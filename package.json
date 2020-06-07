@@ -10,13 +10,10 @@
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
   },
-  "config": {
-    "nuxt": {
-      "host": "192.168.31.191",
-      "port": 8080
-    }
-  },
   "dependencies": {
+    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/proxy": "^2.0.0",
+    "cookie-universal-nuxt": "^2.1.4",
     "cross-env": "^5.2.0",
     "iview": "^3.1.5",
     "koa": "^2.6.2",

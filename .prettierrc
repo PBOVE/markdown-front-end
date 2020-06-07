@@ -1,3 +1,5 @@
 {
-  "semicolons":false
+  "semicolons":false,
+  "trailingComma":"all",
+  "semi": true,
 }
