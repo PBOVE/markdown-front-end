@@ -7,13 +7,16 @@
 
 <template>
   <div class="container">
-    <nuxt-link to="/login">登录</nuxt-link>
+    <public-header />
   </div>
 </template>
 
 
 <script>
+import publicHeader from "@/components/publicHeader/index.vue";
+
 export default {
+  components: { publicHeader },
   data() {
     return {};
   },

@@ -1,0 +1,116 @@
+.login-group {
+  position: relative;
+  margin: 0.6rem 0 0;
+}
+.login-group,
+.login-group input {
+  width: 100%;
+}
+.login-group label {
+  position: absolute;
+  top: -0.6rem;
+  left: 1rem;
+  background: #fff;
+  padding: 0 0.28rem;
+  color: #666;
+  user-select: none;
+  z-index: 1;
+}
+.login-group input {
+  height: 2.6rem;
+  outline: none;
+  border: 0.07rem solid #ddd;
+  border-radius: 0.4rem;
+  padding: 0 30px 0 1rem;
+  letter-spacing: 0.1rem;
+  transition: border 0.2s ease-in-out, background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.login-group input::placeholder {
+  color: #ddd;
+  user-select: none;
+}
+.login-group input:hover {
+  border-color: #222fffdd;
+}
+.login-group input:focus {
+  border-color: #222fffdd;
+  box-shadow: 0 0 0 0.14rem #222fff44;
+}
+.from-error.login-group input {
+  border-color: #ed4014;
+}
+.from-error.login-group label {
+  color: #ed4014;
+}
+.from-error.login-group input:focus {
+  border-color: #ed4014;
+  box-shadow: 0 0 0 2px rgba(237, 64, 20, 0.2);
+}
+.from-error.login-group input:hover {
+  box-shadow: 0 0 0 2px rgba(237, 64, 20, 0.2);
+}
+.from-error.login-group .login-group-tips {
+  opacity: 1;
+}
+.login-group-tips {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0 0 0;
+  min-height: 21px;
+  color: #ed4014;
+  opacity: 0;
+  transition: all 0.2s;
+}
+.login-button {
+  position: relative;
+  height: 2.6rem;
+  width: 100%;
+  margin: 1rem 0 0 0;
+  outline: none;
+  color: #fff;
+  font-size: 1.14rem;
+  letter-spacing: 0.2rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background-image: linear-gradient(90deg, #0162c6, #755bea);
+  box-shadow: 0 0.28rem 0.85rem rgba(34, 47, 255, 0.33);
+  text-shadow: 0 0.14rem 0.28rem rgba(0, 0, 0, 0.28);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+}
+.login-group-input-wrap {
+  position: relative;
+}
+.login-group-input-suffix {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 2px;
+  height: 2.6rem;
+  width: 28px;
+}
+.login-group-input-load {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #77aaad;
+  animation: ani-load-spin 1s linear infinite;
+}
+.login-floor {
+  margin: 1.2rem 0 0;
+  text-align: right;
+  user-select: none;
+}
+
+@keyframes ani-load-spin {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

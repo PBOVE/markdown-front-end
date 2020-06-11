@@ -1,7 +1,7 @@
 {
   "name": "markdown",
   "version": "1.0.0",
-  "description": "笔记本",
+  "description": "便笺薄",
   "author": "pbove",
   "private": true,
   "scripts": {
@@ -17,10 +17,12 @@
     "cross-env": "^5.2.0",
     "iview": "^3.1.5",
     "koa": "^2.6.2",
-    "nuxt": "^2.12.2"
+    "nuxt": "^2.12.2",
+    "qs": "^6.9.4"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
+    "eslint": "^7.2.0",
     "nodemon": "^1.18.9"
   }
 }

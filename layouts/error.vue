@@ -6,9 +6,7 @@
 
 
 <template>
-  <div>
-    
-  </div>
+  <div>错误</div>
 </template>
 
 
@@ -16,7 +14,7 @@
 export default {
   data() {
     return {};
-  }
+  },
 };
 </script>
 

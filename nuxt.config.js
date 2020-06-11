@@ -4,7 +4,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Mountain',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,11 +19,11 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [ 'iview/dist/styles/iview.css' ],
+  css: [ 'iview/dist/styles/iview.css', 'assets/css/main.css' ],
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [ '@/plugins/iview', '~/plugins/axios', '~/plugins/api' ],
+  plugins: [ '@/plugins/iview', '@/plugins/api' ],
   /*
   ** Nuxt.js dev-modules
   */
@@ -31,7 +31,7 @@ module.exports = {
   /*
   ** Nuxt.js modules
   */
-  modules: [ '@nuxtjs/axios', '@nuxtjs/proxy' ],
+  modules: [ '@nuxtjs/axios', '@nuxtjs/proxy', 'cookie-universal-nuxt' ],
   axios: {
     proxy: true, // Can be also an object with default options
     prefix: '/api',
@@ -55,7 +55,16 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {},
+    extend(config, ctx) {
+      if (ctx.dev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint',
+          exclude: /(node_modules)/,
+        });
+      }
+    },
     vendor: [ 'axios' ], //为防止重复打包
   },
 };

@@ -1,15 +1,17 @@
+// import Cookies from 'js-cookie';
+
 export const namespaced = true;
 
 export const state = () => ({
-  token: '',
+  access_token: '',
+  isGetToken: false,
 });
 
 export const mutations = {
   setToken(state, token) {
-    console.log('---------------------------------------------------------------------------------------------------');
-    console.log(token);
-    state.token = token;
+    state.access_token = token;
+  },
+  setIsGetToken(state) {
+    state.isGetToken = true;
   },
 };
-
-
