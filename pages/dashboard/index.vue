@@ -27,6 +27,7 @@
 import publicHeader from "@/components/publicHeader/index.vue";
 
 export default {
+  transition: "fade",
   components: { publicHeader },
   data() {
     return {};
