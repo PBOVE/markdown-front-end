@@ -37,7 +37,7 @@
             <img src="@/assets/images/security.png" />
           </div>
         </div>
-        <nuxt-link to="/user/personal" class="ui-box-header-footer">确保您账户安全</nuxt-link>
+        <nuxt-link to="/user/security" class="ui-box-header-footer">确保您账户安全</nuxt-link>
       </div>
     </div>
   </div>
