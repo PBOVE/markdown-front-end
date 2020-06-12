@@ -14,16 +14,26 @@
       </div>
     </div>
     <div class="public-header-right nav-middle">
-      <div class="public-header-user-portrait nav-middle">R</div>
+      <div class="public-header-user-portrait nav-middle">{{this.storeUserName|userName}}</div>
     </div>
   </div>
 </template>
 
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
+  filters: {
+    userName(name) {
+      return name[0].toUpperCase();
+    },
+  },
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters("user", ["storeUserName"]),
   },
 };
 </script>

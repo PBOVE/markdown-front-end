@@ -104,7 +104,7 @@ export default {
         const { data } = await this.$request.GetToken();
         this.$cookies.set("access_token", data._csrf.token);
         this.$store.commit("token/setToken", data._csrf.token);
-        this.$router.push("/dashboard");
+        this.$router.push(this.$route.query.redirect || "/dashboard");
         console.log(data);
       } catch (err) {
         this.$Message.error({

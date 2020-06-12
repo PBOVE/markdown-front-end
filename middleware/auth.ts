@@ -14,7 +14,7 @@ const authMiddleware: Middleware = async context => {
   const token = app.$cookies.get('access_token');
   const { path } = route;
   if (!token && !ignorePaths.includes(path)) {
-    redirect('/login');
+    redirect(`/login?redirect=${path}`);
   }
 };
 
