@@ -103,6 +103,7 @@ export default {
         await this.$request.LoginIn(params);
         const { data } = await this.$request.GetToken();
         this.$cookies.set("access_token", data._csrf.token);
+        this.$store.commit("user/setUser", data.user);
         this.$store.commit("token/setToken", data._csrf.token);
         this.$router.push(this.$route.query.redirect || "/dashboard");
         console.log(data);
