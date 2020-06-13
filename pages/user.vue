@@ -35,7 +35,7 @@
           <div>安全性</div>
         </nuxt-link>
       </div>
-      <div class="user-main">
+      <div class="user-main scroll">
         <nuxt-child />
       </div>
     </div>
@@ -68,11 +68,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
 }
 .user-content {
+  flex: 1;
   display: flex;
-  height: 100%;
 }
 .user-sidebar-wrap {
   display: flex;
@@ -109,7 +108,7 @@ export default {
   color: #1a73e8;
 }
 .user-main {
-  flex: 1;
+  flex: auto;
   padding: 18px 48px 0;
   overflow: auto;
 }
@@ -145,7 +144,8 @@ export default {
 }
 @media screen and (max-width: 600px) {
   .user-main {
-    padding: 18px 18px 0;
+    height: 0;
+    padding: 18px 18px;
   }
 }
 </style>

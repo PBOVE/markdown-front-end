@@ -56,17 +56,6 @@
           <div class="msg-row-title">{{storeUser.updateTime|TimeConversion}}</div>
         </div>
       </div>
-      <div class="upi-msg-row">
-        <nuxt-link to="/user/personal/password" class="upi-msg-row-content layout-middle">
-          <div class="layout-middle-left">
-            <div class="msg-row-name">密码</div>
-            <div class="msg-row-title">••••••••</div>
-          </div>
-          <div class="layout-middle-right">
-            <Icon type="ios-arrow-forward" size="20" />
-          </div>
-        </nuxt-link>
-      </div>
     </div>
     <div class="upi-border">
       <div class="upi-msg-title">
@@ -115,10 +104,6 @@ export default {
   },
   computed: {
     ...mapGetters("user", ["storeUser"]),
-  },
-  methods: {
-    // 时间转换函数
-    // 选择头像
   },
 };
 </script>
@@ -210,6 +195,7 @@ export default {
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
 }
 .layout-middle-img {
+  flex-shrink: 0;
   position: relative;
   border-radius: 50%;
   overflow: hidden;

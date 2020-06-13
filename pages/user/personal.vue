@@ -43,7 +43,7 @@ export default {
 }
 @media screen and (max-width: 1240px) {
   .user-personal-wrap {
-    width: 95%;
+    width: 100%;
     margin: 0;
   }
 }
