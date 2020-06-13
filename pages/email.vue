@@ -31,7 +31,7 @@
     <Modal
       v-model="modalFlag"
       width="340"
-      class-name="main-center-modal "
+      class-name="main-center-modal"
       :footer-hide="true"
       :mask-closable="false"
     >
@@ -75,6 +75,9 @@ export default {
 
 
 <style scoped>
+.email-content{
+  padding: 0 18px;
+}
 .email-content,
 .eh-content {
   margin: 0 auto;
