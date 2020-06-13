@@ -10,11 +10,11 @@
     <div class="public-header-left nav-middle">
       <div class="public-header-logo-warp nav-middle">
         <img src="@/assets/images/mountain.png" class="public-header-logo" />
-        <div class="public-header-logo-title">Mountain</div>
+        <div class="public-header-logo-title">Freedom</div>
       </div>
     </div>
     <div class="public-header-right nav-middle">
-      <div class="public-header-user-portrait nav-middle">{{this.storeUserName|userName}}</div>
+      <div class="public-header-user-portrait nav-middle">{{this.storeNickName|userName}}</div>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("user", ["storeUserName"]),
+    ...mapGetters("user", ["storeNickName"]),
   },
 };
 </script>
@@ -41,13 +41,14 @@ export default {
 
 <style scoped>
 .public-header-wrap {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
-  margin: 0 0 20px;
-  height: 48px;
+  /* margin: 0 0 15px; */
+  height: 60px;
   padding: 0 5%;
   font-family: Georgia;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); */
 }
 .public-header-logo-warp {
   font-size: 0;

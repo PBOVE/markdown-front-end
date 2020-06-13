@@ -14,7 +14,7 @@
           <div class="title">
             <h3>欢迎来到</h3>
             <h1>
-              Mountain
+              Freedom
               <span style="font-weight:lighter;">平台</span>
             </h1>
           </div>

@@ -10,22 +10,26 @@
     <public-header />
     <div class="user-content">
       <div class="user-sidebar-wrap">
-        <nuxt-link to="/user" class="user-sidebar-row" :class="{'row-select':path==='/user'}">
+        <nuxt-link
+          :to="pathArray[0]"
+          class="user-sidebar-row"
+          :class="{'row-select':path===pathArray[0]}"
+        >
           <div class="iconfont user-sidebar-row-icon">&#xe63c;</div>
           <div>首页</div>
         </nuxt-link>
         <nuxt-link
-          to="/user/personal"
+          :to="pathArray[1]"
           class="user-sidebar-row"
-          :class="{'row-select':path==='/user/personal'}"
+          :class="{'row-select':path===pathArray[1]}"
         >
           <div class="iconfont user-sidebar-row-icon">&#xe674;</div>
           <div>个人信息</div>
         </nuxt-link>
         <nuxt-link
-          to="/user/security"
+          :to="pathArray[2]"
           class="user-sidebar-row"
-          :class="{'row-select':path==='/user/security'}"
+          :class="{'row-select':path===pathArray[2]}"
         >
           <div class="iconfont user-sidebar-row-icon">&#xe653;</div>
           <div>安全性</div>
@@ -46,7 +50,9 @@ export default {
   transition: "fade",
   components: { publicHeader },
   data() {
-    return {};
+    return {
+      pathArray: ["/user", "/user/personal", "/user/security"],
+    };
   },
   computed: {
     path() {
@@ -62,6 +68,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 .user-content {
   display: flex;
@@ -102,8 +109,9 @@ export default {
   color: #1a73e8;
 }
 .user-main {
-  padding: 18px 48px 0;
   flex: 1;
+  padding: 18px 48px 0;
+  overflow: auto;
 }
 @media screen and (max-width: 900px) {
   .user-content {
@@ -114,10 +122,12 @@ export default {
     justify-content: center;
     padding: 0;
     width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   .user-sidebar-row {
-    border-radius: 0;
+    padding: 5px 8px 5px 8px;
     border: 2px solid transparent;
+    border-radius: 0;
   }
   .user-sidebar-row:hover {
     background-color: transparent;
@@ -128,9 +138,14 @@ export default {
   }
   .row-select {
     background-color: transparent !important;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    border-bottom: 2px solid #1a73e8;
+    border-left: 2.4px solid transparent;
+    border-right: 2.4px solid transparent;
+    border-bottom: 2.4px solid #1a73e8;
+  }
+}
+@media screen and (max-width: 600px) {
+  .user-main {
+    padding: 18px 18px 0;
   }
 }
 </style>

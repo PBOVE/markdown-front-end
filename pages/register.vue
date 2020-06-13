@@ -143,7 +143,7 @@ export default {
   },
   head() {
     return {
-      title: "注册 ● Mountain",
+      title: "注册 ● Freedom",
     };
   },
   watch: {

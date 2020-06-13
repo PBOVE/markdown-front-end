@@ -8,3 +8,14 @@
 .fade-leave-active {
   opacity: 0;
 }
+.main-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-center-modal .ivu-modal{
+  top: -100px;
+}
+.main-center-modal .ivu-modal-close{
+  display: none;
+}

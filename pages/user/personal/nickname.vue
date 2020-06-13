@@ -6,20 +6,14 @@
 
 
 <template>
-  <div class="container">security</div>
+  <div class="container">123</div>
 </template>
 
 
 <script>
 export default {
-  transition: "fade",
   data() {
     return {};
-  },
-  head() {
-    return {
-      title: "账户 ● Freedom",
-    };
   },
 };
 </script>

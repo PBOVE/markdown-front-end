@@ -12,14 +12,14 @@
         <div class="ui-portrait layout-center">{{this.storeUserName|userName}}</div>
       </div>
       <div class="ui-title">欢迎使用，{{storeNickName}}</div>
-      <div class="ui-tip">管理自己的信息和安全，从而让 Mountain 更好地为您服务</div>
+      <div class="ui-tip">管理自己的信息和安全，从而让 Freedom 更好地为您服务</div>
     </div>
     <div class="ui-main">
       <div class="ui-box">
         <div class="ui-box-header">
           <div class="ui-box-header-left">
             <h2>个人信息</h2>
-            <div class="ui-box-header-title">您在 Mountain 服务中使用的基本信息，例如您的姓名和照片</div>
+            <div class="ui-box-header-title">您在 Freedom 中使用的基本信息，例如您的昵称和头像</div>
           </div>
           <div class="ui-box-header-right">
             <img src="@/assets/images/personal.png" />
@@ -59,7 +59,7 @@ export default {
   },
   head() {
     return {
-      title: "账户 ● Mountain",
+      title: "账户 ● Freedom",
     };
   },
   computed: {
@@ -107,6 +107,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
 }
 .ui-box {
   margin: 10px;
