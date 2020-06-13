@@ -84,6 +84,7 @@ export default {
   max-width: 660px;
 }
 .email-header {
+  padding: 0 18px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .eh-content {
