@@ -1,4 +1,6 @@
 import qs from 'qs';
+import { Message } from 'iview';
+import showStatus from '@/utils/message';
 
 const header = { headers: { 'Content-Type': 'application/json;charset=UTF-8' } };
 
@@ -12,14 +14,20 @@ const request = {
   // 注册
   register: params => axios.post('/register', params, header),
   // 获取邮箱验证
-  verifyEmail: () => axios.get('/confirm-email'),
+  verifyEmail: () => axios.get('/accounts/email/link'),
   // 验证邮箱连接
-  verifyEmailLink: requestId => axios.get(`/mail/link/${requestId}`),
+  verifyEmailLink: requestId => axios.put(`/accounts/email/${requestId}`),
+  // 忘记密码
+  forgetEmail: params => axios.get('/accounts/password/link', { params }),
+  // 验证忘记密码
+  forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用
 let axios = null;
 export default ({ $axios, store }, inject) => {
+  const isClient = process.client;
+  // let isServer = process.server;
   //3 保存内置的axios
   axios = $axios;
   axios.setHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -31,7 +39,20 @@ export default ({ $axios, store }, inject) => {
     if (code === 200 && msg === 'OK') {
       return response.data;
     }
+
     return Promise.reject(code);
+  });
+  axios.onError(error => {
+    if (isClient) {
+      let message;
+      if (typeof error === 'number') {
+        message = showStatus(error);
+      } else {
+        const { status } = error.response;
+        message = showStatus(status);
+      }
+      Message.error({ content: message, duration: 10 });
+    }
   });
   //4) 将自定义函数交于nuxt
   inject('request', request);

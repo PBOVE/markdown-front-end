@@ -26,6 +26,9 @@ import publicHeader from "@/components/publicHeader/index.vue";
 
 export default {
   components: { publicHeader },
+  validate({ params }) {
+    return params.requestId ? true : false;
+  },
   data() {
     return {
       verify: 0,

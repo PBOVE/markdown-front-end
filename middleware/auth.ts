@@ -11,7 +11,14 @@ const authMiddleware: Middleware = async context => {
     store.commit('token/setToken', data._csrf.token);
     store.commit('token/setIsGetToken');
   }
-  const ignorePaths: string[] = [ '/', '/login', '/register', '/contactemail/link/:requestId' ];
+  const ignorePaths: string[] = [
+    '/',
+    '/login',
+    '/register',
+    '/forget',
+    '/accounts/email/:requestId',
+    '/accounts/password/:requestId',
+  ];
   const token = app.$cookies.get('access_token');
   const { path } = route;
   const verifyRoute = (route: string) => {

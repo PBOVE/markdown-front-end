@@ -6,7 +6,7 @@
 
 
 <template>
-  <div>错误</div>
+  <div>404</div>
 </template>
 
 

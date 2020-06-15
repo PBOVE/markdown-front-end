@@ -201,7 +201,7 @@ export default {
       const usernameReg = /^[A-Za-z0-9]+([\-]?[A-Za-z0-9]+)*$/;
       let flag = true;
       if (!this.email) {
-        this.handleError("email", "add", "请输入邮箱");
+        this.handleError("email", "add", "请输入邮箱地址");
         flag = false;
       } else if (!emailReg.test(this.email)) {
         this.handleError("email", "add", "邮箱地址格式错误");
@@ -323,25 +323,5 @@ export default {
 }
 .register-wrap .ivu-poptip-body-content-inner {
   color: #000;
-}
-.login-button span {
-  position: absolute;
-  background: #fff;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  border-radius: 50%;
-  animation: animate 1s linear infinite;
-}
-@keyframes animate {
-  0% {
-    width: 0px;
-    height: 0px;
-    opacity: 0.5;
-  }
-  100% {
-    width: 700px;
-    height: 600px;
-    opacity: 0;
-  }
 }
 </style>

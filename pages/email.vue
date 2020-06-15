@@ -90,11 +90,7 @@ export default {
         await this.$request.verifyEmail();
         const content = "您的验证邮件已发送，请前往您的邮箱中查看";
         this.$Message.success({ duration: 10, content });
-      } catch (code) {
-        let content = "错误";
-        if (code === 4004) content = "请不要重复发送验证邮件，请前往您的邮箱中查看";
-        this.$Message.warning({ duration: 10, content });
-      }
+      } catch (code) {}
       this.modalFlag = false;
       this.loading = false;
     },

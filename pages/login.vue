@@ -26,14 +26,25 @@
       </div>
       <div class="login-group" ref="passwordRef">
         <label for="password">密码</label>
-        <input
-          id="password"
-          type="password"
-          autocomplete="off"
-          placeholder="请输入密码"
-          v-model="password"
-          @keyup.enter="handleLoginEvent($event)"
-        />
+
+        <div class="login-group-input-wrap">
+          <input
+            id="password"
+            autocomplete="off"
+            placeholder="请输入密码"
+            v-model="password"
+            :type="eye?'password':'text'"
+            @keyup.enter="handleLoginEvent($event)"
+          />
+          <div class="login-group-input-suffix">
+            <Icon
+              :type="eye?'ios-eye-outline':'ios-eye-off-outline'"
+              size="20"
+              style="cursor:pointer;"
+              @click="eye=!eye"
+            />
+          </div>
+        </div>
         <div class="login-group-tips">
           <Icon type="md-information-circle" size="16" />
           <span>请输入密码</span>
@@ -43,7 +54,7 @@
         <Checkbox v-model="rememberMe" size="large">
           <span style="fontSize:14px; marginLeft:0.5rem; ">记住密码</span>
         </Checkbox>
-        <a href="#">忘记密码</a>
+        <nuxt-link to="/forget">忘记密码</nuxt-link>
       </div>
       <button ref="loginbtn" class="login-button" @click="handleLoginEvent($event)">登录</button>
       <div class="login-floor">
@@ -67,6 +78,8 @@ export default {
       password: "",
       // 记住密码
       rememberMe: false,
+      // 查看密码
+      eye: true,
       // 设置按钮为加载中状态
       loading: false,
     };
@@ -107,15 +120,7 @@ export default {
         this.$store.commit("token/setToken", data._csrf.token);
         this.$router.push(this.$route.query.redirect || "/dashboard");
       } catch (err) {
-        if (err === 4001) {
-          this.$Message.error({
-            content: "用户名或密码错误,请重新输入",
-            duration: 5,
-          });
-        } else this.$Message.error({ content: err, duration: 5 });
-
         this.cancelAnimation(ripples);
-
         return;
       }
     },
@@ -167,29 +172,9 @@ export default {
 }
 </style>
 <style >
-.login-button span {
-  position: absolute;
-  background: #fff;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  border-radius: 50%;
-  animation: animate 1s linear infinite;
-}
 .login-wrap .ivu-checkbox-checked .ivu-checkbox-inner {
   border-color: rgba(34, 47, 255, 0.33);
   background-color: rgb(34, 47, 255);
-}
-@keyframes animate {
-  0% {
-    width: 0px;
-    height: 0px;
-    opacity: 0.5;
-  }
-  100% {
-    width: 700px;
-    height: 600px;
-    opacity: 0;
-  }
 }
 </style>
 
