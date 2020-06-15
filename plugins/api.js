@@ -11,6 +11,8 @@ const request = {
   registerQuery: params => axios.get('/register/query', { params }),
   // 注册
   register: params => axios.post('/register', params, header),
+  // 获取邮箱验证
+  verifyEmail: () => axios.get('/confirm-email'),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

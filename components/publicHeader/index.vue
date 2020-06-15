@@ -14,7 +14,13 @@
       </div>
     </div>
     <div class="public-header-right nav-middle">
-      <div class="public-header-user-portrait nav-middle">{{this.storeNickName|userName}}</div>
+      <div
+        v-if="storeNickName"
+        class="public-header-user-portrait nav-middle"
+      >{{this.storeNickName|userName}}</div>
+      <div v-else>
+        <Button type="primary" to="/login">登录</Button>
+      </div>
     </div>
   </div>
 </template>

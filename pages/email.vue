@@ -13,7 +13,7 @@
         <nuxt-link to="/user/personal">
           <Icon type="md-arrow-round-back" class="eh-content-icon" />
         </nuxt-link>
-        <div>电子邮箱联系地址</div>
+        <div>电子邮箱地址</div>
       </div>
     </div>
     <div class="email-content">
@@ -37,12 +37,17 @@
     >
       <div class="email-modal-title">验证邮件</div>
       <div class="email-modal-content">
-        <div>验证邮件已发送至</div>
-        <div style="color: #000;">{{storeEmail}}</div>
+        <div class="email-modal-left">
+          <div>验证邮件已发送至</div>
+          <div style="color: #000;">{{storeEmail}}</div>
+        </div>
+        <div class="email-modal-right">
+          <img src="@/assets/images/email.png" width="80px" />
+        </div>
       </div>
       <div class="email-modal-footer">
         <Button @click="modalFlag=false">取 消</Button>
-        <Button type="primary">发 送</Button>
+        <Button :loading="loading" type="primary" @click="sendVerify">发 送</Button>
       </div>
     </Modal>
   </div>
@@ -65,17 +70,41 @@ export default {
     return {
       // 对话框
       modalFlag: false,
+      // 设置按钮为加载中状态
+      loading: false,
+    };
+  },
+  head() {
+    return {
+      title: "电子邮箱地址 ● Freedom",
     };
   },
   computed: {
     ...mapGetters("user", ["storeEmail", "storeUser"]),
+  },
+  methods: {
+    // 发送验证
+    async sendVerify() {
+      try {
+        this.loading = true;
+        await this.$request.verifyEmail();
+        const content = "您的验证邮件已发送，请前往您的邮箱中查看";
+        this.$Message.success({ duration: 10, content });
+      } catch (code) {
+        let content = "错误";
+        if (code === 4004) content = "请不要重复发送验证邮件，请前往您的邮箱中查看";
+        this.$Message.warning({ duration: 10, content });
+      }
+      this.modalFlag = false;
+      this.loading = false;
+    },
   },
 };
 </script>
 
 
 <style scoped>
-.email-content{
+.email-content {
   padding: 0 18px;
 }
 .email-content,
@@ -138,14 +167,25 @@ export default {
   font-size: 18px;
 }
 .email-modal-content {
-  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 15px 15px 0px;
   font-size: 14px;
+}
+.email-modal-right {
+  flex-shrink: 0;
 }
 .email-modal-footer {
   text-align: right;
 }
 .email-modal-footer button:first-of-type {
   margin: 0 15px 0 0;
+}
+@media screen and (max-width: 330px) {
+  .email-modal-right {
+    display: none;
+  }
 }
 </style>
 

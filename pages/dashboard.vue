@@ -8,7 +8,7 @@
 <template>
   <div class="dashboard-wrap">
     <public-header />
-    <Alert type="warning" closable class="dashboard-tip">
+    <Alert v-if="!storeUser.authentication" type="warning" closable class="dashboard-tip">
       <div style="fontSize:16px;">您还没有完成你的账号验证</div>
       <div style="fontSize:14px;">
         <div style="marginTop:8px;">您必须先完成电子邮箱验证，否则有些功能将无法实现</div>
@@ -25,12 +25,17 @@
 
 <script>
 import publicHeader from "@/components/publicHeader/index.vue";
+import { mapGetters } from "vuex";
 
 export default {
   transition: "fade",
   components: { publicHeader },
+
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters("user", ["storeUser"]),
   },
 };
 </script>

@@ -108,11 +108,15 @@ export default {
         this.$router.push(this.$route.query.redirect || "/dashboard");
         console.log(data);
       } catch (err) {
-        this.$Message.error({
-          content: "用户名或密码错误,请重新输入",
-          duration: 5,
-        });
+        if (err === 4001) {
+          this.$Message.error({
+            content: "用户名或密码错误,请重新输入",
+            duration: 5,
+          });
+        } else this.$Message.error({ content: err, duration: 5 });
+
         this.cancelAnimation(ripples);
+
         return;
       }
     },
