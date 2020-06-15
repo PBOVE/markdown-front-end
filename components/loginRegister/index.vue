@@ -14,7 +14,7 @@
           <div class="title">
             <h3>欢迎来到</h3>
             <h1>
-              Freedom
+              <nuxt-link to="/" style="color:#fff;">Freedom</nuxt-link>
               <span style="font-weight:lighter;">平台</span>
             </h1>
           </div>
@@ -130,7 +130,7 @@ export default {
   }
 }
 @media screen and (max-width: 540px) {
-  .login-from-wrap{
+  .login-from-wrap {
     width: 100%;
   }
   .login-from {

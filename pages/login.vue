@@ -106,7 +106,6 @@ export default {
         this.$store.commit("user/setUser", data.user);
         this.$store.commit("token/setToken", data._csrf.token);
         this.$router.push(this.$route.query.redirect || "/dashboard");
-        console.log(data);
       } catch (err) {
         if (err === 4001) {
           this.$Message.error({

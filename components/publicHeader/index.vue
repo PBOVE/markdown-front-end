@@ -6,11 +6,11 @@
 
 
 <template>
-  <div class="public-header-wrap">
+  <div class="public-header-wrap" :class="{'public-shadow':shadow}">
     <div class="public-header-left nav-middle">
       <div class="public-header-logo-warp nav-middle">
         <img src="@/assets/images/mountain.png" class="public-header-logo" />
-        <div class="public-header-logo-title">Freedom</div>
+        <nuxt-link to="/" class="public-header-logo-title">Freedom</nuxt-link>
       </div>
     </div>
     <div class="public-header-right nav-middle">
@@ -19,7 +19,9 @@
         class="public-header-user-portrait nav-middle"
       >{{this.storeNickName|userName}}</div>
       <div v-else>
-        <Button type="primary" to="/login">登录</Button>
+        <nuxt-link to="/login">
+          <span class="link-login">登录</span>
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -30,6 +32,12 @@
 import { mapGetters } from "vuex";
 
 export default {
+  props: {
+    shadow: {
+      type: Boolean,
+      default: false,
+    },
+  },
   filters: {
     userName(name) {
       return name[0].toUpperCase();
@@ -50,11 +58,12 @@ export default {
   flex-shrink: 0;
   display: flex;
   justify-content: space-between;
-  /* margin: 0 0 15px; */
   height: 60px;
   padding: 0 5%;
-  font-family: Georgia;
-  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); */
+}
+.public-shadow {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 0 15px;
 }
 .public-header-logo-warp {
   font-size: 0;
@@ -64,8 +73,10 @@ export default {
 }
 .public-header-logo-title {
   margin: 0 0 0 10px;
-  font-size: 16px;
+  font-family: Georgia;
+  font-size: 18px;
   font-weight: bold;
+  color: #000;
 }
 .public-header-right {
   font-size: 16px;
@@ -83,5 +94,18 @@ export default {
 .nav-middle {
   display: flex;
   align-items: center;
+}
+.link-login {
+  display: inline-block;
+  padding: 6px 12px;
+  text-align: center;
+  border-radius: 2px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  color: #fff;
+  background-color: #2d8cf0;
+  transition: background-color 0.8s;
+  font-weight: 700;
 }
 </style>

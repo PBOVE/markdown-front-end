@@ -7,7 +7,7 @@
 
 <template>
   <div class="user-wrap">
-    <public-header />
+    <public-header  />
     <div class="user-content">
       <div class="user-sidebar-wrap">
         <nuxt-link

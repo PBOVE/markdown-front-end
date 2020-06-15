@@ -13,6 +13,8 @@ const request = {
   register: params => axios.post('/register', params, header),
   // 获取邮箱验证
   verifyEmail: () => axios.get('/confirm-email'),
+  // 验证邮箱连接
+  verifyEmailLink: requestId => axios.get(`/mail/link/${requestId}`),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

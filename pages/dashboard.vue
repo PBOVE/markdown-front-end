@@ -7,7 +7,7 @@
 
 <template>
   <div class="dashboard-wrap">
-    <public-header />
+    <public-header :shadow="true" />
     <Alert v-if="!storeUser.authentication" type="warning" closable class="dashboard-tip">
       <div style="fontSize:16px;">您还没有完成你的账号验证</div>
       <div style="fontSize:14px;">

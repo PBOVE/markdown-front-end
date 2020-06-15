@@ -25,7 +25,7 @@
             :style="{color:storeUser.authentication?'#19be6b':'#ed4014'}"
           >{{storeUser.authentication|authentication}}</span>
         </div>
-        <div class="email-again" @click="modalFlag=true">发送验证邮件</div>
+        <div v-if="!storeUser.authentication" class="email-again" @click="modalFlag=true">发送验证邮件</div>
       </div>
     </div>
     <Modal

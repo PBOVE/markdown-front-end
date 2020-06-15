@@ -13,7 +13,6 @@ export const mutations = {
 };
 export const getters = {
   storeUser(state) {
-    console.log(state.data);
     return state.data;
   },
   storeUserName(state) {

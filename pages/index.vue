@@ -7,7 +7,7 @@
 
 <template>
   <div class="container">
-    <public-header />
+    <public-header :shadow="true" />
   </div>
 </template>
 
