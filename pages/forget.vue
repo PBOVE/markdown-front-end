@@ -77,9 +77,14 @@ export default {
     async handleSubmitEvent(event) {
       if (this.loading) return;
       this.loading = true;
+
       const ripples = this.handleAnimation(event);
       const valid = this.verifyData();
-      if (!valid || this.emailLoad !== 0) {
+      if (!valid) {
+        this.cancelAnimation(ripples);
+        return;
+      } else if (this.emailLoad !== 0) {
+        this.$Message.info("验证邮箱中，请稍等");
         this.cancelAnimation(ripples);
         return;
       }
