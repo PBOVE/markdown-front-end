@@ -8,7 +8,7 @@
 <template>
   <div class="user-personal-wrap">
     <div style="text-align:center;font-size:26px;">个人信息</div>
-    <div class="up-title">您在 Freedom 中使用的基本信息，例如您的昵称和头像</div>
+    <div class="up-title">您在 Freedom 中使用的基本信息，例如您的昵称和照片</div>
     <nuxt-child />
   </div>
 </template>

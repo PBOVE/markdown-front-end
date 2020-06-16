@@ -15,8 +15,8 @@
       <div class="upi-msg-row">
         <div class="upi-msg-row-content layout-middle">
           <div class="layout-middle-left">
-            <div class="msg-row-name">头像</div>
-            <div class="msg-row-title msg-row-title-tip">更改头像 可帮助您个性化您的帐号</div>
+            <div class="msg-row-name">照片</div>
+            <div class="msg-row-title msg-row-title-tip">更改照片，可帮助您个性化您的帐号</div>
           </div>
           <div class="layout-middle-right layout-middle-img">
             <!-- <img :src="images" class="msg-row-image" v-if="images" /> -->
@@ -73,16 +73,19 @@
         </nuxt-link>
       </div>
     </div>
+    <head-portrait v-model="headPortrait" />
   </div>
 </template>
 
 
 <script>
 // 点击上传照片
+import headPortrait from "@/components/headPortrait/index.vue";
 import { mapGetters } from "vuex";
 
 export default {
   transition: "fade",
+  components: { headPortrait },
   filters: {
     TimeConversion(time) {
       const date = new Date(time);
@@ -100,7 +103,10 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      // 打开设置头像
+      headPortrait: true,
+    };
   },
   computed: {
     ...mapGetters("user", ["storeUser"]),
@@ -192,6 +198,7 @@ export default {
   text-align: center;
   line-height: 60px;
   color: #dff6f0;
+  font-weight: bold;
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
 }
 .layout-middle-img {

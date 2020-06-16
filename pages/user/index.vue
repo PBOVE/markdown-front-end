@@ -19,7 +19,7 @@
         <div class="ui-box-header">
           <div class="ui-box-header-left">
             <h2>个人信息</h2>
-            <div class="ui-box-header-title">您在 Freedom 中使用的基本信息，例如您的昵称和头像</div>
+            <div class="ui-box-header-title">您在 Freedom 中使用的基本信息，例如您的昵称和照片</div>
           </div>
           <div class="ui-box-header-right">
             <img src="@/assets/images/personal.png" />

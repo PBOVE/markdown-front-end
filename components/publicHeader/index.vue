@@ -14,37 +14,44 @@
       </div>
     </div>
     <div class="public-header-right nav-middle">
-      <div
-        v-if="storeNickName"
-        class="public-header-user-portrait nav-middle"
-      >{{this.storeNickName|userName}}</div>
+      <nuxt-link to="/dashboard" class="public-header-right-icon nav-middle">
+        <Icon type="ios-keypad" />
+      </nuxt-link>
+      <div class="user-portrait-wrap" v-if="storeNickName" data-user-portrait="true">
+        <div class="user-portrait" data-user-portrait="true">{{storeNickName|userName}}</div>
+      </div>
       <div v-else>
         <nuxt-link to="/login">
           <span class="link-login">登录</span>
         </nuxt-link>
       </div>
     </div>
+    <user-drop v-model="userDropDown" />
   </div>
 </template>
 
 
 <script>
 import { mapGetters } from "vuex";
+import userDrop from "@/components/userDrop/index.vue";
 
 export default {
+  components: { userDrop },
+  filters: {
+    userName(name) {
+      return name[0].toUpperCase();
+    },
+  },
   props: {
     shadow: {
       type: Boolean,
       default: false,
     },
   },
-  filters: {
-    userName(name) {
-      return name[0].toUpperCase();
-    },
-  },
   data() {
-    return {};
+    return {
+      userDropDown: false,
+    };
   },
   computed: {
     ...mapGetters("user", ["storeNickName"]),
@@ -59,7 +66,7 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 60px;
-  padding: 0 5%;
+  padding: 0 50px;
 }
 .public-shadow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
@@ -81,7 +88,18 @@ export default {
 .public-header-right {
   font-size: 16px;
 }
-.public-header-user-portrait {
+.user-portrait-wrap {
+  border: 3px solid transparent;
+  border-radius: 50%;
+  transition: border 0.3s;
+  font-family: Georgia;
+}
+.user-portrait-wrap:hover {
+  border-color: #c5c8ce;
+}
+.user-portrait {
+  display: flex;
+  align-items: center;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -90,6 +108,7 @@ export default {
   color: #e8eaec;
   justify-content: center;
   user-select: none;
+  cursor: pointer;
 }
 .nav-middle {
   display: flex;
@@ -107,5 +126,10 @@ export default {
   background-color: #2d8cf0;
   transition: background-color 0.8s;
   font-weight: 700;
+}
+.public-header-right-icon {
+  margin: 0 20px 0 0;
+  font-size: 25px;
+  color: #515a6e;
 }
 </style>
