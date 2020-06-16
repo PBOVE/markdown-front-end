@@ -18,7 +18,13 @@
         <Icon type="ios-keypad" />
       </nuxt-link>
       <div class="user-portrait-wrap" v-if="storeNickName" data-user-portrait="true">
-        <div class="user-portrait" data-user-portrait="true">{{storeNickName|userName}}</div>
+        <img
+          v-if="storeImages"
+          :src="storeImages"
+          class="main-user-image"
+          data-user-portrait="true"
+        />
+        <div v-else class="user-portrait" data-user-portrait="true">{{storeNickName|userName}}</div>
       </div>
       <div v-else>
         <nuxt-link to="/login">
@@ -39,7 +45,7 @@ export default {
   components: { userDrop },
   filters: {
     userName(name) {
-      return name[0].toUpperCase();
+      return name ? name[0].toUpperCase() : "";
     },
   },
   props: {
@@ -54,7 +60,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeNickName"]),
+    ...mapGetters("user", ["storeNickName", "storeImages"]),
   },
 };
 </script>
@@ -93,6 +99,8 @@ export default {
   border-radius: 50%;
   transition: border 0.3s;
   font-family: Georgia;
+  font-size: 0;
+  cursor: pointer;
 }
 .user-portrait-wrap:hover {
   border-color: #c5c8ce;
@@ -108,7 +116,6 @@ export default {
   color: #e8eaec;
   justify-content: center;
   user-select: none;
-  cursor: pointer;
 }
 .nav-middle {
   display: flex;

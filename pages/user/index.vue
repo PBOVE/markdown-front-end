@@ -9,7 +9,8 @@
   <div class="user-index-wrap">
     <div class="ui-header">
       <div class="ui-portrait-wrap layout-center">
-        <div class="ui-portrait layout-center">{{this.storeUserName|userName}}</div>
+        <img v-if="storeImages" :src="storeImages" class="ui-portrait-image" />
+        <div v-else class="ui-portrait layout-center">{{storeUserName|userName}}</div>
       </div>
       <div class="ui-title">欢迎使用，{{storeNickName}}</div>
       <div class="ui-tip">管理自己的信息和安全，从而让 Freedom 更好地为您服务</div>
@@ -63,7 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUserName", "storeNickName"]),
+    ...mapGetters("user", ["storeUserName", "storeNickName", "storeImages"]),
   },
 };
 </script>
@@ -80,10 +81,13 @@ export default {
 .ui-box-header-left {
   flex: 1;
 }
+.ui-portrait-image,
 .ui-portrait {
   height: 96px;
   width: 96px;
   border-radius: 50%;
+}
+.ui-portrait {
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
   font-weight: bold;
   font-size: 50px;
@@ -107,7 +111,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
 }
 .ui-box {
   margin: 10px;

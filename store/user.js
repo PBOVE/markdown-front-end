@@ -15,6 +15,9 @@ export const getters = {
   storeUser(state) {
     return state.data;
   },
+  storeImages(state) {
+    return state.data.images;
+  },
   storeUserName(state) {
     return state.data.userName;
   },

@@ -8,8 +8,18 @@
 <template>
   <div ref="cropWrap" class="crop-image-wrap">
     <canvas ref="canvasFirst" class="g-canvas-first" />
-    <canvas ref="canvasSecond" class="g-canvas-second" @mousedown.stop="startEvent($event)" />
-    <div ref="selectResize" class="g-se-resize" @mousedown.stop="handleStart($event)" />
+    <canvas
+      ref="canvasSecond"
+      class="g-canvas-second"
+      @mousedown.stop="startEvent($event,'mouseEvent')"
+      @touchstart.stop="startEvent($event,'touchEvent')"
+    />
+    <div
+      ref="selectResize"
+      class="g-se-resize"
+      @mousedown.stop="handleStart($event,'mouseEvent')"
+      @touchstart.stop="handleStart($event,'touchEvent')"
+    />
   </div>
 </template>
 
@@ -32,10 +42,12 @@ export default {
   data() {
     return {
       // 判断移动端还是pc 端
+      isTouch: "",
       moveEvt: "",
       endEvt: "",
       // 黑色边宽度
       leftSide: "",
+      topSide: "",
       // 裁剪框开始位置
       startX: "",
       startY: "",
@@ -52,9 +64,9 @@ export default {
     };
   },
   mounted() {
-    const isTouch = "ontouchstart" in window ? true : false;
-    this.moveEvt = isTouch ? "touchmove" : "mousemove";
-    this.endEvt = isTouch ? "touchend" : "mouseup";
+    this.isTouch = "ontouchstart" in window ? true : false;
+    this.moveEvt = this.isTouch ? "touchmove" : "mousemove";
+    this.endEvt = this.sTouch ? "touchend" : "mouseup";
   },
   watch: {
     imgSrc(val) {
@@ -68,13 +80,22 @@ export default {
       this.imageSecond = new Image();
       img.src = val;
       img.onload = () => {
+        let left, top;
         const { width, height } = img;
         const { clientWidth, clientHeight } = this.$refs.cropWrap;
         this.canvasHeight = clientHeight;
         this.canvasWidth = Math.floor((clientHeight * width) / height);
-        const left = (clientWidth - this.canvasWidth) / 2;
+        left = (clientWidth - this.canvasWidth) / 2;
+        top = 0;
+        if (this.canvasWidth > clientWidth) {
+          this.canvasWidth = clientWidth;
+          this.canvasHeight = Math.floor((clientWidth * height) / width);
+          top = (clientHeight - this.canvasHeight) / 2;
+          left = 0;
+        }
         this.setConvasSize(canvasFirst, this.canvasWidth, this.canvasHeight);
         canvasFirst.style.left = `${left}px`;
+        canvasFirst.style.top = `${top}px`;
         ctxFirst.fillStyle = "#000";
         ctxFirst.fillRect(0, 0, this.canvasHeight, this.canvasHeight);
         ctxFirst.drawImage(img, 0, 0, this.canvasWidth, this.canvasHeight);
@@ -89,11 +110,15 @@ export default {
           this.dropSizeHeight = this.canvasHeight - 10;
         this.imageSecond.onload = () => {
           this.leftSide = left;
+          this.topSide = top;
           this.setDropConvasSize();
-          this.setPosition(this.$refs.canvasSecond, { x: left + sx, y: sy });
+          this.setPosition(this.$refs.canvasSecond, {
+            x: left + sx,
+            y: top + sy,
+          });
           this.setPosition(this.$refs.selectResize, {
             x: left + sx + this.dropSizeWidth - 5,
-            y: sy + this.dropSizeHeight - 5,
+            y: top + sy + this.dropSizeHeight - 5,
           });
           this.setConvas(sx, sy);
         };
@@ -102,9 +127,11 @@ export default {
   },
   methods: {
     // 按下
-    startEvent(Event) {
-      this.startX = Event.pageX;
-      this.startY = Event.pageY;
+    startEvent(Event, eventname) {
+      if (this.isTouch && eventname === "mouseEvent") return;
+      else if (!this.isTouch && eventname === "touchEvent") return;
+      this.startX = this.isTouch ? Event.targetTouches[0].pageX : Event.pageX;
+      this.startY = this.isTouch ? Event.targetTouches[0].pageY : Event.pageY;
       const pos = this.getPosition(this.$refs.canvasSecond);
       this.sourceX = pos.x;
       this.sourceY = pos.y;
@@ -113,8 +140,12 @@ export default {
     },
     // 移动
     moveEvent(Event) {
-      const currentX = Event.pageX;
-      const currentY = Event.pageY;
+      const currentX = this.isTouch
+        ? Event.targetTouches[0].pageX
+        : Event.pageX;
+      const currentY = this.isTouch
+        ? Event.targetTouches[0].pageY
+        : Event.pageY;
       const distanceX = currentX - this.startX;
       const distanceY = currentY - this.startY;
       let x = toDecimal(this.sourceX + distanceX);
@@ -122,15 +153,15 @@ export default {
       if (x < this.leftSide) x = this.leftSide;
       else if (x > this.leftSide + this.canvasWidth - this.dropSizeWidth)
         x = this.leftSide + this.canvasWidth - this.dropSizeWidth;
-      if (y < 0) y = 0;
-      else if (y > this.canvasHeight - this.dropSizeHeight)
-        y = this.canvasHeight - this.dropSizeHeight;
+      if (y < this.topSide) y = this.topSide;
+      else if (y > this.topSide + this.canvasHeight - this.dropSizeHeight)
+        y = this.topSide + this.canvasHeight - this.dropSizeHeight;
       this.setPosition(this.$refs.canvasSecond, { x, y });
       this.setPosition(this.$refs.selectResize, {
         x: x + this.dropSizeWidth - 5,
         y: y + this.dropSizeHeight - 5,
       });
-      this.setConvas(x - this.leftSide, y);
+      this.setConvas(x - this.leftSide, y - this.topSide);
     },
     // 松开
     endEvent() {
@@ -138,9 +169,11 @@ export default {
       document.removeEventListener(this.endEvt, this.endEvent);
     },
     // 按下
-    handleStart(Event) {
-      this.startX = Event.pageX;
-      this.startY = Event.pageY;
+    handleStart(Event, eventname) {
+      if (this.isTouch && eventname === "mouseEvent") return;
+      else if (!this.isTouch && eventname === "touchEvent") return;
+      this.startX = this.isTouch ? Event.targetTouches[0].pageX : Event.pageX;
+      this.startY = this.isTouch ? Event.targetTouches[0].pageY : Event.pageY;
       const pos = this.getPosition(this.$refs.selectResize);
       this.sourceX = pos.x;
       this.sourceY = pos.y;
@@ -149,8 +182,12 @@ export default {
     },
     // 移动
     handleMove(Event) {
-      const currentX = Event.pageX;
-      const currentY = Event.pageY;
+      const currentX = this.isTouch
+        ? Event.targetTouches[0].pageX
+        : Event.pageX;
+      const currentY = this.isTouch
+        ? Event.targetTouches[0].pageY
+        : Event.pageY;
       const distanceX = currentX - this.startX;
       const distanceY = currentY - this.startY;
       const pos = this.getPosition(this.$refs.canvasSecond);
@@ -160,17 +197,18 @@ export default {
       else if (x > this.leftSide + this.canvasWidth - 5)
         x = this.leftSide + this.canvasWidth - 5;
       if (y - pos.y <= 0) y = pos.y + 5;
-      else if (y > this.canvasHeight - 5) y = this.canvasHeight - 5;
+      else if (y > this.topSide + this.canvasHeight - 5)
+        y = this.topSide + this.canvasHeight - 5;
       this.dropSizeWidth = x - pos.x + 5;
       this.dropSizeHeight = y - pos.y + 5;
       this.setDropConvasSize();
-      this.setConvas(pos.x - this.leftSide, pos.y);
+      this.setConvas(pos.x - this.leftSide, pos.y - this.topSide);
       this.setPosition(this.$refs.selectResize, { x, y });
     },
     // 松开
     handleEnd() {
       document.removeEventListener(this.moveEvt, this.handleMove, false);
-      document.removeEventListener("mouseup", this.handleEnd, false);
+      document.removeEventListener(this.endEvt, this.handleEnd, false);
     },
     // 设置位置
     setPosition(dom, pos) {

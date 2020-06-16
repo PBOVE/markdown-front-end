@@ -7,14 +7,16 @@
 
 <template>
   <Modal
-    v-model="model"
+    v-model="modalShow"
     class="set-head-portrait-wrap"
     :footer-hide="true"
     :width="width"
     :mask-closable="false"
+    :styles="{top: '50px'}"
   >
     <div class="head-portrait-header">
       <div>设置个人资料照片</div>
+      <Icon type="md-close" class="head-portrait-header-icon" @click="modalShow=false;" />
     </div>
     <div class="head-portrait-main">
       <div v-show="viewSelect===0">
@@ -28,13 +30,13 @@
         </div>
       </div>
       <div v-show="viewSelect===1">
-        <div class="display:flex; align-items: center;">
+        <div style="display:flex; align-items: center; margin-bottom:10px">
           <span style="padding:0 10px; cursor:pointer;" @click="viewSelect=0">上传照片</span>
           <Icon type="md-arrow-dropright" style="padding:0 10px 0 0;" size="18" />
           <span>{{fileName}}</span>
         </div>
-        <div :style="{height:height+'px'}">
-          <div class="drop-content" :style="{height:height-50+'px'}">
+        <div class="drop-content-wrap">
+          <div class="drop-content-left" :style="{height:height+'px',width:width-hidden+'px'}">
             <crop-image
               :imgSrc="imgSrc"
               :cropHeight="150"
@@ -42,12 +44,15 @@
               @on-callback="getCanvasPos"
             />
           </div>
+          <div class="drop-content-right" v-show="hidden">
+            <canvas ref="canvas" width="150" height="150" />
+          </div>
         </div>
       </div>
     </div>
     <div class="head-portrait-footer">
-      <Button type="primary">设置为个人资料照片</Button>
-      <Button type="text">取消</Button>
+      <Button type="primary" :disabled="disabled" :loading="loading" @click="uploadPhotos">设置为个人资料照片</Button>
+      <Button type="text" @click="modalShow=false">取消</Button>
     </div>
   </Modal>
 </template>
@@ -68,19 +73,45 @@ export default {
   data() {
     return {
       // 宽度
-      width: 800,
+      width: 700,
       // 高度
-      height: 400,
+      height: 300,
       // 视图选择
       viewSelect: 0,
       // 文件名称
       fileName: "",
       // 图谱连接
       imgSrc: "",
+      // 隐藏
+      hidden: 280,
+      // 设置按钮为禁用状态
+      disabled: true,
+      // 对话框
+      modalShow: this.model,
+      // 设置按钮为加载中状态
+      loading: false,
     };
   },
+  watch: {
+    modalShow(value) {
+      if (!value) {
+        this.$emit("model-event", false);
+      }
+    },
+    model(value) {
+      if (value) {
+        this.modalShow = true;
+        this.imgSrc = "";
+        this.fileName = "";
+        this.viewSelect = 0;
+        this.disabled = true;
+        this.loading = false;
+      }
+    },
+  },
   mounted() {
-    if (window.innerWidth < 800) {
+    if (window.innerWidth < 700) {
+      this.hidden = 0;
       this.width = window.innerWidth - 20;
       this.height = this.width * 0.618;
     }
@@ -92,9 +123,14 @@ export default {
   methods: {
     // 窗口变化
     clientSize() {
-      if (window.innerWidth < 800) {
+      if (window.innerWidth < 700) {
+        this.hidden = 0;
         this.width = window.innerWidth - 20;
         this.height = this.width * 0.618;
+      } else {
+        this.hidden = 280;
+        this.width = 700;
+        this.height = 300;
       }
     },
     // 点击input
@@ -113,16 +149,26 @@ export default {
       reader.onload = e => {
         this.imgSrc = e.target.result;
         this.viewSelect = 1;
+        this.disabled = false;
       };
       reader.readAsDataURL(file);
     },
     // 得到照片位置
     getCanvasPos(imgSrc, sx, sy, sw, sh) {
-      console.log(imgSrc, sx, sy, sw, sh);
-      // const ctxFirst = this.$refs.canvasFirst.getContext('2d');
-      // const ctxSecond = this.$refs.canvasSecond.getContext('2d');
-      // ctxFirst.drawImage(imgSrc, sx, sy, sw, sh, 0, 0, 300, 150);
-      // ctxSecond.drawImage(imgSrc, sx, sy, sw, sh, 0, 0, 50, 50);
+      const ctx = this.$refs.canvas.getContext("2d");
+      ctx.drawImage(imgSrc, sx, sy, sw, sh, 0, 0, 150, 150);
+    },
+    // 上传照片
+    async uploadPhotos() {
+      const base64String = this.$refs.canvas.toDataURL("image/jpeg");
+      try {
+        this.loading = true;
+        const { data } = await this.$request.updataUserMsg({
+          images: base64String,
+        });
+        this.$store.commit("user/setUser", data);
+        this.modalShow = false;
+      } catch (err) {}
     },
   },
 };
@@ -134,14 +180,23 @@ export default {
   color: #000;
 }
 .head-portrait-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 16px;
   font-size: 18px;
+}
+.head-portrait-header-icon {
+  cursor: pointer;
+}
+.head-portrait-header-icon:hover {
+  color: #ed4014;
 }
 .head-portrait-select {
   margin: 16px 0 0 0;
 }
 .head-portrait-main {
-  padding: 0 16px 16px;
+  padding: 0 16px 0;
 }
 .head-portrait-main-select {
   display: inline-block;
@@ -173,7 +228,7 @@ export default {
   color: #f5f5f5;
 }
 .head-portrait-footer {
-  padding: 16px;
+  padding: 30px 16px 16px;
 }
 .head-portrait-footer button:last-of-type {
   margin: 0 0 0 20px;
@@ -187,8 +242,21 @@ export default {
   cursor: pointer;
   opacity: 0;
 }
-.drop-content {
+.drop-content-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+.drop-content-left {
+  border-radius: 8px;
   background: #000;
+  overflow: hidden;
+}
+.drop-content-right {
+}
+canvas {
+  border-radius: 50%;
+  box-shadow: 0 0 2px silver;
+  background: #f0f0f0;
 }
 </style>
 <style>

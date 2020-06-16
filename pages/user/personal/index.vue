@@ -12,7 +12,7 @@
         <div class="upi-header-name">个人资料</div>
         <div class="upi-header-title">Freedom 为您带来更好的服务与帮助</div>
       </div>
-      <div class="upi-msg-row">
+      <div class="upi-msg-row" @click="headPortrait=true">
         <div class="upi-msg-row-content layout-middle">
           <div class="layout-middle-left">
             <div class="msg-row-name">照片</div>
@@ -20,7 +20,8 @@
           </div>
           <div class="layout-middle-right layout-middle-img">
             <!-- <img :src="images" class="msg-row-image" v-if="images" /> -->
-            <div class="msg-row-Nimage">{{storeUser.nickName.charAt(0).toUpperCase()}}</div>
+            <img v-if="storeImages" :src="storeImages" class="msg-row-image" />
+            <div v-else class="msg-row-Nimage">{{storeUser.nickName.charAt(0).toUpperCase()}}</div>
             <div class="msg-row-image-camera">
               <Icon type="ios-camera" size="20" color="#c5c8ce" />
             </div>
@@ -34,7 +35,7 @@
         </div>
       </div>
       <div class="upi-msg-row">
-        <nuxt-link to="/user/personal/nickname" class="upi-msg-row-content layout-middle">
+        <nuxt-link to="/nickname" class="upi-msg-row-content layout-middle">
           <div class="layout-middle-left">
             <div class="msg-row-name">昵称</div>
             <div class="msg-row-title">{{storeUser.nickName}}</div>
@@ -105,11 +106,11 @@ export default {
   data() {
     return {
       // 打开设置头像
-      headPortrait: true,
+      headPortrait: false,
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser"]),
+    ...mapGetters("user", ["storeUser", "storeImages"]),
   },
 };
 </script>

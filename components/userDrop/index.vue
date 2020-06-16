@@ -10,7 +10,7 @@
     <div class="user-drop-box" v-show="model" @click.stop>
       <div class="box-header">
         <div class="header-content">
-          <img :src="images" class="box-header-image" v-if="images" />
+          <img v-if="storeImages" :src="storeImages" class="box-header-image" />
           <div class="header-nickname" v-else>{{storeUser.nickName|userName}}</div>
           <div class="header-icon-wrap">
             <div class="header-icon">
@@ -37,7 +37,7 @@ import { mapGetters } from "vuex";
 export default {
   filters: {
     userName(name) {
-      return name[0].toUpperCase();
+      return name ? name[0].toUpperCase() : "";
     },
   },
   model: {
@@ -53,7 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser"]),
+    ...mapGetters("user", ["storeUser", "storeImages"]),
   },
   mounted() {
     window.addEventListener("click", this.globalEvent);
@@ -98,6 +98,7 @@ export default {
   display: inline-block;
   font-size: 0;
 }
+.box-header-image,
 .header-nickname {
   width: 80px;
   height: 80px;

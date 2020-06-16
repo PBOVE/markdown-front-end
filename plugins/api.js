@@ -6,7 +6,9 @@ const header = { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }
 
 const request = {
   // 获取 token
-  GetToken: () => axios.get('user/me'),
+  GetToken: () => axios.get('/user/me'),
+  // 更新用户信息
+  updataUserMsg: params => axios.put('/user/me', params, header),
   // 登录
   LoginIn: params => axios.post('/login', qs.stringify(params)),
   // 查询 注册
