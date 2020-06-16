@@ -20,7 +20,7 @@ const request = {
   // 忘记密码
   forgetEmail: params => axios.get('/accounts/password/link', { params }),
   // 验证忘记密码
-  forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params),
+  forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params, header),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用
@@ -39,7 +39,6 @@ export default ({ $axios, store }, inject) => {
     if (code === 200 && msg === 'OK') {
       return response.data;
     }
-
     return Promise.reject(code);
   });
   axios.onError(error => {

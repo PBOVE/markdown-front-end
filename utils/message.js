@@ -3,7 +3,7 @@ const showStatus = status => {
   let message = '';
   switch (status) {
     case 400:
-      message = '无效请求';
+      message = '请求参数不正确，无法得到服务器响应';
       break;
     case 401:
       message = '未授权，请登录(401)';
@@ -46,6 +46,9 @@ const showStatus = status => {
       break;
     case 4004:
       message = '请不要重复发送验证邮件，请前往您的邮箱中查看';
+      break;
+    case 4005:
+      message = '邮箱没有认证，无法发送邮件修改密码';
       break;
     default:
       message = `连接出错(${status})!`;

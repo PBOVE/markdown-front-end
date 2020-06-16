@@ -94,8 +94,8 @@ export default {
         this.email = "";
         this.loading = false;
         this.$Message.success({ duration: 10, content });
-        this.cancelAnimation(ripples);
       } catch (err) {}
+      this.cancelAnimation(ripples);
     },
     // 失去焦点
     handleBlurEvent() {
