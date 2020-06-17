@@ -1,5 +1,5 @@
 // 对不同响应码设置信息
-const showStatus = status => {
+const showStatus = (status: number) => {
   let message = '';
   switch (status) {
     case 400:
