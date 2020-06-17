@@ -18,7 +18,8 @@
     "iview": "^3.1.5",
     "koa": "^2.6.2",
     "nuxt": "^2.12.2",
-    "qs": "^6.9.4"
+    "qs": "^6.9.4",
+    "vue-cropper": "^0.5.4"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

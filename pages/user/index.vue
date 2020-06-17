@@ -52,7 +52,7 @@ export default {
   transition: "fade",
   filters: {
     userName(name) {
-      return name[0].toUpperCase();
+      return name ? name[0].toUpperCase() : "";
     },
   },
   data() {

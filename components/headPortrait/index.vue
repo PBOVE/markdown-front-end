@@ -30,14 +30,18 @@
         </div>
       </div>
       <div v-show="viewSelect===1">
-        <div style="display:flex; align-items: center; margin-bottom:10px">
-          <span style="padding:0 10px; cursor:pointer;" @click="viewSelect=0">上传照片</span>
-          <Icon type="md-arrow-dropright" style="padding:0 10px 0 0;" size="18" />
-          <span>{{fileName}}</span>
+        <div class="drop-flex" style=" align-items: center; margin-bottom:10px">
+          <div :style="{width:width-hidden+'px'}">
+            <span style="padding:0 10px; cursor:pointer;" @click="viewSelect=0">上传照片</span>
+            <Icon type="md-arrow-dropright" style="padding:0 10px 0 0;" size="18" />
+            <span>{{fileName}}</span>
+          </div>
+          <div style="font-size:14px; margin-left:20px" v-show="hidden">图片预览：</div>
         </div>
-        <div class="drop-content-wrap">
+        <div class="drop-flex">
           <div class="drop-content-left" :style="{height:height+'px',width:width-hidden+'px'}">
             <crop-image
+              ref="cropImage"
               :imgSrc="imgSrc"
               :cropHeight="150"
               :cropWidth="150"
@@ -45,7 +49,11 @@
             />
           </div>
           <div class="drop-content-right" v-show="hidden">
-            <canvas ref="canvas" width="150" height="150" />
+            <div class="show-preview" :style="previewStyle">
+              <div :style="previews.div">
+                <img :src="previews.url" :style="previews.img" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -82,6 +90,9 @@ export default {
       fileName: "",
       // 图谱连接
       imgSrc: "",
+      // 预览链接
+      previews: {},
+      previewStyle: {},
       // 隐藏
       hidden: 280,
       // 设置按钮为禁用状态
@@ -154,13 +165,18 @@ export default {
       reader.readAsDataURL(file);
     },
     // 得到照片位置
-    getCanvasPos(imgSrc, sx, sy, sw, sh) {
-      const ctx = this.$refs.canvas.getContext("2d");
-      ctx.drawImage(imgSrc, sx, sy, sw, sh, 0, 0, 150, 150);
+    getCanvasPos(data) {
+      this.previews = data;
+      this.previewStyle = {
+        width: data.w + "px",
+        height: data.h + "px",
+        overflow: "hidden",
+        margin: "0",
+      };
     },
     // 上传照片
     async uploadPhotos() {
-      const base64String = this.$refs.canvas.toDataURL("image/jpeg");
+      const base64String = await this.$refs.cropImage.onCubeImg();
       try {
         this.loading = true;
         const { data } = await this.$request.updataUserMsg({
@@ -242,9 +258,8 @@ export default {
   cursor: pointer;
   opacity: 0;
 }
-.drop-content-wrap {
+.drop-flex {
   display: flex;
-  justify-content: space-between;
 }
 .drop-content-left {
   border-radius: 8px;
@@ -252,8 +267,9 @@ export default {
   overflow: hidden;
 }
 .drop-content-right {
+  margin: 0 0 0 20px;
 }
-canvas {
+.show-preview {
   border-radius: 50%;
   box-shadow: 0 0 2px silver;
   background: #f0f0f0;

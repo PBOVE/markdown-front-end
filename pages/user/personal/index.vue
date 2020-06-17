@@ -21,7 +21,7 @@
           <div class="layout-middle-right layout-middle-img">
             <!-- <img :src="images" class="msg-row-image" v-if="images" /> -->
             <img v-if="storeImages" :src="storeImages" class="msg-row-image" />
-            <div v-else class="msg-row-Nimage">{{storeUser.nickName.charAt(0).toUpperCase()}}</div>
+            <div v-else class="msg-row-Nimage">{{storeUser.nickName|userName}}</div>
             <div class="msg-row-image-camera">
               <Icon type="ios-camera" size="20" color="#c5c8ce" />
             </div>
@@ -88,6 +88,9 @@ export default {
   transition: "fade",
   components: { headPortrait },
   filters: {
+    userName(name) {
+      return name ? name[0].toUpperCase() : "";
+    },
     TimeConversion(time) {
       const date = new Date(time);
       const completion = num => {

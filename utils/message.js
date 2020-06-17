@@ -1,6 +1,5 @@
 // 对不同响应码设置信息
 const showStatus = status => {
-  console.log(status);
   let message = '';
   switch (status) {
     case 400:

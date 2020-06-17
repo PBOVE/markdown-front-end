@@ -7,26 +7,35 @@
 
 <template>
   <div ref="cropWrap" class="crop-image-wrap">
-    <canvas ref="canvasFirst" class="g-canvas-first" />
-    <canvas
-      ref="canvasSecond"
-      class="g-canvas-second"
-      @mousedown.stop="startEvent($event,'mouseEvent')"
-      @touchstart.stop="startEvent($event,'touchEvent')"
-    />
-    <div
-      ref="selectResize"
-      class="g-se-resize"
-      @mousedown.stop="handleStart($event,'mouseEvent')"
-      @touchstart.stop="handleStart($event,'touchEvent')"
-    />
+    <no-ssr>
+      <vue-cropper
+        ref="cropper"
+        :img="option.img"
+        :canScale="option.canScale"
+        :outputSize="option.size"
+        :outputType="option.outputType"
+        :info="true"
+        :full="option.full"
+        :canMove="option.canMove"
+        :canMoveBox="option.canMoveBox"
+        :original="option.original"
+        :autoCrop="option.autoCrop"
+        :autoCropWidth="option.autoCropWidth"
+        :autoCropHeight="option.autoCropHeight"
+        :fixed="option.fixed"
+        :fixedNumber="option.fixedNumber"
+        :centerBox="option.centerBox"
+        :infoTrue="option.infoTrue"
+        :fixedBox="option.fixedBox"
+        :mode="option.mode"
+        @realTime="realTime"
+      />
+    </no-ssr>
   </div>
 </template>
 
 
 <script>
-import { toDecimal } from "@/utils/method";
-
 export default {
   props: {
     imgSrc: {
@@ -41,231 +50,55 @@ export default {
   },
   data() {
     return {
-      // 判断移动端还是pc 端
-      isTouch: "",
-      moveEvt: "",
-      endEvt: "",
-      // 黑色边宽度
-      leftSide: "",
-      topSide: "",
-      // 裁剪框开始位置
-      startX: "",
-      startY: "",
-      sourceX: "",
-      sourceY: "",
-      // 图像
-      imageSecond: "",
-      // 背景图片宽度
-      canvasHeight: "",
-      canvasWidth: "",
-      // 裁剪大小
-      dropSizeWidth: "",
-      dropSizeHeight: "",
+      cropper: "",
+      option: {
+        img: "", // 裁剪图片的地址
+        info: true, // 裁剪框的大小信息
+        outputSize: 1, // 裁剪生成图片的质量
+        outputType: "jpeg", // 裁剪生成图片的格式
+        canScale: true, // 图片是否允许滚轮缩放
+        autoCrop: true, // 是否默认生成截图框
+        autoCropWidth: this.cropWidth, // 默认生成截图框宽度
+        autoCropHeight: this.cropHeight, // 默认生成截图框高度
+        fixedBox: false, // 固定截图框大小 不允许改变
+        fixed: true, // 是否开启截图框宽高固定比例
+        fixedNumber: [1, 1], // 截图框的宽高比例
+        // full: true, // 是否输出原图比例的截图
+        canMoveBox: true, // 截图框能否拖动
+        canMove: false, // 上传图片是否可以移动
+        original: false, // 上传图片按照原始比例渲染
+        centerBox: true, // 截图框是否被限制在图片里面
+        infoTrue: false, // true 为展示真实输出图片宽高 false 展示看到的截图框宽高
+        mode: "cover", // cover  图片铺满容器
+      },
     };
   },
-  mounted() {
-    this.isTouch = "ontouchstart" in window ? true : false;
-    this.moveEvt = this.isTouch ? "touchmove" : "mousemove";
-    this.endEvt = this.sTouch ? "touchend" : "mouseup";
-  },
   watch: {
-    imgSrc(val) {
-      const canvasFirst = this.$refs.canvasFirst;
-      const ctxFirst = canvasFirst.getContext("2d");
-      const img = new Image();
-      this.clearCanvas(this.$refs.canvasFirst);
-      this.clearCanvas(this.$refs.canvasSecond);
-      this.dropSizeWidth = this.cropWidth;
-      this.dropSizeHeight = this.cropHeight;
-      this.imageSecond = new Image();
-      img.src = val;
-      img.onload = () => {
-        let left, top;
-        const { width, height } = img;
-        const { clientWidth, clientHeight } = this.$refs.cropWrap;
-        this.canvasHeight = clientHeight;
-        this.canvasWidth = Math.floor((clientHeight * width) / height);
-        left = (clientWidth - this.canvasWidth) / 2;
-        top = 0;
-        if (this.canvasWidth > clientWidth) {
-          this.canvasWidth = clientWidth;
-          this.canvasHeight = Math.floor((clientWidth * height) / width);
-          top = (clientHeight - this.canvasHeight) / 2;
-          left = 0;
-        }
-        this.setConvasSize(canvasFirst, this.canvasWidth, this.canvasHeight);
-        canvasFirst.style.left = `${left}px`;
-        canvasFirst.style.top = `${top}px`;
-        ctxFirst.fillStyle = "#000";
-        ctxFirst.fillRect(0, 0, this.canvasHeight, this.canvasHeight);
-        ctxFirst.drawImage(img, 0, 0, this.canvasWidth, this.canvasHeight);
-        let sx = this.canvasWidth / 2 - this.cropWidth / 2;
-        let sy = this.canvasHeight / 2 - this.cropHeight / 2;
-        sx = sx > 0 ? sx : 0;
-        sy = sy > 0 ? sy : 0;
-        this.imageSecond.src = canvasFirst.toDataURL("image/png");
-        if (this.dropSizeWidth > this.canvasWidth)
-          this.dropSizeWidth = this.canvasWidth - 10;
-        if (this.dropSizeHeight > this.canvasHeight)
-          this.dropSizeHeight = this.canvasHeight - 10;
-        this.imageSecond.onload = () => {
-          this.leftSide = left;
-          this.topSide = top;
-          this.setDropConvasSize();
-          this.setPosition(this.$refs.canvasSecond, {
-            x: left + sx,
-            y: top + sy,
-          });
-          this.setPosition(this.$refs.selectResize, {
-            x: left + sx + this.dropSizeWidth - 5,
-            y: top + sy + this.dropSizeHeight - 5,
-          });
-          this.setConvas(sx, sy);
-        };
-      };
+    imgSrc(value) {
+      this.initCropper();
     },
   },
   methods: {
-    // 按下
-    startEvent(Event, eventname) {
-      if (this.isTouch && eventname === "mouseEvent") return;
-      else if (!this.isTouch && eventname === "touchEvent") return;
-      this.startX = this.isTouch ? Event.targetTouches[0].pageX : Event.pageX;
-      this.startY = this.isTouch ? Event.targetTouches[0].pageY : Event.pageY;
-      const pos = this.getPosition(this.$refs.canvasSecond);
-      this.sourceX = pos.x;
-      this.sourceY = pos.y;
-      document.addEventListener(this.moveEvt, this.moveEvent, false);
-      document.addEventListener(this.endEvt, this.endEvent, false);
-    },
-    // 移动
-    moveEvent(Event) {
-      const currentX = this.isTouch
-        ? Event.targetTouches[0].pageX
-        : Event.pageX;
-      const currentY = this.isTouch
-        ? Event.targetTouches[0].pageY
-        : Event.pageY;
-      const distanceX = currentX - this.startX;
-      const distanceY = currentY - this.startY;
-      let x = toDecimal(this.sourceX + distanceX);
-      let y = toDecimal(this.sourceY + distanceY);
-      if (x < this.leftSide) x = this.leftSide;
-      else if (x > this.leftSide + this.canvasWidth - this.dropSizeWidth)
-        x = this.leftSide + this.canvasWidth - this.dropSizeWidth;
-      if (y < this.topSide) y = this.topSide;
-      else if (y > this.topSide + this.canvasHeight - this.dropSizeHeight)
-        y = this.topSide + this.canvasHeight - this.dropSizeHeight;
-      this.setPosition(this.$refs.canvasSecond, { x, y });
-      this.setPosition(this.$refs.selectResize, {
-        x: x + this.dropSizeWidth - 5,
-        y: y + this.dropSizeHeight - 5,
-      });
-      this.setConvas(x - this.leftSide, y - this.topSide);
-    },
-    // 松开
-    endEvent() {
-      document.removeEventListener(this.moveEvt, this.moveEvent);
-      document.removeEventListener(this.endEvt, this.endEvent);
-    },
-    // 按下
-    handleStart(Event, eventname) {
-      if (this.isTouch && eventname === "mouseEvent") return;
-      else if (!this.isTouch && eventname === "touchEvent") return;
-      this.startX = this.isTouch ? Event.targetTouches[0].pageX : Event.pageX;
-      this.startY = this.isTouch ? Event.targetTouches[0].pageY : Event.pageY;
-      const pos = this.getPosition(this.$refs.selectResize);
-      this.sourceX = pos.x;
-      this.sourceY = pos.y;
-      document.addEventListener(this.moveEvt, this.handleMove, false);
-      document.addEventListener(this.endEvt, this.handleEnd, false);
-    },
-    // 移动
-    handleMove(Event) {
-      const currentX = this.isTouch
-        ? Event.targetTouches[0].pageX
-        : Event.pageX;
-      const currentY = this.isTouch
-        ? Event.targetTouches[0].pageY
-        : Event.pageY;
-      const distanceX = currentX - this.startX;
-      const distanceY = currentY - this.startY;
-      const pos = this.getPosition(this.$refs.canvasSecond);
-      let x = toDecimal(this.sourceX + distanceX);
-      let y = toDecimal(this.sourceY + distanceY);
-      if (x - pos.x <= 0) x = pos.x + 5;
-      else if (x > this.leftSide + this.canvasWidth - 5)
-        x = this.leftSide + this.canvasWidth - 5;
-      if (y - pos.y <= 0) y = pos.y + 5;
-      else if (y > this.topSide + this.canvasHeight - 5)
-        y = this.topSide + this.canvasHeight - 5;
-      this.dropSizeWidth = x - pos.x + 5;
-      this.dropSizeHeight = y - pos.y + 5;
-      this.setDropConvasSize();
-      this.setConvas(pos.x - this.leftSide, pos.y - this.topSide);
-      this.setPosition(this.$refs.selectResize, { x, y });
-    },
-    // 松开
-    handleEnd() {
-      document.removeEventListener(this.moveEvt, this.handleMove, false);
-      document.removeEventListener(this.endEvt, this.handleEnd, false);
-    },
-    // 设置位置
-    setPosition(dom, pos) {
-      dom.style["left"] = pos.x + "px";
-      dom.style["top"] = pos.y + "px";
-    },
-    // 设置 canvas 大小
-    setConvasSize(dom, width, height) {
-      dom.width = width;
-      dom.height = height;
-    },
-    // 设置裁剪画布大小
-    setDropConvasSize() {
-      this.setConvasSize(
-        this.$refs.canvasSecond,
-        this.dropSizeWidth,
-        this.dropSizeHeight,
-      );
-    },
-    // 获取位置
-    getPosition(dom) {
-      const x = this.getStyle(dom, "left");
-      const y = this.getStyle(dom, "top");
-      const pos = {
-        x: parseInt(x ? x : 0),
-        y: parseInt(y ? y : 0),
+    // 初始化
+    initCropper() {
+      const cropper = this.$refs.cropper;
+      const img = new Image();
+      img.src = this.imgSrc;
+      img.onload = () => {
+        this.option.img = this.imgSrc;
       };
-      return pos;
     },
-    // 获取位置
-    getStyle(dom, property) {
-      return window.getComputedStyle
-        ? window.getComputedStyle(dom, null)[property]
-        : dom.currentStyle[property];
+    // 预览
+    realTime(data) {
+      this.$emit("on-callback", data);
     },
-    // 设置照片位置
-    setConvas(sx, sy) {
-      const canvasSecond = this.$refs.canvasSecond;
-      const ctxSecond = canvasSecond.getContext("2d");
-      const dropSize = [this.dropSizeWidth, this.dropSizeHeight];
-      this.$emit("on-callback", this.imageSecond, sx, sy, ...dropSize);
-      ctxSecond.drawImage(
-        this.imageSecond,
-        sx,
-        sy,
-        ...dropSize,
-        0,
-        0,
-        ...dropSize,
-      );
-      canvasSecond.style.cursor = "move";
-      canvasSecond.style.outline = "1px solid #dcdee2";
-    },
-    // 清空画布
-    clearCanvas(dom) {
-      const ctx = dom.getContext("2d");
-      ctx.clearRect(0, 0, dom.width, dom.height);
+    // 上传获取照片位置
+    onCubeImg() {
+      return new Promise(resolve => {
+        this.$refs.cropper.getCropData(data => {
+          resolve(data);
+        });
+      });
     },
   },
 };
@@ -277,23 +110,5 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
-  user-select: none;
-  overflow: hidden;
-}
-.g-canvas-first {
-  position: absolute;
-  top: 0;
-  opacity: 0.5;
-}
-.g-canvas-second {
-  position: absolute;
-}
-.g-se-resize {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 1px solid #dcdee2;
-  background: #00000055;
-  cursor: se-resize;
 }
 </style>

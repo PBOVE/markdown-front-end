@@ -23,7 +23,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [ '@/plugins/iview', '@/plugins/api' ],
+  plugins: [ 'plugins/iview', 'plugins/api', { src: 'plugins/vue-cropper', ssr: false } ],
   /*
   ** Nuxt.js dev-modules
   */
@@ -55,16 +55,6 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
-      if (ctx.dev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint',
-          exclude: /(node_modules)/,
-        });
-      }
-    },
-    vendor: [ 'axios' ], //为防止重复打包
+    vendor: [ 'axios', 'vue-cropper' ], //为防止重复打包
   },
 };
