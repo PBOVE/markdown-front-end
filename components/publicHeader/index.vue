@@ -77,7 +77,7 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 60px;
-  padding: 0 50px;
+  padding: 0 10% 0 10%;
 }
 .public-shadow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
@@ -121,6 +121,7 @@ export default {
   border-radius: 50%;
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
   font-weight: bold;
+  font-size: 16px;
   color: #e8eaec;
   justify-content: center;
   user-select: none;

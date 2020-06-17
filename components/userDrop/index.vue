@@ -8,6 +8,7 @@
 <template>
   <transition name="userDrop">
     <div class="user-drop-box" v-show="model" @click.stop>
+      <Spin fix v-show="loading" />
       <div class="box-header">
         <div class="header-content">
           <img v-if="storeImages" :src="storeImages" class="box-header-image" />
@@ -24,7 +25,9 @@
       </div>
       <Divider />
       <div class="box-main">
-        <div class="box-main-button">退出</div>
+        <div class="box-main-button" @click="buttonEvent">
+          <span>退出</span>
+        </div>
       </div>
       <head-portrait v-model="headPortrait" />
     </div>
@@ -55,6 +58,8 @@ export default {
     return {
       // 修改照片
       headPortrait: false,
+      // 加载
+      loading: false,
     };
   },
   computed: {
@@ -81,6 +86,15 @@ export default {
       this.headPortrait = true;
       this.$emit("model-event", false);
     },
+    // 点击退出
+    async buttonEvent() {
+      try {
+        this.loading = true;
+        await this.$request.LoginOut();
+        this.$store.commit("token/removeToken");
+        this.$router.push("/login");
+      } catch (err) {}
+    },
   },
 };
 </script>
@@ -90,13 +104,14 @@ export default {
 .user-drop-box {
   position: fixed;
   z-index: 1998;
-  right: 20px;
-  top: 50px;
+  right: 8%;
+  top: 55px;
   width: 350px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 .box-header {
   padding: 30px 30px 10px;
@@ -121,6 +136,7 @@ export default {
   color: #dff6f0;
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
 }
+.box-main-button,
 .header-icon-wrap,
 .header-icon {
   display: flex;
@@ -181,6 +197,9 @@ export default {
   border: 1px solid #dadce0;
   border-radius: 4px;
   cursor: pointer;
+}
+.box-main-button:hover {
+  background: #e8eaec;
 }
 .userDrop-enter-active,
 .userDrop-leave-active {

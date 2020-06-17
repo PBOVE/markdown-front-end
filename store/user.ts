@@ -7,24 +7,27 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setUser(state, data) {
+  setUser(state: any, data: any) {
     state.data = data;
+  },
+  removeUser(state: any) {
+    state.data = '';
   },
 };
 export const getters = {
-  storeUser(state) {
+  storeUser(state: any) {
     return state.data;
   },
-  storeImages(state) {
+  storeImages(state: any) {
     return state.data.images;
   },
-  storeUserName(state) {
+  storeUserName(state: any) {
     return state.data.userName;
   },
-  storeNickName(state) {
+  storeNickName(state: any) {
     return state.data.nickName;
   },
-  storeEmail(state) {
+  storeEmail(state: any) {
     return state.data.email;
   },
 };

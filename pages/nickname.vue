@@ -91,7 +91,7 @@ export default {
         this.$refs.FullNameI.focus();
       });
     },
-    // 发送验证
+    // 发送修改
     async updateNickName() {
       if (this.loading) return;
       if (this.nickName === this.storeNickName) {

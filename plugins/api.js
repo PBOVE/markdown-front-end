@@ -10,7 +10,9 @@ const request = {
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
   // 登录
-  LoginIn: params => axios.post('/login', qs.stringify(params)),
+  LoginIn: params => axios.post('/user/login', qs.stringify(params)),
+  // 退出
+  LoginOut: () => axios.post('/user/logout'),
   // 查询 注册
   registerQuery: params => axios.get('/register/query', { params }),
   // 注册

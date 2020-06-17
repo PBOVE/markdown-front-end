@@ -2,11 +2,14 @@ import { Middleware } from '@nuxt/types';
 
 const authMiddleware: Middleware = async context => {
   const { app, store, route, redirect } = context;
-
   if (!store.state.token.isGetToken) {
     const { data } = await app.$request.GetToken();
-    if (!data.user) app.$cookies.remove('access_token');
-    else store.commit('user/setUser', data.user);
+    if (!data.user) {
+      app.$cookies.remove('access_token');
+      store.commit('user/removeUser');
+    } else {
+      store.commit('user/setUser', data.user);
+    }
     app.$cookies.set('XSRF-TOKEN', data._csrf.token);
     store.commit('token/setToken', data._csrf.token);
     store.commit('token/setIsGetToken');

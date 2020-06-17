@@ -58,6 +58,14 @@
     opacity: 0;
   }
 }
+.main-spin-icon-load{
+  animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-main-spin {
+  from { transform: rotate(0deg);}
+  50%  { transform: rotate(180deg);}
+  to   { transform: rotate(360deg);}
+}
 @media screen and (max-width: 576px) {
   .main-center-modal .ivu-modal {
     width: 80% !important;
