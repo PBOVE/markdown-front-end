@@ -13,7 +13,7 @@
           <img v-if="storeImages" :src="storeImages" class="box-header-image" />
           <div class="header-nickname" v-else>{{storeUser.nickName|userName}}</div>
           <div class="header-icon-wrap">
-            <div class="header-icon">
+            <div class="header-icon" @click="openHeadPortrait">
               <Icon type="ios-camera" size="18" />
             </div>
           </div>
@@ -26,15 +26,19 @@
       <div class="box-main">
         <div class="box-main-button">退出</div>
       </div>
+      <head-portrait v-model="headPortrait" />
     </div>
   </transition>
 </template>
 
 
 <script>
+// 点击上传照片
+import headPortrait from "@/components/headPortrait/index.vue";
 import { mapGetters } from "vuex";
 
 export default {
+  components: { headPortrait },
   filters: {
     userName(name) {
       return name ? name[0].toUpperCase() : "";
@@ -49,7 +53,8 @@ export default {
   },
   data() {
     return {
-      images: "",
+      // 修改照片
+      headPortrait: false,
     };
   },
   computed: {
@@ -70,6 +75,11 @@ export default {
       } else {
         this.$emit("model-event", false);
       }
+    },
+    // 打开修改照片
+    openHeadPortrait() {
+      this.headPortrait = true;
+      this.$emit("model-event", false);
     },
   },
 };

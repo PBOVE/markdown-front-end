@@ -17,7 +17,12 @@
       <nuxt-link to="/dashboard" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
-      <div class="user-portrait-wrap" v-if="storeNickName" data-user-portrait="true">
+      <div
+        v-if="storeNickName"
+        class="user-portrait-wrap"
+        data-user-portrait="true"
+        :class="{'borderColor':userDropDown}"
+      >
         <img
           v-if="storeImages"
           :src="storeImages"
@@ -103,6 +108,9 @@ export default {
   cursor: pointer;
 }
 .user-portrait-wrap:hover {
+  border-color: #c5c8ce;
+}
+.borderColor {
   border-color: #c5c8ce;
 }
 .user-portrait {

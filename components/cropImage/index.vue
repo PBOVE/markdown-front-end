@@ -7,7 +7,7 @@
 
 <template>
   <div ref="cropWrap" class="crop-image-wrap">
-    <no-ssr>
+    <client-only>
       <vue-cropper
         ref="cropper"
         :img="option.img"
@@ -30,7 +30,7 @@
         :mode="option.mode"
         @realTime="realTime"
       />
-    </no-ssr>
+    </client-only>
   </div>
 </template>
 

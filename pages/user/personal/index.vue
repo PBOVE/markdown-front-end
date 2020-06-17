@@ -19,7 +19,6 @@
             <div class="msg-row-title msg-row-title-tip">更改照片，可帮助您个性化您的帐号</div>
           </div>
           <div class="layout-middle-right layout-middle-img">
-            <!-- <img :src="images" class="msg-row-image" v-if="images" /> -->
             <img v-if="storeImages" :src="storeImages" class="msg-row-image" />
             <div v-else class="msg-row-Nimage">{{storeUser.nickName|userName}}</div>
             <div class="msg-row-image-camera">
