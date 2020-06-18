@@ -3,12 +3,15 @@ import { Message } from 'iview';
 import showStatus from '@/utils/message';
 
 const header = { headers: { 'Content-Type': 'application/json;charset=UTF-8' } };
+const fileHeader = { headers: { 'Content-Type': 'multipart/form-data' } };
 
 const request = {
   // 获取 token
   GetToken: () => axios.get('/user/me'),
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
+  // 上传文件
+  uploadFile: data => axios.post(`/storage`, data, fileHeader),
   // 登录
   LoginIn: params => axios.post('/user/login', qs.stringify(params)),
   // 退出

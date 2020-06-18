@@ -172,19 +172,23 @@ export default {
         height: data.h + "px",
         overflow: "hidden",
         margin: "0",
+        zoom: 150 / data.w,
       };
     },
     // 上传照片
     async uploadPhotos() {
-      const base64String = await this.$refs.cropImage.onCubeImg();
+      const BlobString = await this.$refs.cropImage.onCubeImg();
       try {
         this.loading = true;
-        const { data } = await this.$request.updataUserMsg({
-          images: base64String,
-        });
+        let formData = new FormData();
+        formData.append("file", BlobString, this.fileName);
+        const { data: images } = await this.$request.uploadFile(formData);
+        const params = { images };
+        const { data } = await this.$request.updataUserMsg(params); 
         this.$store.commit("user/setUser", data);
         this.modalShow = false;
       } catch (err) {}
+      this.loading = false;
     },
   },
 };

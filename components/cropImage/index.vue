@@ -95,7 +95,7 @@ export default {
     // 上传获取照片位置
     onCubeImg() {
       return new Promise(resolve => {
-        this.$refs.cropper.getCropData(data => {
+        this.$refs.cropper.getCropBlob(data => {
           resolve(data);
         });
       });
