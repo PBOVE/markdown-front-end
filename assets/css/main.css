@@ -1,4 +1,5 @@
 @import url('./font.css');
+@import url('./user.css');
 
 .fade-enter-active,
 .fade-leave-active {
@@ -31,7 +32,7 @@
   height: 8px;
 }
 
-.main-user-image{
+.main-user-image {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -58,13 +59,19 @@
     opacity: 0;
   }
 }
-.main-spin-icon-load{
+.main-spin-icon-load {
   animation: ani-demo-spin 1s linear infinite;
 }
 @keyframes ani-main-spin {
-  from { transform: rotate(0deg);}
-  50%  { transform: rotate(180deg);}
-  to   { transform: rotate(360deg);}
+  from {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @media screen and (max-width: 576px) {
   .main-center-modal .ivu-modal {

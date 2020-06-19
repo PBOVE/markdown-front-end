@@ -14,7 +14,7 @@
         <div style="marginTop:8px;">您必须先完成电子邮箱验证，否则有些功能将无法实现</div>
         <div style="marginTop:8px;">
           <span>您可以使用电子邮箱来验证身份，请前往</span>
-          <nuxt-link to="/user">个人主页</nuxt-link>
+          <nuxt-link to="/user/personal">个人信息</nuxt-link>
           <span>进行验证。</span>
         </div>
       </div>

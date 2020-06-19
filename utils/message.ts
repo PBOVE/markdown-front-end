@@ -38,8 +38,8 @@ const showStatus = (status: number) => {
     case 505:
       message = 'HTTP版本不受支持(505)';
       break;
-    case 6003:
-      message = '账号或密码错误';
+    case 4000:
+      message = '原密码无法匹配,请重新输入原密码';
       break;
     case 4001:
       message = '用户名或密码错误,请重新输入';

@@ -21,7 +21,7 @@
           <div>请至少输入 6 个字符。请不要使用容易被猜到的密码。</div>
         </div>
         <div class="login-group" ref="passwordRef">
-          <label for="password">密码</label>
+          <label for="password">新密码</label>
           <input
             id="password"
             type="password"

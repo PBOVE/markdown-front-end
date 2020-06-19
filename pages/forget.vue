@@ -37,7 +37,7 @@
       </div>
       <button ref="submitref" class="login-button" @click="handleSubmitEvent($event)">确定</button>
       <div class="login-floor">
-        <div style="color:#57a3f3;cursor:pointer;">收不到邮件</div>
+        <div style="color:#57a3f3;cursor:pointer;" @click="openModal">收不到邮件</div>
       </div>
     </div>
   </login-register>
@@ -50,6 +50,7 @@ export default {
   components: { loginRegister },
   data() {
     return {
+      // 提示消息
       emailErrorText: "",
       // 邮箱
       email: "",
@@ -155,6 +156,15 @@ export default {
         this.$refs.emailRef.classList.add("from-error");
         this.emailErrorText = "此邮箱地址未分配给任何用户账号";
       }
+    },
+    // 打开对话框
+    openModal() {
+      this.$Modal.info({
+        title: "收不到邮件 ?",
+        content:
+          "通过邮箱接收邮件，请尝试到广告邮件、订阅邮件、垃圾邮件等目录找找看。",
+        okText: "确定",
+      });
     },
   },
 };

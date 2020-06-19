@@ -19,11 +19,11 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [ 'iview/dist/styles/iview.css', 'assets/css/main.css' ],
+  css: [ 'view-design/dist/styles/iview.css', 'assets/css/main.css' ],
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [ 'plugins/iview', 'plugins/api', { src: 'plugins/vue-cropper', ssr: false } ],
+  plugins: [ 'plugins/viewUI', 'plugins/api', { src: 'plugins/vue-cropper', ssr: false } ],
   /*
   ** Nuxt.js dev-modules
   */

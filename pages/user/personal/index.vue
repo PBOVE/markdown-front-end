@@ -7,18 +7,18 @@
 
 <template>
   <div class="user-personal-index-wrap">
-    <div class="upi-border">
-      <div class="upi-msg-title">
-        <div class="upi-header-name">个人资料</div>
-        <div class="upi-header-title">Freedom 为您带来更好的服务与帮助</div>
+    <div class="user-border">
+      <div class="user-title-wrap">
+        <div class="user-title">个人资料</div>
+        <div class="user-title-content">Freedom 为您带来更好的服务与帮助</div>
       </div>
-      <div class="upi-msg-row" @click="headPortrait=true">
-        <div class="upi-msg-row-content layout-middle">
-          <div class="layout-middle-left">
-            <div class="msg-row-name">照片</div>
-            <div class="msg-row-title msg-row-title-tip">更改照片，可帮助您个性化您的帐号</div>
+      <div class="user-row" @click="headPortrait=true">
+        <div class="user-row-main user-middle">
+          <div class="user-middle-left">
+            <div class="user-row-title">照片</div>
+            <div class="user-row-content user-row-content-tip">更改照片，可帮助您个性化您的帐号</div>
           </div>
-          <div class="layout-middle-right layout-middle-img">
+          <div class="user-middle-right layout-middle-img">
             <img v-if="storeImages" :src="storeImages" class="msg-row-image" />
             <div v-else class="msg-row-Nimage">{{storeUser.nickName|userName}}</div>
             <div class="msg-row-image-camera">
@@ -27,47 +27,48 @@
           </div>
         </div>
       </div>
-      <div class="upi-msg-row">
-        <div class="upi-msg-row-content">
-          <div class="msg-row-name">用户名</div>
-          <div class="msg-row-title">{{storeUser.userName}}</div>
+      <div class="user-row">
+        <div class="user-row-main">
+          <div class="user-row-title">用户名</div>
+          <div class="user-row-content">{{storeUser.userName}}</div>
         </div>
       </div>
-      <div class="upi-msg-row">
-        <nuxt-link to="/nickname" class="upi-msg-row-content layout-middle">
-          <div class="layout-middle-left">
-            <div class="msg-row-name">昵称</div>
-            <div class="msg-row-title">{{storeUser.nickName}}</div>
+      <div class="user-row">
+        <nuxt-link to="/nickname" class="user-row-main user-middle">
+          <div class="user-middle-left">
+            <div class="user-row-title">昵称</div>
+            <div class="user-row-content">{{storeUser.nickName}}</div>
           </div>
-          <div class="layout-middle-right">
+          <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
           </div>
         </nuxt-link>
       </div>
-      <div class="upi-msg-row">
-        <div class="upi-msg-row-content">
-          <div class="msg-row-name">创建时间</div>
-          <div class="msg-row-title">{{storeUser.createTime|TimeConversion}}</div>
+      <div class="user-row">
+        <div class="user-row-main">
+          <div class="user-row-title">创建时间</div>
+          <div class="user-row-content">{{storeUser.createTime|TimeConversion}}</div>
         </div>
       </div>
-      <div class="upi-msg-row">
-        <div class="upi-msg-row-content">
-          <div class="msg-row-name">更新时间</div>
-          <div class="msg-row-title">{{storeUser.updateTime|TimeConversion}}</div>
+      <div class="user-row">
+        <div class="user-row-main">
+          <div class="user-row-title">更新时间</div>
+          <div class="user-row-content">{{storeUser.updateTime|TimeConversion}}</div>
         </div>
       </div>
     </div>
-    <div class="upi-border">
-      <div class="upi-msg-title">
-        <div class="upi-header-name">联系信息</div>
+    <div class="user-border">
+      <div class="user-title-wrap user-title-email-wrap">
+        <div class="user-title">联系信息</div>
+        <img src="@/assets/images/email_1.png" width="50px" />
       </div>
-      <div class="upi-msg-row">
-        <nuxt-link to="/email" class="upi-msg-row-content layout-middle">
-          <div class="layout-middle-left">
-            <div class="msg-row-name">电子邮箱</div>
-            <div class="msg-row-title">{{storeUser.email}}</div>
+      <div class="user-row user-row-email">
+        <nuxt-link to="/email" class="user-row-main user-middle">
+          <div class="user-middle-left">
+            <div class="user-row-title">电子邮箱</div>
+            <div class="user-row-content">{{storeUser.email}}</div>
           </div>
-          <div class="layout-middle-right">
+          <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
           </div>
         </nuxt-link>
@@ -119,77 +120,6 @@ export default {
 
 
 <style scoped>
-.upi-border {
-  border: 1px solid #dadce0;
-  border-radius: 8px;
-  margin: 0 0 30px;
-  overflow: hidden;
-}
-.upi-header-name {
-  font-size: 23px;
-  color: #202124;
-}
-.upi-header-title {
-  margin: 10px 0 0px 0;
-  font-size: 12px;
-  font-weight: 520;
-  color: #5f6368;
-}
-.upi-msg-title {
-  padding: 20px;
-}
-.upi-msg-row {
-  cursor: pointer;
-  font-size: 0;
-}
-.upi-msg-row:hover,
-.upi-msg-row:hover + .upi-msg-row {
-  border-top: 1px solid #dadce0;
-}
-.upi-msg-row:hover {
-  background: #f5f5f5;
-}
-
-.upi-msg-row:active {
-  background: #e1e1e1;
-  transform-origin: center right;
-  transition: all 1s;
-}
-.upi-msg-row:hover .upi-msg-row-content,
-.upi-msg-row:hover + .upi-msg-row .upi-msg-row-content {
-  border-width: 0;
-}
-.upi-msg-row-content {
-  padding: 20px 20px 20px 0;
-  margin: 0 0 0 20px;
-  border-top: 1px solid #dadce0;
-  color: #515a6e;
-}
-.upi-msg-row:hover:nth-of-type(2),
-.upi-msg-row:nth-of-type(2) .upi-msg-row-content {
-  border-width: 0px;
-}
-.msg-row-name,
-.msg-row-title {
-  display: inline-block;
-}
-.msg-row-name {
-  width: 150px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-}
-.msg-row-title {
-  height: 25px;
-  line-height: 25px;
-  font-size: 16px;
-  color: #202124;
-}
-.msg-row-title-tip {
-  color: #5f6368;
-  font-size: 12px;
-}
 .msg-row-image,
 .msg-row-Nimage {
   height: 60px;
@@ -218,11 +148,16 @@ export default {
   text-align: center;
   background: rgba(32, 33, 36, 0.6);
 }
-.layout-middle {
-  display: flex;
-  align-items: center;
+.user-row-email {
+  border-top: 1px solid #dadce0;
 }
-.layout-middle-left {
-  flex-grow: 1;
+.user-row-email:hover {
+  border-top: 1px solid #dadce0;
+}
+.user-title-email-wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 90px;
 }
 </style>

@@ -23,6 +23,7 @@
         data-user-portrait="true"
         :class="{'borderColor':userDropDown}"
       >
+        {{storeImages}}
         <img
           v-if="storeImages"
           :src="storeImages"

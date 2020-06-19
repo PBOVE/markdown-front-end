@@ -19,7 +19,7 @@ export const getters = {
     return state.data;
   },
   storeImages(state: any) {
-    return `/api/storage/preview/${state.data.images}`;
+    return state.data.images ? `/api/storage/preview/${state.data.images}` : '';
   },
   storeUserName(state: any) {
     return state.data.userName;

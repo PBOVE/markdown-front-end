@@ -19,7 +19,7 @@
             autocomplete="off"
             v-model="email"
             @blur="handleBlur(1)"
-            @keyup.enter="handleLoginEvent($event)"
+            @keyup.enter="handleRegisterEvent($event)"
           />
           <div class="login-group-input-suffix">
             <div v-if="emailLoad===1" class="login-group-input-load" />
@@ -48,7 +48,7 @@
               placeholder="请输入用户名"
               autocomplete="off"
               v-model="username"
-              @keyup.enter="handleLoginEvent($event)"
+              @keyup.enter="handleRegisterEvent($event)"
             />
             <div class="login-group-input-suffix">
               <div v-if="usernameLoad===1" class="login-group-input-load" />
@@ -87,7 +87,7 @@
             autocomplete="off"
             v-model="password"
             @blur="handleBlur(3)"
-            @keyup.enter="handleLoginEvent($event)"
+            @keyup.enter="handleRegisterEvent($event)"
           />
           <div class="login-group-tips">
             <Icon type="md-information-circle" size="16" />
@@ -196,6 +196,7 @@ export default {
         this.handleError("password", "add", "密码强度太低");
       }
     },
+    // 验证数据
     verifyData() {
       const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
       const usernameReg = /^[A-Za-z0-9]+([\-]?[A-Za-z0-9]+)*$/;
@@ -229,7 +230,16 @@ export default {
       this.loading = true;
       const result = this.verifyData();
       const ripples = this.handleAnimation(event);
-      if (!result || this.emailLoad !== 0 || this.usernameLoad !== 0) {
+      if (!result) {
+        this.cancelAnimation(ripples);
+        return;
+      }
+      if (this.emailLoad !== 0 || this.usernameLoad !== 0) {
+        this.$Message.info({
+          background: true,
+          content: "数据验证中,请稍等",
+          duration: 5,
+        });
         this.cancelAnimation(ripples);
         return;
       }

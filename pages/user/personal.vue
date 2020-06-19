@@ -20,11 +20,6 @@ export default {
   data() {
     return {};
   },
-   head() {
-    return {
-      title: "账户 ● Freedom",
-    };
-  },
 };
 </script>
 

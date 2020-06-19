@@ -155,4 +155,9 @@ export default {
     width: 100%;
   }
 }
+@media screen and (max-width: 370px) {
+  .ui-box-header-right {
+    display: none;
+  }
+}
 </style>

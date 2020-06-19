@@ -7,7 +7,7 @@
 
 <template>
   <div class="user-wrap">
-    <public-header  />
+    <public-header />
     <div class="user-content">
       <div class="user-sidebar-wrap">
         <nuxt-link
@@ -52,6 +52,11 @@ export default {
   data() {
     return {
       pathArray: ["/user", "/user/personal", "/user/security"],
+    };
+  },
+  head() {
+    return {
+      title: "账户 ● Freedom",
     };
   },
   computed: {

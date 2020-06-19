@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { Message } from 'iview';
+import { Message } from 'view-design';
 import showStatus from '@/utils/message';
 
 const header = { headers: { 'Content-Type': 'application/json;charset=UTF-8' } };
@@ -10,12 +10,16 @@ const request = {
   GetToken: () => axios.get('/user/me'),
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
+  // 删除账户
+  deleteAccount: () => axios.delete('/user/me'),
   // 上传文件
   uploadFile: data => axios.post(`/storage`, data, fileHeader),
   // 登录
   LoginIn: params => axios.post('/user/login', qs.stringify(params)),
   // 退出
   LoginOut: () => axios.post('/user/logout'),
+  // 修改密码
+  password: params => axios.put('/user/me/password', params),
   // 查询 注册
   registerQuery: params => axios.get('/register/query', { params }),
   // 注册

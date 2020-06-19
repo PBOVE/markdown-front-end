@@ -2,9 +2,11 @@ import { Middleware } from '@nuxt/types';
 
 const authMiddleware: Middleware = async context => {
   const { app, store, route, redirect } = context;
+  let token = app.$cookies.get('access_token');
   if (!store.state.token.isGetToken) {
     const { data } = await app.$request.GetToken();
     if (!data.user) {
+      token = false;
       app.$cookies.remove('access_token');
       store.commit('user/removeUser');
     } else {
@@ -22,7 +24,7 @@ const authMiddleware: Middleware = async context => {
     '/accounts/email/:requestId',
     '/accounts/password/:requestId',
   ];
-  const token = app.$cookies.get('access_token');
+
   const { path } = route;
   const verifyRoute = (route: string) => {
     const routeMatcher = new RegExp(`^${route.replace(/:[^\s/]+/g, '[\\w-.]+')}$`);
