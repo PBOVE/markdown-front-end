@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="from-check">
-        <Checkbox v-model="rememberMe" size="large">
+        <Checkbox v-model="keepPass" size="large">
           <span style="fontSize:14px; marginLeft:0.5rem; ">记住密码</span>
         </Checkbox>
         <nuxt-link to="/forget">忘记密码</nuxt-link>
@@ -77,7 +77,7 @@ export default {
       // 密码
       password: "",
       // 记住密码
-      rememberMe: false,
+      keepPass: false,
       // 查看密码
       eye: true,
       // 设置按钮为加载中状态
@@ -112,6 +112,7 @@ export default {
         const params = {
           username: this.username,
           password: this.password,
+          keepPass: this.keepPass,
         };
         await this.$request.LoginIn(params);
         const { data } = await this.$request.GetToken();

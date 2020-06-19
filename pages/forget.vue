@@ -161,8 +161,7 @@ export default {
     openModal() {
       this.$Modal.info({
         title: "收不到邮件 ?",
-        content:
-          "通过邮箱接收邮件，请尝试到广告邮件、订阅邮件、垃圾邮件等目录找找看。",
+        content: "请尝试到广告邮件、订阅邮件、垃圾邮件等目录找找看。",
         okText: "确定",
       });
     },

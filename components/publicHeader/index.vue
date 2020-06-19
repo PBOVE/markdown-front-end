@@ -23,7 +23,6 @@
         data-user-portrait="true"
         :class="{'borderColor':userDropDown}"
       >
-        {{storeImages}}
         <img
           v-if="storeImages"
           :src="storeImages"
@@ -143,6 +142,9 @@ export default {
   background-color: #2d8cf0;
   transition: background-color 0.8s;
   font-weight: 700;
+}
+.link-login:hover {
+  background: #2d8cf0aa;
 }
 .public-header-right-icon {
   margin: 0 20px 0 0;

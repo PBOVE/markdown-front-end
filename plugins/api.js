@@ -15,7 +15,7 @@ const request = {
   // 上传文件
   uploadFile: data => axios.post(`/storage`, data, fileHeader),
   // 登录
-  LoginIn: params => axios.post('/user/login', qs.stringify(params)),
+  LoginIn: params => axios.post('/user/login', params, header),
   // 退出
   LoginOut: () => axios.post('/user/logout'),
   // 修改密码

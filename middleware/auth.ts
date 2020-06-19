@@ -11,6 +11,7 @@ const authMiddleware: Middleware = async context => {
       store.commit('user/removeUser');
     } else {
       store.commit('user/setUser', data.user);
+      app.$cookies.set('access_token', data._csrf.token);
     }
     app.$cookies.set('XSRF-TOKEN', data._csrf.token);
     store.commit('token/setToken', data._csrf.token);
@@ -32,6 +33,8 @@ const authMiddleware: Middleware = async context => {
   };
   if (!token && !ignorePaths.some(verifyRoute)) {
     redirect(`/login?redirect=${path}`);
+  } else if (token && path === '/login') {
+    redirect('/dashboard');
   }
 };
 
