@@ -11,7 +11,7 @@ const request = {
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
   // 删除账户
-  deleteAccount: () => axios.delete('/user/me'),
+  deleteAccount: params => axios.delete('/user/me', { data: params }),
   // 上传文件
   uploadFile: data => axios.post(`/storage`, data, fileHeader),
   // 登录
@@ -32,6 +32,8 @@ const request = {
   forgetEmail: params => axios.get('/accounts/password/link', { params }),
   // 验证忘记密码
   forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params, header),
+  // 验证 requestId
+  verifyRequestId: (requestId, params) => axios.get(`/valid/${requestId}`, { params }),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用
@@ -61,7 +63,7 @@ export default ({ $axios, store }, inject) => {
         const { status } = error.response;
         message = showStatus(status);
       }
-      Message.error({ content: message, duration: 10 });
+      Message.error({ content: message, duration: 10, background: true });
     }
   });
   //4) 将自定义函数交于nuxt

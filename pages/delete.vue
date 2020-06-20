@@ -23,11 +23,12 @@
         <div class="delete-tip">您正在尝试删除自己的 “Freedom” 帐号（您可以通过此帐号使用各种 “Freedom” 服务）。</div>
         <div class="delete-tip">删除后，您将无法再使用任何 “Freedom” 服务，并且您的帐号和数据也将会丢失。</div>
         <Divider />
-        <Checkbox v-model="tick" size="large">
-          <span style="margin-left:15px;">是的，我要永久删除此 Freedom 帐号及其所有关联数据。</span>
-        </Checkbox>
+        <div style="max-width:300px">
+          <div style="padding:0px 0 6px;font-size:14px;">账户密码:</div>
+          <Input v-model="password" type="password" size="large" placeholder="请输入密码" />
+        </div>
         <div style="margin-top:25px;">
-          <Button type="primary" size="large" :loading="loading" @click="handleButton">删除账户</Button>
+          <Button type="primary" size="large" @click="handleButton" :loading="loading">删除账户</Button>
         </div>
       </div>
     </div>
@@ -45,10 +46,12 @@ export default {
 
   data() {
     return {
+      // 对话框展示
+      modelShow: true,
       // 设置按钮为加载中状态
       loading: false,
-      // 多选
-      tick: false,
+      // 密码
+      password: "",
     };
   },
   head() {
@@ -59,20 +62,21 @@ export default {
 
   methods: {
     async handleButton() {
-      if (!this.tick) {
+      if (!this.password) {
         this.$Message.info({
           background: true,
-          content: "请确认您要删除此 Freedom 帐号",
+          content: "请您输入您的 Freedom 账户密码",
           duration: 5,
         });
         return;
       }
       try {
         this.loading = true;
-        await this.$request.deleteAccount();
+        await this.$request.deleteAccount({ password: this.password });
         this.$store.commit("token/removeToken");
         this.$router.push("/login");
       } catch (err) {}
+      this.loading = false;
     },
   },
 };

@@ -6,12 +6,13 @@
 
 
 <template>
-  <div>404</div>
+  <div>{{error.statusCode}}</div>
 </template>
 
 
 <script>
 export default {
+  props: ["error"],
   data() {
     return {};
   },

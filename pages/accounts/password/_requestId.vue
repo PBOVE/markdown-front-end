@@ -63,8 +63,13 @@
 import loginRegister from "@/components/loginRegister/index.vue";
 export default {
   components: { loginRegister },
-  validate({ params }) {
-    return params.requestId ? true : false;
+  async validate({ params, app }) {
+    try {
+      const { data } = await app.$request.verifyRequestId(params.requestId, {
+        type: "password",
+      });
+      return data;
+    } catch (err) {}
   },
   data() {
     return {
@@ -128,7 +133,7 @@ export default {
         };
         const { data } = await this.$request.forgetEmailLink(requestId, params);
         const content = "密码更换成功";
-        this.$Message.success({ duration: 8, content });
+        this.$Message.success({ duration: 8, content, background: true });
         this.$router.push("/login");
       } catch (err) {
         this.cancelAnimation(ripples);
