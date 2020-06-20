@@ -8,7 +8,7 @@
 <template>
   <login-register>
     <div class="forget-from-wrap">
-      <div style="text-align:left; margin-bottom:1rem;">更换密码</div>
+      <div style="text-align:left; margin-bottom:1.1rem;">更换密码</div>
       <Poptip word-wrap class="forget-poptip" trigger="focus" placement="top-start">
         <div slot="content" class="forget-poptip-content">
           <div>强度: {{strength}}</div>

@@ -8,13 +8,13 @@
 <template>
   <login-register>
     <div class="login-from-wrap">
-      <div style="text-align:left; margin-bottom:1rem;">账户密码登录</div>
+      <div style="text-align:left; margin-bottom:1.1rem;">账户密码登录</div>
       <div class="login-group" ref="usernameRef">
-        <label for="username">用户名</label>
+        <label for="username">用户名/邮箱</label>
         <input
           id="username"
           type="text"
-          placeholder="请输入用户名"
+          placeholder="请输入用户名/邮箱"
           autocomplete="off"
           v-model="username"
           @keyup.enter="handleLoginEvent($event)"
@@ -54,7 +54,7 @@
         <Checkbox v-model="rememberMe" size="large">
           <span style="fontSize:14px; marginLeft:0.5rem; ">记住密码</span>
         </Checkbox>
-        <nuxt-link to="/forget">忘记密码</nuxt-link>
+        <nuxt-link to="/password_reset">忘记密码</nuxt-link>
       </div>
       <button ref="loginbtn" class="login-button" @click="handleLoginEvent($event)">登录</button>
       <div class="login-floor">

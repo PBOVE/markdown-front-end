@@ -47,7 +47,19 @@
   border-radius: 50%;
   animation: animate 1s linear infinite;
 }
-
+.main-spin-icon-load {
+  animation: ani-demo-spin 1s linear infinite;
+}
+.main-logo {
+  width: 58px;
+  height: 30px;
+  background-image: url('../images/mountain.png');
+  background-size: cover;
+  text-align: center;
+  line-height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+}
 @keyframes animate {
   0% {
     width: 0px;
@@ -60,9 +72,7 @@
     opacity: 0;
   }
 }
-.main-spin-icon-load {
-  animation: ani-demo-spin 1s linear infinite;
-}
+
 @keyframes ani-main-spin {
   from {
     transform: rotate(0deg);

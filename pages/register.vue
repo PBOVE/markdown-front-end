@@ -8,7 +8,7 @@
 <template>
   <login-Register>
     <div class="register-wrap">
-      <div style="text-align:left; margin-bottom:1rem;">邮箱注册</div>
+      <div style="text-align:left; margin-bottom:1.1rem;">邮箱注册</div>
       <div class="login-group" ref="emailRef">
         <label for="email">邮箱</label>
         <div class="login-group-input-wrap">

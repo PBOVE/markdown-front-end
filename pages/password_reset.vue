@@ -8,7 +8,7 @@
 <template>
   <login-register>
     <div class="login-from-wrap">
-      <div style="text-align:left; margin-bottom:1rem;">重新设置密码</div>
+      <div style="text-align:left; margin-bottom:1.1rem;">重新设置密码</div>
       <Alert type="warning">
         <div class="forget-tip">忘记密码了？请输入您的电子邮箱，我们会发送重设邮件到您的邮箱。</div>
       </Alert>

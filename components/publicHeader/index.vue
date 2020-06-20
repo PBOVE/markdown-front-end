@@ -8,10 +8,18 @@
 <template>
   <div class="public-header-wrap" :class="{'public-shadow':shadow}">
     <div class="public-header-left nav-middle">
-      <div class="public-header-logo-warp nav-middle">
-        <img src="@/assets/images/mountain.png" class="public-header-logo" />
-        <nuxt-link to="/" class="public-header-logo-title">Freedom</nuxt-link>
-      </div>
+      <nuxt-link to="/" class="nav-middle">
+        <div class="main-logo" />
+        <div :style="{display:searchHide?'':'none'}" class="logo-title">Freedom</div>
+      </nuxt-link>
+      <AutoComplete
+        :style="{display:searchHide?'none':''}"
+        class="public-header-search"
+        placeholder="搜索"
+        icon="ios-search"
+        v-model="inputData"
+        :data="searchData"
+      />
     </div>
     <div class="public-header-right nav-middle">
       <nuxt-link to="/dashboard" class="public-header-right-icon nav-middle">
@@ -58,9 +66,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    "search-hide": {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
+      // 输入数据
+      inputData: "",
+      // 搜索数据
+      searchData: [],
+      // 点击用户头像
       userDropDown: false,
     };
   },
@@ -77,24 +94,11 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 60px;
-  padding: 0 10% 0 10%;
+  padding: 0 10% 0 3%;
 }
 .public-shadow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   margin: 0 0 15px;
-}
-.public-header-logo-warp {
-  font-size: 0;
-}
-.public-header-logo {
-  height: 30px;
-}
-.public-header-logo-title {
-  margin: 0 0 0 10px;
-  font-family: Georgia;
-  font-size: 18px;
-  font-weight: bold;
-  color: #000;
 }
 .public-header-right {
   font-size: 16px;
@@ -150,5 +154,24 @@ export default {
   margin: 0 20px 0 0;
   font-size: 25px;
   color: #515a6e;
+}
+.public-header-search {
+  margin: 0 0 0 20px;
+  width: 300px;
+}
+.logo-title {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 0 10px;
+  color: #000;
+}
+@media screen and (max-width: 570px) {
+  .public-header-left {
+    flex: 1;
+  }
+  .public-header-search {
+    display: none;
+  }
 }
 </style>

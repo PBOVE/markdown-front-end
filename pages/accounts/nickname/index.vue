@@ -7,7 +7,7 @@
 
 <template>
   <div class="nick-name-wrap">
-    <public-header />
+    <public-header :search-hide="true" />
     <div class="nick-name-header">
       <div class="eh-content">
         <nuxt-link to="/user/personal">

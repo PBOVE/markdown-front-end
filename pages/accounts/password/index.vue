@@ -7,7 +7,7 @@
 
 <template>
   <div class="password-wrap">
-    <public-header />
+    <public-header :search-hide="true" />
     <div class="pass-header">
       <div class="pass-header-content">
         <nuxt-link to="/user/security">

@@ -48,7 +48,7 @@ const showStatus = (status: number) => {
       message = '请不要重复发送验证邮件,请前往您的邮箱中查看';
       break;
     case 4005:
-      message = '邮箱没有认证,无法发送邮件修改密码';
+      message = '邮箱没有认证,无法使用此邮箱';
       break;
     case 4007:
       message = '密码输入错误,请重新输入密码';

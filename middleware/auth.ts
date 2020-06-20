@@ -18,22 +18,24 @@ const authMiddleware: Middleware = async context => {
     store.commit('token/setIsGetToken');
   }
   const ignorePaths: string[] = [
-    '/',
-    '/login',
-    '/register',
-    '/forget',
-    '/accounts/email/:requestId',
-    '/accounts/password/:requestId',
+    '/dashboard',
+    '/user',
+    '/user/personal',
+    '/user/secrity',
+    'accounts/nickname',
+    'accounts/delete',
+    'accounts/email',
+    'accounts/password'
   ];
-
+  const redirectPath = [ '/login', '/register', '/password_reset' ];
   const { path } = route;
   const verifyRoute = (route: string) => {
     const routeMatcher = new RegExp(`^${route.replace(/:[^\s/]+/g, '[\\w-.]+')}$`);
     return routeMatcher.test(path);
   };
-  if (!token && !ignorePaths.some(verifyRoute)) {
+  if (!token && ignorePaths.some(verifyRoute)) {
     redirect(`/login?redirect=${path}`);
-  } else if (token && path === '/login') {
+  } else if (token && redirectPath.some(verifyRoute)) {
     redirect('/dashboard');
   }
 };

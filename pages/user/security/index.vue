@@ -10,10 +10,10 @@
     <div class="user-border">
       <div class="user-title-wrap user-title-password-wrap">
         <div class="user-title">账户安全</div>
-        <img src="@/assets/images/key.png" width="100" />
+        <img src="@/assets/images/key.png" width="100" class='security-image' />
       </div>
       <div class="user-row">
-        <nuxt-link to="/password" class="user-row-main user-middle">
+        <nuxt-link to="/accounts/password" class="user-row-main user-middle">
           <div class="user-middle-left">
             <div class="user-row-title">密码</div>
             <div class="user-row-content">••••••••</div>
@@ -32,7 +32,7 @@
         <div class="user-title-content">您将无法使用需要通过该帐号登录的 “Freedom” 服务</div>
       </div>
       <div class="delete-account">
-        <nuxt-link to="/delete">删除你的账户</nuxt-link>
+        <nuxt-link to="/accounts/delete">删除你的账户</nuxt-link>
       </div>
     </div>
   </div>
@@ -72,5 +72,10 @@ export default {
 }
 .delete-account {
   padding: 0 20px 20px;
+}
+@media screen and (max-width: 370px) {
+  .security-image {
+    display: none;
+  }
 }
 </style>

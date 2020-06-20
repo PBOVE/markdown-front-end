@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="user-row">
-        <nuxt-link to="/nickname" class="user-row-main user-middle">
+        <nuxt-link to="/accounts/nickname" class="user-row-main user-middle">
           <div class="user-middle-left">
             <div class="user-row-title">昵称</div>
             <div class="user-row-content">{{storeUser.nickName}}</div>
@@ -63,7 +63,7 @@
         <img src="@/assets/images/email_1.png" width="50px" />
       </div>
       <div class="user-row user-row-email">
-        <nuxt-link to="/email" class="user-row-main user-middle">
+        <nuxt-link to="/accounts/email" class="user-row-main user-middle">
           <div class="user-middle-left">
             <div class="user-row-title">电子邮箱</div>
             <div class="user-row-content">{{storeUser.email}}</div>
@@ -154,7 +154,7 @@ export default {
 .user-row-email:hover {
   border-top: 1px solid #dadce0;
 }
-.user-title-email-wrap{
+.user-title-email-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;

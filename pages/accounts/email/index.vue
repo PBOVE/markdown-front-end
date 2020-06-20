@@ -7,7 +7,7 @@
 
 <template>
   <div class="email-wrap">
-    <public-header />
+    <public-header  :search-hide="true" />
     <div class="email-header">
       <div class="eh-content">
         <nuxt-link to="/user/personal">

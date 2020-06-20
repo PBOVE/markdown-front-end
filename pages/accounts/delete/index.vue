@@ -7,7 +7,7 @@
 
 <template>
   <div class="password-wrap">
-    <public-header />
+    <public-header  :search-hide="true" />
     <div class="delete-header">
       <div class="delete-header-content">
         <nuxt-link to="/user/security">
@@ -56,7 +56,7 @@ export default {
   },
   head() {
     return {
-      title: "帐号注销 ● Freedom",
+      title: "账户删除 ● Freedom",
     };
   },
 
