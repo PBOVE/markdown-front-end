@@ -9,14 +9,14 @@
   <login-register>
     <div class="login-from-wrap">
       <div style="text-align:left; margin-bottom:1.1rem;">账户密码登录</div>
-      <div class="login-group" ref="usernameRef">
-        <label for="username">用户名/邮箱</label>
+      <div class="login-group" ref="accountRef">
+        <label for="account">用户名/邮箱</label>
         <input
-          id="username"
+          id="account"
           type="text"
           placeholder="请输入用户名/邮箱"
           autocomplete="off"
-          v-model="username"
+          v-model="account"
           @keyup.enter="handleLoginEvent($event)"
         />
         <div class="login-group-tips">
@@ -72,8 +72,8 @@ export default {
   components: { loginRegister },
   data() {
     return {
-      // 用户名
-      username: "",
+      // 账户
+      account: "",
       // 密码
       password: "",
       // 记住密码
@@ -90,8 +90,8 @@ export default {
     };
   },
   watch: {
-    username() {
-      this.$refs.usernameRef.classList.remove("from-error");
+    account() {
+      this.$refs.accountRef.classList.remove("from-error");
     },
     password() {
       this.$refs.passwordRef.classList.remove("from-error");
@@ -110,7 +110,7 @@ export default {
       }
       try {
         const params = {
-          username: this.username,
+          account: this.account,
           password: this.password,
           "remember-me": this.rememberMe,
         };
@@ -145,11 +145,11 @@ export default {
     },
     // 检测
     verifyContent() {
-      const username = this.username.replace(/\s+/g, "");
+      const account = this.account.replace(/\s+/g, "");
       const password = this.password.replace(/\s+/g, "");
       let valid = true;
-      if (!username) {
-        this.$refs.usernameRef.classList.add("from-error");
+      if (!account) {
+        this.$refs.accountRef.classList.add("from-error");
         valid = false;
       }
       if (!password) {
