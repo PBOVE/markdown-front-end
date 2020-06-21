@@ -153,12 +153,25 @@ export default {
     },
     username(name) {
       const usernameReg = /^[A-Za-z0-9]+([\-]?[A-Za-z0-9]+)*$/;
+      const nameRules = [
+        /^user$/,
+        /^accounts$/,
+        /^login$/,
+        /^register$/,
+        /^password_reset$/,
+      ];
+      const verifyName = nameRule => {
+        return nameRule.test(name);
+      };
       this.handleError("username", "remove");
       if (!name) {
         this.usernameLoad = 2;
       } else if (!usernameReg.test(this.username)) {
         this.usernameLoad = -1;
         this.handleError("username", "add", "用户名格式错误");
+      } else if (nameRules.some(verifyName)) {
+        this.usernameLoad = -1;
+        this.handleError("username", "add", `用户名 ${name} 不可用`);
       } else this.queryNameMethod(name);
     },
     password(val) {
@@ -280,6 +293,7 @@ export default {
       }
       this.usernameLoad = 1;
       const { data } = await this.$request.registerQuery({ name });
+      if (this.usernameLoad === -1) return (this.queryName = "");
       this.usernameLoad = 2;
       if (this.queryName) {
         const queryName = this.queryName;
