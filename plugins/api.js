@@ -8,32 +8,34 @@ const fileHeader = { headers: { 'Content-Type': 'multipart/form-data' } };
 const request = {
   // 获取 token
   GetToken: () => axios.get('/user/me'),
+  // 获取邮箱验证
+  verifyEmail: () => axios.get('/accounts/email/link'),
+  // 用户查询
+  queryUser: params => axios.get('/user/query', { params }),
+  // 查询 注册
+  registerQuery: params => axios.get('/register/query', { params }),
+  // 忘记密码
+  forgetEmail: params => axios.get('/accounts/password/link', { params }),
+  // 验证 requestId
+  verifyRequestId: (requestId, params) => axios.get(`/valid/${requestId}`, { params }),
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
-  // 删除账户
-  deleteAccount: params => axios.delete('/user/me', { data: params }),
+  // 修改密码
+  password: params => axios.put('/user/me/password', params),
+  // 验证邮箱连接
+  verifyEmailLink: requestId => axios.put(`/accounts/email/${requestId}`),
+  // 验证忘记密码
+  forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params, header),
   // 上传文件
   uploadFile: data => axios.post(`/storage`, data, fileHeader),
   // 登录
   LoginIn: params => axios.post('/user/login', params, header),
   // 退出
   LoginOut: () => axios.post('/user/logout'),
-  // 修改密码
-  password: params => axios.put('/user/me/password', params),
-  // 查询 注册
-  registerQuery: params => axios.get('/register/query', { params }),
   // 注册
   register: params => axios.post('/register', params, header),
-  // 获取邮箱验证
-  verifyEmail: () => axios.get('/accounts/email/link'),
-  // 验证邮箱连接
-  verifyEmailLink: requestId => axios.put(`/accounts/email/${requestId}`),
-  // 忘记密码
-  forgetEmail: params => axios.get('/accounts/password/link', { params }),
-  // 验证忘记密码
-  forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params, header),
-  // 验证 requestId
-  verifyRequestId: (requestId, params) => axios.get(`/valid/${requestId}`, { params }),
+  // 删除账户
+  deleteAccount: params => axios.delete('/user/me', { data: params }),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

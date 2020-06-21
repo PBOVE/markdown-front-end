@@ -18,6 +18,7 @@
         placeholder="搜索"
         icon="ios-search"
         v-model="inputData"
+        size="large"
         :data="searchData"
       />
     </div>
@@ -161,7 +162,7 @@ export default {
 }
 .public-header-search {
   margin: 0 0 0 20px;
-  width: 300px;
+  width: 400px;
 }
 .logo-title {
   font-family: Georgia, "Times New Roman", Times, serif;
@@ -170,7 +171,7 @@ export default {
   margin: 0 0 0 10px;
   color: #000;
 }
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 670px) {
   .public-header-left {
     flex: 1;
   }
