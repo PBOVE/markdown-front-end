@@ -6,42 +6,47 @@
 
 
 <template>
-  <div class="nick-name-wrap">
+  <div class="signature-wrap">
     <public-header :search-hide="true" />
-    <div class="nick-name-header">
+    <div class="signature-header">
       <div class="eh-content">
         <nuxt-link to="/user/personal">
           <Icon type="md-arrow-round-back" class="eh-content-icon curpoin" />
         </nuxt-link>
-        <div>昵称</div>
+        <div>个性签名</div>
       </div>
     </div>
-    <div class="nick-name-content">
-      <div class="nick-name-content-title">对您的名称所做的更改将反映在您的 Freedom 帐号中。</div>
-      <div class="nick-name-box">
-        <div class="nick-name-content-title" style="padding:18px 0;">更改昵称</div>
-        <div class="nick-name-title">
-          <span class="nick-name-account">{{storeNickName}}</span>
-          <Icon type="md-create" class="nick-name-title-icon curpoin" @click="openModal" />
+    <div class="signature-content">
+      <div class="signature-content-title">对您的个性签名所做的更改将反映在您的 Freedom 帐号中。</div>
+      <div class="signature-box">
+        <div class="signature-content-title" style="padding:18px 0;">个性签名</div>
+        <div class="signature-title">
+          <span class="signature-account">{{storeSignature}}</span>
+          <Icon type="md-create" class="signature-title-icon curpoin" @click="openModal" />
         </div>
       </div>
     </div>
     <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
       <div class="modal-edit-header">
-        <div>更改昵称</div>
+        <div>更改签名</div>
         <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
       </div>
-      <div class="modal-title">昵称</div>
-      <input
-        ref="modalInput"
-        type="text"
-        class="modal-input"
-        v-model="nickName"
-        @keydown.enter="updateNickName"
-      />
+      <div class="modal-title">个性签名</div>
+      <div class="modal-input-wrap">
+        <input
+          ref="modalInput"
+          type="text"
+          class="modal-input"
+          maxlength="30"
+          v-model="signature"
+          @keydown.enter="update"
+        />
+        <div class="modal-input-prefix">{{words}}</div>
+      </div>
+
       <div class="modal-footer">
         <Button type="text" @click="modalShow=false">取消</Button>
-        <Button type="primary" :loading="loading" @click="updateNickName">确定</Button>
+        <Button type="primary" :loading="loading" @click="update">确定</Button>
       </div>
     </Modal>
   </div>
@@ -62,7 +67,9 @@ export default {
       // 设置按钮为加载中状态
       loading: false,
       // 昵称
-      nickName: "",
+      signature: "",
+      // 字数
+      words: "0/30",
     };
   },
   head() {
@@ -71,28 +78,33 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeNickName"]),
+    ...mapGetters("user", ["storeSignature"]),
+  },
+  watch: {
+    signature(value) {
+      this.words = `${value.length}/60`;
+    },
   },
   methods: {
     // 打开对话框
     openModal() {
       this.modalShow = true;
-      this.nickName = this.storeNickName;
+      this.signature = this.storeSignature;
       this.$nextTick(() => {
         this.$refs.modalInput.focus();
       });
     },
     // 发送修改
-    async updateNickName() {
+    async update() {
       if (this.loading) return;
-      if (this.nickName === this.storeNickName) {
+      if (this.signature === this.storeSignature) {
         this.modalShow = false;
         return;
       }
       try {
         this.loading = true;
         const { data } = await this.$request.updataUserMsg({
-          nickName: this.nickName,
+          signature: this.signature.substr(0, 30),
         });
         this.$store.commit("user/setUser", data);
         this.modalShow = false;
@@ -105,15 +117,15 @@ export default {
 
 
 <style scoped>
-.nick-name-content {
+.signature-content {
   padding: 0 18px;
 }
-.nick-name-content,
+.signature-content,
 .eh-content {
   margin: 0 auto;
   max-width: 660px;
 }
-.nick-name-header {
+.signature-header {
   padding: 0 18px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -137,33 +149,44 @@ export default {
   border-radius: 50%;
   background: #dcdee2;
 }
-.nick-name-content-title {
+.signature-content-title {
   padding: 24px 0;
   color: rgba(0, 0, 0, 0.65);
 }
-.nick-name-box {
+.signature-box {
   padding: 24px;
   border: 1px solid #dadce0;
   border-radius: 8px;
 }
-.nick-name-account {
+.signature-account {
   margin: 0 10px 0 0;
   font-size: 17px;
   font-weight: 500;
   color: #3c4043;
 }
-.nick-name-title {
+.signature-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.nick-name-title-icon {
+.signature-title-icon {
   font-size: 19px;
   color: #515a6e;
 }
 .curpoin {
   cursor: pointer;
+}
+.modal-input-wrap {
+  position: relative;
+}
+.modal-input {
+  padding: 0 40px 0 0;
+}
+.modal-input-prefix {
+  position: absolute;
+  right: 0;
+  top: 4px;
 }
 </style>
 

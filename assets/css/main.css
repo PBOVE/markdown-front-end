@@ -1,5 +1,6 @@
 @import url('./font.css');
 @import url('./user.css');
+@import url('./modal.css');
 
 .fade-enter-active,
 .fade-leave-active {
@@ -60,6 +61,7 @@
   font-size: 18px;
   font-weight: bold;
 }
+
 @keyframes animate {
   0% {
     width: 0px;

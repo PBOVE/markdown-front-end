@@ -18,7 +18,6 @@ const authMiddleware: Middleware = async context => {
     store.commit('token/setIsGetToken');
   }
   const ignorePaths: string[] = [
-    '/dashboard',
     '/user',
     '/user/personal',
     '/user/secrity',

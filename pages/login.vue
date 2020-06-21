@@ -120,7 +120,7 @@ export default {
         this.$cookies.set("access_token", data._csrf.token);
         this.$store.commit("user/setUser", data.user);
         this.$store.commit("token/setToken", data._csrf.token);
-        this.$router.push(this.$route.query.redirect || "/dashboard");
+        this.$router.push(this.$route.query.redirect || `/${data.user.userName}`);
       } catch (err) {
         this.cancelAnimation(ripples);
         return;

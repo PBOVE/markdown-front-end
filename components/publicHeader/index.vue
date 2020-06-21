@@ -22,7 +22,7 @@
       />
     </div>
     <div class="public-header-right nav-middle">
-      <nuxt-link to="/dashboard" class="public-header-right-icon nav-middle">
+      <nuxt-link v-if="storeNickName" :to="userPage" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
       <div
@@ -37,7 +37,7 @@
           class="main-user-image"
           data-user-portrait="true"
         />
-        <div v-else class="user-portrait" data-user-portrait="true">{{storeNickName|userName}}</div>
+        <div v-else class="user-portrait" data-user-portrait="true">{{storeNickName|nickName}}</div>
       </div>
       <div v-else>
         <nuxt-link to="/login">
@@ -57,7 +57,7 @@ import userDrop from "@/components/userDrop/index.vue";
 export default {
   components: { userDrop },
   filters: {
-    userName(name) {
+    nickName(name) {
       return name ? name[0].toUpperCase() : "";
     },
   },
@@ -82,7 +82,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeNickName", "storeImages"]),
+    ...mapGetters("user", ["storeNickName", "storeImages", "storeUserName"]),
+    // 用户页
+    userPage() {
+      return `/${this.storeUserName}`;
+    },
   },
 };
 </script>
