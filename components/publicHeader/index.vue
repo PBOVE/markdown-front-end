@@ -180,7 +180,10 @@ export default {
     flex: 1;
   }
   .public-header-search {
-    display: none;
+    display: none !important;
+  }
+  .logo-title {
+    display: inline-block !important;
   }
 }
 </style>
