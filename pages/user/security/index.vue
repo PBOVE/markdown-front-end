@@ -73,9 +73,4 @@ export default {
   width: 100px;
   height: 100px;
 }
-@media screen and (max-width: 370px) {
-  .security-image {
-    display: none;
-  }
-}
 </style>

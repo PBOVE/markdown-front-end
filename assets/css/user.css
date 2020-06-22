@@ -54,20 +54,14 @@
 .user-row:nth-of-type(2) .user-row-main {
   border-width: 0px;
 }
-.user-row-title,
-.user-row-content {
-  display: inline-block;
-}
 .user-row-title {
-  width: 150px;
-  height: 25px;
-  line-height: 25px;
+  flex-shrink: 0;
+  width: 130px;
   font-size: 12px;
   letter-spacing: 0.1em;
 }
 .user-row-content {
-  height: 25px;
-  line-height: 25px;
+  padding: 0 10px;
   font-size: 16px;
   color: #202124;
 }
@@ -81,4 +75,9 @@
 }
 .user-middle-left {
   flex-grow: 1;
+}
+@media screen and (max-width: 700px) {
+  .user-row-title {
+    width: 70px;
+  }
 }

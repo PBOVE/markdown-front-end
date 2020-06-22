@@ -26,24 +26,13 @@
         </div>
       </div>
     </div>
-    <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
-      <div class="modal-edit-header">
-        <div>更改昵称</div>
-        <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
-      </div>
-      <div class="modal-title">昵称</div>
-      <input
-        ref="modalInput"
-        type="text"
-        class="modal-input"
-        v-model="nickName"
-        @keydown.enter="updateNickName"
-      />
-      <div class="modal-footer">
-        <Button type="text" @click="modalShow=false">取消</Button>
-        <Button type="primary" :loading="loading" @click="updateNickName">确定</Button>
-      </div>
-    </Modal>
+    <update-modal
+      ref="updateModal"
+      title="昵称"
+      headerTitle="更改昵称"
+      :loading="loading"
+      @on-button="update"
+    />
   </div>
 </template>
 
@@ -51,18 +40,15 @@
 <script>
 import { mapGetters } from "vuex";
 import publicHeader from "@/components/publicHeader/index.vue";
+import updateModal from "@/components/updateModal/index.vue";
 
 export default {
   transition: "fade",
-  components: { publicHeader },
+  components: { publicHeader, updateModal },
   data() {
     return {
-      // 对话框
-      modalShow: false,
       // 设置按钮为加载中状态
       loading: false,
-      // 昵称
-      nickName: "",
     };
   },
   head() {
@@ -76,26 +62,19 @@ export default {
   methods: {
     // 打开对话框
     openModal() {
-      this.modalShow = true;
-      this.nickName = this.storeNickName;
-      this.$nextTick(() => {
-        this.$refs.modalInput.focus();
-      });
+      this.$refs.updateModal.openModal(this.storeNickName);
     },
     // 发送修改
-    async updateNickName() {
+    async update(value, callback) {
       if (this.loading) return;
-      if (this.nickName === this.storeNickName) {
-        this.modalShow = false;
-        return;
-      }
+      if (value === this.storeNickName) return callback();
       try {
         this.loading = true;
         const { data } = await this.$request.updataUserMsg({
-          nickName: this.nickName,
+          nickName: value,
         });
         this.$store.commit("user/setUser", data);
-        this.modalShow = false;
+        callback();
       } catch (err) {}
       this.loading = false;
     },

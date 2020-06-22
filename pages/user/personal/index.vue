@@ -14,7 +14,7 @@
       </div>
       <div class="user-row" @click="headPortrait=true">
         <div class="user-row-main user-middle">
-          <div class="user-middle-left">
+          <div class="user-middle-left user-middle">
             <div class="user-row-title">照片</div>
             <div class="user-row-content user-row-content-tip">更改照片，可帮助您个性化您的帐号</div>
           </div>
@@ -28,14 +28,14 @@
         </div>
       </div>
       <div class="user-row">
-        <div class="user-row-main">
+        <div class="user-row-main user-middle">
           <div class="user-row-title">用户名</div>
           <div class="user-row-content">{{storeUser.userName}}</div>
         </div>
       </div>
       <div class="user-row">
         <nuxt-link to="/accounts/nickname" class="user-row-main user-middle">
-          <div class="user-middle-left">
+          <div class="user-middle-left user-middle">
             <div class="user-row-title">昵称</div>
             <div class="user-row-content">{{storeUser.nickName}}</div>
           </div>
@@ -46,7 +46,7 @@
       </div>
       <div class="user-row">
         <nuxt-link to="/accounts/location" class="user-row-main user-middle">
-          <div class="user-middle-left">
+          <div class="user-middle-left user-middle">
             <div class="user-row-title">地区</div>
             <div class="user-row-content">{{storeUser.location}}</div>
           </div>
@@ -57,8 +57,8 @@
       </div>
       <div class="user-row">
         <nuxt-link to="/accounts/signature" class="user-row-main user-middle">
-          <div class="user-middle-left">
-            <div class="user-row-title">个人介绍</div>
+          <div class="user-middle-left user-middle">
+            <div class="user-row-title">简介</div>
             <div class="user-row-content">{{storeUser.signature}}</div>
           </div>
           <div class="user-middle-right">
@@ -68,13 +68,13 @@
       </div>
 
       <div class="user-row">
-        <div class="user-row-main">
+        <div class="user-row-main user-middle">
           <div class="user-row-title">创建时间</div>
           <div class="user-row-content">{{storeUser.createTime|TimeConversion}}</div>
         </div>
       </div>
       <div class="user-row">
-        <div class="user-row-main">
+        <div class="user-row-main user-middle">
           <div class="user-row-title">更新时间</div>
           <div class="user-row-content">{{storeUser.updateTime|TimeConversion}}</div>
         </div>
@@ -87,7 +87,7 @@
       </div>
       <div class="user-row user-row-email">
         <nuxt-link to="/accounts/email" class="user-row-main user-middle">
-          <div class="user-middle-left">
+          <div class="user-middle-left user-middle">
             <div class="user-row-title">电子邮箱</div>
             <div class="user-row-content">{{storeUser.email}}</div>
           </div>

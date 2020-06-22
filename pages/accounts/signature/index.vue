@@ -13,42 +13,27 @@
         <nuxt-link to="/user/personal">
           <Icon type="md-arrow-round-back" class="eh-content-icon curpoin" />
         </nuxt-link>
-        <div>个人介绍</div>
+        <div>简介</div>
       </div>
     </div>
     <div class="signature-content">
-      <div class="signature-content-title">对您的个人介绍所做的更改将反映在您的 Freedom 帐号中。</div>
+      <div class="signature-content-title">对您的简介所做的更改将反映在您的 Freedom 帐号中。</div>
       <div class="signature-box">
-        <div class="signature-content-title" style="padding:18px 0;">个人介绍</div>
+        <div class="signature-content-title" style="padding:18px 0;">简介</div>
         <div class="signature-title">
           <span class="signature-account">{{storeSignature}}</span>
           <Icon type="md-create" class="signature-title-icon curpoin" @click="openModal" />
         </div>
       </div>
     </div>
-    <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
-      <div class="modal-edit-header">
-        <div>修改</div>
-        <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
-      </div>
-      <div class="modal-title">个人介绍</div>
-      <div class="modal-input-wrap">
-        <input
-          ref="modalInput"
-          type="text"
-          class="modal-input"
-          maxlength="60"
-          v-model="signature"
-          @keydown.enter="update"
-        />
-        <div class="modal-input-prefix">{{words}}</div>
-      </div>
-
-      <div class="modal-footer">
-        <Button type="text" @click="modalShow=false">取消</Button>
-        <Button type="primary" :loading="loading" @click="update">确定</Button>
-      </div>
-    </Modal>
+    <update-modal
+      ref="updateModal"
+      title="简介"
+      headerTitle="简介"
+      :maxlength="60"
+      :loading="loading"
+      @on-button="update"
+    />
   </div>
 </template>
 
@@ -56,20 +41,15 @@
 <script>
 import { mapGetters } from "vuex";
 import publicHeader from "@/components/publicHeader/index.vue";
+import updateModal from "@/components/updateModal/index.vue";
 
 export default {
   transition: "fade",
-  components: { publicHeader },
+  components: { publicHeader, updateModal },
   data() {
     return {
-      // 对话框
-      modalShow: false,
       // 设置按钮为加载中状态
       loading: false,
-      // 昵称
-      signature: "",
-      // 字数
-      words: "0/30",
     };
   },
   head() {
@@ -80,34 +60,23 @@ export default {
   computed: {
     ...mapGetters("user", ["storeSignature"]),
   },
-  watch: {
-    signature(value) {
-      this.words = `${value.length}/60`;
-    },
-  },
   methods: {
     // 打开对话框
     openModal() {
-      this.modalShow = true;
-      this.signature = this.storeSignature;
-      this.$nextTick(() => {
-        this.$refs.modalInput.focus();
-      });
+      this.$refs.updateModal.openModal(this.storeSignature);
     },
     // 发送修改
-    async update() {
+    async update(value, callback) {
       if (this.loading) return;
-      if (this.signature === this.storeSignature) {
-        this.modalShow = false;
-        return;
-      }
+      if (value === this.storeSignature) return callback();
       try {
         this.loading = true;
-        const { data } = await this.$request.updataUserMsg({
-          signature: this.signature.substr(0, 60),
-        });
+        const params = {
+          signature: value.substr(0, 60),
+        };
+        const { data } = await this.$request.updataUserMsg(params);
         this.$store.commit("user/setUser", data);
-        this.modalShow = false;
+        callback();
       } catch (err) {}
       this.loading = false;
     },
@@ -176,17 +145,6 @@ export default {
 }
 .curpoin {
   cursor: pointer;
-}
-.modal-input-wrap {
-  position: relative;
-}
-.modal-input {
-  padding: 0 40px 0 0;
-}
-.modal-input-prefix {
-  position: absolute;
-  right: 0;
-  top: 4px;
 }
 </style>
 
