@@ -7,12 +7,12 @@
 
 <template>
   <div class="error">
-    <!-- <public-header :shadow="true" /> -->
+    <public-header :shadow="true" />
     <div class="error-box">
       <img src="@/assets/images/404.svg" />
       <div class="error-tips">抱歉，您访问的页面不存在。</div>
       <Button type="primary">
-        <nuxt-link to="/" class="error-link">返 回 首 页</nuxt-link>
+        <nuxt-link to="/" class="error-link">返回首页</nuxt-link>
       </Button>
     </div>
   </div>
@@ -41,9 +41,7 @@ export default {
   height: 100vh;
 }
 .error-box {
-  margin: 100px auto;
-  width: 400px;
-  height: 400px;
+  margin: 80px auto 0 auto;
   text-align: center;
 }
 .error-tips {
