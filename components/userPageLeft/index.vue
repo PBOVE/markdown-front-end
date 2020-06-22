@@ -72,6 +72,7 @@ export default {
   color: #24292e;
 }
 .middle-content {
+  font-family: Georgia, Times New Roman, Times, serif;
   font-size: 18px;
   color: #666;
 }
@@ -81,14 +82,11 @@ export default {
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
-  background: #e9ecef;
   color: #24292e;
   letter-spacing: 0.1em;
 }
-.button-follow:hover {
-  background: #e9ecef99;
-}
-.icon-wrap{
+
+.icon-wrap {
   margin: 10px 0;
   line-height: 16px;
 }
