@@ -75,8 +75,10 @@ export default {
   height: 100vh;
 }
 .user-content {
-  flex: 1;
   display: flex;
+  flex: auto;
+  height: 0;
+  overflow: auto;
 }
 .user-sidebar-wrap {
   display: flex;

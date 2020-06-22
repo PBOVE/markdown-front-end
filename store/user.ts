@@ -39,4 +39,7 @@ export const getters = {
   storeSignature(state: any) {
     return state.data.signature;
   },
+  storeLocation(state: any) {
+    return state.data.location;
+  },
 };

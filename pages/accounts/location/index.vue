@@ -6,47 +6,43 @@
 
 
 <template>
-  <div class="signature-wrap">
+  <div class="nick-name-wrap">
     <public-header :search-hide="true" />
-    <div class="signature-header">
+    <div class="nick-name-header">
       <div class="eh-content">
         <nuxt-link to="/user/personal">
           <Icon type="md-arrow-round-back" class="eh-content-icon curpoin" />
         </nuxt-link>
-        <div>个人介绍</div>
+        <div>地区</div>
       </div>
     </div>
-    <div class="signature-content">
-      <div class="signature-content-title">对您的个人介绍所做的更改将反映在您的 Freedom 帐号中。</div>
-      <div class="signature-box">
-        <div class="signature-content-title" style="padding:18px 0;">个人介绍</div>
-        <div class="signature-title">
-          <span class="signature-account">{{storeSignature}}</span>
-          <Icon type="md-create" class="signature-title-icon curpoin" @click="openModal" />
+    <div class="nick-name-content">
+      <div class="nick-name-content-title">对您的地区所做的更改将反映在您的 Freedom 帐号中。</div>
+      <div class="nick-name-box">
+        <div class="nick-name-content-title" style="padding:18px 0;">更改地区</div>
+        <div class="nick-name-title">
+          <span class="nick-name-account">{{storeLocation}}</span>
+          <Icon type="md-create" class="nick-name-title-icon curpoin" @click="openModal" />
         </div>
       </div>
     </div>
     <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
       <div class="modal-edit-header">
-        <div>修改</div>
+        <div>更改地区</div>
         <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
       </div>
-      <div class="modal-title">个人介绍</div>
-      <div class="modal-input-wrap">
-        <input
-          ref="modalInput"
-          type="text"
-          class="modal-input"
-          maxlength="60"
-          v-model="signature"
-          @keydown.enter="update"
-        />
-        <div class="modal-input-prefix">{{words}}</div>
-      </div>
-
+      <div class="modal-title">地区</div>
+      <input
+        ref="modalInput"
+        type="text"
+        maxlength="60"
+        class="modal-input"
+        v-model="location"
+        @keydown.enter="updateLocation"
+      />
       <div class="modal-footer">
         <Button type="text" @click="modalShow=false">取消</Button>
-        <Button type="primary" :loading="loading" @click="update">确定</Button>
+        <Button type="primary" :loading="loading" @click="updateLocation">确定</Button>
       </div>
     </Modal>
   </div>
@@ -66,45 +62,38 @@ export default {
       modalShow: false,
       // 设置按钮为加载中状态
       loading: false,
-      // 昵称
-      signature: "",
-      // 字数
-      words: "0/30",
+      // 地区
+      location: "",
     };
   },
   head() {
     return {
-      title: "名称 ● Freedom",
+      title: "地区 ● Freedom",
     };
   },
   computed: {
-    ...mapGetters("user", ["storeSignature"]),
-  },
-  watch: {
-    signature(value) {
-      this.words = `${value.length}/60`;
-    },
+    ...mapGetters("user", ["storeLocation"]),
   },
   methods: {
     // 打开对话框
     openModal() {
       this.modalShow = true;
-      this.signature = this.storeSignature;
+      this.location = this.storeLocation;
       this.$nextTick(() => {
         this.$refs.modalInput.focus();
       });
     },
     // 发送修改
-    async update() {
+    async updateLocation() {
       if (this.loading) return;
-      if (this.signature === this.storeSignature) {
+      if (this.location === this.storeLocation) {
         this.modalShow = false;
         return;
       }
       try {
         this.loading = true;
         const { data } = await this.$request.updataUserMsg({
-          signature: this.signature.substr(0, 60),
+          location: this.location,
         });
         this.$store.commit("user/setUser", data);
         this.modalShow = false;
@@ -117,15 +106,15 @@ export default {
 
 
 <style scoped>
-.signature-content {
+.nick-name-content {
   padding: 0 18px;
 }
-.signature-content,
+.nick-name-content,
 .eh-content {
   margin: 0 auto;
   max-width: 660px;
 }
-.signature-header {
+.nick-name-header {
   padding: 0 18px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -149,44 +138,33 @@ export default {
   border-radius: 50%;
   background: #dcdee2;
 }
-.signature-content-title {
+.nick-name-content-title {
   padding: 24px 0;
   color: rgba(0, 0, 0, 0.65);
 }
-.signature-box {
+.nick-name-box {
   padding: 24px;
   border: 1px solid #dadce0;
   border-radius: 8px;
 }
-.signature-account {
+.nick-name-account {
   margin: 0 10px 0 0;
   font-size: 17px;
   font-weight: 500;
   color: #3c4043;
 }
-.signature-title {
+.nick-name-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.signature-title-icon {
+.nick-name-title-icon {
   font-size: 19px;
   color: #515a6e;
 }
 .curpoin {
   cursor: pointer;
-}
-.modal-input-wrap {
-  position: relative;
-}
-.modal-input {
-  padding: 0 40px 0 0;
-}
-.modal-input-prefix {
-  position: absolute;
-  right: 0;
-  top: 4px;
 }
 </style>
 

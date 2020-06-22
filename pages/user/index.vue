@@ -10,7 +10,7 @@
     <div class="ui-header">
       <div class="ui-portrait-wrap layout-center">
         <img v-if="storeImages" :src="storeImages" class="ui-portrait-image" />
-        <div v-else class="ui-portrait layout-center">{{storeUserName|userName}}</div>
+        <div v-else class="ui-portrait layout-center">{{storeNickName|userName}}</div>
       </div>
       <div class="ui-title">欢迎使用，{{storeNickName}}</div>
       <div class="ui-tip">管理自己的信息和安全，从而让 Freedom 更好地为您服务</div>
@@ -64,7 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUserName", "storeNickName", "storeImages"]),
+    ...mapGetters("user", ["storeNickName", "storeImages"]),
   },
 };
 </script>

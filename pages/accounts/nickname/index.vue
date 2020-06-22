@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="nick-name-content">
-      <div class="nick-name-content-title">对您的名称所做的更改将反映在您的 Freedom 帐号中。</div>
+      <div class="nick-name-content-title">对您的昵称所做的更改将反映在您的 Freedom 帐号中。</div>
       <div class="nick-name-box">
         <div class="nick-name-content-title" style="padding:18px 0;">更改昵称</div>
         <div class="nick-name-title">
@@ -67,7 +67,7 @@ export default {
   },
   head() {
     return {
-      title: "名称 ● Freedom",
+      title: "昵称 ● Freedom",
     };
   },
   computed: {

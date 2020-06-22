@@ -22,11 +22,11 @@
       />
     </div>
     <div class="public-header-right nav-middle">
-      <nuxt-link v-if="storeNickName" :to="userPage" class="public-header-right-icon nav-middle">
+      <nuxt-link v-if="storeUserState" :to="userPage" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
       <div
-        v-if="storeNickName"
+        v-if="storeUserState"
         class="user-portrait-wrap"
         data-user-portrait="true"
         :class="{'borderColor':userDropDown}"
@@ -82,7 +82,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeNickName", "storeImages", "storeUserName"]),
+    ...mapGetters("user", [
+      "storeNickName",
+      "storeImages",
+      "storeUserName",
+      "storeUserState",
+    ]),
     // 用户页
     userPage() {
       return `/${this.storeUserName}`;

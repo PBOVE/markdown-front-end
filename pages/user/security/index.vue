@@ -10,7 +10,7 @@
     <div class="user-border">
       <div class="user-title-wrap user-title-password-wrap">
         <div class="user-title">账户安全</div>
-        <img src="@/assets/images/key.png" class='security-image' />
+        <img src="@/assets/images/key.png" class="security-image" />
       </div>
       <div class="user-row">
         <nuxt-link to="/accounts/password" class="user-row-main user-middle">
@@ -42,16 +42,12 @@
 <script>
 // 点击上传照片
 import headPortrait from "@/components/headPortrait/index.vue";
-import { mapGetters } from "vuex";
 
 export default {
   transition: "fade",
   components: { headPortrait },
   data() {
     return {};
-  },
-  computed: {
-    ...mapGetters("user", ["storeUser", "storeImages"]),
   },
 };
 </script>
@@ -73,7 +69,7 @@ export default {
 .delete-account {
   padding: 0 20px 20px;
 }
-.security-image{
+.security-image {
   width: 100px;
   height: 100px;
 }

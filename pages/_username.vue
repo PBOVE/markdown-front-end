@@ -11,7 +11,8 @@
     <valid-remind />
     <div class="index-main scroll">
       <div class="index-content">
-        <div></div>
+        <page-left class="index-content-left" :user="user" />
+        <div class="index-content-right"></div>
       </div>
     </div>
   </div>
@@ -21,10 +22,11 @@
 <script>
 import publicHeader from "@/components/publicHeader/index.vue";
 import validRemind from "@/components/validRemind/index.vue";
+import pageLeft from "@/components/userPageLeft/index.vue";
 
 export default {
   transition: "fade",
-  components: { publicHeader, validRemind },
+  components: { publicHeader, validRemind, pageLeft },
   async validate({ params, app }) {
     const query = { name: params.username };
     const { data } = await app.$request.registerQuery(query);
@@ -58,9 +60,14 @@ export default {
   overflow: auto;
 }
 .index-content {
-  max-width: 1200px;
+  display: flex;
   margin: 0 auto;
   padding: 18px 30px 0;
-  /* border: 1px solid #ccc; */
+  max-width: 1200px;
+}
+.index-content-left {
+  flex-shrink: 0;
+  width: 280px;
+  margin: 0 16px;
 }
 </style>

@@ -45,9 +45,20 @@
         </nuxt-link>
       </div>
       <div class="user-row">
+        <nuxt-link to="/accounts/location" class="user-row-main user-middle">
+          <div class="user-middle-left">
+            <div class="user-row-title">地区</div>
+            <div class="user-row-content">{{storeUser.location}}</div>
+          </div>
+          <div class="user-middle-right">
+            <Icon type="ios-arrow-forward" size="20" />
+          </div>
+        </nuxt-link>
+      </div>
+      <div class="user-row">
         <nuxt-link to="/accounts/signature" class="user-row-main user-middle">
           <div class="user-middle-left">
-            <div class="user-row-title">个性签名</div>
+            <div class="user-row-title">个人介绍</div>
             <div class="user-row-content">{{storeUser.signature}}</div>
           </div>
           <div class="user-middle-right">
@@ -55,6 +66,7 @@
           </div>
         </nuxt-link>
       </div>
+
       <div class="user-row">
         <div class="user-row-main">
           <div class="user-row-title">创建时间</div>
