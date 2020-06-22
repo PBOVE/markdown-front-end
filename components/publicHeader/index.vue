@@ -18,7 +18,6 @@
         placeholder="搜索"
         icon="ios-search"
         v-model="inputData"
-        size="large"
         :data="searchData"
       />
     </div>
@@ -162,7 +161,7 @@ export default {
 }
 .public-header-search {
   margin: 0 0 0 20px;
-  width: 400px;
+  width: 350px;
 }
 .logo-title {
   font-family: Georgia, "Times New Roman", Times, serif;

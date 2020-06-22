@@ -10,7 +10,9 @@
     <public-header :shadow="true" />
     <valid-remind />
     <div class="index-main scroll">
-      <div class="index-content">{{user}}</div>
+      <div class="index-content">
+        <div></div>
+      </div>
     </div>
   </div>
 </template>
