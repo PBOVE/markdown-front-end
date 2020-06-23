@@ -10,7 +10,7 @@
     <div class="public-header-left nav-middle">
       <nuxt-link to="/" class="nav-middle">
         <div class="main-logo" />
-        <div :style="{display:searchHide?'':'none'}" class="logo-title">Freedom</div>
+        <div :style="{display:searchHide?'':'none'}" class="logo-title">TBS.feel</div>
       </nuxt-link>
       <AutoComplete
         :style="{display:searchHide?'none':''}"
@@ -169,7 +169,7 @@ export default {
   width: 350px;
 }
 .logo-title {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: Georgia;
   font-size: 18px;
   font-weight: bold;
   margin: 0 0 0 10px;

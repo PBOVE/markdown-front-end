@@ -56,7 +56,7 @@ export default {
   },
   head() {
     return {
-      title: "账户 ● Freedom",
+      title: "账户 ● TBS.feel",
     };
   },
   computed: {

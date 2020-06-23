@@ -145,7 +145,7 @@ export default {
   },
   head() {
     return {
-      title: "密码 ● Freedom",
+      title: "密码 ● TBS.feel",
     };
   },
   watch: {

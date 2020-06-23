@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="signature-content">
-      <div class="signature-content-title">对您的简介所做的更改将反映在您的 Freedom 帐号中。</div>
+      <div class="signature-content-title">对您的简介所做的更改将反映在您的 TBS.feel 帐号中。</div>
       <div class="signature-box">
         <div class="signature-content-title" style="padding:18px 0;">简介</div>
         <div class="signature-title">
@@ -54,7 +54,7 @@ export default {
   },
   head() {
     return {
-      title: "名称 ● Freedom",
+      title: "名称 ● TBS.feel",
     };
   },
   computed: {

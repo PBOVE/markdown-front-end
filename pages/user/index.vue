@@ -13,14 +13,14 @@
         <div v-else class="ui-portrait layout-center">{{storeNickName|userName}}</div>
       </div>
       <div class="ui-title">欢迎使用，{{storeNickName}}</div>
-      <div class="ui-tip">管理自己的信息和安全，从而让 Freedom 更好地为您服务</div>
+      <div class="ui-tip">管理自己的信息和安全，从而让 TBS.feel 更好地为您服务</div>
     </div>
     <div class="ui-main">
       <div class="ui-box">
         <div class="ui-box-header">
           <div class="ui-box-header-left">
             <h2>个人信息</h2>
-            <div class="ui-box-header-title">您在 Freedom 中使用的基本信息，例如您的昵称和照片</div>
+            <div class="ui-box-header-title">您在 TBS.feel 中使用的基本信息，例如您的昵称和照片</div>
           </div>
           <div class="ui-box-header-right">
             <img src="@/assets/images/personal.png" />
@@ -60,7 +60,7 @@ export default {
   },
   head() {
     return {
-      title: "账户 ● Freedom",
+      title: "账户 ● TBS.feel",
     };
   },
   computed: {

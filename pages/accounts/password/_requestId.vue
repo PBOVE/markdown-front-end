@@ -91,7 +91,7 @@ export default {
   },
   head() {
     return {
-      title: "修改密码 ● Freedom",
+      title: "修改密码 ● TBS.feel",
     };
   },
   watch: {

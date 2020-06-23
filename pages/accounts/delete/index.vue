@@ -13,15 +13,15 @@
         <nuxt-link to="/user/security">
           <Icon type="md-arrow-round-back" class="delete-header-content-icon" />
         </nuxt-link>
-        <div>删除您的 “Freedom” 帐号</div>
+        <div>删除您的 “TBS.feel” 帐号</div>
       </div>
     </div>
     <div class="delete-content">
-      <div class="delete-content-title">您可以永久删除自己的 Freedom 帐号以及所有服务和数据</div>
+      <div class="delete-content-title">您可以永久删除自己的 TBS.feel 帐号以及所有服务和数据</div>
       <div class="user-border delete-main">
         <div>这部分内容非常重要，请仔细阅读。</div>
-        <div class="delete-tip">您正在尝试删除自己的 “Freedom” 帐号（您可以通过此帐号使用各种 “Freedom” 服务）。</div>
-        <div class="delete-tip">删除后，您将无法再使用任何 “Freedom” 服务，并且您的帐号和数据也将会丢失。</div>
+        <div class="delete-tip">您正在尝试删除自己的 “TBS.feel” 帐号（您可以通过此帐号使用各种 “TBS.feel” 服务）。</div>
+        <div class="delete-tip">删除后，您将无法再使用任何 “TBS.feel” 服务，并且您的帐号和数据也将会丢失。</div>
         <Divider />
         <div style="max-width:300px">
           <div style="padding:0px 0 6px;font-size:14px;">账户密码:</div>
@@ -56,7 +56,7 @@ export default {
   },
   head() {
     return {
-      title: "账户删除 ● Freedom",
+      title: "账户删除 ● TBS.feel",
     };
   },
 
@@ -65,7 +65,7 @@ export default {
       if (!this.password) {
         this.$Message.info({
           background: true,
-          content: "请您输入您的 Freedom 账户密码",
+          content: "请您输入您的 TBS.feel 账户密码",
           duration: 5,
         });
         return;

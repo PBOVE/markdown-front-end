@@ -39,7 +39,10 @@
   border-radius: 50%;
   font-size: 0;
 }
-
+.main-user-image:hover {
+  transform: rotate(666turn);
+  transition: all 60s cubic-bezier(.34, 0, .84, 1) 1s;
+}
 .login-button span {
   position: absolute;
   background: #fff;

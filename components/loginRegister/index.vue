@@ -14,7 +14,7 @@
           <div class="title">
             <h3>欢迎来到</h3>
             <h1>
-              <nuxt-link to="/" style="color:#fff;">Freedom</nuxt-link>
+              <nuxt-link to="/" style="color:#fff;">TBS.feel</nuxt-link>
               <span style="font-weight:lighter;">平台</span>
             </h1>
           </div>

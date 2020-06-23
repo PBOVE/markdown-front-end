@@ -28,7 +28,7 @@ export default {
   },
   head() {
     return {
-      title: "页面没有找到 ● Freedom",
+      title: "页面没有找到 ● TBS.feel",
     };
   },
 };

@@ -64,7 +64,7 @@ export default {
   },
   head() {
     return {
-      title: "忘记密码 ● Freedom",
+      title: "忘记密码 ● TBS.feel",
     };
   },
   watch: {

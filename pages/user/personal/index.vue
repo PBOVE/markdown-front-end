@@ -10,7 +10,7 @@
     <div class="user-border">
       <div class="user-title-wrap">
         <div class="user-title">个人资料</div>
-        <div class="user-title-content">Freedom 为您带来更好的服务与帮助</div>
+        <div class="user-title-content">TBS.feel 为您带来更好的服务与帮助</div>
       </div>
       <div class="user-row" @click="headPortrait=true">
         <div class="user-row-main user-middle">

@@ -7,22 +7,40 @@
 
 <template>
   <div class="page-left-wrap">
-    <div class="header">
-      <img :src="'/api/storage/preview/'+userImageSrc" class="image" />
-      <div class="header-title">{{user.signature}}</div>
-    </div>
-    <div class="middle">
-      <div class="middle-title">{{user.nickName}}</div>
-      <div class="middle-content">{{user.userName}}</div>
-    </div>
-    <div class="button-follow">
-      <div v-if="storeUser.userName===user.userName">编辑</div>
-      <div v-else>关注</div>
+    <div class="header-wrap">
+      <div class="header">
+        <img v-if="userImageSrc" :src="'/api/storage/preview/'+userImageSrc" class="image" />
+        <div v-else class="alt-wrap"></div>
+      </div>
+      <div class="middle">
+        <div class="middle-title">{{user.nickName}}</div>
+        <div class="middle-content">{{user.userName}}</div>
+      </div>
     </div>
     <div class="icon-wrap">
       <Icon type="ios-pin-outline" />
       {{user.location}}
     </div>
+    <div class="icon-wrap">
+      <Icon type="ios-paper-outline" />
+      {{user.signature}}
+    </div>
+    <div class="button-follow">
+      <div v-if="storeUser.userName===user.userName">编辑</div>
+      <div v-else>关注</div>
+    </div>
+    <div class="middle-number">
+      <div class="middle-number-row">
+        <Icon type="ios-people-outline" />1 粉丝
+      </div>
+      <div class="middle-number-row">
+        <Icon type="ios-paw-outline" />2 关注
+      </div>
+      <div class="middle-number-row">
+        <Icon type="ios-star-outline" />10 获赞
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -32,6 +50,11 @@ import { mapGetters } from "vuex";
 
 export default {
   props: ["user"],
+  filters: {
+    handleName(name) {
+      return name ? name[0].toUpperCase() : "";
+    },
+  },
   data() {
     return {};
   },
@@ -47,22 +70,17 @@ export default {
 
 <style scoped>
 .header {
-  border: 1px solid #c5c8ce;
-  border-radius: 4px;
-  overflow: hidden;
   font-size: 0;
 }
-.image {
+
+.image,
+.alt-wrap {
   width: 280px;
   height: 280px;
+  border-radius: 50%;
+  border: 1px solid #c5c8ce;
 }
-.header-title {
-  padding: 10px 12px;
-  line-height: 19px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #586069;
-}
+
 .middle {
   padding: 16px 0;
   letter-spacing: 0.1em;
@@ -72,7 +90,7 @@ export default {
   color: #24292e;
 }
 .middle-content {
-  font-family: Georgia, Times New Roman, Times, serif;
+  font-family: Georgia;
   font-size: 18px;
   color: #666;
 }
@@ -84,10 +102,48 @@ export default {
   cursor: pointer;
   color: #24292e;
   letter-spacing: 0.1em;
+  background: #fafbfc;
+}
+.button-follow:hover {
+  background-color: #f3f4f6;
+  transition-duration: 0.1s;
+}
+.middle-number {
+  display: flex;
+  margin: 20px 0 30px;
+}
+.middle-number-row {
+  flex-grow: 1;
 }
 
 .icon-wrap {
   margin: 10px 0;
-  line-height: 16px;
+}
+.middle-number-row i,
+.icon-wrap i {
+  margin: 0 10px 0 0;
+  font-size: 16px;
+  color: #000;
+}
+@media screen and (max-width: 850px) {
+  .image,
+  .alt-wrap {
+    width: 50px;
+    height: 50px;
+  }
+  .header-wrap {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 0;
+  }
+  .middle {
+    padding: 0 0 0 15px;
+  }
+  .middle-title {
+    font-size: 20px;
+  }
+  .middle-content{
+    font-size: 16px;
+  }
 }
 </style>

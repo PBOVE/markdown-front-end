@@ -21,7 +21,7 @@
         </div>
         <div class="header-name">{{storeUser.nickName}}</div>
         <div class="header-name">{{storeUser.userName}}</div>
-        <router-link to="/user" class="header-link-user">管理您的 Freedom 账号</router-link>
+        <router-link to="/user" class="header-link-user">管理您的 TBS.feel 账号</router-link>
       </div>
       <Divider />
       <div class="box-main">

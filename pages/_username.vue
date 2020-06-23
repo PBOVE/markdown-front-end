@@ -12,7 +12,9 @@
     <div class="index-main scroll">
       <div class="index-content">
         <page-left class="index-content-left" :user="user" />
-        <div class="index-content-right"></div>
+        <div class="index-content-right">
+          <page-right />
+        </div>
       </div>
     </div>
   </div>
@@ -23,10 +25,11 @@
 import publicHeader from "@/components/publicHeader/index.vue";
 import validRemind from "@/components/validRemind/index.vue";
 import pageLeft from "@/components/userPageLeft/index.vue";
+import pageRight from "@/components/userPageRight/index.vue";
 
 export default {
   transition: "fade",
-  components: { publicHeader, validRemind, pageLeft },
+  components: { publicHeader, validRemind, pageLeft, pageRight },
   async validate({ params, app }) {
     const query = { name: params.username };
     const { data } = await app.$request.registerQuery(query);
@@ -69,5 +72,18 @@ export default {
   flex-shrink: 0;
   width: 280px;
   margin: 0 16px;
+}
+.index-content-right {
+  margin: 0 0 0 20px;
+}
+@media screen and (max-width: 850px) {
+  .index-content {
+    flex-direction: column;
+    padding: 5px 18px 0;
+  }
+  .index-content-left,
+  .index-content-right {
+    margin: 0;
+  }
 }
 </style>

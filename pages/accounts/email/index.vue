@@ -76,7 +76,7 @@ export default {
   },
   head() {
     return {
-      title: "电子邮箱地址 ● Freedom",
+      title: "电子邮箱地址 ● TBS.feel",
     };
   },
   computed: {

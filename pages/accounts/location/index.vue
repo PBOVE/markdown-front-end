@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="location-content">
-      <div class="location-content-title">对您的地区所做的更改将反映在您的 Freedom 帐号中。</div>
+      <div class="location-content-title">对您的地区所做的更改将反映在您的 TBS.feel 帐号中。</div>
       <div class="location-box">
         <div class="location-content-title" style="padding:18px 0;">更改地区</div>
         <div class="location-title">
@@ -53,7 +53,7 @@ export default {
   },
   head() {
     return {
-      title: "地区 ● Freedom",
+      title: "地区 ● TBS.feel",
     };
   },
   computed: {

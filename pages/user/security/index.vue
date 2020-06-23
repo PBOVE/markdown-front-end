@@ -27,9 +27,9 @@
     <div class="user-border">
       <div class="user-title-wrap">
         <div class="user-title">账户删除</div>
-        <div class="user-title-content">您可以随时删除自己的 “Freedom” 帐号。如果事后改变主意了，您可能无法恢复帐号。</div>
+        <div class="user-title-content">您可以随时删除自己的 “TBS.feel” 帐号。如果事后改变主意了，您可能无法恢复帐号。</div>
         <div class="user-title-content">您将失去该帐号中的所有数据和内容</div>
-        <div class="user-title-content">您将无法使用需要通过该帐号登录的 “Freedom” 服务</div>
+        <div class="user-title-content">您将无法使用需要通过该帐号登录的 “TBS.feel” 服务</div>
       </div>
       <div class="delete-account">
         <nuxt-link to="/accounts/delete">删除你的账户</nuxt-link>
