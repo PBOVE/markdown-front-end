@@ -34,7 +34,7 @@ export default {
   display: flex;
 }
 .header-row {
-  padding: 4px 20px 4px 0;
+  padding: 4px 20px 4px 20px;
   font-size: 16px;
   letter-spacing: 0.1rem;
   cursor: pointer;

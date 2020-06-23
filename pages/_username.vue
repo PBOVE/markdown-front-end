@@ -79,6 +79,7 @@ export default {
 @media screen and (max-width: 850px) {
   .index-content {
     flex-direction: column;
+    align-items: center;
     padding: 5px 18px 0;
   }
   .index-content-left,
