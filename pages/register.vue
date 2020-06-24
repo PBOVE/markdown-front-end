@@ -159,6 +159,9 @@ export default {
         /^login$/,
         /^register$/,
         /^password_reset$/,
+        /^404$/,
+        /^500$/,
+        /^new$/,
       ];
       const verifyName = nameRule => {
         return nameRule.test(name);

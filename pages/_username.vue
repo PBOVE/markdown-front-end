@@ -13,7 +13,8 @@
       <div class="index-content">
         <page-left class="index-content-left" :user="user" />
         <div class="index-content-right">
-          <page-right />
+          <page-right :user="user" />
+          <nuxt-child  />
         </div>
       </div>
     </div>
@@ -74,6 +75,7 @@ export default {
   margin: 0 16px;
 }
 .index-content-right {
+  width: 100%;
   margin: 0 0 0 20px;
 }
 @media screen and (max-width: 850px) {
@@ -87,4 +89,10 @@ export default {
     margin: 0;
   }
 }
+@media screen and (max-width: 550px) {
+  .index-content-right{
+    width: 280px;
+  }
+}
+
 </style>
