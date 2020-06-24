@@ -25,6 +25,7 @@ const authMiddleware: Middleware = async context => {
     '/accounts/delete',
     '/accounts/email',
     '/accounts/password',
+    '/new',
   ];
   const redirectPath = [ '/login', '/register', '/password_reset' ];
   const { path } = route;

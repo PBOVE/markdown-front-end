@@ -16,13 +16,15 @@
           <Option v-for="(item,index) in projectList" :value="item" :key="index">{{ item }}</Option>
         </Select>
         <Button
-          v-if="userName!==storeUserName"
+          v-if="userName!==storeUser.userName&&storeUser.authentication"
           type="success"
           class="header-right-button"
           icon="ios-copy-outline"
+          to='/new'
         >创 建</Button>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUserName"]),
+    ...mapGetters("user", ["storeUser"]),
   },
 };
 </script>
