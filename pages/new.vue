@@ -63,7 +63,7 @@
                 </div>
               </div>
             </Radio>
-            <Radio label="public" class="row-middle" style="margin-top:20px;">
+            <Radio label="private" class="row-middle" style="margin-top:20px;">
               <div class="row-middle" style="margin-left:10px">
                 <img src="@/assets/images/lock.png" class="row-image" />
                 <div class="row-right">
