@@ -12,27 +12,33 @@
         <Input v-model="search" placeholder="查找项目" />
       </div>
       <div class="header-right">
-        <Select v-model="select" class="header-right-select" placeholder="类型" not-found-text>
-          <Option v-for="(item,index) in projectList" :value="item" :key="index">{{ item }}</Option>
-        </Select>
-        <Button
+        <select-box
+          class="header-right-select"
+          header-title="类型"
+          list-width="217px"
+          v-model="select"
+          :list="typeList"
+        />
+        <nuxt-link
           v-if="userName!==storeUser.userName&&storeUser.authentication"
           type="success"
-          class="header-right-button"
-          icon="ios-copy-outline"
-          to='/new'
-        >创 建</Button>
+          class="main-success-button"
+          to="/new"
+        >
+          <Icon type="ios-copy-outline" />创 建
+        </nuxt-link>
       </div>
     </div>
-    
   </div>
 </template>
 
 
 <script>
 import { mapGetters } from "vuex";
+import selectBox from "@/components/selectBox/index.vue";
 
 export default {
+  components: { selectBox },
   transition: "fade",
   data() {
     return {
@@ -41,8 +47,8 @@ export default {
       // 搜索内容
       search: "",
       // 选择内容
-      select: "",
-      projectList: [],
+      select: "全部",
+      typeList: ["全部", "typeList"],
     };
   },
   computed: {
@@ -53,7 +59,8 @@ export default {
 
 
 <style scoped>
-.header {
+.header,
+.header-right {
   display: flex;
 }
 .header-left {
@@ -69,7 +76,7 @@ export default {
     flex-direction: column;
   }
   .header-right-select {
-    margin: 0;
+    margin: 0 16px 0 0;
   }
   .header-right {
     margin: 15px 0 0;
