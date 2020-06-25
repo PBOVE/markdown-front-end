@@ -14,7 +14,10 @@
         <page-left class="index-content-left" :user="user" />
         <div class="index-content-right">
           <page-right :user="user" />
-          <nuxt-child  />
+          <transition name="fade" mode="out-in">
+            <index-page v-if="!tab" />
+            <project-page v-else-if="tab==='project'" :projects="projects" />
+          </transition>
         </div>
       </div>
     </div>
@@ -27,19 +30,31 @@ import publicHeader from "@/components/publicHeader/index.vue";
 import validRemind from "@/components/validRemind/index.vue";
 import pageLeft from "@/components/userPageLeft/index.vue";
 import pageRight from "@/components/userPageRight/index.vue";
+import indexPage from "@/components/_username/index.vue";
+import projectPage from "@/components/_username/project.vue";
 
 export default {
   transition: "fade",
-  components: { publicHeader, validRemind, pageLeft, pageRight },
+  components: {
+    publicHeader,
+    validRemind,
+    pageLeft,
+    pageRight,
+    indexPage,
+    projectPage,
+  },
   async validate({ params, app }) {
     const query = { name: params.username };
     const { data } = await app.$request.registerQuery(query);
     return data;
   },
   async asyncData({ params, app, redirect }) {
-    const query = { username: params.username };
-    const { data } = await app.$request.queryUser(query);
-    return { user: data };
+    const { username } = params;
+    const { data: user } = await app.$request.queryUser({ username });
+    const { data: projects } = await app.$request.getProject({
+      author: username,
+    });
+    return { user, projects };
   },
   data() {
     return {
@@ -47,7 +62,11 @@ export default {
       userPage: this.$route.params.username,
     };
   },
-  computed: {},
+  computed: {
+    tab() {
+      return this.$route.query.tab;
+    },
+  },
 };
 </script>
 
@@ -90,9 +109,8 @@ export default {
   }
 }
 @media screen and (max-width: 550px) {
-  .index-content-right{
+  .index-content-right {
     width: 280px;
   }
 }
-
 </style>

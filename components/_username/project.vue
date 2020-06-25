@@ -29,6 +29,13 @@
         </nuxt-link>
       </div>
     </div>
+    <div class="content">
+      <div v-for="item in projects" :key="item.path">
+        <div>{{item.title}}</div>
+        <div>{{item.description}}</div>
+        <div>{{item.createTime}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,7 +46,7 @@ import selectBox from "@/components/selectBox/index.vue";
 
 export default {
   components: { selectBox },
-  transition: "fade",
+  props: ["projects"],
   data() {
     return {
       // 用户
@@ -70,7 +77,9 @@ export default {
   margin: 0 16px;
   width: 120px;
 }
-
+.content {
+  margin: 20px 0 0 0;
+}
 @media screen and (max-width: 550px) {
   .header {
     flex-direction: column;

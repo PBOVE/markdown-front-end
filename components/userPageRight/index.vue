@@ -8,17 +8,13 @@
 <template>
   <div class="page-right">
     <div class="header">
-      <nuxt-link
-        :to="'/'+user.userName"
-        class="header-row"
-        :class="{border:pathArray[0].test(path)}"
-      >
+      <nuxt-link :to="'/'+user.userName" class="header-row" :class="{border:!tab}">
         <Icon type="ios-book-outline" />概述
       </nuxt-link>
       <nuxt-link
-        :to="'/'+user.userName + '/project'"
         class="header-row"
-        :class="{border:pathArray[1].test(path)}"
+        :to="'/'+user.userName + '?tab=project'"
+        :class="{border:tab==='project'}"
       >
         <Icon type="ios-folder-open-outline" />项目
       </nuxt-link>
@@ -31,13 +27,11 @@
 export default {
   props: ["user"],
   data() {
-    return {
-      pathArray: [/^\/[\w]+$/, /^\/[\w]+\/project$/],
-    };
+    return {};
   },
   computed: {
-    path() {
-      return this.$route.path;
+    tab() {
+      return this.$route.query.tab;
     },
   },
 };

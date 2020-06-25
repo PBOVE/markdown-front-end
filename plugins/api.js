@@ -18,6 +18,8 @@ const request = {
   forgetEmail: params => axios.get('/accounts/password/link', { params }),
   // 验证 requestId
   verifyRequestId: (requestId, params) => axios.get(`/valid/${requestId}`, { params }),
+  // 获取项目
+  getProject: params => axios.get('/article', { params }),
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
   // 修改密码

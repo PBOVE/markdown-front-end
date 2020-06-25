@@ -24,7 +24,7 @@
         <div class="row">
           <div class="row-header">
             <div class="row-title row-person row-person-title">所有者</div>
-            <div class="row-title row-must">项目名称</div>
+            <div class="row-title row-must">项目路径</div>
           </div>
           <div class="row-main row-middle">
             <div class="row-person row-middle row-border">
@@ -46,6 +46,13 @@
         </div>
         <Divider />
         <div class="row">
+          <div class="row-title row-must">项目名称</div>
+          <div class="row-main">
+            <input v-model="projectName" type="text" class="row-input" />
+          </div>
+        </div>
+        <Divider />
+        <div class="row">
           <div class="row-title">描述</div>
           <div class="row-main">
             <input v-model="projectName" type="text" class="row-input" />
@@ -53,8 +60,8 @@
         </div>
         <Divider />
         <div class="row">
-          <RadioGroup v-model="single">
-            <Radio label="public" class="row-middle">
+          <RadioGroup v-model="share">
+            <Radio label="1" class="row-middle">
               <div class="row-middle" style="margin-left:10px">
                 <img src="@/assets/images/bookmark.png" class="row-image" />
                 <div class="row-right">
@@ -63,7 +70,7 @@
                 </div>
               </div>
             </Radio>
-            <Radio label="private" class="row-middle" style="margin-top:20px;">
+            <Radio label="0" class="row-middle" style="margin-top:20px;">
               <div class="row-middle" style="margin-left:10px">
                 <img src="@/assets/images/lock.png" class="row-image" />
                 <div class="row-right">
@@ -103,6 +110,8 @@ export default {
       disabled: true,
       // 项目名称
       projectName: "",
+      // 分享
+      share: "1",
     };
   },
   head() {
