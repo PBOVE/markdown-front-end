@@ -39,7 +39,7 @@
             </div>
             <span class="row-line">/</span>
             <div class="row-input-tool">
-              <Poptip word-wrap trigger="focus" :content="content" placement="bottom-start">
+              <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
                 <input v-model="path" ref="pathRef" type="text" class="row-input" />
               </Poptip>
             </div>
@@ -160,12 +160,20 @@ export default {
     path(value) {
       this.$refs.pathRef.classList.remove("row-error");
       const dom = document.querySelector(".ivu-poptip-popper");
-      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
+      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]\-]+/g;
       if (!value.replace(/[\s]+/g, "")) {
         dom.classList.add("row-input-tool-tip");
       } else {
         dom.classList.remove("row-input-tool-tip");
-        this.content = `您将创建的路径为 ${value.replace(reg, "-")}`;
+        const newValue = value.replace(reg, "-");
+        const regPath = /^[A-Za-z0-9\-]+$/;
+        if (regPath.test(newValue)) {
+          this.content = `您将创建的路径为 ${newValue}`;
+          dom.classList.remove("poptip-error");
+        } else {
+          dom.classList.add("poptip-error");
+          this.content = `项目路径只能包含数字,字母,和连字符`;
+        }
       }
     },
     description(value) {
@@ -200,8 +208,12 @@ export default {
     },
     // 检测
     verifyContent() {
+      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
       let verid = true;
-      if (!this.path.replace(/[\s]+/g, "")) {
+      if (
+        !this.path.replace(/[\s]+/g, "") ||
+        !/^[A-Za-z0-9\-]+$/.test(this.path.replace(reg, "-"))
+      ) {
         this.$refs.pathRef.classList.add("row-error");
         verid = false;
       }
@@ -350,9 +362,11 @@ export default {
 }
 .new-wrap .ivu-poptip-body-content-word-wrap {
   word-break: break-all;
-  color: #000;
 }
 .new-wrap .ivu-poptip-body-content-inner {
   color: #000;
+}
+.new-wrap .poptip-error .ivu-poptip-body-content-inner {
+  color: #ed4014;
 }
 </style>

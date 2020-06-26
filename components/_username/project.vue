@@ -26,7 +26,7 @@
     <div class="content">
       <div v-for="item in projects.content" :key="item.path" class="row">
         <div class="row-left">
-          <div class="row-middle">
+          <div class="row-middle row-start">
             <nuxt-link :to="'/'+user.userName+'/'+item.path" class="row-link">{{item.title}}</nuxt-link>
             <div v-if="!item.share" class="row-share">{{item.share|shareFilter}}</div>
           </div>
@@ -183,7 +183,7 @@ export default {
   border-bottom: 2px solid #0366d6;
 }
 .row-share {
-  display: inline-block;
+  flex-shrink: 0;
   margin: 0 0 0 10px;
   padding: 0 5px;
   border: 1px solid #e1e4e8;
@@ -236,6 +236,12 @@ export default {
   }
   .header-right {
     margin: 15px 0 0;
+  }
+  .row-right {
+    padding: 0 0 0 20px;
+  }
+  .row-start{
+    align-items: flex-start;
   }
 }
 </style>
