@@ -8,7 +8,7 @@
 <template>
   <div class="new-wrap">
     <public-header :shadow="true" />
-    <div class="main">
+    <div class="main scroll">
       <div class="content">
         <div class="content-header">
           <div class="content-header-title">创建一个新的项目</div>
@@ -18,7 +18,13 @@
         <div class="row">
           <div class="row-title row-must">文档格式</div>
           <div class="row-content">请选择文档格式</div>
-          <select-box class="select" header-title="格式" v-model="select" :list="textList" />
+          <select-box
+            class="select"
+            v-model="select"
+            header-title="格式"
+            default="Markdown编辑器"
+            :list="textList"
+          />
         </div>
         <Divider />
         <div class="row">
@@ -26,36 +32,42 @@
             <div class="row-title row-person row-person-title">所有者</div>
             <div class="row-title row-must">项目路径</div>
           </div>
-          <div class="row-main row-middle">
+          <div class="row-main row-middle-start">
             <div class="row-person row-middle row-border">
               <img :src="storeImages" class="row-person-img" />
               <span>{{storeUserName}}</span>
             </div>
             <span class="row-line">/</span>
-            <Tooltip
-              :content="content"
-              theme="light"
-              :disabled="disabled"
-              class="row-input-tool-wrap"
-            >
-              <div class="row-input-tool">
-                <input v-model="projectName" type="text" class="row-input" />
-              </div>
-            </Tooltip>
+            <div class="row-input-tool">
+              <input v-model="path" ref="pathRef" type="text" class="row-input" />
+            </div>
           </div>
         </div>
         <Divider />
         <div class="row">
           <div class="row-title row-must">项目名称</div>
-          <div class="row-main">
-            <input v-model="projectName" type="text" class="row-input" />
+          <div class="row-main row-position">
+            <input
+              v-model="title"
+              ref="titleRef"
+              class="row-input row-input-position"
+              type="text"
+              maxlength="30"
+            />
+            <div class="row-size-position">{{titleSize}}</div>
           </div>
         </div>
         <Divider />
         <div class="row">
           <div class="row-title">描述</div>
-          <div class="row-main">
-            <input v-model="projectName" type="text" class="row-input" />
+          <div class="row-main row-position">
+            <input
+              v-model="description"
+              class="row-input row-input-position"
+              type="text"
+              maxlength="60"
+            />
+            <div class="row-size-position">{{descriptionSize}}</div>
           </div>
         </div>
         <Divider />
@@ -82,7 +94,13 @@
           </RadioGroup>
         </div>
         <Divider />
-        <button class="main-success-button">创建项目</button>
+        <button
+          class="main-success-button"
+          :style="{background: loading?'#2ea44f88':''}"
+          @click="handleSubmit"
+        >
+          <Icon type="ios-loading" class="main-spin-icon-load" v-show="loading" />创建项目
+        </button>
       </div>
     </div>
   </div>
@@ -102,16 +120,25 @@ export default {
   data() {
     return {
       // 选择器选择
-      select: "Markdown编辑器",
-      textList: ["Markdown编辑器", "富文本编辑器"],
-      // 显示的内容
-      content: "",
-      // 是否禁用提示框
-      disabled: true,
-      // 项目名称
-      projectName: "",
+      select: "markdown",
+      textList: [
+        { label: "Markdown编辑器", value: "markdown" },
+        { label: "富文本编辑器", value: "richText" },
+      ],
+      // 路径
+      path: "",
       // 分享
       share: "1",
+      // 描述
+      description: "",
+      descriptionSize: "0/60",
+      // 名称
+      title: "",
+      titleSize: "0/30",
+      // 路径
+      path: "",
+      // 加载
+      loading: false,
     };
   },
   head() {
@@ -123,9 +150,50 @@ export default {
     ...mapGetters("user", ["storeUserName", "storeImages"]),
   },
   watch: {
-    projectName(value) {
+    path(value) {
+      this.$refs.pathRef.classList.remove("row-error");
+    },
+    description(value) {
+      this.descriptionSize = `${value.length}/60`;
+    },
+    title(value) {
+      this.$refs.titleRef.classList.remove("row-error");
+      this.titleSize = `${value.length}/30`;
+    },
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      const result = this.verifyContent();
       const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
-      console.log(value.replace(reg, "-"));
+      if (!result) return;
+      this.loading = true;
+      const params = {
+        path: this.path.replace(reg, "-"),
+        share: this.share === "1",
+        format: this.select,
+        title: this.title,
+      };
+      try {
+        this.$request.createProject(params);
+        this.$router.push(`/${this.storeUserName}/${params.path}`);
+      } catch (err) {
+        this.$refs.pathRef.classList.add("row-error");
+      }
+      this.loading = false;
+    },
+    // 检测
+    verifyContent() {
+      let verid = true;
+      if (!this.path.replace(/[\s]+/g, "")) {
+        this.$refs.pathRef.classList.add("row-error");
+        verid = false;
+      }
+      if (!this.title) {
+        this.$refs.titleRef.classList.add("row-error");
+        verid = false;
+      }
+      return verid;
     },
   },
 };
@@ -211,7 +279,7 @@ export default {
 }
 .row-input {
   outline: 0;
-  text-indent: 1em;
+  text-indent: 0.2em;
   width: 100%;
 }
 .row-input:focus {
@@ -226,15 +294,31 @@ export default {
 .row-right {
   margin: 0 0 0 10px;
 }
+.row-position {
+  position: relative;
+}
+.row-input-position {
+  padding: 0 40px 0 0;
+}
+.row-size-position {
+  position: absolute;
+  top: 7px;
+  right: 4px;
+}
+.row-middle-start {
+  display: flex;
+  justify-items: flex-start;
+}
+.row-input.row-error {
+  border: 1px solid #ed4014;
+  box-shadow: 0 0 0 2px rgba(237, 64, 20, 0.2);
+}
 @media screen and (max-width: 750px) {
   .content {
     margin: 0 20px;
   }
-  .row-input-tool-wrap {
-    flex: 1;
-  }
   .row-input-tool {
-    width: 100%;
+    flex: 1;
   }
 }
 </style>

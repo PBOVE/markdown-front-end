@@ -9,7 +9,7 @@
   <div class="select-box-wrap" tabindex="0" @blur="listShow=false">
     <div class="select-selection middle-center" @click="listShow=!listShow">
       <span style="color:#24292e;font-weight: 500;opacity: .75;">{{headerTitle}}:</span>
-      <span style="margin:0 3px;">{{parent}}</span>
+      <span style="margin:0 3px;">{{select}}</span>
       <Icon type="md-arrow-dropdown" />
     </div>
     <transition name="list">
@@ -19,11 +19,16 @@
             <span>选择{{headerTitle}}</span>
             <Icon type="md-close" class="select-ul-header-icon" @click="listShow=false" />
           </div>
-          <div v-for="item in list" :key="item" class="select-li border">
+          <div
+            v-for="item in list"
+            class="select-li border"
+            :key="item.value"
+            @click="handleClick(item)"
+          >
             <div class="select-li-icon">
-              <Icon type="md-checkmark" v-if="item==parent" />
+              <Icon type="md-checkmark" v-if="item.value===parent" />
             </div>
-            <div>{{item}}</div>
+            <div>{{item.label}}</div>
           </div>
         </div>
       </div>
@@ -37,6 +42,7 @@ export default {
   props: {
     list: Array,
     parent: String,
+    default: String,
     "header-title": String,
     "list-width": String,
   },
@@ -46,11 +52,18 @@ export default {
   },
   data() {
     return {
+      // 选择
+      select: this.default,
       // 列表展示
       listShow: false,
     };
   },
-  methods: {},
+  methods: {
+    handleClick(item) {
+      this.select = item.label;
+      this.$emit("parent-event", item.value);
+    },
+  },
 };
 </script>
 
@@ -67,6 +80,7 @@ export default {
   justify-content: center;
 }
 .select-selection {
+  padding: 0 10px;
   min-height: 32px;
   background: #fafbfc;
   border: 1px solid rgba(27, 31, 35, 0.15);

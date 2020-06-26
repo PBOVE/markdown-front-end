@@ -16,7 +16,7 @@
           <page-right :user="user" />
           <transition name="fade" mode="out-in">
             <index-page v-if="!tab" />
-            <project-page v-else-if="tab==='project'" :projects="projects" />
+            <project-page v-else-if="tab==='project'" :projects="projects" :user="user" />
           </transition>
         </div>
       </div>

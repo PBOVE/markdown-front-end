@@ -36,6 +36,8 @@ const request = {
   LoginOut: () => axios.post('/user/logout'),
   // 注册
   register: params => axios.post('/register', params, header),
+  // 创建项目
+  createProject: params => axios.post('/article', params, header),
   // 删除账户
   deleteAccount: params => axios.delete('/user/me', { data: params }),
 };

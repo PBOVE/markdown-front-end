@@ -53,6 +53,9 @@ const showStatus = (status: number) => {
     case 4007:
       message = '密码输入错误,请重新输入密码';
       break;
+    case 4008:
+      message = '项目路径已经存在,请重新设置';
+      break;
     default:
       message = `连接出错(${status})!`;
   }
