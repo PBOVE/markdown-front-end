@@ -16,7 +16,7 @@
           <page-right :user="user" />
           <transition name="fade" mode="out-in">
             <index-page v-if="!tab" />
-            <project-page v-else-if="tab==='project'" :projects="projects" :user="user" />
+            <project-page v-else-if="tab==='projects'" :projects.sync="projects" :user="user" />
           </transition>
         </div>
       </div>
@@ -48,13 +48,15 @@ export default {
     const { data } = await app.$request.registerQuery(query);
     return data;
   },
-  async asyncData({ params, app, redirect }) {
+  async asyncData({ params, app, redirect, query }) {
     const { username } = params;
-    const { data: user } = await app.$request.queryUser({ username });
-    const { data: projects } = await app.$request.getProject({
-      author: username,
-    });
-    return { user, projects };
+    const title = query.q;
+    const page = query.page;
+    const result = await Promise.all([
+      app.$request.queryUser({ username }),
+      app.$request.getProject({ author: username, title, page }),
+    ]);
+    return { user: result[0].data, projects: result[1].data };
   },
   data() {
     return {
@@ -64,7 +66,22 @@ export default {
   },
   computed: {
     tab() {
-      return this.$route.query.tab;
+      const paramsPath = ["projects"];
+      const { tab } = this.$route.query;
+      return paramsPath.includes(tab) ? tab : "";
+    },
+  },
+  watch: {
+    async $route(to, from) {
+      const { query: oldVal } = from;
+      const { query: newVal } = to;
+      if (oldVal.q !== newVal.q || oldVal.page !== newVal.page) {
+        const title = newVal.q;
+        const page = newVal.page;
+        const params = { page, title, author: this.user.userName };
+        const { data } = await this.$request.getProject(params);
+        this.projects = data;
+      }
     },
   },
 };

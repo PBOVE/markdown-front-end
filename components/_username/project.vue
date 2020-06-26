@@ -9,21 +9,14 @@
   <div class="project">
     <div class="header">
       <div class="header-left">
-        <Input v-model="search" placeholder="查找项目" />
+        <Input v-model="search" placeholder="查找项目" @on-enter="handleSearch" />
       </div>
       <div class="header-right">
-        <select-box
-          v-model="select"
-          class="header-right-select"
-          header-title="类型"
-          list-width="217px"
-          default="全部"
-          :list="typeList"
-        />
+        <button class="row-praise" style="min-width:80px;" @click="handleSearch">搜索</button>
         <nuxt-link
-          v-if="userName!==storeUser.userName&&storeUser.authentication"
+          v-if="user.userName===storeUser.userName&&storeUser.authentication"
           type="success"
-          class="main-success-button"
+          class="main-success-button header-button"
           to="/new"
         >
           <Icon type="ios-copy-outline" />创 建
@@ -31,7 +24,7 @@
       </div>
     </div>
     <div class="content">
-      <div v-for="item in projects" :key="item.path" class="row">
+      <div v-for="item in projects.content" :key="item.path" class="row">
         <div class="row-left">
           <div class="row-middle">
             <nuxt-link :to="'/'+user.userName+'/'+item.path" class="row-link">{{item.title}}</nuxt-link>
@@ -45,11 +38,14 @@
         </div>
         <div class="row-right">
           <div class="row-praise row-middle">
-            <Icon type="ios-star-outline" style="margin-right:2px;" size="14" />
+            <Icon type="ios-star-outline" style="margin-right:2px; font-weight:bold;" size="14" />
             <span>点赞</span>
           </div>
         </div>
       </div>
+    </div>
+    <div class="project-footer row-middle" v-if="projects.totalElements">
+      <Page :total="projects.totalElements" size="small" :page-size="10" @on-change="pageChange" />
     </div>
   </div>
 </template>
@@ -102,22 +98,15 @@ export default {
   },
   data() {
     return {
-      // 用户
-      userName: this.$route.params.userName,
       // 搜索内容
-      search: "",
-      // 选择内容
-      select: "全部",
-      typeList: [
-        { value: "全部", label: "全部" },
-        { value: "typeScript", label: "typeScript" },
-      ],
+      search: this.$route.query.q,
     };
   },
   computed: {
     ...mapGetters("user", ["storeUser"]),
   },
   methods: {
+    // 时间转换
     timeConversion(time) {
       const date = new Date(time);
       const completion = num => {
@@ -128,6 +117,28 @@ export default {
       )}月${completion(date.getDate())}日 ${completion(
         date.getHours(),
       )}:${completion(date.getMinutes())}`;
+    },
+    // 处理搜索
+    handleSearch() {
+      this.$router.push({
+        path: `/${this.user.userName}`,
+        query: {
+          tab: "projects",
+          q: this.search,
+          page: 0,
+        },
+      });
+    },
+    // 页码改变的回调，返回改变后的页码
+    pageChange(page) {
+      this.$router.push({
+        path: `/${this.user.userName}`,
+        query: {
+          tab: "projects",
+          q: this.$route.query.q,
+          page: page - 1,
+        },
+      });
     },
   },
 };
@@ -142,19 +153,21 @@ export default {
 .header-left {
   flex: 1;
 }
-.header-right-select {
-  margin: 0 16px;
-  min-width: 120px;
+.header-right,
+.header-button {
+  margin: 0 0 0 16px;
 }
 .content {
   margin: 20px 0 0 0;
-  border-top: 1px solid #e1e4e8;
 }
 .row {
   display: flex;
   justify-content: space-between;
   padding: 24px 0;
   border-top: 1px solid #e1e4e8;
+}
+.row:last-of-type {
+  border-bottom: 1px solid #e1e4e8;
 }
 .row-right {
   flex-shrink: 0;
@@ -194,14 +207,25 @@ export default {
   font-size: 12px;
   background: #fafbfc;
   border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
+  border-radius: 4px;
   box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
     inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
   transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  outline: none;
   cursor: pointer;
 }
 .row-praise:hover {
   background-color: #f3f4f6;
+}
+.project-footer {
+  justify-content: center;
+  margin: 20px 0;
+}
+.content-tip {
+  margin: 20px auto;
+  text-align: center;
+  font-size: 16px;
+  color: #808695;
 }
 @media screen and (max-width: 550px) {
   .header {

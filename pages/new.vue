@@ -39,7 +39,9 @@
             </div>
             <span class="row-line">/</span>
             <div class="row-input-tool">
-              <input v-model="path" ref="pathRef" type="text" class="row-input" />
+              <Poptip word-wrap trigger="focus" :content="content" placement="bottom-start">
+                <input v-model="path" ref="pathRef" type="text" class="row-input" />
+              </Poptip>
             </div>
           </div>
         </div>
@@ -127,6 +129,7 @@ export default {
       ],
       // 路径
       path: "",
+      content: "",
       // 分享
       share: "1",
       // 描述
@@ -149,9 +152,21 @@ export default {
   computed: {
     ...mapGetters("user", ["storeUserName", "storeImages"]),
   },
+  mounted() {
+    const dom = document.querySelector(".ivu-poptip-popper");
+    dom.classList.add("row-input-tool-tip");
+  },
   watch: {
     path(value) {
       this.$refs.pathRef.classList.remove("row-error");
+      const dom = document.querySelector(".ivu-poptip-popper");
+      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
+      if (!value.replace(/[\s]+/g, "")) {
+        dom.classList.add("row-input-tool-tip");
+      } else {
+        dom.classList.remove("row-input-tool-tip");
+        this.content = `您将创建的路径为 ${value.replace(reg, "-")}`;
+      }
     },
     description(value) {
       this.descriptionSize = `${value.length}/60`;
@@ -162,7 +177,7 @@ export default {
     },
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       if (this.loading) return;
       const result = this.verifyContent();
       const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
@@ -173,9 +188,10 @@ export default {
         share: this.share === "1",
         format: this.select,
         title: this.title,
+        description: this.description,
       };
       try {
-        this.$request.createProject(params);
+        await this.$request.createProject(params);
         this.$router.push(`/${this.storeUserName}/${params.path}`);
       } catch (err) {
         this.$refs.pathRef.classList.add("row-error");
@@ -275,6 +291,7 @@ export default {
   font-size: 23px;
 }
 .row-input-tool {
+  position: relative;
   width: 300px;
 }
 .row-input {
@@ -323,7 +340,19 @@ export default {
 }
 </style>
 <style>
-.new-wrap .ivu-tooltip-rel {
+.new-wrap .ivu-poptip-popper,
+.new-wrap .ivu-poptip-rel,
+.new-wrap .ivu-poptip {
   width: 100%;
+}
+.new-wrap .row-input-tool-tip {
+  display: none;
+}
+.new-wrap .ivu-poptip-body-content-word-wrap {
+  word-break: break-all;
+  color: #000;
+}
+.new-wrap .ivu-poptip-body-content-inner {
+  color: #000;
 }
 </style>

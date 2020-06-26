@@ -13,8 +13,8 @@
       </nuxt-link>
       <nuxt-link
         class="header-row"
-        :to="'/'+user.userName + '?tab=project'"
-        :class="{border:tab==='project'}"
+        :to="'/'+user.userName + '?tab=projects'"
+        :class="{border:tab==='projects'}"
       >
         <Icon type="ios-folder-open-outline" />项目
       </nuxt-link>
@@ -31,7 +31,9 @@ export default {
   },
   computed: {
     tab() {
-      return this.$route.query.tab;
+      const paramsPath = ["projects"];
+      const { tab } = this.$route.query;
+      return paramsPath.includes(tab) ? tab : "";
     },
   },
 };
