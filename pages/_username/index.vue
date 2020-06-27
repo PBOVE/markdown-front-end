@@ -77,7 +77,7 @@ export default {
       const { query: newVal } = to;
       if (oldVal.q !== newVal.q || oldVal.page !== newVal.page) {
         const title = newVal.q;
-        const page = newVal.page;
+        const page = newVal.page - 1;
         const params = { page, title, author: this.user.userName };
         const { data } = await this.$request.getProject(params);
         this.projects = data;

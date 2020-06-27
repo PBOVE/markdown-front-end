@@ -6,9 +6,9 @@
 
 
 <template>
-  <div class="container">
+  <div class="">
     <public-header :shadow="true" />
-     hello 
+    <div></div> 
   </div>
 </template>
 

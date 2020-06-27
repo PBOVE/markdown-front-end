@@ -8,7 +8,7 @@
 <template>
   <div class="login-register-wrap">
     <div class="login-from-wrap">
-      <img class="signal" src="@/assets/images/star.png" />
+      <img class="signal" src="@/assets/images/ball.png" />
       <div class="login-from">
         <div class="half half-show">
           <div class="title">

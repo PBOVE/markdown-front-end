@@ -37,9 +37,11 @@
           >{{item.updateTime|timeFilter}}</div>
         </div>
         <div class="row-right">
-          <div class="row-praise row-middle">
-            <Icon type="ios-star-outline" style="margin-right:2px; font-weight:bold;" size="14" />
-            <span>点赞</span>
+          <div class="row-praise row-middle row-star">
+            <img v-if="item.islike" src="@/assets/images/star.png" class="row-praise-image" />
+            <img v-else src="@/assets/images/unstar.png" class="row-praise-image" />
+            <span v-if="item.islike">取消</span>
+            <span v-else>点赞</span>
           </div>
         </div>
       </div>
@@ -136,7 +138,7 @@ export default {
         query: {
           tab: "projects",
           q: this.$route.query.q,
-          page: page - 1,
+          page: page,
         },
       });
     },
@@ -201,6 +203,12 @@ export default {
 .row-time {
   color: #586069;
 }
+.row-star.row-praise {
+  font-size: 0;
+}
+.row-star.row-praise span {
+  font-size: 12px;
+}
 .row-praise {
   padding: 4px 12px;
   color: #24292e;
@@ -216,6 +224,11 @@ export default {
 }
 .row-praise:hover {
   background-color: #f3f4f6;
+}
+.row-praise-image {
+  height: 16px;
+  width: 16px;
+  margin: 0 4px 0 0;
 }
 .project-footer {
   justify-content: center;
@@ -240,7 +253,7 @@ export default {
   .row-right {
     padding: 0 0 0 20px;
   }
-  .row-start{
+  .row-start {
     align-items: flex-start;
   }
 }
