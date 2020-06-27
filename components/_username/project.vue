@@ -127,7 +127,7 @@ export default {
         query: {
           tab: "projects",
           q: this.search,
-          page: 0,
+          page: 1,
         },
       });
     },
