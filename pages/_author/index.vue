@@ -11,7 +11,7 @@
     <valid-remind />
     <div class="index-main scroll">
       <div class="index-content">
-        <page-left class="index-content-left" :user="user" />
+        <page-left class="index-content-left" :user="user" :number="number" />
         <div class="index-content-right">
           <page-right :user="user" />
           <transition name="fade" mode="out-in">
@@ -61,7 +61,12 @@ export default {
       app.$request.queryUser({ username: author }),
       app.$request.getProject({ author, title, page }),
     ]);
-    return { user: result[0].data, projects: result[1].data };
+    console.log(result);
+    return {
+      user: result[0].data.user,
+      number: result[0].data.number,
+      projects: result[1].data,
+    };
   },
   data() {
     return {

@@ -10,7 +10,7 @@
     <div class="header-wrap">
       <div class="header">
         <img v-if="userImageSrc" :src="'/api/storage/preview/'+userImageSrc" class="image" />
-        <div v-else class="alt-wrap main-center-middle">{{storeNickName|handleName}}</div>
+        <div v-else class="alt-wrap main-center-middle">{{user.nickName|handleName}}</div>
       </div>
       <div class="middle">
         <div class="middle-title">{{user.nickName}}</div>
@@ -19,11 +19,11 @@
     </div>
     <div class="icon-wrap">
       <Icon type="ios-pin-outline" />
-      {{user.location}}
+      {{user.location||'未填写'}}
     </div>
     <div class="icon-wrap">
       <Icon type="ios-paper-outline" />
-      {{user.signature}}
+      {{user.signature||'未填写'}}
     </div>
     <div class="button-follow">
       <div v-if="storeUser.userName===user.userName">编辑</div>
@@ -31,13 +31,14 @@
     </div>
     <div class="middle-number">
       <div class="middle-number-row">
-        <Icon type="ios-people-outline" />1 粉丝
+        <Icon type="ios-people-outline" />0 粉丝
       </div>
       <div class="middle-number-row">
-        <Icon type="ios-paw-outline" />2 关注
+        <Icon type="ios-paw-outline" />0 关注
       </div>
       <div class="middle-number-row">
-        <Icon type="ios-star-outline" />10 获赞
+        <Icon type="ios-star-outline" />
+        {{number.like}} 获赞
       </div>
     </div>
   </div>
@@ -48,7 +49,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["user"],
+  props: ["user", "number"],
   filters: {
     handleName(name) {
       return name ? name[0].toUpperCase() : "";
@@ -84,7 +85,6 @@ export default {
   font-family: Georgia;
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
   color: #fff;
-  
 }
 .middle {
   padding: 16px 0;
