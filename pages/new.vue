@@ -46,22 +46,6 @@
               </Poptip>
             </div>
           </div>
-          <!-- <div class="row-header">
-            <div class="row-title row-person row-person-title">所有者</div>
-            <div class="row-title row-must">项目路径</div>
-          </div>
-          <div class="row-main row-middle-start">
-            <div class="row-person row-middle row-border">
-              <img :src="storeImages" class="row-person-img" />
-              <span>{{storeUserName}}</span>
-            </div>
-            <span class="row-line">/</span>
-            <div class="row-input-tool">
-              <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
-                <input v-model="path" ref="pathRef" type="text" class="row-input" />
-              </Poptip>
-            </div>
-          </div>-->
         </div>
         <Divider />
         <div class="row">

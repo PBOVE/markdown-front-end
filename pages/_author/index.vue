@@ -61,7 +61,6 @@ export default {
       app.$request.queryUser({ username: author }),
       app.$request.getProject({ author, title, page }),
     ]);
-    console.log(result);
     return {
       user: result[0].data.user,
       number: result[0].data.number,
