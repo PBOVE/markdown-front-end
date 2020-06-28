@@ -85,6 +85,7 @@ export default {
   font-family: Georgia;
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
   color: #fff;
+  user-select: none;
 }
 .middle {
   padding: 16px 0;

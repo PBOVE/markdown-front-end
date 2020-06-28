@@ -131,7 +131,7 @@ export default {
       ],
       // 路径
       path: "",
-      content: "",
+      content: "请输入项目路径",
       // 分享
       share: "1",
       // 描述
@@ -154,23 +154,18 @@ export default {
   computed: {
     ...mapGetters("user", ["storeUserName", "storeImages"]),
   },
-  mounted() {
-    const dom = document.querySelector(".ivu-poptip-popper");
-    dom.classList.add("row-input-tool-tip");
-  },
   watch: {
     path(value) {
       this.$refs.pathRef.classList.remove("row-error");
       const dom = document.querySelector(".ivu-poptip-popper");
       const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]\-]+/g;
       if (!value.replace(/[\s]+/g, "")) {
-        dom.classList.add("row-input-tool-tip");
+        this.content = "请输入项目路径";
       } else {
-        dom.classList.remove("row-input-tool-tip");
         const newValue = value.replace(reg, "-");
         const regPath = /^[A-Za-z0-9\-]+$/;
         if (regPath.test(newValue)) {
-          this.content = `您将创建的路径为 ${newValue}`;
+          this.content = `项目路径为 ${newValue}`;
           dom.classList.remove("poptip-error");
         } else {
           dom.classList.add("poptip-error");
