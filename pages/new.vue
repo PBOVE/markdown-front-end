@@ -27,8 +27,26 @@
           />
         </div>
         <Divider />
-        <div class="row">
-          <div class="row-header">
+        <div class="row row-flex">
+          <div>
+            <div class="row-title row-person row-person-title">所有者</div>
+            <div class="row-flex">
+              <div class="row-person row-middle row-border">
+                <img :src="storeImages" class="row-person-img" />
+                <span>{{storeUserName}}</span>
+              </div>
+              <span class="row-line">/</span>
+            </div>
+          </div>
+          <div>
+            <div class="row-title row-must">项目路径</div>
+            <div class="row-input-tool">
+              <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
+                <input v-model="path" ref="pathRef" type="text" class="row-input" />
+              </Poptip>
+            </div>
+          </div>
+          <!-- <div class="row-header">
             <div class="row-title row-person row-person-title">所有者</div>
             <div class="row-title row-must">项目路径</div>
           </div>
@@ -43,7 +61,7 @@
                 <input v-model="path" ref="pathRef" type="text" class="row-input" />
               </Poptip>
             </div>
-          </div>
+          </div>-->
         </div>
         <Divider />
         <div class="row">
@@ -270,24 +288,24 @@ export default {
   margin: 5px 0 0 0;
 }
 .row-main,
-.row-header {
+.row-flex {
   display: flex;
 }
 .row-person {
-  width: 80px;
+  justify-content: center;
 }
 .row-person-img {
-  margin: 0 10px;
+  margin: 0 10px 0 0;
   height: 20px;
   width: 20px;
   border-radius: 50%;
 }
-.row-person-title {
-  width: 110px;
-}
 .row-middle {
   display: flex;
   align-items: center;
+}
+.row-border {
+  padding: 0 15px;
 }
 .row-input,
 .row-border {
