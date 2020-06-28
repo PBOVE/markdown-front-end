@@ -221,23 +221,25 @@ export default {
   user-select: none;
   height: 40px;
   width: 40px;
+  background: #fff;
   border-radius: 50%;
   cursor: pointer;
 }
 
 .row-star,
 .row-praise {
-  background: #fafbfc;
   box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
     inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
   border: 1px solid rgba(27, 31, 35, 0.15);
 }
 
 .row-praise {
+  
   padding: 4px 12px;
   color: #24292e;
   font-size: 12px;
   border-radius: 4px;
+  background: #fafbfc;
   transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
   outline: none;
   cursor: pointer;
