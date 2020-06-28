@@ -36,7 +36,7 @@
             :type="eye?'password':'text'"
             @keyup.enter="handleLoginEvent($event)"
           />
-          <div class="login-group-input-suffix">
+          <div class="login-group-input-suffix main-center-middle">
             <Icon
               :type="eye?'ios-eye-outline':'ios-eye-off-outline'"
               size="20"

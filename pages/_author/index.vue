@@ -16,7 +16,12 @@
           <page-right :user="user" />
           <transition name="fade" mode="out-in">
             <index-page v-if="!tab" />
-            <project-page v-else-if="tab==='projects'" :projects.sync="projects" :user="user" />
+            <project-page
+              v-else-if="tab==='projects'"
+              :projects="projects"
+              :user="user"
+              @on-change="dataChange"
+            />
           </transition>
         </div>
       </div>
@@ -28,10 +33,10 @@
 <script>
 import publicHeader from "@/components/publicHeader/index.vue";
 import validRemind from "@/components/validRemind/index.vue";
-import pageLeft from "@/components/userPageLeft/index.vue";
-import pageRight from "@/components/userPageRight/index.vue";
-import indexPage from "@/components/_username/index.vue";
-import projectPage from "@/components/_username/project.vue";
+import pageLeft from "@/components/_author/pageLeft.vue";
+import pageRight from "@/components/_author/pageRight.vue";
+import indexPage from "@/components/_author/index.vue";
+import projectPage from "@/components/_author/project.vue";
 
 export default {
   transition: "fade",
@@ -44,24 +49,23 @@ export default {
     projectPage,
   },
   async validate({ params, app }) {
-    const query = { name: params.username };
+    const query = { name: params.author };
     const { data } = await app.$request.registerQuery(query);
     return data;
   },
   async asyncData({ params, app, redirect, query }) {
-    const { username } = params;
+    const { author } = params;
     const title = query.q;
     const page = query.page;
     const result = await Promise.all([
-      app.$request.queryUser({ username }),
-      app.$request.getProject({ author: username, title, page }),
+      app.$request.queryUser({ username: author }),
+      app.$request.getProject({ author, title, page }),
     ]);
     return { user: result[0].data, projects: result[1].data };
   },
   data() {
     return {
       alertShow: false,
-      userPage: this.$route.params.username,
     };
   },
   computed: {
@@ -82,6 +86,11 @@ export default {
         const { data } = await this.$request.getProject(params);
         this.projects = data;
       }
+    },
+  },
+  methods: {
+    dataChange(row, index) {
+      this.$set(this.projects.content, index, row);
     },
   },
 };

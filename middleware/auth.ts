@@ -36,7 +36,7 @@ const authMiddleware: Middleware = async context => {
   if (!token && ignorePaths.some(verifyRoute)) {
     redirect(`/login?redirect=${path}`);
   } else if (token && redirectPath.some(verifyRoute)) {
-    redirect('/dashboard');
+    redirect('/');
   }
 };
 

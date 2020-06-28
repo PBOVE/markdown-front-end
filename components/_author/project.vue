@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="content">
-      <div v-for="item in projects.content" :key="item.path" class="row">
+      <div v-for="(item,index) in projects.content" :key="item.path" class="row">
         <div class="row-left">
           <div class="row-middle row-start">
             <nuxt-link :to="'/'+user.userName+'/'+item.path" class="row-link">{{item.title}}</nuxt-link>
@@ -37,11 +37,11 @@
           >{{item.updateTime|timeFilter}}</div>
         </div>
         <div class="row-right">
-          <div class="row-praise row-middle row-star">
+          <div class="row-middle row-star" @click="handleLike( JSON.stringify(item),index)">
             <img v-if="item.islike" src="@/assets/images/star.png" class="row-praise-image" />
             <img v-else src="@/assets/images/unstar.png" class="row-praise-image" />
-            <span v-if="item.islike">取消</span>
-            <span v-else>点赞</span>
+            <!-- <span v-if="item.islike">取消</span>
+            <span v-else>点赞</span>-->
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser"]),
+    ...mapGetters("user", ["storeUser", "storeUserState"]),
   },
   methods: {
     // 时间转换
@@ -141,6 +141,18 @@ export default {
           page: page,
         },
       });
+    },
+    // 点赞
+    async handleLike(parseRow, index) {
+      if (!this.storeUserState) {
+        return this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      }
+      const row = JSON.parse(parseRow);
+      const params = { author: this.user.userName, path: row.path };
+      if (row.islike) await this.$request.projectUnLike(params);
+      else await this.$request.projectLike(params);
+      row.islike = !row.islike;
+      this.$emit("on-change", row, index);
     },
   },
 };
@@ -203,32 +215,41 @@ export default {
 .row-time {
   color: #586069;
 }
-.row-star.row-praise {
+.row-star {
+  justify-content: center;
   font-size: 0;
+  user-select: none;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
-.row-star.row-praise span {
-  font-size: 12px;
+
+.row-star,
+.row-praise {
+  background: #fafbfc;
+  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
+  border: 1px solid rgba(27, 31, 35, 0.15);
 }
+
 .row-praise {
   padding: 4px 12px;
   color: #24292e;
   font-size: 12px;
-  background: #fafbfc;
-  border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 4px;
-  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
-    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
   transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
   outline: none;
   cursor: pointer;
 }
+.row-star:hover,
 .row-praise:hover {
   background-color: #f3f4f6;
 }
 .row-praise-image {
-  height: 16px;
-  width: 16px;
-  margin: 0 4px 0 0;
+  height: 30px;
+  width: 30px;
+  margin: 2px 0 0 0;
 }
 .project-footer {
   justify-content: center;

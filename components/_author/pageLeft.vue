@@ -10,7 +10,7 @@
     <div class="header-wrap">
       <div class="header">
         <img v-if="userImageSrc" :src="'/api/storage/preview/'+userImageSrc" class="image" />
-        <div v-else class="alt-wrap"></div>
+        <div v-else class="alt-wrap main-center-middle">{{storeNickName|handleName}}</div>
       </div>
       <div class="middle">
         <div class="middle-title">{{user.nickName}}</div>
@@ -40,7 +40,6 @@
         <Icon type="ios-star-outline" />10 获赞
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -62,7 +61,7 @@ export default {
     userImageSrc() {
       return this.user.images;
     },
-    ...mapGetters("user", ["storeUser"]),
+    ...mapGetters("user", ["storeUser", "storeNickName"]),
   },
 };
 </script>
@@ -80,7 +79,13 @@ export default {
   border-radius: 50%;
   border: 1px solid #c5c8ce;
 }
-
+.alt-wrap {
+  font-size: 200px;
+  font-family: Georgia;
+  background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
+  color: #fff;
+  
+}
 .middle {
   padding: 16px 0;
   letter-spacing: 0.1em;
@@ -142,7 +147,7 @@ export default {
   .middle-title {
     font-size: 20px;
   }
-  .middle-content{
+  .middle-content {
     font-size: 16px;
   }
 }

@@ -6,7 +6,7 @@
 
 
 <template>
-  <div class="login-register-wrap">
+  <div class="login-register-wrap main-center-middle">
     <div class="login-from-wrap">
       <img class="signal" src="@/assets/images/ball.png" />
       <div class="login-from">
@@ -46,9 +46,6 @@ export default {
 
 <style scoped>
 .login-register-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   width: 100vw;
   background-image: url("../../assets/images/background.svg");

@@ -24,7 +24,7 @@
             @keydown.enter="handleSubmitEvent($event)"
             @blur="handleBlurEvent"
           />
-          <div class="login-group-input-suffix">
+          <div class="login-group-input-suffix main-center-middle">
             <div v-if="emailLoad===1" class="login-group-input-load" />
             <Icon v-else-if="emailLoad===-1" type="ios-warning" size="20" color="#ed4014" />
             <Icon v-else-if="emailLoad===0" type="ios-checkmark-circle" size="20" color="#19be6b" />
