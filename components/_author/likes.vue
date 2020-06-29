@@ -16,7 +16,7 @@
       >
         <div class="index-page-row-left">
           <div class="index-page-flex-middle index-page-row-start">
-            <nuxt-link :to="'/'+author+'/'+item.path" class="index-page-row-link">
+            <nuxt-link :to="'/'+item.author+'/'+item.path" class="index-page-row-link">
               <span style="font-weight:400;">{{item.author}}</span>
               <span>/</span>
               <span>{{item.title}}</span>
