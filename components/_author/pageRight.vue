@@ -18,6 +18,13 @@
       >
         <Icon type="ios-folder-open-outline" />项目
       </nuxt-link>
+      <nuxt-link
+        class="header-row"
+        :to="'/'+user.userName + '?tab=likes'"
+        :class="{border:tab==='likes'}"
+      >
+        <Icon type="ios-heart-outline" />喜欢
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -31,7 +38,7 @@ export default {
   },
   computed: {
     tab() {
-      const paramsPath = ["projects"];
+      const paramsPath = ["projects", "likes"];
       const { tab } = this.$route.query;
       return paramsPath.includes(tab) ? tab : "";
     },
@@ -84,5 +91,10 @@ export default {
 .border::before {
   transform: scaleX(1);
   background: #2d8cf0;
+}
+@media screen and (max-width: 550px) {
+  .header-row > i {
+    display: none;
+  }
 }
 </style>

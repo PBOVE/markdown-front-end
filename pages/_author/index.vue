@@ -20,8 +20,9 @@
               v-else-if="tab==='projects'"
               :projects="projects"
               :user="user"
-              @on-change="dataChange"
+              @on-change="projectChange"
             />
+            <likes-page v-else-if="tab==='likes'" :user="user" :likes="likes" />
           </transition>
         </div>
       </div>
@@ -37,6 +38,7 @@ import pageLeft from "@/components/_author/pageLeft.vue";
 import pageRight from "@/components/_author/pageRight.vue";
 import indexPage from "@/components/_author/index.vue";
 import projectPage from "@/components/_author/project.vue";
+import likesPage from "@/components/_author/likes.vue";
 
 export default {
   transition: "fade",
@@ -47,6 +49,7 @@ export default {
     pageRight,
     indexPage,
     projectPage,
+    likesPage,
   },
   async validate({ params, app }) {
     const query = { name: params.author };
@@ -60,11 +63,13 @@ export default {
     const result = await Promise.all([
       app.$request.queryUser({ username: author }),
       app.$request.getProject({ author, title, page }),
+      app.$request.queryUserLike({ author }),
     ]);
     return {
       user: result[0].data.user,
       number: result[0].data.number,
       projects: result[1].data,
+      likes: result[2].data,
     };
   },
   data() {
@@ -74,7 +79,7 @@ export default {
   },
   computed: {
     tab() {
-      const paramsPath = ["projects"];
+      const paramsPath = ["projects", "likes"];
       const { tab } = this.$route.query;
       return paramsPath.includes(tab) ? tab : "";
     },
@@ -93,7 +98,7 @@ export default {
     },
   },
   methods: {
-    dataChange(row, index) {
+    projectChange(row, index) {
       this.$set(this.projects.content, index, row);
     },
   },
@@ -139,8 +144,8 @@ export default {
   }
 }
 @media screen and (max-width: 550px) {
-  .index-content-right {
-    width: 280px;
+  .index-content-left {
+    width: 100%;
   }
 }
 </style>

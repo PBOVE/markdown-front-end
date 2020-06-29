@@ -8,32 +8,18 @@
 <template>
   <div class="index-page-wrap">
     <div class="index-page-header">
-      <div class="index-page-header-left">
-        <Input v-model="search" placeholder="查找项目" @on-enter="handleSearch" />
-      </div>
-      <div class="index-page-header-right">
-        <button class="index-page-button" style="min-width:80px;" @click="handleSearch">搜索</button>
-        <nuxt-link
-          v-if="user.userName===storeUser.userName&&storeUser.authentication"
-          type="success"
-          class="main-success-button index-page-margin-left-16"
-          to="/new"
-        >
-          <Icon type="ios-copy-outline" />创 建
-        </nuxt-link>
-      </div>
     </div>
     <div class="index-page-content">
       <div
         class="index-page-row index-page-flex-between"
-        v-for="(item,index) in projects.content"
+        v-for="(item,index) in likes.content"
         :key="item.path"
       >
         <div class="index-page-row-left">
           <div class="index-page-flex-middle index-page-row-start">
             <nuxt-link
-              class="index-page-row-link"
               :to="'/'+user.userName+'/'+item.path"
+              class="index-page-row-link"
             >{{item.title}}</nuxt-link>
             <div v-if="!item.share" class="index-page-row-share">{{item.share|shareFilter}}</div>
           </div>
@@ -44,10 +30,7 @@
           >{{item.updateTime|timeFilter}}</div>
         </div>
         <div class="index-page-row-right">
-          <div
-            class="index-page-flex-middle index-page-row-star"
-            @click="handleLike( JSON.stringify(item),index)"
-          >
+          <div class="index-page-flex-middle index-page-row-star">
             <img
               v-if="item.islike"
               src="@/assets/images/star.png"
@@ -58,20 +41,16 @@
         </div>
       </div>
     </div>
-    <div class="index-page-footer index-page-flex-middle" v-if="projects.totalElements">
-      <Page :total="projects.totalElements" size="small" :page-size="10" @on-change="pageChange" />
+    <div class="index-page-footer index-page-flex-middle" v-if="likes.totalElements">
+      <Page :total="likes.totalElements" size="small" :page-size="10" @on-change="pageChange" />
     </div>
   </div>
 </template>
 
 
 <script>
-import { mapGetters } from "vuex";
-import selectBox from "@/components/selectBox/index.vue";
-
 export default {
-  components: { selectBox },
-  props: ["projects", "user"],
+  props: ["likes", "user"],
   filters: {
     shareFilter(share) {
       return share ? "" : "私有项目";
@@ -112,12 +91,9 @@ export default {
   },
   data() {
     return {
-      // 搜索内容
-      search: this.$route.query.q,
+      // 搜索
+      search: "",
     };
-  },
-  computed: {
-    ...mapGetters("user", ["storeUser", "storeUserState"]),
   },
   methods: {
     // 时间转换
@@ -132,43 +108,9 @@ export default {
         date.getHours(),
       )}:${completion(date.getMinutes())}`;
     },
-    // 处理搜索
-    handleSearch() {
-      this.$router.push({
-        path: `/${this.user.userName}`,
-        query: {
-          tab: "projects",
-          q: this.search,
-          page: 1,
-        },
-      });
-    },
-    // 页码改变的回调，返回改变后的页码
-    pageChange(page) {
-      this.$router.push({
-        path: `/${this.user.userName}`,
-        query: {
-          tab: "projects",
-          q: this.$route.query.q,
-          page: page,
-        },
-      });
-    },
-    // 点赞
-    async handleLike(parseRow, index) {
-      if (!this.storeUserState) {
-        return this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-      }
-      const row = JSON.parse(parseRow);
-      const params = { author: this.user.userName, path: row.path };
-      if (row.islike) await this.$request.projectUnLike(params);
-      else await this.$request.projectLike(params);
-      row.islike = !row.islike;
-      this.$emit("on-change", row, index);
-    },
+    // 页面改变
+    pageChange() {},
   },
 };
 </script>
-
-
 

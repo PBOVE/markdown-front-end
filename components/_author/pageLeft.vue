@@ -137,6 +137,9 @@ export default {
     width: 50px;
     height: 50px;
   }
+  .alt-wrap{
+    font-size: 30px;
+  }
   .header-wrap {
     display: flex;
     align-items: center;

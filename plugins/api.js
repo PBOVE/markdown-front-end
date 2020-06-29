@@ -8,12 +8,14 @@ const fileHeader = { headers: { 'Content-Type': 'multipart/form-data' } };
 const request = {
   // 获取 token
   GetToken: () => axios.get('/user/me'),
+  // 用户查询
+  queryUser: params => axios.get('/user/query', { params }),
+  // 查询用户点赞
+  queryUserLike: params => axios.get('/user/like', { params }),
   // 更新用户信息
   updataUserMsg: params => axios.put('/user/me', params, header),
   // 修改密码
   password: params => axios.put('/user/me/password', params),
-  // 用户查询
-  queryUser: params => axios.get('/user/query', { params }),
   // 登录
   LoginIn: params => axios.post('/user/login', params, header),
   // 退出
