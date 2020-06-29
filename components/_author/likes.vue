@@ -7,7 +7,7 @@
 
 <template>
   <div class="index-page-wrap">
-    <div class="index-page-header">查看 {{storeAuthorUser.nickName}} 喜欢的项目</div>
+    <div class="index-page-header">{{storeAuthorUser.nickName}}</div>
     <div class="index-page-content">
       <div
         class="index-page-row index-page-flex-between"
