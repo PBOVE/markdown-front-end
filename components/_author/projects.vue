@@ -114,7 +114,7 @@ export default {
         path: `/${this.author}`,
         query: {
           tab: "projects",
-          q: this.search,
+          q: this.search.replace(/(^\s*)|(\s*$)/g, ""),
           page: 1,
         },
       });
