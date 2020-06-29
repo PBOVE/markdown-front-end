@@ -72,7 +72,8 @@ export default {
       this.$emit("on-button", this.content, () => (this.modalShow = false));
     },
     handleLegth(value) {
-      return `${value.length}/${this.maxlength}`;
+      if (value) return `${value.length}/${this.maxlength}`;
+      else return `0/${this.maxlength}`;
     },
   },
 };
