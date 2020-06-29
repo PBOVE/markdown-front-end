@@ -14,7 +14,7 @@
       <div class="index-page-header-right">
         <button class="index-page-button" style="min-width:80px;" @click="handleSearch">搜索</button>
         <nuxt-link
-          v-if="user.userName===storeUser.userName&&storeUser.authentication"
+          v-if="author===storeUser.userName&&storeUser.authentication"
           type="success"
           class="main-success-button index-page-margin-left-16"
           to="/new"
@@ -31,17 +31,14 @@
       >
         <div class="index-page-row-left">
           <div class="index-page-flex-middle index-page-row-start">
-            <nuxt-link
-              class="index-page-row-link"
-              :to="'/'+user.userName+'/'+item.path"
-            >{{item.title}}</nuxt-link>
+            <nuxt-link class="index-page-row-link" :to="'/'+author+'/'+item.path">{{item.title}}</nuxt-link>
             <div v-if="!item.share" class="index-page-row-share">{{item.share|shareFilter}}</div>
           </div>
           <div class="index-page-row-description">{{item.description}}</div>
           <div
             class="index-page-row-time"
             :title="timeConversion(item.updateTime)"
-          >{{item.updateTime|timeFilter}}</div>
+          >{{item.updateTime|TimeFilter}}</div>
         </div>
         <div class="index-page-row-right">
           <div
@@ -59,7 +56,13 @@
       </div>
     </div>
     <div class="index-page-footer index-page-flex-middle" v-if="projects.totalElements">
-      <Page :total="projects.totalElements" size="small" :page-size="10" @on-change="pageChange" />
+      <Page
+        size="small"
+        :total="projects.totalElements"
+        :page-size="10"
+        :current="current"
+        @on-change="pageChange"
+      />
     </div>
   </div>
 </template>
@@ -71,49 +74,22 @@ import selectBox from "@/components/selectBox/index.vue";
 
 export default {
   components: { selectBox },
-  props: ["projects", "user"],
+  props: ["projects"],
   filters: {
     shareFilter(share) {
       return share ? "" : "私有项目";
-    },
-    timeFilter(time) {
-      let dateStart = new Date(time);
-      let dateEnd = new Date();
-      let dateValue = dateEnd - dateStart;
-      let DateValue = [1000, 60, 60, 24, 30, 12, Infinity];
-      for (var i = 0; i < DateValue.length - 1; i++) {
-        dateValue /= DateValue[i];
-        if (dateValue < DateValue[i + 1]) {
-          switch (i) {
-            case 0:
-              dateValue = parseInt(dateValue) + " 秒";
-              break;
-            case 1:
-              dateValue = parseInt(dateValue) + " 分钟";
-              break;
-            case 2:
-              dateValue = parseInt(dateValue) + " 小时";
-              break;
-            case 3:
-              dateValue = parseInt(dateValue) + " 天";
-              break;
-            case 4:
-              dateValue = parseInt(dateValue) + " 个月";
-              break;
-            case 5:
-              dateValue = parseInt(dateValue) + " 年";
-              break;
-          }
-          break;
-        }
-      }
-      return dateValue + "前更新";
     },
   },
   data() {
     return {
       // 搜索内容
       search: this.$route.query.q,
+      // 用户页面
+      author: this.$route.params.author,
+      // 当前页面
+      current: this.$route.query.page
+        ? parseInt(this.$route.query.page, 10)
+        : 1,
     };
   },
   computed: {
@@ -135,7 +111,7 @@ export default {
     // 处理搜索
     handleSearch() {
       this.$router.push({
-        path: `/${this.user.userName}`,
+        path: `/${this.author}`,
         query: {
           tab: "projects",
           q: this.search,
@@ -146,11 +122,11 @@ export default {
     // 页码改变的回调，返回改变后的页码
     pageChange(page) {
       this.$router.push({
-        path: `/${this.user.userName}`,
+        path: `/${this.author}`,
         query: {
           tab: "projects",
           q: this.$route.query.q,
-          page: page,
+          page,
         },
       });
     },
@@ -160,11 +136,11 @@ export default {
         return this.$router.push(`/login?redirect=${this.$route.fullPath}`);
       }
       const row = JSON.parse(parseRow);
-      const params = { author: this.user.userName, path: row.path };
+      const params = { author: this.author, path: row.path };
       if (row.islike) await this.$request.projectUnLike(params);
       else await this.$request.projectLike(params);
       row.islike = !row.islike;
-      this.$emit("on-change", row, index);
+      this.$set(this.projects.content, index, row);
     },
   },
 };

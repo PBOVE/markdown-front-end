@@ -10,23 +10,23 @@
     <div class="header-wrap">
       <div class="header">
         <img v-if="userImageSrc" :src="'/api/storage/preview/'+userImageSrc" class="image" />
-        <div v-else class="alt-wrap main-center-middle">{{user.nickName|handleName}}</div>
+        <div v-else class="alt-wrap main-center-middle">{{storeAuthorUser.nickName|handleName}}</div>
       </div>
       <div class="middle">
-        <div class="middle-title">{{user.nickName}}</div>
-        <div class="middle-content">{{user.userName}}</div>
+        <div class="middle-title">{{storeAuthorUser.nickName}}</div>
+        <div class="middle-content">{{storeAuthorUser.userName}}</div>
       </div>
     </div>
     <div class="icon-wrap">
       <Icon type="ios-pin-outline" />
-      {{user.location||'未填写'}}
+      {{storeAuthorUser.location||'未填写'}}
     </div>
     <div class="icon-wrap">
       <Icon type="ios-paper-outline" />
-      {{user.signature||'未填写'}}
+      {{storeAuthorUser.signature||'未填写'}}
     </div>
     <div class="button-follow">
-      <div v-if="storeUser.userName===user.userName">编辑</div>
+      <div v-if="storeUser.userName===storeAuthorUser.userName">编辑</div>
       <div v-else>关注</div>
     </div>
     <div class="middle-number">
@@ -38,7 +38,7 @@
       </div>
       <div class="middle-number-row">
         <Icon type="ios-star-outline" />
-        {{number.like}} 获赞
+        {{storeAuthorNumber.like}} 获赞
       </div>
     </div>
   </div>
@@ -49,7 +49,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["user", "number"],
   filters: {
     handleName(name) {
       return name ? name[0].toUpperCase() : "";
@@ -60,9 +59,10 @@ export default {
   },
   computed: {
     userImageSrc() {
-      return this.user.images;
+      return this.storeAuthorUser.images;
     },
     ...mapGetters("user", ["storeUser", "storeNickName"]),
+    ...mapGetters("author", ["storeAuthorUser", "storeAuthorNumber"]),
   },
 };
 </script>
@@ -137,7 +137,7 @@ export default {
     width: 50px;
     height: 50px;
   }
-  .alt-wrap{
+  .alt-wrap {
     font-size: 30px;
   }
   .header-wrap {

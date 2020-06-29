@@ -8,21 +8,17 @@
 <template>
   <div class="page-right">
     <div class="header">
-      <nuxt-link :to="'/'+user.userName" class="header-row" :class="{border:!tab}">
+      <nuxt-link class="header-row" :to="'/'+author" :class="{border:!tab}">
         <Icon type="ios-book-outline" />概述
       </nuxt-link>
       <nuxt-link
         class="header-row"
-        :to="'/'+user.userName + '?tab=projects'"
+        :to="'/'+ author + '?tab=projects'"
         :class="{border:tab==='projects'}"
       >
         <Icon type="ios-folder-open-outline" />项目
       </nuxt-link>
-      <nuxt-link
-        class="header-row"
-        :to="'/'+user.userName + '?tab=likes'"
-        :class="{border:tab==='likes'}"
-      >
+      <nuxt-link class="header-row" :to="'/'+author + '?tab=likes'" :class="{border:tab==='likes'}">
         <Icon type="ios-heart-outline" />喜欢
       </nuxt-link>
     </div>
@@ -32,9 +28,10 @@
 
 <script>
 export default {
-  props: ["user"],
   data() {
-    return {};
+    return {
+      author: this.$route.params.author,
+    };
   },
   computed: {
     tab() {

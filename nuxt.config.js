@@ -12,6 +12,10 @@ module.exports = {
     ],
     link: [ { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } ],
   },
+  /**
+   * 使用watchQuery属性可以监听参数字符串的更改
+   */
+  watchQuery: true,
   /*
   ** Customize the progress-bar color
   */
@@ -23,7 +27,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [ 'plugins/viewUI', 'plugins/api', { src: 'plugins/vue-cropper', ssr: false } ],
+  plugins: [ 'plugins/viewUI', 'plugins/api', { src: 'plugins/vue-cropper', ssr: false }, 'plugins/filter.js' ],
   /*
   ** Nuxt.js dev-modules
   */

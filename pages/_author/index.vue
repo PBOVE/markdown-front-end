@@ -11,18 +11,17 @@
     <valid-remind />
     <div class="index-main scroll">
       <div class="index-content">
-        <page-left class="index-content-left" :user="user" :number="number" />
+        <page-left class="index-content-left" />
         <div class="index-content-right">
-          <page-right :user="user" />
+          <page-right />
           <transition name="fade" mode="out-in">
             <index-page v-if="!tab" />
             <project-page
               v-else-if="tab==='projects'"
               :projects="projects"
-              :user="user"
-              @on-change="projectChange"
+              @on-change="projectData"
             />
-            <likes-page v-else-if="tab==='likes'" :user="user" :likes="likes" />
+            <likes-page v-else-if="tab==='likes'" :likes="likes" />
           </transition>
         </div>
       </div>
@@ -37,7 +36,7 @@ import validRemind from "@/components/validRemind/index.vue";
 import pageLeft from "@/components/_author/pageLeft.vue";
 import pageRight from "@/components/_author/pageRight.vue";
 import indexPage from "@/components/_author/index.vue";
-import projectPage from "@/components/_author/project.vue";
+import projectPage from "@/components/_author/projects.vue";
 import likesPage from "@/components/_author/likes.vue";
 
 export default {
@@ -56,21 +55,26 @@ export default {
     const { data } = await app.$request.registerQuery(query);
     return data;
   },
-  async asyncData({ params, app, redirect, query }) {
+  async asyncData({ params, app, query }) {
     const { author } = params;
-    const title = query.q;
-    const page = query.page;
-    const result = await Promise.all([
-      app.$request.queryUser({ username: author }),
-      app.$request.getProject({ author, title, page }),
-      app.$request.queryUserLike({ author }),
-    ]);
-    return {
-      user: result[0].data.user,
-      number: result[0].data.number,
-      projects: result[1].data,
-      likes: result[2].data,
-    };
+    const { tab, page, q } = query;
+    let projects, likes;
+    if (tab === "projects") {
+      const request = { author, page: page ? page - 1 : 0, title: q };
+      const { data } = await app.$request.getProject(request);
+      projects = data;
+    } else if (tab === "likes") {
+      const request = { author, page: page ? page - 1 : 0 };
+      const { data } = await app.$request.queryUserLike(request);
+      likes = data;
+    }
+    return { projects, likes };
+  },
+  async watchQuery() {},
+  async fetch({ store, app, params }) {
+    const { author: username } = params;
+    const { data } = await app.$request.queryUser({ username });
+    store.commit("author/setAuthor", data);
   },
   data() {
     return {
@@ -84,21 +88,9 @@ export default {
       return paramsPath.includes(tab) ? tab : "";
     },
   },
-  watch: {
-    async $route(to, from) {
-      const { query: oldVal } = from;
-      const { query: newVal } = to;
-      if (oldVal.q !== newVal.q || oldVal.page !== newVal.page) {
-        const title = newVal.q;
-        const page = newVal.page - 1;
-        const params = { page, title, author: this.user.userName };
-        const { data } = await this.$request.getProject(params);
-        this.projects = data;
-      }
-    },
-  },
   methods: {
-    projectChange(row, index) {
+    // 项目数据改变
+    projectData(row, index) {
       this.$set(this.projects.content, index, row);
     },
   },
