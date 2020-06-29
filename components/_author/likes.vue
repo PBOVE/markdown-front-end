@@ -81,6 +81,7 @@ export default {
   },
   computed: {
     ...mapGetters("user", ["storeUserState"]),
+    ...mapGetters("author", ["storeAuthorUser"]),
   },
   watch: {
     async $route(to) {
