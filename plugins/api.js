@@ -46,6 +46,8 @@ const request = {
   projectLike: params => axios.post('/article/like', params, header),
   // 删除点赞
   projectUnLike: params => axios.delete('/article/like', { data: params }, header),
+  // 获取文章内容
+  projectContent: params => axios.get('/article/details', { params }),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用
