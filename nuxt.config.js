@@ -43,7 +43,7 @@ module.exports = {
 
   proxy: {
     '/api': {
-      target: 'https://lovepan.top',
+      target: 'https://tibis.top',
     },
   },
   /**
