@@ -8,37 +8,80 @@
 <template>
   <div class="path-wrap">
     <public-header />
-    <div class="path-header middle">
-      <Icon v-if="storeProject.share" type="md-paper" size="15" style="margin-right:8px;" />
-      <Icon v-else type="ios-lock-outline" size="15" style="margin-right:8px;" />
-      <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
-        <nuxt-link :to="'/' + storeProject.author" class="path-header-title">{{storeProject.author}}</nuxt-link>
-        <div class="middle" slot="title">
-          <img
-            v-if="user.images"
-            :src="'/api/storage/preview/' + user.images"
-            class="path-poptip-image"
-          />
-          <div v-else class="path-poptip-portrait middle">{{user.nickName|nickName}}</div>
-          <div style="margin:5px 0px 0 15px;">
-            <div style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;">{{user.nickName}}</div>
-            <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
-            <div style="color:#515a6e;">
-              <Icon type="ios-pin-outline" />
-              {{user.location}}
+    <div class="path-header">
+      <div class="middle">
+        <Icon v-if="storeProject.share" type="ios-podium-outline" class="path-header-icon" />
+        <Icon v-else type="ios-lock-outline" class="path-header-icon" />
+        <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
+          <nuxt-link
+            :to="'/' + storeProject.author"
+            class="path-header-title"
+          >{{storeProject.author}}</nuxt-link>
+          <div class="middle" slot="title">
+            <img
+              v-if="user.images"
+              :src="'/api/storage/preview/' + user.images"
+              class="path-poptip-image"
+            />
+            <div v-else class="path-poptip-portrait middle">{{user.nickName|nickName}}</div>
+            <div style="margin:5px 0px 0 15px;">
+              <div
+                style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;"
+              >{{user.nickName}}</div>
+              <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
+              <div style="color:#515a6e;">
+                <Icon type="ios-pin-outline" />
+                {{user.location}}
+              </div>
             </div>
           </div>
+          <div class="api" slot="content">
+            <Icon type="ios-stats-outline" />
+            {{user.signature}}
+          </div>
+        </Poptip>
+        <span class="path-header-line">/</span>
+        {{storeProject.title}}
+        <div v-if="!storeProject.share" class="path-header-share">{{storeProject.share|shareFilter}}</div>
+      </div>
+      <div class="middle">
+        <div class="path-button middle">
+          <div class="path-button-left middle">
+            <Icon type="ios-copy-outline" class="path-button-icon" />
+            <span>复制</span>
+          </div>
+          <div class="path-button-right">0</div>
         </div>
-        <div class="api" slot="content">
-          <Icon type="ios-stats-outline" />
-          {{user.signature}}
+        <div class="path-button middle">
+          <div class="path-button-left middle">
+            <Icon type="ios-thumbs-up-outline" class="path-button-icon" />
+            <span>点赞</span>
+          </div>
+          <div class="path-button-right">{{storeProject.likes}}</div>
         </div>
-      </Poptip>
-      <span class="path-header-line">/</span>
-      {{storeProject.title}}
-      <div v-if="!storeProject.share" class="path-header-share">{{storeProject.share|shareFilter}}</div>
+      </div>
     </div>
-    <!-- <div>{{storeProject}}</div> -->
+    <div class="middle path-main">
+      <nuxt-link class="middle" :class="{border:$route.path===projectPath}" :to="projectPath">文章</nuxt-link>
+      <nuxt-link
+        class="middle"
+        :class="{border:$route.path===projectPath+'/edit'}"
+        :to="projectPath+'/edit'"
+      >编辑</nuxt-link>
+      <nuxt-link
+        class="middle"
+        :class="{border:$route.path===projectPath+'/issues'}"
+        :to="projectPath+'/issues'"
+      >留言</nuxt-link>
+      <nuxt-link
+        class="middle"
+        :class="{border:$route.path===projectPath+'/setting'}"
+        :to="projectPath+'/setting'"
+      >设置</nuxt-link>
+    </div>
+    <div class="path-content">
+      <nuxt-child />
+    </div>
   </div>
 </template>
 
@@ -78,6 +121,10 @@ export default {
   },
   computed: {
     ...mapGetters("author", ["storeProject"]),
+    // 路径
+    projectPath() {
+      return `/${this.storeProject.author}/${this.storeProject.path}`;
+    },
   },
   mounted() {
     if (window.innerWidth < 300) {
@@ -110,9 +157,17 @@ export default {
   align-items: center;
 }
 .path-header {
+  display: flex;
+  justify-content: space-between;
   margin: 10px 0 0 0;
   padding: 0 4%;
   font-size: 20px;
+}
+.path-header-icon {
+  margin: 0 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #515a6e;
 }
 .path-header-line {
   margin: 0 5px;
@@ -145,5 +200,52 @@ export default {
   border-radius: 10px;
   font-size: 14px;
   color: #586069;
+}
+.path-button-icon {
+  margin: 0 4px 0 0;
+  font-weight: bold;
+}
+.path-button {
+  font-size: 14px;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.path-button:first-of-type {
+  margin: 0 20px 0 0;
+}
+.path-button-left {
+  padding: 2px 10px;
+  cursor: pointer;
+}
+.path-button-left:hover {
+  background: #00000011;
+}
+.path-button-right {
+  padding: 2px 10px;
+  border-left: 1px solid #e1e4e8;
+}
+.path-main {
+  margin: 10px 0 0 0;
+  padding: 0 2% 0 5%;
+  border-bottom: 1px solid #e1e4e8;
+}
+.path-main > a {
+  display: inline-block;
+  padding: 0 20px 7px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: #000;
+}
+.path-main > a:hover {
+  border-bottom: 2px solid #c5c8ce;
+}
+.border {
+  border-bottom: 2px solid #19be6b !important;
+}
+.path-content {
+  flex: auto;
+  height: 0;
+  overflow: auto;
 }
 </style>
