@@ -12,6 +12,12 @@
 
 <script>
 export default {
+  validate({ store, params }) {
+    return (
+      store.state.user.userState &&
+      params.author === store.state.user.data.userName
+    );
+  },
   data() {
     return {};
   },

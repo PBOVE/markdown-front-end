@@ -183,10 +183,12 @@ export default {
         let formData = new FormData();
         formData.append("file", BlobString, this.fileName);
         const { data: images } = await this.$request.uploadFile(formData);
-        const params = { images };
-        const { data } = await this.$request.updataUserMsg(params); 
-        this.$store.commit("user/setUser", data);
-        this.modalShow = false;
+        if (images[0]) {
+          const params = { images: images[0] };
+          const { data } = await this.$request.updataUserMsg(params);
+          this.$store.commit("user/setUser", data);
+          this.modalShow = false;
+        }
       } catch (err) {}
       this.loading = false;
     },

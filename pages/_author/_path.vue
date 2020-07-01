@@ -62,24 +62,31 @@
       </div>
     </div>
     <div class="middle path-main">
-      <nuxt-link class="middle" :class="{border:$route.path===projectPath}" :to="projectPath">文章</nuxt-link>
+      <nuxt-link class="middle" :class="{border:$route.path === projectPath}" :to="projectPath">文章</nuxt-link>
       <nuxt-link
+        v-if="storeEdit || author === storeUserName"
         class="middle"
-        :class="{border:$route.path===projectPath+'/edit'}"
+        :class="{border:$route.path === projectPath+'/edit'}"
         :to="projectPath+'/edit'"
       >编辑</nuxt-link>
       <nuxt-link
         class="middle"
-        :class="{border:$route.path===projectPath+'/issues'}"
+        :class="{border:$route.path === projectPath+'/issues'}"
         :to="projectPath+'/issues'"
       >留言</nuxt-link>
       <nuxt-link
         class="middle"
-        :class="{border:$route.path===projectPath+'/setting'}"
+        :class="{border:$route.path === projectPath+'/log'}"
+        :to="projectPath+'/log'"
+      >日志</nuxt-link>
+      <nuxt-link
+        v-if="author === storeUserName"
+        class="middle"
+        :class="{border:$route.path === projectPath+'/setting'}"
         :to="projectPath+'/setting'"
       >设置</nuxt-link>
     </div>
-    <div class="path-content">
+    <div class="path-content scroll">
       <nuxt-child />
     </div>
   </div>
@@ -117,10 +124,13 @@ export default {
     return {
       // 宽度
       width: 300,
+      // 作者
+      author: this.$route.params.author,
     };
   },
   computed: {
-    ...mapGetters("author", ["storeProject"]),
+    ...mapGetters("author", ["storeProject", "storeEdit"]),
+    ...mapGetters("user", ["storeUserName"]),
     // 路径
     projectPath() {
       return `/${this.storeProject.author}/${this.storeProject.path}`;
@@ -139,7 +149,7 @@ export default {
     clientSize() {
       if (window.innerWidth < 300) {
         this.width = window.innerWidth - 20;
-      } else this.width - 300;
+      } else this.width = 300;
     },
   },
 };
@@ -247,5 +257,13 @@ export default {
   flex: auto;
   height: 0;
   overflow: auto;
+}
+@media screen and (max-width: 500px) {
+  .path-header {
+    flex-direction: column;
+  }
+  .path-header > div:first-of-type {
+    margin: 0 0 20px 0;
+  }
 }
 </style>

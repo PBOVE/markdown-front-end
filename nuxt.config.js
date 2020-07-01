@@ -27,7 +27,13 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [ 'plugins/viewUI', 'plugins/api', { src: 'plugins/vue-cropper', ssr: false }, 'plugins/filter.js' ],
+  plugins: [
+    'plugins/viewUI',
+    'plugins/api',
+    'plugins/filter',
+    { src: 'plugins/editor', ssr: false },
+    { src: 'plugins/vue-cropper', ssr: false },
+  ],
   /*
   ** Nuxt.js dev-modules
   */

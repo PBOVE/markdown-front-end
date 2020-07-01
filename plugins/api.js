@@ -42,6 +42,8 @@ const request = {
   getProject: params => axios.get('/article', { params }),
   // 创建项目
   createProject: params => axios.post('/article', params, header),
+   // 更新项目
+  updateProject: params => axios.put('/article', params, header),
   // 处理点赞
   projectLike: params => axios.post('/article/like', params, header),
   // 删除点赞

@@ -15,7 +15,10 @@
 .ivu-select {
   color: #000;
 }
-
+.github-markdown-body {
+  font-size: 14px !important;
+  color: #2c3e50;
+}
 .main-center-modal {
   display: flex;
   align-items: center;
