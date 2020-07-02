@@ -265,5 +265,13 @@ export default {
   .path-header > div:first-of-type {
     margin: 0 0 20px 0;
   }
+  .path-main {
+    padding: 0 2%;
+  }
+  .path-main > a {
+    flex: 1;
+    padding: 0 0 7px;
+    text-align: center;
+  }
 }
 </style>

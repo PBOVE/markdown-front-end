@@ -31,6 +31,7 @@ module.exports = {
     'plugins/viewUI',
     'plugins/api',
     'plugins/filter',
+    { src: 'plugins/prism', ssr: false },
     { src: 'plugins/editor', ssr: false },
     { src: 'plugins/vue-cropper', ssr: false },
   ],
