@@ -268,7 +268,10 @@ export default {
     flex-direction: column;
   }
   .path-header > div:first-of-type {
-    margin: 0 0 20px 0;
+    margin: 0;
+  }
+  .path-header > div:last-of-type {
+    display: none;
   }
   .path-main {
     padding: 0 2%;

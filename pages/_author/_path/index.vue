@@ -103,9 +103,6 @@ export default {
   }
 }
 @media screen and (max-width: 800px) {
-  .index-content {
-    margin: 50px 20px;
-  }
   .index-left {
     width: 100%;
   }
