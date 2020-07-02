@@ -37,7 +37,7 @@
           class="main-user-image"
           data-user-portrait="true"
         />
-        <div v-else class="user-portrait" data-user-portrait="true">{{storeNickName|nickName}}</div>
+        <div v-else class="main-user-portrait" data-user-portrait="true">{{storeNickName|nickName}}</div>
       </div>
       <div v-else>
         <nuxt-link to="/login">
@@ -125,19 +125,6 @@ export default {
 }
 .borderColor {
   border-color: #c5c8ce;
-}
-.user-portrait {
-  display: flex;
-  align-items: center;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
-  font-weight: bold;
-  font-size: 16px;
-  color: #e8eaec;
-  justify-content: center;
-  user-select: none;
 }
 .nav-middle {
   display: flex;

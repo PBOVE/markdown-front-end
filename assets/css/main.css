@@ -51,6 +51,19 @@
   border-radius: 50%;
   font-size: 0;
 }
+.main-user-portrait {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
+  font-weight: bold;
+  font-size: 16px;
+  color: #e8eaec;
+  justify-content: center;
+  user-select: none;
+}
 .main-user-image:hover {
   transform: rotate(666turn);
   transition: all 60s cubic-bezier(.34, 0, .84, 1) 1s;

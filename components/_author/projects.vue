@@ -37,7 +37,7 @@
           <div class="index-page-row-description">{{item.description}}</div>
           <div
             class="index-page-row-time"
-            :title="timeConversion(item.updateTime)"
+            :title="$timeConversion(item.updateTime)"
           >{{item.updateTime|TimeFilter}}</div>
         </div>
         <div class="index-page-row-right">
@@ -96,18 +96,6 @@ export default {
     ...mapGetters("user", ["storeUser", "storeUserState"]),
   },
   methods: {
-    // 时间转换
-    timeConversion(time) {
-      const date = new Date(time);
-      const completion = num => {
-        return num.toString().padStart(2, "0");
-      };
-      return `${date.getFullYear()}年${completion(
-        date.getMonth() + 1,
-      )}月${completion(date.getDate())}日 ${completion(
-        date.getHours(),
-      )}:${completion(date.getMinutes())}`;
-    },
     // 处理搜索
     handleSearch() {
       this.$router.push({

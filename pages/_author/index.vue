@@ -81,6 +81,11 @@ export default {
       alertShow: false,
     };
   },
+  head() {
+    return {
+      title: `${this.$route.params.author} ● TBS.feel`,
+    };
+  },
   computed: {
     tab() {
       const paramsPath = ["projects", "likes"];

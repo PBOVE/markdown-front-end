@@ -128,6 +128,11 @@ export default {
       author: this.$route.params.author,
     };
   },
+  head() {
+    return {
+      title: `${this.author}/${this.storeProject.path} ● TBS.feel`,
+    };
+  },
   computed: {
     ...mapGetters("author", ["storeProject", "storeEdit"]),
     ...mapGetters("user", ["storeUserName"]),

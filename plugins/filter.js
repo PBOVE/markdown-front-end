@@ -33,3 +33,12 @@ Vue.filter('TimeFilter', time => {
   }
   return dateValue + '前更新';
 });
+Vue.prototype.$timeConversion = time => {
+  const date = new Date(time);
+  const completion = num => {
+    return num.toString().padStart(2, '0');
+  };
+  return `${date.getFullYear()}年${completion(date.getMonth() + 1)}月${completion(date.getDate())}日 ${completion(
+    date.getHours(),
+  )}:${completion(date.getMinutes())}`;
+};
