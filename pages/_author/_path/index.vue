@@ -16,6 +16,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Prism from "prismjs";
+
 export default {
   data() {
     return {};
@@ -30,5 +32,7 @@ export default {
 <style scoped>
 .index-wrap {
   height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 </style>

@@ -38,7 +38,7 @@
               <span class="row-line">/</span>
             </div>
           </div>
-          <div>
+          <div class="row-input-right"> 
             <div class="row-title row-must">项目路径</div>
             <div class="row-input-tool">
               <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
@@ -344,6 +344,9 @@ export default {
     margin: 0 20px;
   }
   .row-input-tool {
+    width: 100%;
+  }
+  .row-input-right{
     flex: 1;
   }
 }

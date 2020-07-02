@@ -1,4 +1,7 @@
 import Vue from 'vue';
+/**
+ * 引入 VMdEditor VMdPreview
+ */
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';

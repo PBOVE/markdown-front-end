@@ -19,6 +19,9 @@
   font-size: 14px !important;
   color: #2c3e50;
 }
+.tox.tox-tinymce{
+  border-width: 0;
+}
 .main-center-modal {
   display: flex;
   align-items: center;
