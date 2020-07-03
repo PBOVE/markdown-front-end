@@ -55,6 +55,8 @@ const showStatus = (status: number) => {
       break;
     case 4008:
       message = '项目路径已经存在,请重新设置';
+    case 6000:
+      message = '系统未开放,无法创建项目';
       break;
     default:
       message = `连接出错(${status})!`;
