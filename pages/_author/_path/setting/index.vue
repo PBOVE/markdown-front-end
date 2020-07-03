@@ -130,4 +130,22 @@ export default {
   top: 8px;
   right: 5px;
 }
+@media screen and (max-width: 800px) {
+  .setting-input{
+    width: 400px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .setting-input{
+    width: 300px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .setting-input-wrap{
+    width: 100%;
+  }
+  .setting-input{
+    width: 100%;
+  }
+}
 </style>
