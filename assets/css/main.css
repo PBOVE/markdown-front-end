@@ -23,6 +23,9 @@
 .github-markdown-body pre {
   font-size: 100% !important;
 }
+.github-markdown-body blockquote{
+  color: #515A6E!important;
+}
 .tox.tox-tinymce {
   border-width: 0;
 }
