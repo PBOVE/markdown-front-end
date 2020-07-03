@@ -16,6 +16,12 @@ import nginx from 'highlight.js/lib/languages/nginx';
 import php from 'highlight.js/lib/languages/php';
 import python from 'highlight.js/lib/languages/python';
 import markdown from 'highlight.js/lib/languages/markdown';
+import dart from 'highlight.js/lib/languages/dart';
+import vim from 'highlight.js/lib/languages/vim';
+import sql from 'highlight.js/lib/languages/sql';
+import go from 'highlight.js/lib/languages/go';
+
+// emoji
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 
 VMdEditor.use(createEmojiPlugin());
@@ -30,6 +36,10 @@ VMdEditor.use(githubTheme, {
     hljs.registerLanguage('cpp', cpp);
     hljs.registerLanguage('c', cpp);
     hljs.registerLanguage('md', markdown);
+    hljs.registerLanguage('dart', dart);
+    hljs.registerLanguage('vm', vim);
+    hljs.registerLanguage('sql', sql);
+    hljs.registerLanguage('go', go);
   },
 });
 VMdPreview.use(githubTheme);
