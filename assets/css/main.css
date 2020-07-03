@@ -19,7 +19,11 @@
   font-size: 14px !important;
   color: #24292e;
 }
-.tox.tox-tinymce{
+.github-markdown-body .highlight pre,
+.github-markdown-body pre {
+  font-size: 100% !important;
+}
+.tox.tox-tinymce {
   border-width: 0;
 }
 .main-center-modal {
