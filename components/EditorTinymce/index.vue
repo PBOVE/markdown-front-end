@@ -92,7 +92,7 @@ export default {
             "lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview",
           ],
           // 当tinymce检测到当前环境为移动设备时，该参数允许你配置在移动设备生效配置参数。
-          toolbar: "",
+          toolbar: "save | undo redo | bold italic forecolor backcolor ",
         },
         // 图片上传
         images_upload_handler: this.imagesUpload,
