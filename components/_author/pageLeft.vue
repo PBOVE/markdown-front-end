@@ -31,10 +31,12 @@
     </div>
     <div class="middle-number">
       <div class="middle-number-row">
-        <Icon type="ios-people-outline" />0 粉丝
+        <Icon type="ios-people-outline" />
+        {{storeAuthorUser.fans}} 粉丝
       </div>
       <div class="middle-number-row">
-        <Icon type="ios-paw-outline" />0 关注
+        <Icon type="ios-paw-outline" />
+        {{storeAuthorUser.followes}} 关注
       </div>
       <div class="middle-number-row">
         <Icon type="ios-star-outline" />

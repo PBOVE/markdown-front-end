@@ -57,7 +57,7 @@ module.exports = {
    * router
    */
   router: {
-    middleware: 'auth',
+    middleware: [ 'auth', 'view' ],
   },
   /*
   ** Build configuration

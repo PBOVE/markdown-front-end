@@ -85,7 +85,6 @@ export default {
           background: true,
           content: "项目更新成功",
         });
-        console.log(data);
         this.$store.commit("author/setProject", data);
       } catch (err) {}
       this.loading = false;

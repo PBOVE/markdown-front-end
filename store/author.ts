@@ -17,10 +17,10 @@ export const mutations = {
 };
 export const getters = {
   storeAuthorUser(state: any) {
-    return state.author.user;
+    return state.author;
   },
   storeAuthorNumber(state: any) {
-    return state.author.number;
+    return state.author;
   },
   storeProject(state: any) {
     return state.project;
