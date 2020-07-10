@@ -110,7 +110,7 @@ export default {
   async asyncData({ params, app }) {
     const { author: username } = params;
     const { data } = await app.$request.queryUser({ username });
-    return { user: data.user };
+    return { user: data };
   },
   filters: {
     nickName(name) {
