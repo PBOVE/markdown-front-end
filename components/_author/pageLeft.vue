@@ -25,9 +25,14 @@
       <Icon type="ios-paper-outline" />
       {{storeAuthorUser.signature||'未填写'}}
     </div>
-    <div class="button-follow">
-      <div v-if="storeUser.userName===storeAuthorUser.userName">编辑</div>
-      <div v-else>关注</div>
+    <div class="button-follow main-center-middle">
+      <nuxt-link
+        to="/user"
+        v-if="storeUser.userName===storeAuthorUser.userName"
+        class="button-text"
+      >编辑</nuxt-link>
+      <div v-else-if="storeAuthorNumber.isFans" class="button-text" @click="handleButton">取消关注</div>
+      <div v-else class="button-text" @click="handleButton">关注</div>
     </div>
     <div class="middle-number">
       <div class="middle-number-row">
@@ -66,6 +71,16 @@ export default {
     ...mapGetters("user", ["storeUser", "storeNickName"]),
     ...mapGetters("author", ["storeAuthorUser", "storeAuthorNumber"]),
   },
+  methods: {
+    async handleButton() {
+      const username = this.storeAuthorUser.userName;
+      const isFans = this.storeAuthorNumber.isFans;
+      let data;
+      if (isFans) data = await this.$request.unfollowUser({ username });
+      else data = await this.$request.followUser({ username });
+      this.$store.commit("author/setAuthor", data.data);
+    },
+  },
 };
 </script>
 
@@ -103,18 +118,23 @@ export default {
   color: #666;
 }
 .button-follow {
-  padding: 6.5px 0;
-  text-align: center;
-  border: 1px solid #ccc;
+  height: 37px;
   border-radius: 4px;
   cursor: pointer;
-  color: #24292e;
+  font-weight: bold;
   letter-spacing: 0.1em;
-  background: #fafbfc;
+  background: #f4f4f4;
+  transition: all 0.1s;
+}
+.button-text {
+  width: 100%;
+  height: 100%;
+  padding: 9px 0;
+  color: #000;
+  text-align: center;
 }
 .button-follow:hover {
-  background-color: #f3f4f6;
-  transition-duration: 0.1s;
+  background-color: #f4f6ff;
 }
 .middle-number {
   display: flex;
@@ -123,7 +143,6 @@ export default {
 .middle-number-row {
   flex-grow: 1;
 }
-
 .icon-wrap {
   margin: 10px 0;
 }

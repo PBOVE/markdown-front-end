@@ -32,14 +32,11 @@
         <div class="index-page-row-right">
           <div
             class="index-page-flex-middle index-page-row-star"
+            :class="{like:item.islike}"
             @click="handleLike( JSON.stringify(item),index)"
           >
-            <img
-              v-if="item.islike"
-              src="@/assets/images/star.png"
-              class="index-page-row-star-image"
-            />
-            <img v-else src="@/assets/images/unstar.png" class="index-page-row-star-image" />
+            <img src="@/assets/images/star.png" class="index-page-row-star-image" />
+            <span>{{item.islike?'取消':'赞'}}</span>
           </div>
         </div>
       </div>

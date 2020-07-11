@@ -22,6 +22,10 @@ const request = {
   LoginOut: () => axios.post('/user/logout'),
   // 删除账户
   deleteAccount: params => axios.delete('/user/me', { data: params }),
+  // 关注用户
+  followUser: params => axios.post('/user/follow', params),
+  // 取消关注
+  unfollowUser:params =>axios.delete('/user/follow',{ data: params }),
   // 获取邮箱验证
   verifyEmail: () => axios.get('/accounts/email/link'),
   // 忘记密码
