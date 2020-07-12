@@ -5,12 +5,16 @@ export const namespaced = true;
 export const state = () => ({
   data: {},
   userState: false,
+  weather: '',
 });
 
 export const mutations = {
   setUser(state: any, data: any) {
     state.data = data;
     state.userState = true;
+  },
+  setWeather(state: any, weather: any) {
+    state.weather = weather;
   },
   removeUser(state: any) {
     state.data = '';
@@ -41,5 +45,8 @@ export const getters = {
   },
   storeLocation(state: any) {
     return state.data.location;
+  },
+  storeWeather(state: any) {
+    return state.weather;
   },
 };

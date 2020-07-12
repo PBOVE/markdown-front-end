@@ -22,6 +22,7 @@
       />
     </div>
     <div class="public-header-right nav-middle">
+      <weather-view v-if="storeUserState" />
       <nuxt-link v-if="storeUserState" :to="userPage" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
@@ -53,9 +54,10 @@
 <script>
 import { mapGetters } from "vuex";
 import userDrop from "@/components/userDrop/index.vue";
+import weatherView from "@/components/publicHeader/weather.vue";
 
 export default {
-  components: { userDrop },
+  components: { userDrop, weatherView },
   filters: {
     nickName(name) {
       return name ? name[0].toUpperCase() : "";
@@ -162,7 +164,7 @@ export default {
   margin: 0 0 0 10px;
   color: #000;
 }
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 730px) {
   .public-header-left {
     flex: 1;
   }
@@ -171,6 +173,20 @@ export default {
   }
   .logo-title {
     display: inline-block !important;
+  }
+  .public-header-wrap {
+    padding: 0 3%;
+  }
+  .public-header-right-icon{
+    margin: 0 10px 0 0;
+  }
+}
+@media screen and (max-width: 400px) {
+  .main-logo {
+    display: none;
+  }
+  .logo-title {
+    margin: 0;
   }
 }
 </style>

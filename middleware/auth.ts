@@ -11,6 +11,7 @@ const authMiddleware: Middleware = async context => {
       store.commit('user/removeUser');
     } else {
       store.commit('user/setUser', data.user);
+      store.commit('user/setWeather', data.weather);
       app.$cookies.set('access_token', data._csrf.token);
     }
     app.$cookies.set('XSRF-TOKEN', data._csrf.token);
