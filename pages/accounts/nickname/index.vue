@@ -73,7 +73,7 @@ export default {
         const { data } = await this.$request.updataUserMsg({
           nickName: value,
         });
-        this.$store.commit("user/setUser", data);
+        this.$store.commit("user/setUser", data.user);
         callback();
       } catch (err) {}
       this.loading = false;

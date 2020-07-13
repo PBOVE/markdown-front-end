@@ -48,7 +48,7 @@
         <nuxt-link to="/accounts/location" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">地区</div>
-            <div class="user-row-content">{{storeUser.location}}</div>
+            <div class="user-row-content" v-if="storeLocation">{{storeLocation.province}} {{storeLocation.city}}</div>
           </div>
           <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
@@ -136,7 +136,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser", "storeImages"]),
+    ...mapGetters("user", ["storeUser", "storeImages", "storeLocation"]),
   },
 };
 </script>

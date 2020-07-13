@@ -21,34 +21,62 @@
       <div class="location-box">
         <div class="location-content-title" style="padding:18px 0;">更改地区</div>
         <div class="location-title">
-          <span class="location-account">{{storeLocation}}</span>
+          <span
+            class="location-account"
+            v-if="storeLocation"
+          >{{storeLocation.province}} {{storeLocation.city}}</span>
+          <span class="location-account" v-else></span>
           <Icon type="md-create" class="location-title-icon curpoin" @click="openModal" />
         </div>
       </div>
     </div>
-    <update-modal
-      ref="updateModal"
-      headerTitle="更改地区"
-      title="地区"
-      :loading="loading"
-      @on-button="update"
-    />
+    <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
+      <div class="modal-edit-header">
+        <div>地区</div>
+        <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
+      </div>
+      <div class="modal-title">选择您所在的地区</div>
+      <div class="modal-input-wrap">
+        <Select
+          v-model="province"
+          style="width:110px; marginRight:16px"
+          @on-change="provinceChange"
+        >
+          <Option v-for="(item,key) in cityList" :key="key" :value="key" :label="key" />
+        </Select>
+        <Select v-model="city" style="width:120px">
+          <Option v-for="(item,key) in cityList[province]" :key="key" :value="key" :label="key" />
+        </Select>
+      </div>
+      <div class="modal-footer">
+        <Button type="text" @click="modalShow=false">取消</Button>
+        <Button type="primary" :loading="loading" @click="update">确定</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 
 <script>
 import { mapGetters } from "vuex";
+import cityList from "@/utils/cities";
 import publicHeader from "@/components/publicHeader/index.vue";
-import updateModal from "@/components/updateModal/index.vue";
 
 export default {
   transition: "fade",
-  components: { publicHeader, updateModal },
+  components: { publicHeader },
   data() {
     return {
+      // modal 展示
+      modalShow: false,
       // 设置按钮为加载中状态
       loading: false,
+      // 城市列表
+      cityList,
+      // 省
+      province: "",
+      // 城市
+      city: "",
     };
   },
   head() {
@@ -59,22 +87,43 @@ export default {
   computed: {
     ...mapGetters("user", ["storeLocation"]),
   },
+  watch: {},
   methods: {
     // 打开对话框
     openModal() {
-      this.$refs.updateModal.openModal(this.storeLocation);
+      if (this.storeLocation.province) {
+        this.province = this.storeLocation.province;
+        this.city = this.storeLocation.city;
+      } else {
+        console.log(123);
+        this.province = "北京";
+        this.city = "北京";
+      }
+      this.modalShow = true;
+    },
+    // 省份城市修改
+    provinceChange(value) {
+      this.city = Object.keys(this.cityList[value])[0];
     },
     // 发送修改
-    async update(value, callback) {
+    async update(value) {
       if (this.loading) return;
-      if (value === this.storeLocation) return callback();
+      if (this.storeLocation.city === this.city) {
+        this.modalShow = false;
+        return;
+      }
       try {
         this.loading = true;
         const { data } = await this.$request.updataUserMsg({
-          location: value,
+          location: {
+            province: this.province,
+            city: this.city,
+            adcode: this.cityList[this.province][this.city],
+          },
         });
-        this.$store.commit("user/setUser", data);
-        callback();
+        this.$store.commit("user/setUser", data.user);
+        this.$store.commit("user/setWeather", data.weather);
+        this.modalShow = false;
       } catch (err) {}
       this.loading = false;
     },
@@ -143,6 +192,10 @@ export default {
 }
 .curpoin {
   cursor: pointer;
+}
+.modal-input-wrap {
+  display: flex;
+  margin: 10px 0 0 0;
 }
 </style>
 

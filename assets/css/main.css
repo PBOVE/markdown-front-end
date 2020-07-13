@@ -23,8 +23,8 @@
 .github-markdown-body pre {
   font-size: 100% !important;
 }
-.github-markdown-body blockquote{
-  color: #515A6E!important;
+.github-markdown-body blockquote {
+  color: #515a6e !important;
 }
 .tox.tox-tinymce {
   border-width: 0;
@@ -42,12 +42,14 @@
 .main-center-modal .ivu-modal-close {
   display: none;
 }
-.scroll::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb,
+.ivu-select-dropdown::-webkit-scrollbar-thumb {
   background-color: #c5c8ce;
   border-radius: 5px;
 }
 
-.scroll::-webkit-scrollbar {
+.scroll::-webkit-scrollbar,
+.ivu-select-dropdown::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }

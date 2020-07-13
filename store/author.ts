@@ -22,6 +22,9 @@ export const getters = {
   storeAuthorNumber(state: any) {
     return state.author;
   },
+  storeAuthorLocaltion(state: any) {
+    return state.author.location;
+  },
   storeProject(state: any) {
     return state.project;
   },

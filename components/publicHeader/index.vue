@@ -12,17 +12,10 @@
         <div class="main-logo" />
         <div :style="{display:searchHide?'':'none'}" class="logo-title">TBS.feel</div>
       </nuxt-link>
-      <AutoComplete
-        :style="{display:searchHide?'none':''}"
-        class="public-header-search"
-        placeholder="搜索"
-        icon="ios-search"
-        v-model="inputData"
-        :data="searchData"
-      />
+      <search-view class="public-header-search" :search-hide="searchHide" />
     </div>
     <div class="public-header-right nav-middle">
-      <weather-view v-if="storeUserState" />
+      <weather-view v-if="storeUserState&&storeWeather" />
       <nuxt-link v-if="storeUserState" :to="userPage" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
@@ -55,9 +48,10 @@
 import { mapGetters } from "vuex";
 import userDrop from "@/components/userDrop/index.vue";
 import weatherView from "@/components/publicHeader/weather.vue";
+import searchView from "@/components/publicHeader/search.vue";
 
 export default {
-  components: { userDrop, weatherView },
+  components: { userDrop, weatherView, searchView },
   filters: {
     nickName(name) {
       return name ? name[0].toUpperCase() : "";
@@ -75,10 +69,6 @@ export default {
   },
   data() {
     return {
-      // 输入数据
-      inputData: "",
-      // 搜索数据
-      searchData: [],
       // 点击用户头像
       userDropDown: false,
     };
@@ -89,6 +79,7 @@ export default {
       "storeImages",
       "storeUserName",
       "storeUserState",
+      "storeWeather",
     ]),
     // 用户页
     userPage() {
@@ -177,7 +168,7 @@ export default {
   .public-header-wrap {
     padding: 0 3%;
   }
-  .public-header-right-icon{
+  .public-header-right-icon {
     margin: 0 10px 0 0;
   }
 }

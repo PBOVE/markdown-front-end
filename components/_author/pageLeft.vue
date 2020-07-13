@@ -19,11 +19,14 @@
     </div>
     <div class="icon-wrap">
       <Icon type="ios-pin-outline" />
-      {{storeAuthorUser.location||'未填写'}}
+      <span
+        v-if="storeAuthorLocaltion"
+      >{{storeAuthorLocaltion.province}} {{storeAuthorLocaltion.city}}</span>
+      <span v-else>未填写</span>
     </div>
     <div class="icon-wrap">
       <Icon type="ios-paper-outline" />
-      {{storeAuthorUser.signature||'未填写'}}
+      <span>{{storeAuthorUser.signature||'未填写'}}</span>
     </div>
     <div class="button-follow main-center-middle">
       <nuxt-link
@@ -69,7 +72,11 @@ export default {
       return this.storeAuthorUser.images;
     },
     ...mapGetters("user", ["storeUser", "storeNickName"]),
-    ...mapGetters("author", ["storeAuthorUser", "storeAuthorNumber"]),
+    ...mapGetters("author", [
+      "storeAuthorUser",
+      "storeAuthorNumber",
+      "storeAuthorLocaltion",
+    ]),
   },
   methods: {
     async handleButton() {
@@ -123,7 +130,7 @@ export default {
   cursor: pointer;
   font-weight: bold;
   letter-spacing: 0.1em;
-  background: #f4f4f4;
+  background: #fafbfc;
   transition: all 0.1s;
 }
 .button-text {
