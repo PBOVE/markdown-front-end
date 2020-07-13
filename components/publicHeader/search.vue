@@ -11,8 +11,22 @@
     placeholder="搜索"
     icon="ios-search"
     v-model="inputData"
+    :clearable="true"
     @on-change="contentChange"
-  ></AutoComplete>
+    @on-select="handelSelect"
+  >
+    <Option
+      v-for="(item,index) in searchData"
+      class="search-ul"
+      :key="index"
+      :value="'/' + item.author + '/' + item.path"
+    >
+      <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
+        <img src="@/assets/images/bookmarks.svg" />
+        {{item.author}}/{{item.title}}
+      </nuxt-link>
+    </Option>
+  </AutoComplete>
 </template>
 
 
@@ -30,12 +44,37 @@ export default {
       inputData: "",
       // 搜索数据
       searchData: [],
+      // 数据加载中
+      loading: false,
+      asyncTitle: "",
     };
   },
   methods: {
     // 搜索内容发送变化
     contentChange(value) {
-      // console.log(value);
+      const search = value.replace(/(^\s*)|(\s*$)/g, "");
+      if (search) this.asyncSearch(search);
+    },
+    // 异步搜索
+    async asyncSearch(title) {
+      if (this.loading) {
+        this.asyncTitle = title;
+        return;
+      }
+      this.loading = true;
+      const params = { title };
+      const { data } = await this.$request.getProject(params);
+      this.searchData = data.content;
+      this.loading = false;
+      if (this.asyncTitle) {
+        const asyncTitle = this.asyncTitle;
+        this.asyncTitle = "";
+        this.asyncSearch(asyncTitle);
+      }
+    },
+    // 处理选择
+    handelSelect(value) {
+      this.$router.push(value);
     },
   },
 };
@@ -43,4 +82,19 @@ export default {
 
 
 <style scoped>
+.search-li {
+  padding: 5px 10px 5px 0;
+  font-size: 14px;
+  color: #1b1f23;
+}
+.search-li img {
+  width: 14px;
+  height: 14px;
+  margin: 0 10px 0 0;
+}
+</style>
+<style>
+.public-header-search .ivu-icon-ios-close {
+  cursor: pointer;
+}
 </style>
