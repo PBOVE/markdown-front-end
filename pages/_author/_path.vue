@@ -31,7 +31,8 @@
               <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
               <div style="color:#515a6e;">
                 <Icon type="ios-pin-outline" />
-                {{user.location}}
+                <span v-if="user.location">{{user.location.province}}  {{user.location.city}}</span>
+                <span v-else></span>
               </div>
             </div>
           </div>
