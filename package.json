@@ -11,7 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@kangc/v-md-editor": "^1.4.2",
+    "@kangc/v-md-editor": "^1.4.5",
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/proxy": "^2.0.0",
     "@tinymce/tinymce-vue": "^3.2.2",

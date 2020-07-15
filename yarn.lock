@@ -827,10 +827,10 @@
   resolved "https://registry.npm.taobao.org/@csstools/convert-colors/download/@csstools/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha1-rUldxBsS511YjG24uYNPCPoTHrc=
 
-"@kangc/v-md-editor@^1.4.2":
-  version "1.4.3"
-  resolved "https://registry.npm.taobao.org/@kangc/v-md-editor/download/@kangc/v-md-editor-1.4.3.tgz#bfe0f8203e7abb9f9aa0b94024d52febf4600192"
-  integrity sha1-v+D4ID56u5+aoLlAJNUv6/RgAZI=
+"@kangc/v-md-editor@^1.4.5":
+  version "1.4.5"
+  resolved "https://registry.npm.taobao.org/@kangc/v-md-editor/download/@kangc/v-md-editor-1.4.5.tgz#eef450ed215204a6e83ae7585c85f1e74e6165d9"
+  integrity sha1-7vRQ7SFSBKboOudYXIXx505hZdk=
   dependencies:
     "@vuepress/markdown" "^1.4.1"
     codemirror "^5.52.2"
@@ -8416,6 +8416,11 @@ vue-no-ssr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/vue-no-ssr/download/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha1-h1875vsK5BVoqDfzrBqA6qE3uZg=
+
+vue-prism-component@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/vue-prism-component/download/vue-prism-component-1.2.0.tgz#406252e16979def13b5d28827d95b2b6dc647825"
+  integrity sha1-QGJS4Wl53vE7XSiCfZWyttxkeCU=
 
 vue-router@^3.1.6:
   version "3.3.1"

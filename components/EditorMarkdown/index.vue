@@ -65,26 +65,25 @@ export default {
       this.$emit("on-save", content);
     },
     // 上传照片
-    async handleUploadImage(event, insertImage) {
-      let file;
-      if (event.dataTransfer) file = event.dataTransfer.files[0];
-      else if (event.target.files) file = event.target.files[0];
-      else if (event.clipboardData && event.clipboardData.items.length) {
-        file = event.clipboardData.items[0].getAsFile();
-      } else return;
+    async handleUploadImage(event, insertImage, files) {
       const reg = /^image/;
-      if (!file || !reg.test(file.type)) return;
-      if (file.size > 1024 * 1024 * 5) {
-        this.$Message.warning("文件太大,请不要上传文件大于 3M 的图片");
-        return;
-      }
-      let Filedata = new FormData();
-      Filedata.append("file", file);
+      let fileData = new FormData();
+      // files.forEach(file => {
+      //   fileData.append("file", file);
+      // });
+      fileData.append("file", files[0]);
       try {
-        const { data } = await this.$request.uploadFile(Filedata);
+        const { data } = await this.$request.uploadFile(fileData);
+        // const images = [];
+        // files.forEach((file, index) => {
+        //   images.push({
+        //     url: `/api/storage/preview/${data[index]}`,
+        //     desc: file.name.replace(/\..+/, ""),
+        //   });
+        // });
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
-          desc: file.name.replace(/\..+/, ""),
+          desc: files[0].name.replace(/\..+/, ""),
         });
       } catch (err) {}
     },
