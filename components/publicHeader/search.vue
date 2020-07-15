@@ -24,6 +24,7 @@
       <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
         <img src="@/assets/images/bookmarks.svg" />
         {{item.author}}/{{item.title}}
+        <span class="search-private" v-if="!item.share">私有项目</span>
       </nuxt-link>
     </Option>
   </AutoComplete>
@@ -91,6 +92,11 @@ export default {
   width: 14px;
   height: 14px;
   margin: 0 10px 0 0;
+}
+.search-private {
+  font-size: 12px;
+  margin: 0 0 0 10px;
+  color: #586069;
 }
 </style>
 <style>

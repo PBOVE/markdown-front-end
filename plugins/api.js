@@ -25,7 +25,7 @@ const request = {
   // 关注用户
   followUser: params => axios.post('/user/follow', params),
   // 取消关注
-  unfollowUser:params =>axios.delete('/user/follow',{ data: params }),
+  unfollowUser: params => axios.delete('/user/follow', { data: params }),
   // 获取邮箱验证
   verifyEmail: () => axios.get('/accounts/email/link'),
   // 忘记密码
@@ -43,7 +43,7 @@ const request = {
   // 上传文件
   uploadFile: data => axios.post(`/storage`, data, fileHeader),
   // 获取项目
-  getProject: params => axios.get('/article', { params }),
+  getProject: params => axios.get('/article', { params, progress: false }),
   // 创建项目
   createProject: params => axios.post('/article', params, header),
   // 更新项目
