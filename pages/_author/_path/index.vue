@@ -100,7 +100,7 @@ export default {
 }
 @media screen and (max-width: 1240px) {
   .index-content {
-    margin: 35px 20px;
+    margin: 0 20px;
   }
 }
 @media screen and (max-width: 800px) {
