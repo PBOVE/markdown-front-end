@@ -6,9 +6,9 @@
 
 
 <template>
-  <div>
+  <div class="issues-index-wrap">
     <div class="issues-header index-page-flex-between">
-      <div>
+      <div class="issues-header-left">
         <Input v-model="value" placeholder="搜索留言" class="issues-header-input" />
         <Button>搜索</Button>
       </div>
@@ -51,6 +51,9 @@ export default {
 
 
 <style scoped>
+.issues-index-wrap{
+  padding: 0 32px;
+}
 .issues-header-input {
   margin: 0 20px 0 0;
   width: 500px;
@@ -71,5 +74,25 @@ export default {
 .issues-blankslate-title {
   font-size: 20px;
   font-weight: bold;
+}
+@media screen and (max-width: 750px) {
+  .issues-header-left{
+    flex: 1;
+  }
+  .issues-header-input {
+    width: calc(100% - 90px);
+  }
+}
+@media screen and (max-width: 400px) {
+  .issues-header{
+    flex-direction: column;
+  }
+  .main-success-button{
+    margin: 10px 0 0;
+    width: 80px;
+  }
+  .issues-main{
+    border: 0;
+  }
 }
 </style>

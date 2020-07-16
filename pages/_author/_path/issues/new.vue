@@ -195,6 +195,9 @@ export default {
   .issues-new-image {
     display: none;
   }
+  .issues-new-content {
+    overflow: hidden;
+  }
 }
 @media screen and (max-width: 550px) {
   .issues-new-wrap {
@@ -208,6 +211,7 @@ export default {
     display: flex;
     justify-content: center;
     margin: 0 0 10px;
+    padding: 10px;
   }
   .issues-new-content-main {
     height: auto;
@@ -217,13 +221,15 @@ export default {
   }
   .main-header-button {
     flex: 1;
-    margin: 0 5px;
     height: 32px;
     line-height: 32px;
     text-align: center;
     border: 1px solid #dcdee2;
     background: #f8f8f9;
     border-radius: 4px;
+  }
+  .main-header-button:last-of-type {
+    margin: 0 0 0 10px;
   }
 }
 </style>
@@ -257,5 +263,11 @@ export default {
 }
 .issues-new-wrap .v-md-icon-title::before {
   content: "H";
+}
+.issues-new-wrap .v-md-editor__left-area{
+  display: none;
+}
+.issues-new-wrap .v-md-editor__toolbar-left+.v-md-editor__toolbar-right{
+  margin: 0;
 }
 </style>
