@@ -62,7 +62,8 @@ export default {
   height: 100%;
 }
 .index-content {
-  margin: 35px auto;
+  margin: 0 auto;
+  padding: 35px 0;
   max-width: 1200px;
 }
 .richText {

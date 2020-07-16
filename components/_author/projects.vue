@@ -15,7 +15,6 @@
         <button class="index-page-button" style="min-width:80px;" @click="handleSearch">搜索</button>
         <nuxt-link
           v-if="author===storeUser.userName&&storeUser.authentication"
-          type="success"
           class="main-success-button index-page-margin-left-16"
           to="/new"
         >

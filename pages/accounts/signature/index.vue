@@ -75,7 +75,7 @@ export default {
           signature: value.substr(0, 60),
         };
         const { data } = await this.$request.updataUserMsg(params);
-        this.$store.commit("user/setUser", data);
+        this.$store.commit("user/setUser", data.user);
         callback();
       } catch (err) {}
       this.loading = false;

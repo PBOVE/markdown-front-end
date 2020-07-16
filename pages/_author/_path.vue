@@ -31,7 +31,7 @@
               <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
               <div style="color:#515a6e;">
                 <Icon type="ios-pin-outline" />
-                <span v-if="user.location">{{user.location.province}}  {{user.location.city}}</span>
+                <span v-if="user.location">{{user.location.province}} {{user.location.city}}</span>
                 <span v-else></span>
               </div>
             </div>
@@ -63,27 +63,19 @@
       </div>
     </div>
     <div class="middle path-main">
-      <nuxt-link class="middle" :class="{border:$route.path === projectPath}" :to="projectPath">文章</nuxt-link>
+      <nuxt-link class="middle" :class="{ border: resultPath === 0 }" :to="projectPath">文章</nuxt-link>
       <nuxt-link
         v-if="storeEdit || author === storeUserName"
         class="middle"
-        :class="{border:$route.path === projectPath+'/edit'}"
+        :class="{ border: resultPath === 1 }"
         :to="projectPath+'/edit'"
       >编辑</nuxt-link>
-      <nuxt-link
-        class="middle"
-        :class="{border:$route.path === projectPath+'/issues'}"
-        :to="projectPath+'/issues'"
-      >留言</nuxt-link>
-      <nuxt-link
-        class="middle"
-        :class="{border:$route.path === projectPath+'/log'}"
-        :to="projectPath+'/log'"
-      >日志</nuxt-link>
+      <nuxt-link class="middle" :class=" { border:resultPath === 2 }" :to="projectPath+'/issues'">留言</nuxt-link>
+      <nuxt-link class="middle" :class=" {border:resultPath === 3 }" :to="projectPath+'/log'">日志</nuxt-link>
       <nuxt-link
         v-if="author === storeUserName"
         class="middle"
-        :class="{border:$route.path === projectPath+'/setting'}"
+        :class="{ border:resultPath === 4 }"
         :to="projectPath+'/setting'"
       >设置</nuxt-link>
     </div>
@@ -138,8 +130,21 @@ export default {
     ...mapGetters("author", ["storeProject", "storeEdit"]),
     ...mapGetters("user", ["storeUserName"]),
     // 路径
+    resultPath() {
+      const { author, path } = this.storeProject;
+      const reg = new RegExp(`/${author}/${path}`);
+      const router = this.$route.path.replace(reg, "");
+      let result = 0;
+      if (/^\/edit/.test(router)) result = 1;
+      else if (/^\/issues/.test(router)) result = 2;
+      else if (/^\/log/.test(router)) result = 3;
+      else if (/^\/setting/.test(router)) result = 4;
+      return result;
+    },
+    // 项目路径
     projectPath() {
-      return `/${this.storeProject.author}/${this.storeProject.path}`;
+      const { author, path } = this.storeProject;
+      return `/${author}/${path}`;
     },
   },
   mounted() {

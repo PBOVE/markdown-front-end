@@ -33,8 +33,13 @@ export default {
       path: this.$route.params.path,
     };
   },
+  head() {
+    return {
+      title: `编辑 · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+    };
+  },
   computed: {
-    ...mapGetters("author", ["storeFormat"]),
+    ...mapGetters("author", ["storeFormat", "storeProject"]),
   },
   methods: {
     // 保存

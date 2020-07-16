@@ -36,6 +36,8 @@
 
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   validate({ store, params }) {
     return (
@@ -49,10 +51,16 @@ export default {
       path: this.$route.params.path,
     };
   },
+  head() {
+    return {
+      title: `设置 · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+    };
+  },
   computed: {
     projectPath() {
       return `/${this.author}/${this.path}/setting`;
     },
+    ...mapGetters("author", ["storeProject"]),
   },
 };
 </script>
