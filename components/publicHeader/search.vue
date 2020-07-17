@@ -19,11 +19,11 @@
       v-for="(item,index) in searchData"
       class="search-ul"
       :key="index"
-      :value="'/' + item.author + '/' + item.path"
+      :value="item.author + '/' + item.path"
     >
       <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
-        <img src="@/assets/images/bookmarks.svg" />
-        {{item.author}}/{{item.title}}
+        <Icon type="md-list-box" />
+        {{item.author}} / {{item.title}}
         <span class="search-private" v-if="!item.share">私有项目</span>
       </nuxt-link>
     </Option>
@@ -75,7 +75,7 @@ export default {
     },
     // 处理选择
     handelSelect(value) {
-      this.$router.push(value);
+      this.$router.push(`/${value}`);
     },
   },
 };
@@ -88,9 +88,9 @@ export default {
   font-size: 14px;
   color: #1b1f23;
 }
-.search-li img {
-  width: 14px;
-  height: 14px;
+.search-li i {
+  font-size: 14px;
+  color: #5c6b77;
   margin: 0 10px 0 0;
 }
 .search-private {
