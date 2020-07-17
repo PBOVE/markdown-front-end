@@ -21,7 +21,7 @@ import { mapGetters } from "vuex";
 export default {
   filters: {
     cityFilter(city) {
-      return city.replace(/市|省|区/, "");
+      return city.replace(/市|省|城区|区/, "");
     },
   },
   data() {

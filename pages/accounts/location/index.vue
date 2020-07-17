@@ -91,11 +91,10 @@ export default {
   methods: {
     // 打开对话框
     openModal() {
-      if (this.storeLocation.province) {
+      if (this.storeLocation) {
         this.province = this.storeLocation.province;
         this.city = this.storeLocation.city;
       } else {
-        console.log(123);
         this.province = "北京";
         this.city = "北京";
       }
@@ -108,7 +107,7 @@ export default {
     // 发送修改
     async update(value) {
       if (this.loading) return;
-      if (this.storeLocation.city === this.city) {
+      if (this.storeLocation && this.storeLocation.city === this.city) {
         this.modalShow = false;
         return;
       }
