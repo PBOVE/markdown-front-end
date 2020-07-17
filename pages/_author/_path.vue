@@ -63,21 +63,50 @@
       </div>
     </div>
     <div class="middle path-main">
-      <nuxt-link class="middle" :class="{ border: resultPath === 0 }" :to="projectPath">文章</nuxt-link>
+      <nuxt-link
+        class="middle path-main-link"
+        :class="{ border: resultPath === 0 }"
+        :to="projectPath"
+      >文章</nuxt-link>
       <nuxt-link
         v-if="storeEdit || author === storeUserName"
-        class="middle"
+        class="middle path-main-link"
         :class="{ border: resultPath === 1 }"
         :to="projectPath+'/edit'"
       >编辑</nuxt-link>
-      <nuxt-link class="middle" :class=" { border:resultPath === 2 }" :to="projectPath+'/issues'">留言</nuxt-link>
-      <nuxt-link class="middle" :class=" {border:resultPath === 3 }" :to="projectPath+'/log'">日志</nuxt-link>
       <nuxt-link
-        v-if="author === storeUserName"
-        class="middle"
+        class="middle path-main-link"
+        :class=" { border:resultPath === 2 }"
+        :to="projectPath+'/issues'"
+      >留言</nuxt-link>
+      <nuxt-link
+        class="middle path-main-link"
+        :class=" {border:resultPath === 3 }"
+        :to="projectPath+'/log'"
+      >日志</nuxt-link>
+      <nuxt-link
+        v-if="!setting && author === storeUserName"
+        class="middle path-main-link"
         :class="{ border:resultPath === 4 }"
         :to="projectPath+'/setting'"
       >设置</nuxt-link>
+      <Dropdown v-if="setting && author === storeUserName" trigger="click">
+        <div class="middle path-main-link path-main-down" :class="{ border:resultPath === 4 }">
+          设置
+          <Icon type="ios-arrow-down" />
+        </div>
+        <DropdownMenu slot="list">
+          <DropdownItem :selected="$route.path === projectPath + '/setting'">
+            <nuxt-link :to="projectPath+'/setting'" class="path-main-setting-link">基本设置</nuxt-link>
+          </DropdownItem>
+          <DropdownItem :selected="$route.path === projectPath + '/setting/access'">
+            <nuxt-link :to="projectPath+'/setting/access'" class="path-main-setting-link">访问设置</nuxt-link>
+          </DropdownItem>
+          <DropdownItem :selected="$route.path === projectPath + '/setting/danger'">
+            <nuxt-link :to="projectPath+'/setting/danger'" class="path-main-setting-link">危险设置</nuxt-link>
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </div>
     <div class="path-content scroll">
       <nuxt-child />
@@ -119,6 +148,8 @@ export default {
       width: 300,
       // 作者
       author: this.$route.params.author,
+      // 设置菜单展示
+      setting: false,
     };
   },
   head() {
@@ -151,6 +182,9 @@ export default {
     if (window.innerWidth < 300) {
       this.width = window.innerWidth - 20;
     }
+    if (window.innerWidth < 500) {
+      this.setting = true;
+    }
     window.addEventListener("resize", this.clientSize);
   },
   beforeDestroy() {
@@ -161,6 +195,8 @@ export default {
       if (window.innerWidth < 300) {
         this.width = window.innerWidth - 20;
       } else this.width = 300;
+      if (window.innerWidth < 500) this.setting = true;
+      else this.setting = false;
     },
   },
 };
@@ -251,14 +287,21 @@ export default {
   padding: 0 2% 0 5%;
   border-bottom: 1px solid #e1e4e8;
 }
-.path-main > a {
+.path-main-link {
   display: inline-block;
   padding: 0 20px 7px;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   color: #000;
 }
-.path-main > a:hover {
+.ivu-dropdown {
+  flex: 1;
+}
+.path-main-down.path-main-link {
+  width: 100%;
+  padding: 0 0 7px 10px;
+}
+.path-main-link:hover {
   border-bottom: 2px solid #c5c8ce;
 }
 .border {
@@ -268,6 +311,9 @@ export default {
   flex: auto;
   height: 0;
   overflow: auto;
+}
+.path-main-setting-link {
+  color: #000;
 }
 @media screen and (max-width: 500px) {
   .path-header {
@@ -282,10 +328,21 @@ export default {
   .path-main {
     padding: 0 2%;
   }
-  .path-main > a {
+  .path-main-link {
     flex: 1;
     padding: 0 0 7px;
     text-align: center;
   }
+  .path-main-down {
+    content: "";
+  }
+}
+</style>
+<style >
+.path-wrap .ivu-dropdown-menu {
+  min-width: auto;
+}
+.path-wrap .ivu-dropdown-item {
+  padding: 7px 10px;
 }
 </style>

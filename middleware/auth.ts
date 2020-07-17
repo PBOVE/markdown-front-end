@@ -19,6 +19,7 @@ const authMiddleware: Middleware = async context => {
     store.commit('token/setIsGetToken');
   }
   const ignorePaths: string[] = [
+    '/new',
     '/user',
     '/user/personal',
     '/user/security',
@@ -27,7 +28,7 @@ const authMiddleware: Middleware = async context => {
     '/accounts/email',
     '/accounts/password',
     '/accounts/location',
-    '/new',
+    '/:author/:path/issues/new',
   ];
   const redirectPath = [ '/login', '/register', '/password_reset' ];
   const { path } = route;

@@ -22,8 +22,8 @@
           >访问设置</nuxt-link>
           <nuxt-link
             class="setting-left-nav"
-            :to="projectPath + '/delete'"
-            :class="{select:$route.path===projectPath + '/delete'}"
+            :to="projectPath + '/danger'"
+            :class="{select:$route.path===projectPath + '/danger'}"
           >危险操作</nuxt-link>
         </div>
       </div>
@@ -107,11 +107,11 @@ export default {
   }
 }
 @media screen and (max-width: 500px) {
-  .setting-left {
+  .setting-left{
     display: none;
   }
   .setting-right {
-    margin: 0;
+    margin: 20px 0 0;
   }
 }
 </style>
