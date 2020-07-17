@@ -48,6 +48,8 @@ const request = {
   createProject: params => axios.post('/article', params, header),
   // 更新项目
   updateProject: params => axios.put('/article', params, header),
+  // 更新项目文章
+  updatePContent: params => axios.put('/article/content', params, header),
   // 删除项目
   deleteProject: params => axios.delete('/article', { data: params }, header),
   // 处理点赞

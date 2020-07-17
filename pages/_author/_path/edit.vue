@@ -50,7 +50,7 @@ export default {
           content,
           path: this.path,
         };
-        await this.$request.updateProject(params);
+        await this.$request.updatePContent(params);
         this.$Message.success({
           background: true,
           content: "项目保存成功",
