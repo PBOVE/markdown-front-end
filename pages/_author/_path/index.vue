@@ -39,6 +39,7 @@
 import { mapGetters } from "vuex";
 
 export default {
+  transition: "fade",
   filters: {
     name(name) {
       return name ? name[0].toUpperCase() : "";

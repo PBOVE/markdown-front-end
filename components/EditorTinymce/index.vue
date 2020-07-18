@@ -62,6 +62,7 @@ if (process.client) {
   require("tinymce/plugins/noneditable");
   require("tinymce/plugins/pagebreak");
   require("tinymce/plugins/charmap");
+  require("tinymce/plugins/toc");
 }
 
 export default {
@@ -85,11 +86,15 @@ export default {
         branding: false, // 去水印
         // 在编辑器中屏蔽浏览器本身的右键菜单
         contextmenu_never_use_native: true,
-
+        // 为tinymce附加新图标集合
+        icons: "custom",
+        // 附加新图标的url路径
+        icons_url: "/tinymce/icon/icons.js",
+        // 移动端
         mobile: {
           menubar: true,
           plugins: [
-            "lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview",
+            "lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview toc",
           ],
           // 当tinymce检测到当前环境为移动设备时，该参数允许你配置在移动设备生效配置参数。
           toolbar: "save | undo redo | bold italic forecolor backcolor ",
@@ -98,12 +103,14 @@ export default {
         images_upload_handler: this.imagesUpload,
         // 插件
         plugins: [
-          "lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview",
+          "lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview toc",
         ],
         toolbar:
           "save |undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |  blockquote | removeformat ",
         // 保存
         save_onsavecallback: this.contentSave,
+        // 当内容无变化时禁用保存按钮
+        save_enablewhendirty: false,
       },
     };
   },

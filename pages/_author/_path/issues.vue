@@ -18,6 +18,7 @@
 import { mapGetters } from "vuex";
 
 export default {
+  transition: "fade",
   data() {
     return {
       // 作者

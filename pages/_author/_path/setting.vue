@@ -39,11 +39,11 @@
 import { mapGetters } from "vuex";
 
 export default {
+  transition: "fade",
   validate({ store, params }) {
-    return (
-      store.state.user.userState &&
-      params.author === store.state.user.data.userName
-    );
+    const userState = store.state.user.userState;
+    const userName = store.state.user.data.userName;
+    return userState && params.author === userName;
   },
   data() {
     return {
@@ -107,7 +107,7 @@ export default {
   }
 }
 @media screen and (max-width: 500px) {
-  .setting-left{
+  .setting-left {
     display: none;
   }
   .setting-right {

@@ -19,6 +19,7 @@ import tinymceEditor from "@/components/EditorTinymce/index.vue";
 import markdownEditor from "@/components/EditorMarkdown/index.vue";
 
 export default {
+  transition: "fade",
   components: { tinymceEditor, markdownEditor },
   validate({ store, params }) {
     return (
