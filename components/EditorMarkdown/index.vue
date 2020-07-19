@@ -95,5 +95,6 @@ export default {
 <style scoped>
 .markdown-wrap {
   height: 100%;
+  overflow: hidden;
 }
 </style>

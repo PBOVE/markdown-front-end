@@ -11,8 +11,8 @@
     <Divider />
     <div class="setting-delete-row">
       <div class="setting-delete-left">
-        <div class="setting-delete-title">项目删除</div>
-        <div>一旦删除了项目，就无法返回。确定是否删除。</div>
+        <div class="setting-delete-title">知识库删除</div>
+        <div>一旦删除了知识库，就无法返回。确定是否删除。</div>
       </div>
       <div class="setting-delete-roght">
         <Button type="error" @click="handleDelete">确定删除</Button>
@@ -23,9 +23,9 @@
       <div class="model-header">您确定要删除吗?</div>
       <div class="model-main">
         此操作无法撤消。这将永久删除
-        <strong>{{storeProject.author}}/{{storeProject.title}}</strong> 项目
+        <strong>{{storeProject.author}}/{{storeProject.title}}</strong> 知识库
       </div>
-      <div class="model-tip">请输入项目路径, 表示确认删除此项目</div>
+      <div class="model-tip">请输入知识库路径, 表示确认删除此知识库</div>
       <Input v-model="projectPath" />
       <div class="model-footer">
         <Button type="text" @click="modalShow=false">取消</Button>
@@ -46,7 +46,7 @@ export default {
       path: this.$route.params.path,
       // 对话框
       modalShow: false,
-      // 项目路径
+      // 知识库路径
       projectPath: "",
       // 设置按钮为禁用状态
       disabled: true,

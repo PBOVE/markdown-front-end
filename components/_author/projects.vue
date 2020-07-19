@@ -9,7 +9,7 @@
   <div class="index-page-wrap">
     <div class="index-page-header">
       <div class="index-page-header-left">
-        <Input v-model="search" placeholder="查找项目" @on-enter="handleSearch" />
+        <Input v-model="search" placeholder="查找知识库" @on-enter="handleSearch" />
       </div>
       <div class="index-page-header-right">
         <button class="index-page-button" style="min-width:80px;" @click="handleSearch">搜索</button>
@@ -73,7 +73,7 @@ export default {
   props: ["projects"],
   filters: {
     shareFilter(share) {
-      return share ? "" : "私有项目";
+      return share ? "" : "私有知识库";
     },
   },
   data() {

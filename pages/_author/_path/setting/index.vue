@@ -9,12 +9,12 @@
   <div class="setting-index-wrap">
     <div class="setting-index-header">基本设置</div>
     <Divider />
-    <div class="setting-title">项目名称</div>
+    <div class="setting-title">知识库名称</div>
     <div class="setting-input-wrap">
       <input type="text" class="setting-input" v-model="title" />
       <div class="setting-input-suffix">{{titleSize}}</div>
     </div>
-    <div class="setting-title">项目描述</div>
+    <div class="setting-title">知识库描述</div>
     <div class="setting-input-wrap">
       <input type="text" class="setting-input" v-model="description" />
       <div class="setting-input-suffix">{{descriptionSize}}</div>
@@ -23,7 +23,7 @@
       class="main-success-button setting-button"
       :style="{background: loading?'#2ea44f88':''}"
       @click="handleSubbmit"
-    >更新项目</button>
+    >更新知识库</button>
   </div>
 </template>
 
@@ -83,7 +83,7 @@ export default {
         const { data } = await this.$request.updateProject(params);
         this.$Message.success({
           background: true,
-          content: "项目更新成功",
+          content: "知识库更新成功",
         });
         this.$store.commit("author/setProject", data);
       } catch (err) {}

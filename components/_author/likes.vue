@@ -61,7 +61,7 @@ export default {
   props: ["likes"],
   filters: {
     shareFilter(share) {
-      return share ? "" : "私有项目";
+      return share ? "" : "私有知识库";
     },
   },
   data() {

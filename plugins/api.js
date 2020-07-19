@@ -42,15 +42,15 @@ const request = {
   verifyRequestId: (requestId, params) => axios.get(`/valid/${requestId}`, { params }),
   // 上传文件
   uploadFile: data => axios.post(`/storage`, data, fileHeader),
-  // 获取项目
+  // 获取知识库
   getProject: params => axios.get('/article', { params, progress: false }),
-  // 创建项目
+  // 创建知识库
   createProject: params => axios.post('/article', params, header),
-  // 更新项目
+  // 更新知识库
   updateProject: params => axios.put('/article', params, header),
-  // 更新项目文章
+  // 更新知识库文章
   updatePContent: params => axios.put('/article/content', params, header),
-  // 删除项目
+  // 删除知识库
   deleteProject: params => axios.delete('/article', { data: params }, header),
   // 处理点赞
   projectLike: params => axios.post('/article/like', params, header),

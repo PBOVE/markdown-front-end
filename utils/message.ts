@@ -54,9 +54,9 @@ const showStatus = (status: number) => {
       message = '密码输入错误,请重新输入密码';
       break;
     case 4008:
-      message = '项目路径已经存在,请重新设置';
+      message = '知识库路径已经存在,请重新设置';
     case 6000:
-      message = '系统未开放,无法创建项目';
+      message = '系统未开放,无法创建知识库';
       break;
     default:
       message = `连接出错(${status})!`;

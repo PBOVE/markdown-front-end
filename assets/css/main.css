@@ -2,6 +2,7 @@
 @import url('./user.css');
 @import url('./modal.css');
 @import url('./index.css');
+@import url('./scroll.css');
 
 .fade-enter-active,
 .fade-leave-active {
@@ -42,17 +43,7 @@
 .main-center-modal .ivu-modal-close {
   display: none;
 }
-.scroll::-webkit-scrollbar-thumb,
-.ivu-select-dropdown::-webkit-scrollbar-thumb {
-  background-color: #c5c8ce;
-  border-radius: 5px;
-}
 
-.scroll::-webkit-scrollbar,
-.ivu-select-dropdown::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
 
 .main-user-image {
   width: 30px;

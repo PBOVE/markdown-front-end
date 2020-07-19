@@ -7,8 +7,11 @@
 
 <template>
   <div class="edit-wrap">
-    <tinymce-editor v-if="storeFormat==='richText'" @on-save="handleSave" />
-    <markdown-editor v-else-if="storeFormat==='markdown'" @on-save="handleSave" />
+    <editLeft class="edit-left" />
+    <div class="edit-right">
+      <tinymce-editor v-if="storeFormat==='richText'" @on-save="handleSave" />
+      <markdown-editor v-else-if="storeFormat==='markdown'" @on-save="handleSave" />
+    </div>
   </div>
 </template>
 
@@ -17,10 +20,11 @@
 import { mapGetters } from "vuex";
 import tinymceEditor from "@/components/EditorTinymce/index.vue";
 import markdownEditor from "@/components/EditorMarkdown/index.vue";
+import editLeft from "@/components/_path/editLeft.vue";
 
 export default {
   transition: "fade",
-  components: { tinymceEditor, markdownEditor },
+  components: { tinymceEditor, markdownEditor, editLeft },
   validate({ store, params }) {
     return (
       store.state.user.userState &&
@@ -54,7 +58,7 @@ export default {
         await this.$request.updatePContent(params);
         this.$Message.success({
           background: true,
-          content: "项目保存成功",
+          content: "知识库保存成功",
         });
       } catch (err) {}
     },
@@ -65,6 +69,10 @@ export default {
 
 <style scoped>
 .edit-wrap {
+  display: flex;
   height: 100%;
+}
+.edit-right {
+  flex: 1;
 }
 </style>

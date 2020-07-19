@@ -3,7 +3,7 @@ export const namespaced = true;
 export const state = () => ({
   // 用户信息,点赞数量
   author: {},
-  // 项目信息
+  // 知识库信息
   project: {},
 });
 

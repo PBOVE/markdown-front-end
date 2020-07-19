@@ -16,7 +16,7 @@
         :to="'/'+ author + '?tab=projects'"
         :class="{border:tab==='projects'}"
       >
-        <Icon type="ios-folder-open-outline" />项目
+        <Icon type="ios-folder-open-outline" />知识库
       </nuxt-link>
       <nuxt-link class="header-row" :to="'/'+author + '?tab=likes'" :class="{border:tab==='likes'}">
         <Icon type="ios-heart-outline" />喜欢

@@ -12,3 +12,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+h1 {
+  margin: .67em 0;
+}
+h2 {
+  margin: 0.83em 0;
+}
+h3 {
+  margin: 1.17em 0;
+}
+h4 {
+  margin: 1.33em 0;
+}
+h5 {
+  margin: 1.67em 0;
+}
+h6 {
+  margin: 2.33em 0;
+}

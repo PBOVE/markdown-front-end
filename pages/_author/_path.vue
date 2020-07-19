@@ -6,109 +6,114 @@
 
 
 <template>
-  <div class="path-wrap">
+  <div class="path-wrap scroll">
     <public-header />
-    <div class="path-header">
-      <div class="middle">
-        <Icon v-if="storeProject.share" type="ios-podium-outline" class="path-header-icon" />
-        <Icon v-else type="ios-lock-outline" class="path-header-icon" />
-        <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
-          <nuxt-link
-            :to="'/' + storeProject.author"
-            class="path-header-title"
-          >{{storeProject.author}}</nuxt-link>
-          <div class="middle" slot="title">
-            <img
-              v-if="user.images"
-              :src="'/api/storage/preview/' + user.images"
-              class="path-poptip-image"
-            />
-            <div v-else class="path-poptip-portrait middle">{{user.nickName|nickName}}</div>
-            <div style="margin:5px 0px 0 15px;">
-              <div
-                style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;"
-              >{{user.nickName}}</div>
-              <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
-              <div style="color:#515a6e;">
-                <Icon type="ios-pin-outline" />
-                <span v-if="user.location">{{user.location.province}} {{user.location.city}}</span>
-                <span v-else></span>
+    <Affix>
+      <div class="path-header">
+        <div class="middle">
+          <Icon v-if="storeProject.share" type="ios-podium-outline" class="path-header-icon" />
+          <Icon v-else type="ios-lock-outline" class="path-header-icon" />
+          <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
+            <nuxt-link
+              :to="'/' + storeProject.author"
+              class="path-header-title"
+            >{{storeProject.author}}</nuxt-link>
+            <div class="middle" slot="title">
+              <img
+                v-if="user.images"
+                :src="'/api/storage/preview/' + user.images"
+                class="path-poptip-image"
+              />
+              <div v-else class="path-poptip-portrait middle">{{user.nickName|nickName}}</div>
+              <div style="margin:5px 0px 0 15px;">
+                <div
+                  style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;"
+                >{{user.nickName}}</div>
+                <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
+                <div style="color:#515a6e;">
+                  <Icon type="ios-pin-outline" />
+                  <span v-if="user.location">{{user.location.province}} {{user.location.city}}</span>
+                  <span v-else></span>
+                </div>
               </div>
             </div>
+            <div class="api" slot="content">
+              <Icon type="ios-stats-outline" />
+              {{user.signature}}
+            </div>
+          </Poptip>
+          <span class="path-header-line">/</span>
+          {{storeProject.title}}
+          <div
+            v-if="!storeProject.share"
+            class="path-header-share"
+          >{{storeProject.share|shareFilter}}</div>
+        </div>
+        <div class="middle">
+          <div class="path-button middle">
+            <div class="path-button-left middle">
+              <Icon type="ios-copy-outline" class="path-button-icon" />
+              <span>复制</span>
+            </div>
+            <div class="path-button-right">0</div>
           </div>
-          <div class="api" slot="content">
-            <Icon type="ios-stats-outline" />
-            {{user.signature}}
+          <div class="path-button middle">
+            <div class="path-button-left middle">
+              <Icon type="ios-thumbs-up-outline" class="path-button-icon" />
+              <span>点赞</span>
+            </div>
+            <div class="path-button-right">{{storeProject.likes}}</div>
           </div>
-        </Poptip>
-        <span class="path-header-line">/</span>
-        {{storeProject.title}}
-        <div v-if="!storeProject.share" class="path-header-share">{{storeProject.share|shareFilter}}</div>
+        </div>
       </div>
-      <div class="middle">
-        <div class="path-button middle">
-          <div class="path-button-left middle">
-            <Icon type="ios-copy-outline" class="path-button-icon" />
-            <span>复制</span>
+      <div class="middle path-main">
+        <nuxt-link
+          class="middle path-main-link"
+          :class="{ border: resultPath === 0 }"
+          :to="projectPath"
+        >文章</nuxt-link>
+        <nuxt-link
+          v-if="storeEdit || author === storeUserName"
+          class="middle path-main-link"
+          :class="{ border: resultPath === 1 }"
+          :to="projectPath+'/edit'"
+        >编辑</nuxt-link>
+        <nuxt-link
+          class="middle path-main-link"
+          :class=" { border:resultPath === 2 }"
+          :to="projectPath+'/issues'"
+        >留言</nuxt-link>
+        <nuxt-link
+          class="middle path-main-link"
+          :class=" {border:resultPath === 3 }"
+          :to="projectPath+'/log'"
+        >日志</nuxt-link>
+        <nuxt-link
+          v-if="!setting && author === storeUserName"
+          class="middle path-main-link"
+          :class="{ border:resultPath === 4 }"
+          :to="projectPath+'/setting'"
+        >设置</nuxt-link>
+        <Dropdown v-if="setting && author === storeUserName" trigger="click">
+          <div class="middle path-main-link path-main-down" :class="{ border:resultPath === 4 }">
+            设置
+            <Icon type="ios-arrow-down" />
           </div>
-          <div class="path-button-right">0</div>
-        </div>
-        <div class="path-button middle">
-          <div class="path-button-left middle">
-            <Icon type="ios-thumbs-up-outline" class="path-button-icon" />
-            <span>点赞</span>
-          </div>
-          <div class="path-button-right">{{storeProject.likes}}</div>
-        </div>
+          <DropdownMenu slot="list">
+            <DropdownItem :selected="$route.path === projectPath + '/setting'">
+              <nuxt-link :to="projectPath+'/setting'" class="path-main-setting-link">基本设置</nuxt-link>
+            </DropdownItem>
+            <DropdownItem :selected="$route.path === projectPath + '/setting/access'">
+              <nuxt-link :to="projectPath+'/setting/access'" class="path-main-setting-link">访问设置</nuxt-link>
+            </DropdownItem>
+            <DropdownItem :selected="$route.path === projectPath + '/setting/danger'">
+              <nuxt-link :to="projectPath+'/setting/danger'" class="path-main-setting-link">危险设置</nuxt-link>
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </div>
-    </div>
-    <div class="middle path-main">
-      <nuxt-link
-        class="middle path-main-link"
-        :class="{ border: resultPath === 0 }"
-        :to="projectPath"
-      >文章</nuxt-link>
-      <nuxt-link
-        v-if="storeEdit || author === storeUserName"
-        class="middle path-main-link"
-        :class="{ border: resultPath === 1 }"
-        :to="projectPath+'/edit'"
-      >编辑</nuxt-link>
-      <nuxt-link
-        class="middle path-main-link"
-        :class=" { border:resultPath === 2 }"
-        :to="projectPath+'/issues'"
-      >留言</nuxt-link>
-      <nuxt-link
-        class="middle path-main-link"
-        :class=" {border:resultPath === 3 }"
-        :to="projectPath+'/log'"
-      >日志</nuxt-link>
-      <nuxt-link
-        v-if="!setting && author === storeUserName"
-        class="middle path-main-link"
-        :class="{ border:resultPath === 4 }"
-        :to="projectPath+'/setting'"
-      >设置</nuxt-link>
-      <Dropdown v-if="setting && author === storeUserName" trigger="click">
-        <div class="middle path-main-link path-main-down" :class="{ border:resultPath === 4 }">
-          设置
-          <Icon type="ios-arrow-down" />
-        </div>
-        <DropdownMenu slot="list">
-          <DropdownItem :selected="$route.path === projectPath + '/setting'">
-            <nuxt-link :to="projectPath+'/setting'" class="path-main-setting-link">基本设置</nuxt-link>
-          </DropdownItem>
-          <DropdownItem :selected="$route.path === projectPath + '/setting/access'">
-            <nuxt-link :to="projectPath+'/setting/access'" class="path-main-setting-link">访问设置</nuxt-link>
-          </DropdownItem>
-          <DropdownItem :selected="$route.path === projectPath + '/setting/danger'">
-            <nuxt-link :to="projectPath+'/setting/danger'" class="path-main-setting-link">危险设置</nuxt-link>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </div>
-    <div class="path-content scroll">
+    </Affix>
+    <div class="path-content">
       <nuxt-child />
     </div>
   </div>
@@ -139,7 +144,7 @@ export default {
       return name ? name[0].toUpperCase() : "";
     },
     shareFilter(share) {
-      return share ? "" : "私有项目";
+      return share ? "" : "私有知识库";
     },
   },
   data() {
@@ -172,7 +177,7 @@ export default {
       else if (/^\/setting/.test(router)) result = 4;
       return result;
     },
-    // 项目路径
+    // 知识库路径
     projectPath() {
       const { author, path } = this.storeProject;
       return `/${author}/${path}`;
@@ -216,9 +221,9 @@ export default {
 .path-header {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0 0 0;
-  padding: 0 4%;
+  padding: 10px 4% 0;
   font-size: 20px;
+  background: #fff;
 }
 .path-header-icon {
   margin: 0 5px;
@@ -283,9 +288,9 @@ export default {
   border-left: 1px solid #e1e4e8;
 }
 .path-main {
-  margin: 10px 0 0 0;
-  padding: 0 2% 0 5%;
+  padding: 10px 2% 0 5%;
   border-bottom: 1px solid #e1e4e8;
+  background: #fff;
 }
 .path-main-link {
   display: inline-block;
@@ -310,7 +315,6 @@ export default {
 .path-content {
   flex: auto;
   height: 0;
-  overflow: auto;
 }
 .path-main-setting-link {
   color: #000;

@@ -111,6 +111,7 @@ export default {
         save_onsavecallback: this.contentSave,
         // 当内容无变化时禁用保存按钮
         save_enablewhendirty: false,
+        readonly: false,
       },
     };
   },
@@ -155,5 +156,9 @@ export default {
 <style>
 .tinymce {
   font-size: 14px !important;
+}
+.tinymce-wrap .tox-menubar {
+  height: 41px;
+  background: none !important;
 }
 </style>
