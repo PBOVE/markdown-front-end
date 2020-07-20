@@ -85,7 +85,7 @@ export default {
         this.cancelAnimation(ripples);
         return;
       } else if (this.emailLoad !== 0) {
-        this.$Message.info("验证邮箱中，请稍等");
+        this.$Message.info({ content: "验证邮箱中，请稍等", background: true });
         this.cancelAnimation(ripples);
         return;
       }
@@ -94,7 +94,7 @@ export default {
         const content = "您的邮件已发送，请前往您的邮箱中查看";
         this.email = "";
         this.loading = false;
-        this.$Message.success({ duration: 10, content });
+        this.$Message.success({ duration: 10, content, background: true });
       } catch (err) {}
       this.cancelAnimation(ripples);
     },

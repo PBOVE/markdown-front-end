@@ -69,7 +69,12 @@ export default {
   methods: {
     // 处理删除
     handleDelete() {
-      this.modalShow = true;
+      // this.modalShow = true;
+      this.$Message.info({
+        background: true,
+        content: "系统升级中展示无法删除",
+        duration: 5,
+      });
     },
     // 处理提交
     handleSubmit() {

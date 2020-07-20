@@ -32,7 +32,6 @@
       </div>
       <div class="index-right">
         <div class="index-right-header">目录</div>
-        <!-- <div>{{storeProject}}</div> -->
         <div
           v-for="(anchor,index) in titles"
           class="index-titles index-page-flex-middle"

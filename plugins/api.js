@@ -48,8 +48,6 @@ const request = {
   createProject: params => axios.post('/article', params, header),
   // 更新知识库
   updateProject: params => axios.put('/article', params, header),
-  // 更新知识库文章
-  updatePContent: params => axios.put('/article/content', params, header),
   // 删除知识库
   deleteProject: params => axios.delete('/article', { data: params }, header),
   // 处理点赞
@@ -58,6 +56,8 @@ const request = {
   projectUnLike: params => axios.delete('/article/like', { data: params }, header),
   // 获取文章内容
   projectContent: params => axios.get('/article/details', { params }),
+  // 更新知识库文章
+  updatePContent: params => axios.put('/post', params, header),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

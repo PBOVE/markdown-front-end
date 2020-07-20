@@ -175,7 +175,11 @@ export default {
         const { srcPassword, password } = this.updateData;
         try {
           const data = await this.$request.password({ srcPassword, password });
-          this.$Message.success({ content: "密码修改成功", duration: 5 });
+          this.$Message.success({
+            content: "密码修改成功",
+            duration: 5,
+            background: true,
+          });
           this.updateData = { srcPassword: "", password: "", again: "" };
         } catch (err) {}
         this.loading = false;

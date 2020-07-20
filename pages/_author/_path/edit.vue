@@ -26,11 +26,12 @@ export default {
   transition: "fade",
   components: { tinymceEditor, markdownEditor, editLeft },
   validate({ store, params }) {
+    const { user, author } = store.state;
     return (
-      store.state.user.userState &&
-      (store.state.author.edit ||
-        params.author === store.state.user.data.userName)
+      user.userState &&
+      (author.project.edit || params.author === user.data.userName)
     );
+    // return true;
   },
   data() {
     return {
@@ -52,8 +53,8 @@ export default {
       try {
         const params = {
           author: this.author,
-          content,
           path: this.path,
+          content,
         };
         await this.$request.updatePContent(params);
         this.$Message.success({

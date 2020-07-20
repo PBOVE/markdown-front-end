@@ -7,7 +7,7 @@
 
 <template>
   <div class="email-wrap">
-    <public-header  :search-hide="true" />
+    <public-header :search-hide="true" />
     <div class="email-header">
       <div class="eh-content">
         <nuxt-link to="/user/personal">
@@ -89,7 +89,7 @@ export default {
         this.loading = true;
         await this.$request.verifyEmail();
         const content = "您的验证邮件已发送，请前往您的邮箱中查看";
-        this.$Message.success({ duration: 10, content });
+        this.$Message.success({ duration: 10, content, background: true });
       } catch (code) {}
       this.modalFlag = false;
       this.loading = false;
