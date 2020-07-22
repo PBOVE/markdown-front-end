@@ -72,7 +72,7 @@ export default {
       // this.modalShow = true;
       this.$Message.info({
         background: true,
-        content: "系统升级中展示无法删除",
+        content: "系统升级中暂时无法删除",
         duration: 5,
       });
     },

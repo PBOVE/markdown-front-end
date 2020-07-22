@@ -31,7 +31,6 @@ export default {
       user.userState &&
       (author.project.edit || params.author === user.data.userName)
     );
-    // return true;
   },
   data() {
     return {

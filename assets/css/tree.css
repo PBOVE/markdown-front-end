@@ -1,0 +1,45 @@
+.ivu-tree-children .ivu-tree-arrow {
+  line-height: 30px;
+}
+.ivu-tree-title {
+  width: calc(100% - 12px);
+  color: #000;
+  transition: none;
+  height: 30px;
+  line-height: 30px;
+}
+.ivu-tree-arrow i{
+  font-size: 16px;
+}
+.tree-row-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+.ivu-tree-title:hover .tree-row:last-of-type {
+  opacity: 1;
+}
+.tree-row:last-of-type {
+  opacity: 0;
+}
+.tree-row {
+  display: flex;
+  align-items: center;
+
+}
+.tree-row-icon-file,
+.tree-row-icon-note {
+  display: inline-block;
+  background-size: 100% 100%;
+  width: 16px;
+  height: 16px;
+}
+
+.tree-row-icon-file {
+  background-image: url('../images/file.svg');
+}
+.tree-row-icon-note {
+  background-image: url('../images/note.svg');
+}
+.tree-row-icon {
+  margin: 0 0 0 5px;
+}

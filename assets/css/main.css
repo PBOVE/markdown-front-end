@@ -3,6 +3,7 @@
 @import url('./modal.css');
 @import url('./index.css');
 @import url('./scroll.css');
+@import url('./tree.css');
 
 .fade-enter-active,
 .fade-leave-active {

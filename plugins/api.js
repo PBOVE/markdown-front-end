@@ -58,6 +58,8 @@ const request = {
   projectContent: params => axios.get('/article/details', { params }),
   // 更新知识库文章
   updatePContent: params => axios.put('/post', params, header),
+  // 获取列表
+  queryPostList: (id, params) => axios.get(`/post/list/${id}`, { params, progress: false }),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用
