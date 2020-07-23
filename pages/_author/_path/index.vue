@@ -146,21 +146,11 @@ export default {
     },
     // 处理滚动位置
     previewScrollToTarget(heading) {
-      const top = this.getElementTop(heading);
+      const pos = this.$elementOffset(heading);
       window.scrollTo({
-        top: top,
+        top: pos.top - 100,
         behavior: "smooth",
       });
-    },
-    // 获取位置
-    getElementTop(el) {
-      let actualTop = el.offsetTop;
-      let current = el.offsetParent;
-      while (current !== null) {
-        actualTop += current.offsetTop;
-        current = current.offsetParent;
-      }
-      return actualTop - 100;
     },
   },
 };

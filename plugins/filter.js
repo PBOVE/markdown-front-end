@@ -42,3 +42,14 @@ Vue.prototype.$timeConversion = time => {
     date.getHours(),
   )}:${completion(date.getMinutes())}`;
 };
+Vue.prototype.$elementOffset = el => {
+  let actualTop = el.offsetTop;
+  let actualLeft = el.offsetLeft;
+  let current = el.offsetParent;
+  while (current !== null) {
+    actualTop += current.offsetTop;
+    actualLeft += current.offsetLeft;
+    current = current.offsetParent;
+  }
+  return { top: actualTop, left: actualLeft };
+};

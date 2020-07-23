@@ -8,23 +8,22 @@
   height: 30px;
   line-height: 30px;
 }
-.ivu-tree-arrow i{
+.ivu-tree-arrow i {
   font-size: 16px;
 }
 .tree-row-wrap {
   display: flex;
   justify-content: space-between;
 }
-.ivu-tree-title:hover .tree-row:last-of-type {
+.ivu-tree-title:hover .tree-row .ivu-icon {
   opacity: 1;
 }
-.tree-row:last-of-type {
+.tree-row .ivu-icon {
   opacity: 0;
 }
 .tree-row {
   display: flex;
   align-items: center;
-
 }
 .tree-row-icon-file,
 .tree-row-icon-note {
@@ -42,4 +41,15 @@
 }
 .tree-row-icon {
   margin: 0 0 0 5px;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+.tree-select {
+  background: #eaf4fe;
+}
+.tree-select .ivu-icon {
+  opacity: 1;
 }

@@ -39,19 +39,19 @@
         </nuxt-link>
       </div>
     </div>
-    <user-drop v-model="userDropDown" />
+    <drop-user v-model="userDropDown" />
   </div>
 </template>
 
 
 <script>
 import { mapGetters } from "vuex";
-import userDrop from "@/components/userDrop/index.vue";
+import dropUser from "@/components/dropUser/index.vue";
 import weatherView from "@/components/publicHeader/weather.vue";
 import searchView from "@/components/publicHeader/search.vue";
 
 export default {
-  components: { userDrop, weatherView, searchView },
+  components: { dropUser, weatherView, searchView },
   filters: {
     nickName(name) {
       return name ? name[0].toUpperCase() : "";
