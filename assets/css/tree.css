@@ -13,7 +13,9 @@
 }
 .tree-row-wrap {
   display: flex;
+  align-content: center;
   justify-content: space-between;
+  height: 30px;
 }
 .ivu-tree-title:hover .tree-row .ivu-icon {
   opacity: 1;
@@ -27,6 +29,7 @@
 }
 .tree-row-icon-file,
 .tree-row-icon-note {
+  flex-shrink: 0;
   display: inline-block;
   background-size: 100% 100%;
   width: 16px;
@@ -50,6 +53,7 @@
 .tree-select {
   background: #eaf4fe;
 }
+.ivu-tree-title-selected .ivu-icon,
 .tree-select .ivu-icon {
   opacity: 1;
 }

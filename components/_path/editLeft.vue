@@ -10,12 +10,13 @@
     <div class="header index-page-flex-middle">
       <div class="header-left">目录</div>
       <div class="header-right">
-        <Dropdown placement="bottom-start">
+        <Dropdown placement="bottom-start" @on-click="DropdownSelect">
           <Icon type="md-add" size="16" class="header-right-icon" />
           <DropdownMenu slot="list">
             <DropdownItem
               v-for="(item,index) in addList"
               class="index-page-flex-middle header-list"
+              :name="item.name"
               :key="index"
             >
               <img :src="item.src" class="header-list-svg" />
@@ -26,27 +27,27 @@
         <Icon type="md-more" size="16" class="header-right-icon" />
       </div>
     </div>
-    <div class="main scroll-hover">
-      <Tree
-        :data="treeData"
-        :load-data="loadData"
-        :render="renderContent"
-        @on-toggle-expand="toggleExpand"
-      />
+    <div ref="mainRef" class="main scroll-hover" @scroll="mainScroll">
+      <Tree :data="treeData" :load-data="loadData" :render="renderContent" />
     </div>
     <drop-down-list
       :dataList="addList"
       :left="ALeft"
       :top="ATop"
       :show="AShow"
+      :scrollTop="scrollTop"
       @on-close="addClose"
+      @on-open="addOpen"
     />
     <drop-down-list
       :dataList="moreList"
       :left="MLeft"
       :top="MTop"
       :show="MShow"
+      :scrollTop="scrollTop"
       @on-close="MoreClose"
+      @on-open="MoreOpen"
+      @on-click="selectMoreList"
     />
   </div>
 </template>
@@ -69,11 +70,11 @@ export default {
       // 添加列表
       addList: [
         {
-          src: require("@/assets/images/folder.svg"),
+          src: require("@/assets/images/file.svg"),
           name: "新建分组",
         },
         {
-          src: require("@/assets/images/notebook.svg"),
+          src: require("@/assets/images/note.svg"),
           name: "新建文档",
         },
       ],
@@ -81,7 +82,6 @@ export default {
       ATop: 0,
       ALeft: 0,
       AShow: false,
-      ADom: "",
       // 更多列表
       moreList: [
         {
@@ -97,7 +97,11 @@ export default {
       MTop: 0,
       MLeft: 0,
       MShow: false,
-      MDom: "",
+      // 更新选中的节点
+      selectRow: "",
+      selectDom: "",
+      // 滚动条 滚动
+      scrollTop: 0,
     };
   },
   created() {
@@ -110,9 +114,14 @@ export default {
       type: "note",
       id: 0,
       selected: true,
+      treeId: 0,
     });
   },
   methods: {
+    // 滚动条滚动
+    mainScroll() {
+      this.scrollTop = this.$refs.mainRef.scrollTop;
+    },
     // 自定义渲染内容
     renderContent(h, { root, node, data }) {
       let domArray = [
@@ -124,48 +133,84 @@ export default {
           h("span", data.title),
         ]),
       ];
-      if (data.type === "file") {
-        domArray.push(
-          h("div", { class: ["tree-row"] }, [
-            h("Icon", {
-              class: ["tree-row-icon"],
-              props: { type: "md-add" },
-              attrs: { id: `tree-${data.treeId}-add` },
-              on: { click: () => this.handleClickEvent(data, "A") },
-            }),
-            h("Icon", {
-              class: ["tree-row-icon"],
-              props: { type: "md-more" },
-              on: { click: () => this.handleClickEvent(data, "M") },
-            }),
-          ]),
-        );
-      } else {
-        domArray.push(
-          h("div", { class: ["tree-row"] }, [
-            h("Icon", {
-              class: ["tree-row-icon"],
-              props: { type: "md-more" },
-              on: { click: () => this.handleClickEvent(data, "M") },
-            }),
-          ]),
-        );
+      if (data.treeId !== 0) {
+        domArray.push(this.renderFileOrOther(h, data));
       }
       return h(
         "div",
         {
           class: ["tree-row-wrap"],
-          attrs: {
-            id: `tree-${data.treeId}-wrap`,
-          },
+          attrs: { id: `tree-${data.treeId}-wrap` },
           on: { dblclick: () => this.onDblClick(data) },
         },
         domArray,
       );
     },
-    // 展开和收起子列表时触发
-    toggleExpand(node) {
-      console.log(node);
+    // 当前节点渲染内容
+    renderData(h, { root, node, data }) {
+      let domArray = [
+        h("div", { class: ["tree-row"] }, [
+          h("i", {
+            class: [`tree-row-icon-${data.type}`],
+            style: { marginRight: "8px" },
+          }),
+          h("Input", {
+            attrs: { id: `tree-${data.treeId}-input` },
+            props: {
+              value: data.title,
+              size: "small",
+            },
+            on: {
+              "on-blur": () => this.handleInputTitle(data),
+              "on-enter": () => this.handleInputTitleEnter(data),
+            },
+          }),
+        ]),
+      ];
+      domArray.push(this.renderFileOrOther(h, data));
+      return h(
+        "div",
+        {
+          class: ["tree-row-wrap"],
+          attrs: { id: `tree-${data.treeId}-wrap` },
+          on: { dblclick: () => this.onDblClick(data) },
+        },
+        domArray,
+      );
+    },
+    // 渲染文件还是其他
+    renderFileOrOther(h, data) {
+      if (data.type === "file") {
+        return h("div", { class: ["tree-row"] }, [
+          h("Icon", {
+            class: ["tree-row-icon"],
+            props: { type: "md-add" },
+            attrs: { id: `tree-${data.treeId}-add` },
+            nativeOn: {
+              mouseenter: () => this.handleClickEvent(data, "A"),
+              mouseleave: () => this.addClose(),
+            },
+          }),
+          h("Icon", {
+            class: ["tree-row-icon"],
+            props: { type: "md-more" },
+            nativeOn: {
+              mouseenter: () => this.handleClickEvent(data, "M"),
+              mouseleave: () => this.MoreClose(),
+            },
+          }),
+        ]);
+      }
+      return h("div", { class: ["tree-row"] }, [
+        h("Icon", {
+          class: ["tree-row-icon"],
+          props: { type: "md-more" },
+          nativeOn: {
+            mouseenter: () => this.handleClickEvent(data, "M"),
+            mouseleave: () => this.MoreClose(),
+          },
+        }),
+      ]);
     },
     // 异步加载子节点
     async loadData(node, callback) {
@@ -177,33 +222,44 @@ export default {
     // 处理 点击 事件
     handleClickEvent(node, type) {
       const event = window.event;
-      const { target } = event;
+      const { target, pageY } = event;
       const pos = this.$elementOffset(target);
       this[`${type}Top`] = pos.top;
       this[`${type}Left`] = pos.left;
       this[`${type}Show`] = true;
       const nodeId = node.treeId;
-      this[`${type}Dom`] = document.querySelector(
-        `#tree-${nodeId}-wrap`,
+      this.selectRow = node;
+      this.selectDom = document.querySelector(
+        `#tree-${this.selectRow.treeId}-wrap`,
       ).parentNode;
-      this[`${type}Dom`].classList.add("tree-select");
+      this.selectDom.classList.add("tree-select");
     },
-    // 添加菜单关闭
+    // 添加 菜单 关闭
     addClose() {
       this.AShow = false;
-      this.ADom.classList.remove("tree-select");
+      this.selectDom.classList.remove("tree-select");
     },
-    // 更多菜单关闭
+    // 添加 菜单 打开
+    addOpen() {
+      this.AShow = true;
+      this.selectDom.classList.add("tree-select");
+    },
+    // 更多 菜单 关闭
     MoreClose() {
       this.MShow = false;
-      this.MDom.classList.remove("tree-select");
+      this.selectDom.classList.remove("tree-select");
+    },
+    // 添加 菜单 打开
+    MoreOpen() {
+      this.MShow = true;
+      this.selectDom.classList.add("tree-select");
     },
     // 处理双击事件
     onDblClick(node) {
       const data = JSON.parse(JSON.stringify(node));
       if (data.loading !== undefined && !data.children.length) {
         this.$set(node, "loading", true);
-        this.loadData(node, child => {
+        this.loadData(node, (child) => {
           this.$set(node, "children", child);
           this.$set(node, "loading", false);
           this.$set(node, "expand", true);
@@ -215,7 +271,7 @@ export default {
     // 处理数据
     handleDate(data) {
       const childData = [];
-      data.forEach(item => {
+      data.forEach((item) => {
         const child = {
           title: item.name,
           id: item._id,
@@ -230,6 +286,70 @@ export default {
         childData.push(child);
       });
       return childData;
+    },
+    // 处理下拉列表选择
+    async DropdownSelect(name) {
+      const params = {
+        author: this.author,
+        path: this.path,
+        name: "新建分组",
+      };
+      if (name === "新建分组") {
+        params.name = "新建分组";
+        params.type = "file";
+      } else if (name === "新建文档") {
+        params.name = "新建文档";
+        params.type = "note";
+      }
+      const { data } = await this.$request.createPost(params);
+      const [newNode] = this.handleDate([data]);
+      newNode.render = this.renderData;
+      this.treeData.push(newNode);
+      this.$nextTick(() => {
+        const inputDom = this.getInputDom(newNode.treeId);
+        inputDom.focus();
+      });
+    },
+    // 选中更多列表
+    selectMoreList(name) {
+      if (name === "重命名") this.modifyTitle(this.selectRow);
+    },
+    // 修改名称
+    modifyTitle(node) {
+      this.$set(node, "render", this.renderData);
+      this.$nextTick(() => {
+        const inputDom = this.getInputDom(node.treeId);
+        inputDom.focus();
+      });
+    },
+    // 输入框 enter
+    handleInputTitleEnter(data) {
+      this.$nextTick(() => {
+        const inputDom = this.getInputDom(data.treeId);
+        inputDom.blur();
+      });
+    },
+    // 输入框失去焦点
+    async handleInputTitle(data) {
+      const inputDom = this.getInputDom(data.treeId);
+      const { value } = inputDom;
+      if (value !== data.title) {
+        await this.updateNodeName(value, data.id);
+        this.$set(data, "title", value);
+      }
+      this.$set(data, "render", this.renderContent);
+      console.log(value, data);
+    },
+    // 获取inputdom
+    getInputDom(id) {
+      const treeId = `#tree-${id}-input`;
+      return document.querySelector(treeId).querySelector("input");
+    },
+    // 更新节点名称
+    async updateNodeName(name, id) {
+      const params = { author: this.author, path: this.path, name, id };
+      const data = await this.$request.updatePost(params);
+      console.log(data);
     },
   },
 };
@@ -278,22 +398,6 @@ export default {
   margin: 0 7px 0 0;
   width: 18px;
   height: 18px;
-}
-.append-menu {
-  position: fixed;
-  left: 20px;
-  top: 800px;
-  padding: 5px 0;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-}
-.append-menu-list {
-  padding: 7px 10px;
-  cursor: pointer;
-}
-.append-menu-list:hover {
-  background: #f3f3f3;
 }
 </style>
 

@@ -75,4 +75,9 @@ export default {
 .edit-right {
   flex: 1;
 }
+@media screen and (max-width: 900px) {
+  .edit-left {
+    display: none;
+  }
+}
 </style>
