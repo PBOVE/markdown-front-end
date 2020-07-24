@@ -100,7 +100,6 @@ export default {
 }
 .public-shadow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  margin: 0 0 15px;
 }
 .public-header-right {
   font-size: 16px;

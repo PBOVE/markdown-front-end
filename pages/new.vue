@@ -197,7 +197,7 @@ export default {
       };
       try {
         await this.$request.createProject(params);
-        this.$router.push(`/${this.storeUserName}/${params.path}`);
+        this.$router.push(`/${this.storeUserName}/${params.path}/edit`);
       } catch (err) {
         this.$refs.pathRef.classList.add("row-error");
       }

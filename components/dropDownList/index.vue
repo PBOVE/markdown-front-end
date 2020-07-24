@@ -96,6 +96,7 @@ export default {
   },
   methods: {
     selectItem(name) {
+      this.$emit("on-close");
       this.$emit("on-click", name);
     },
   },
