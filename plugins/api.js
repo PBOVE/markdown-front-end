@@ -64,6 +64,8 @@ const request = {
   createPost: params => axios.post('/post', params, header),
   // 更新文章列表
   updatePost: params => axios.put('/post', params, header),
+  // 删除文章文章列表
+  deletePost: params => axios.delete('/post', { data: params }, header),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用
