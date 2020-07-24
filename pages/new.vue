@@ -11,8 +11,8 @@
     <div class="main scroll">
       <div class="content">
         <div class="content-header">
-          <div class="content-header-title">创建一个新的知识库</div>
-          <div class="content-header-content">山不在高，有仙则名。水不在深，有龙则灵。</div>
+          <div class="content-header-title">新建</div>
+          <!-- <div class="content-header-content">山不在高，有仙则名。水不在深，有龙则灵。</div> -->
         </div>
         <Divider />
         <div class="row">
@@ -38,8 +38,8 @@
               <span class="row-line">/</span>
             </div>
           </div>
-          <div class="row-input-right"> 
-            <div class="row-title row-must">知识库路径</div>
+          <div class="row-input-right">
+            <div class="row-title row-must">路径</div>
             <div class="row-input-tool">
               <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
                 <input v-model="path" ref="pathRef" type="text" class="row-input" />
@@ -49,7 +49,7 @@
         </div>
         <Divider />
         <div class="row">
-          <div class="row-title row-must">知识库名称</div>
+          <div class="row-title row-must">名称</div>
           <div class="row-main row-position">
             <input
               v-model="title"
@@ -79,32 +79,26 @@
           <RadioGroup v-model="share">
             <Radio label="1" class="row-middle">
               <div class="row-middle" style="margin-left:10px">
-                <img src="@/assets/images/bookmark.png" class="row-image" />
+                <img src="@/assets/images/ic-unlock.svg" class="row-image" />
                 <div class="row-right">
-                  <div class="row-title">互联网可见</div>
-                  <div class="row-content">知识库对互联网所有人可见</div>
+                  <div class="row-title">所有人可见</div>
+                  <div class="row-content">对所有人可见</div>
                 </div>
               </div>
             </Radio>
             <Radio label="0" class="row-middle" style="margin-top:20px;">
               <div class="row-middle" style="margin-left:10px">
-                <img src="@/assets/images/lock.png" class="row-image" />
+                <img src="@/assets/images/ic-lock.svg" class="row-image" />
                 <div class="row-right">
                   <div class="row-title">仅自己可见</div>
-                  <div class="row-content">知识库仅自己和知识库成员可见</div>
+                  <div class="row-content">仅自己和成员可见</div>
                 </div>
               </div>
             </Radio>
           </RadioGroup>
         </div>
         <Divider />
-        <button
-          class="main-success-button"
-          :style="{background: loading?'#2ea44f88':''}"
-          @click="handleSubmit"
-        >
-          <Icon type="ios-loading" class="main-spin-icon-load" v-show="loading" />创建知识库
-        </button>
+        <Button type="success" :loading="loading" @click="handleSubmit">添 加</Button>
       </div>
     </div>
   </div>
@@ -131,7 +125,7 @@ export default {
       ],
       // 路径
       path: "",
-      content: "请输入知识库路径",
+      content: "请输入路径",
       // 分享
       share: "1",
       // 描述
@@ -148,7 +142,7 @@ export default {
   },
   head() {
     return {
-      title: "创建 ● TBS.feel",
+      title: "新建 ● TBS.feel",
     };
   },
   computed: {
@@ -160,16 +154,16 @@ export default {
       const dom = document.querySelector(".ivu-poptip-popper");
       const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]\-]+/g;
       if (!value.replace(/[\s]+/g, "")) {
-        this.content = "请输入知识库路径";
+        this.content = "请输入路径";
       } else {
         const newValue = value.replace(reg, "-");
         const regPath = /^[A-Za-z0-9\-]+$/;
         if (regPath.test(newValue)) {
-          this.content = `知识库路径为 ${newValue}`;
+          this.content = `路径为 ${newValue}`;
           dom.classList.remove("poptip-error");
         } else {
           dom.classList.add("poptip-error");
-          this.content = `知识库路径只能包含数字,字母,和连字符`;
+          this.content = `路径只能包含数字,字母,和连字符`;
         }
       }
     },
@@ -242,6 +236,7 @@ export default {
   margin: 0 auto;
 }
 .content-header-title {
+  color: #0080ff;
   font-size: 24px;
 }
 .row-content,
@@ -318,7 +313,7 @@ export default {
   height: 28px;
 }
 .row-right {
-  margin: 0 0 0 10px;
+  margin: 0 0 0 20px;
 }
 .row-position {
   position: relative;
@@ -346,7 +341,7 @@ export default {
   .row-input-tool {
     width: 100%;
   }
-  .row-input-right{
+  .row-input-right {
     flex: 1;
   }
 }

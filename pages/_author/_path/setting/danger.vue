@@ -11,8 +11,8 @@
     <Divider />
     <div class="setting-delete-row">
       <div class="setting-delete-left">
-        <div class="setting-delete-title">知识库删除</div>
-        <div>一旦删除了知识库，就无法返回。确定是否删除。</div>
+        <div class="setting-delete-title">删除</div>
+        <div>一旦删除，就无法返回。确定是否删除。</div>
       </div>
       <div class="setting-delete-roght">
         <Button type="error" @click="handleDelete">确定删除</Button>
@@ -69,12 +69,7 @@ export default {
   methods: {
     // 处理删除
     handleDelete() {
-      // this.modalShow = true;
-      this.$Message.info({
-        background: true,
-        content: "系统升级中暂时无法删除",
-        duration: 5,
-      });
+      this.modalShow = true;
     },
     // 处理提交
     handleSubmit() {

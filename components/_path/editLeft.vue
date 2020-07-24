@@ -28,7 +28,12 @@
       </div>
     </div>
     <div ref="mainRef" class="main scroll-hover" @scroll="mainScroll">
-      <Tree :data="treeData" :load-data="loadData" :render="renderContent" />
+      <Tree
+        :data="treeData"
+        :load-data="loadData"
+        :render="renderContent"
+        @on-select-change="selectTreeNode"
+      />
     </div>
     <drop-down-list
       :dataList="addList"
@@ -389,7 +394,7 @@ export default {
       const inputDom = this.getInputDom(data.treeId);
       const { value } = inputDom;
       if (value !== data.title) {
-        await this.updateNodeName(value, data.id);
+        await this.updateNodeName(value.replace(/(^\s*)|(\s*$)/g, ""), data.id);
         this.$set(data, "title", value);
       }
       this.$delete(data, "render");
@@ -417,6 +422,16 @@ export default {
         const index = this.treeData.findIndex((el) => el.id === data.id);
         this.treeData.splice(index, 1);
       }
+    },
+    // 点击树节点时触发
+    async selectTreeNode(node, data) {
+      // this.$set(data, "selected", true);
+      // const { data: content } = await this.$request.queryPostContent({
+      //   author: this.author,
+      //   path: this.path,
+      //   id: data.id,
+      // });
+      // this.$store.commit("author/setContent", content || "");
     },
   },
 };

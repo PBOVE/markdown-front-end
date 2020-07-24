@@ -94,7 +94,7 @@ export default {
     },
   },
   methods: {
-    // 知识库数据改变
+    // 数据改变
     projectData(row, index) {
       this.$set(this.projects.content, index, row);
     },

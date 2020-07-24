@@ -58,7 +58,7 @@ export default {
         await this.$request.updatePContent(params);
         this.$Message.success({
           background: true,
-          content: "知识库保存成功",
+          content: "保存成功",
         });
       } catch (err) {}
     },

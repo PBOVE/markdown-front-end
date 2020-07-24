@@ -32,10 +32,14 @@
         <div class="index-page-row-right">
           <div
             class="index-page-flex-middle index-page-row-star"
-            :class="{like:item.islike}"
             @click="handleLike( JSON.stringify(item),index)"
           >
-            <img src="@/assets/images/star.png" class="index-page-row-star-image" />
+            <img
+              v-if="item.islike"
+              src="@/assets/images/star.svg"
+              class="index-page-row-star-image"
+            />
+            <img v-else src="@/assets/images/unstar.svg" class="index-page-row-star-image" />
             <span>{{item.islike?'取消':'赞'}}</span>
           </div>
         </div>
@@ -61,7 +65,7 @@ export default {
   props: ["likes"],
   filters: {
     shareFilter(share) {
-      return share ? "" : "私有知识库";
+      return share ? "" : "私有";
     },
   },
   data() {

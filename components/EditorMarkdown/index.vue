@@ -24,7 +24,7 @@
 
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -47,9 +47,16 @@ export default {
   watch: {
     storeContent: {
       handler(val) {
+        console.log(1);
         this.handbook = val;
       },
       immediate: true,
+    },
+    handbook: {
+      handler(val) {
+        console.log(2);
+        this.setContent(val);
+      },
     },
   },
   mounted() {
@@ -60,6 +67,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("author", ["setContent"]),
     // 保存
     async handleSave(content) {
       this.$emit("on-save", content);

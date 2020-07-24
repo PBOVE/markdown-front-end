@@ -7,7 +7,7 @@
 
 <template>
   <div class="password-wrap">
-    <public-header  :search-hide="true" />
+    <public-header :search-hide="true" />
     <div class="delete-header">
       <div class="delete-header-content">
         <nuxt-link to="/user/security">
@@ -70,6 +70,12 @@ export default {
         });
         return;
       }
+      this.$Message.info({
+        background: true,
+        content: "系统升级中暂时无法删除",
+        duration: 5,
+      });
+      return;
       try {
         this.loading = true;
         await this.$request.deleteAccount({ password: this.password });

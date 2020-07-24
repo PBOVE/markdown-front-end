@@ -9,17 +9,21 @@
   <div class="index-page-wrap">
     <div class="index-page-header">
       <div class="index-page-header-left">
-        <Input v-model="search" placeholder="查找知识库" @on-enter="handleSearch" />
+        <Input v-model="search" placeholder="搜索" @on-enter="handleSearch" />
       </div>
       <div class="index-page-header-right">
-        <button class="index-page-button" style="min-width:80px;" @click="handleSearch">搜索</button>
-        <nuxt-link
+        <Button
+          type="primary"
+          style="min-width:80px; margin-right:20px"
+          icon="ios-search"
+          @click="handleSearch"
+        >搜索</Button>
+        <Button
           v-if="author===storeUser.userName&&storeUser.authentication"
-          class="main-success-button index-page-margin-left-16"
+          type="success"
+          icon="md-add"
           to="/new"
-        >
-          <Icon type="ios-copy-outline" />创 建
-        </nuxt-link>
+        >添加</Button>
       </div>
     </div>
     <div class="index-page-content">
@@ -42,10 +46,14 @@
         <div class="index-page-row-right">
           <div
             class="index-page-flex-middle index-page-row-star"
-            :class="{like:item.islike}"
             @click="handleLike( JSON.stringify(item),index)"
           >
-            <img src="@/assets/images/star.png" class="index-page-row-star-image" />
+            <img
+              v-if="item.islike"
+              src="@/assets/images/star.svg"
+              class="index-page-row-star-image"
+            />
+            <img v-else src="@/assets/images/unstar.svg" class="index-page-row-star-image" />
             <span>{{item.islike?'取消':'赞'}}</span>
           </div>
         </div>
@@ -73,7 +81,7 @@ export default {
   props: ["projects"],
   filters: {
     shareFilter(share) {
-      return share ? "" : "私有知识库";
+      return share ? "" : "私有";
     },
   },
   data() {
@@ -94,11 +102,13 @@ export default {
   methods: {
     // 处理搜索
     handleSearch() {
+      const q = this.search.replace(/(^\s*)|(\s*$)/g, "");
+      if (!q) return;
       this.$router.push({
         path: `/${this.author}`,
         query: {
           tab: "projects",
-          q: this.search.replace(/(^\s*)|(\s*$)/g, ""),
+          q,
           page: 1,
         },
       });

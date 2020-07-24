@@ -9,25 +9,10 @@
 .index-page-margin-left-16 {
   margin: 0 0 0 16px;
 }
-.index-page-button,
+
 .button-follow {
   box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04), inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
   border: 1px solid rgba(27, 31, 35, 0.15);
-}
-.index-page-button {
-  padding: 4px 12px;
-  height: 32px;
-  color: #24292e;
-  font-size: 12px;
-  border-radius: 4px;
-  background: #fafbfc;
-  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-
-  outline: none;
-  cursor: pointer;
-}
-.index-page-button:hover {
-  background-color: #f3f4f6;
 }
 .index-page-content {
   margin: 20px 0 0 0;
@@ -77,13 +62,6 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.1s;
-}
-.index-page-row-star.like {
-  background-color: #8EC0E433 !important;
-  color: #70a1d4 !important;
-}
-.index-page-row-star.like .index-page-row-star-image {
-  filter: brightness(300%) !important;
 }
 .index-page-row-star:hover {
   color: #000;

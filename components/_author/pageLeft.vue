@@ -28,15 +28,19 @@
       <Icon type="ios-paper-outline" />
       <span>{{storeAuthorUser.signature||'未填写'}}</span>
     </div>
-    <div class="button-follow main-center-middle">
-      <nuxt-link
-        to="/user"
-        v-if="storeUser.userName===storeAuthorUser.userName"
-        class="button-text"
-      >编辑</nuxt-link>
-      <div v-else-if="storeAuthorNumber.isFans" class="button-text" @click="handleButton">取消关注</div>
-      <div v-else class="button-text" @click="handleButton">关注</div>
-    </div>
+    <Button
+      style="width:100%"
+      size="large"
+      v-if="storeUser.userName===storeAuthorUser.userName"
+      to="/user"
+    >编辑</Button>
+    <Button
+      style="width:100%"
+      size="large"
+      v-else-if="storeAuthorNumber.isFans"
+      @click="handleButton"
+    >取消关注</Button>
+    <Button style="width:100%" size="large" v-else @click="handleButton">关注</Button>
     <div class="middle-number">
       <div class="middle-number-row">
         <Icon type="ios-people-outline" />

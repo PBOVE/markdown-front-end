@@ -17,7 +17,7 @@
       <div style="marginTop:8px;">您必须先完成电子邮箱验证，否则有些功能将无法实现</div>
       <div style="marginTop:8px;">
         <span>您可以使用电子邮箱来验证身份，请前往</span>
-        <nuxt-link to="/user/personal">个人信息</nuxt-link>
+        <nuxt-link to="/accounts/email">个人信息</nuxt-link>
         <span>进行验证。</span>
       </div>
     </div>
@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 .dashboard-tip {
-  margin: 0 100px;
+  margin: 20px 100px 0;
   text-align: center;
   color: #8a6d3b;
 }

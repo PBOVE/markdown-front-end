@@ -130,6 +130,7 @@ export default {
     const { data } = await app.$request.projectContent(params);
     if (data) {
       store.commit("author/setProject", data);
+      store.commit("author/setContent", data.content);
       return true;
     }
     return false;
@@ -144,7 +145,7 @@ export default {
       return name ? name[0].toUpperCase() : "";
     },
     shareFilter(share) {
-      return share ? "" : "私有知识库";
+      return share ? "" : "私有";
     },
   },
   data() {
@@ -177,7 +178,7 @@ export default {
       else if (/^\/setting/.test(router)) result = 4;
       return result;
     },
-    // 知识库路径
+    // 路径
     projectPath() {
       const { author, path } = this.storeProject;
       return `/${author}/${path}`;
