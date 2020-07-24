@@ -15,6 +15,7 @@
         :right-toolbar="rightToolbar"
         :mode="mode"
         :disabled-menus="[]"
+        :codemirrorConfig="codemirrorConfig"
         @upload-image="handleUploadImage"
         @save="handleSave"
       />
@@ -39,6 +40,8 @@ export default {
       leftToolbar: "undo redo clear | image  emoji save",
       // 右侧工具栏
       rightToolbar: "preview toc sync-scroll fullscreen",
+      // 初始化 Codemirror 的配置
+      codemirrorConfig: {},
     };
   },
   computed: {
@@ -64,6 +67,7 @@ export default {
       this.mode = "edit";
       this.rightToolbar = "fullscreen";
       this.leftToolbar = "undo redo clear |  emoji save";
+      this.codemirrorConfig = { lineNumbers: false };
     }
   },
   methods: {

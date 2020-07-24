@@ -74,7 +74,6 @@ export default {
           action(editor) {
             editor.insert(selected => {
               const content = selected || "标题";
-
               return {
                 text: `### ${content}`,
                 selected: content,
