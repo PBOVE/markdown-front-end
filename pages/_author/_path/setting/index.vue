@@ -9,12 +9,12 @@
   <div class="setting-index-wrap">
     <div class="setting-index-header">基本设置</div>
     <Divider />
-    <div class="setting-title">名称</div>
+    <div class="setting-title">文档库名称</div>
     <div class="setting-input-wrap">
       <input type="text" class="setting-input" v-model="title" />
       <div class="setting-input-suffix">{{titleSize}}</div>
     </div>
-    <div class="setting-title">描述</div>
+    <div class="setting-title">文档库描述</div>
     <div class="setting-input-wrap">
       <input type="text" class="setting-input" v-model="description" />
       <div class="setting-input-suffix">{{descriptionSize}}</div>

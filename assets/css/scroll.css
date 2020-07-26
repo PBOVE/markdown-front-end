@@ -5,7 +5,7 @@ body::-webkit-scrollbar-thumb,
 }
 body::-webkit-scrollbar,
 .scroll::-webkit-scrollbar {
-  background-color: #dcdee2;
+  background-color: #f0f2f5;
   width: 8px;
   height: 8px;
 }

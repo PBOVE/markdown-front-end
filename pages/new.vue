@@ -11,8 +11,8 @@
     <div class="main scroll">
       <div class="content">
         <div class="content-header">
-          <div class="content-header-title">新建</div>
-          <!-- <div class="content-header-content">山不在高，有仙则名。水不在深，有龙则灵。</div> -->
+          <div class="content-header-title">新建文档库</div>
+          <!-- <div class="new-tip">山不在高，有仙则名。水不在深，有龙则灵。</div> -->
         </div>
         <Divider />
         <div class="row">
@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="row-input-right">
-            <div class="row-title row-must">路径</div>
+            <div class="row-title row-must">文档库路径</div>
             <div class="row-input-tool">
               <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
                 <input v-model="path" ref="pathRef" type="text" class="row-input" />
@@ -47,9 +47,10 @@
             </div>
           </div>
         </div>
+        <div class="new-tip">通过您的 用户名 和 文档库路 径可以查询到您新建的文档库</div>
         <Divider />
         <div class="row">
-          <div class="row-title row-must">名称</div>
+          <div class="row-title row-must">文档库名称</div>
           <div class="row-main row-position">
             <input
               v-model="title"
@@ -63,7 +64,7 @@
         </div>
         <Divider />
         <div class="row">
-          <div class="row-title">描述</div>
+          <div class="row-title">文档库描述</div>
           <div class="row-main row-position">
             <input
               v-model="description"
@@ -91,7 +92,7 @@
                 <img src="@/assets/images/ic-lock.svg" class="row-image" />
                 <div class="row-right">
                   <div class="row-title">仅自己可见</div>
-                  <div class="row-content">仅自己和成员可见</div>
+                  <div class="row-content">仅自己和文档库成员可见</div>
                 </div>
               </div>
             </Radio>
@@ -240,8 +241,11 @@ export default {
   font-size: 24px;
 }
 .row-content,
-.content-header-content {
+.new-tip {
   color: #515a6e;
+}
+.new-tip{
+  margin: 6px 0 0 0;
 }
 .row-title {
   font-size: 14px;

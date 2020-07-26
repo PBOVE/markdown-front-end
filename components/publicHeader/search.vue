@@ -24,7 +24,7 @@
       <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
         <Icon type="md-list-box" />
         {{item.author}} / {{item.title}}
-        <span class="search-private" v-if="!item.share">私有</span>
+        <span class="search-private" v-if="!item.share">仅自己可见</span>
       </nuxt-link>
     </Option>
   </AutoComplete>

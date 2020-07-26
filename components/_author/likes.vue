@@ -65,7 +65,7 @@ export default {
   props: ["likes"],
   filters: {
     shareFilter(share) {
-      return share ? "" : "私有";
+      return share ? "" : "仅自己可见";
     },
   },
   data() {

@@ -23,9 +23,9 @@
       <div class="model-header">您确定要删除吗?</div>
       <div class="model-main">
         此操作无法撤消。这将永久删除
-        <strong>{{storeProject.author}}/{{storeProject.title}}</strong> 知识库
+        <strong>{{storeProject.author}}/{{storeProject.title}}</strong> 文档库
       </div>
-      <div class="model-tip">请输入知识库路径, 表示确认删除此知识库</div>
+      <div class="model-tip">请输入文档库路径, 表示确认删除此文档库</div>
       <Input v-model="projectPath" />
       <div class="model-footer">
         <Button type="text" @click="modalShow=false">取消</Button>

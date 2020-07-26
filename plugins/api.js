@@ -35,7 +35,7 @@ const request = {
   // 验证忘记密码
   forgetEmailLink: (requestId, params) => axios.put(`/accounts/password/${requestId}`, params, header),
   // 查询 注册
-  registerQuery: params => axios.get('/register/query', { params }),
+  registerQuery: params => axios.get('/register/query', { params, progress: false }),
   // 注册
   register: params => axios.post('/register', params, header),
   // 验证 requestId

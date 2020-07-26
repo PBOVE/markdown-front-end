@@ -160,7 +160,7 @@ export default {
       return name ? name[0].toUpperCase() : "";
     },
     shareFilter(share) {
-      return share ? "" : "私有";
+      return share ? "" : "仅自己可见";
     },
   },
   data() {
