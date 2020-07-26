@@ -121,8 +121,7 @@ export default {
   watch: {
     storeContent: {
       handler(val) {
-
-        // this.handbook = val;
+        this.handbook = val;
       },
       immediate: true,
     },

@@ -33,6 +33,12 @@ export default {
       (author.project.edit || params.author === user.data.userName)
     );
   },
+  async asyncData({ store, params, app }) {
+    const { author, path } = params;
+    const { data } = await app.$request.queryPostDetails({ author, path });
+    store.commit("author/setContent", data.content);
+    store.commit("author/setSelectPost",{ id: 0, title: "首页" });
+  },
   data() {
     return {
       author: this.$route.params.author,
@@ -47,9 +53,6 @@ export default {
   },
   computed: {
     ...mapGetters("author", ["storeFormat", "storeProject", "storeSelectPost"]),
-  },
-  mounted() {
-    this.setSelectPost({ id: 0, title: "首页" });
   },
   beforeDestroy() {
     this.setSelectPost({});
