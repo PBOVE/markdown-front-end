@@ -43,27 +43,29 @@
             </div>
           </Poptip>
           <span class="path-header-line">/</span>
-          {{storeProject.title}}
+          <span>{{storeProject.title}}</span>
+          <span v-if="storeSelectPost.title" class="path-header-line">/</span>
+          <span>{{storeSelectPost.title}}</span>
           <div
             v-if="!storeProject.share"
             class="path-header-share"
           >{{storeProject.share|shareFilter}}</div>
         </div>
         <div class="middle">
-          <div class="path-button middle">
+          <!-- <div class="path-button middle">
             <div class="path-button-left middle">
               <Icon type="ios-copy-outline" class="path-button-icon" />
               <span>复制</span>
             </div>
             <div class="path-button-right">0</div>
-          </div>
-          <div class="path-button middle">
+          </div>-->
+          <!-- <div class="path-button middle">
             <div class="path-button-left middle">
               <Icon type="ios-thumbs-up-outline" class="path-button-icon" />
               <span>点赞</span>
             </div>
             <div class="path-button-right">{{storeProject.likes}}</div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="middle path-main">
@@ -127,18 +129,31 @@ import { mapGetters } from "vuex";
 export default {
   components: { publicHeader },
   async validate({ params, app, store }) {
-    const { data } = await app.$request.projectContent(params);
-    if (data) {
-      store.commit("author/setProject", data);
-      store.commit("author/setContent", data.content);
-      return true;
-    }
-    return false;
+    const { author, path } = params;
+    return await app.$request.validArticle({ author, path });
   },
   async asyncData({ params, app }) {
     const { author: username } = params;
     const { data } = await app.$request.queryUser({ username });
     return { user: data };
+  },
+  async fetch({ params, app, store }) {
+    const { author, path } = params;
+    const { data } = await app.$request.projectContent({ author, path });
+    if (data) {
+      store.commit("author/setProject", data);
+      const updateTime = data.updateTime;
+      store.commit("author/setProjectList", [
+        {
+          _id: 0,
+          name: "首页",
+          type: "home",
+          updateTime,
+          to: `/${author}/${path}`,
+        },
+        ...data.list,
+      ]);
+    }
   },
   filters: {
     nickName(name) {
@@ -160,11 +175,11 @@ export default {
   },
   head() {
     return {
-      title: `${this.author}/${this.storeProject.path} ● TBS.feel`,
+      title: `${this.author} · ${this.storeProject.title} ● TBS.feel`,
     };
   },
   computed: {
-    ...mapGetters("author", ["storeProject", "storeEdit"]),
+    ...mapGetters("author", ["storeProject", "storeEdit", "storeSelectPost"]),
     ...mapGetters("user", ["storeUserName"]),
     // 路径
     resultPath() {

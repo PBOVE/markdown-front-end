@@ -9,44 +9,44 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setUser(state: any, data: any) {
+  setUser(state, data) {
     state.data = data;
     state.userState = true;
   },
-  setWeather(state: any, weather: any) {
+  setWeather(state, weather) {
     state.weather = weather;
   },
-  removeUser(state: any) {
+  removeUser(state) {
     state.data = '';
     state.userState = false;
   },
 };
 export const getters = {
-  storeUserState(state: any) {
+  storeUserState(state) {
     return state.userState;
   },
-  storeUser(state: any) {
+  storeUser(state) {
     return state.data;
   },
-  storeImages(state: any) {
+  storeImages(state) {
     return state.data.images ? `/api/storage/preview/${state.data.images}` : '';
   },
-  storeUserName(state: any) {
+  storeUserName(state) {
     return state.data.userName;
   },
-  storeNickName(state: any) {
+  storeNickName(state) {
     return state.data.nickName;
   },
-  storeEmail(state: any) {
+  storeEmail(state) {
     return state.data.email;
   },
-  storeSignature(state: any) {
+  storeSignature(state) {
     return state.data.signature;
   },
-  storeLocation(state: any) {
+  storeLocation(state) {
     return state.data.location;
   },
-  storeWeather(state: any) {
+  storeWeather(state) {
     return state.weather;
   },
 };

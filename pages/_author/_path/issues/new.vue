@@ -86,7 +86,7 @@ export default {
   },
   head() {
     return {
-      title: `新建 issues · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+      title: `新建 issues · ${this.author} · ${this.storeProject.path} ● TBS.feel`,
     };
   },
   computed: {

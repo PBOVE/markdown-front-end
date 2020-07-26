@@ -50,14 +50,12 @@ export default {
   watch: {
     storeContent: {
       handler(val) {
-        console.log(1);
         this.handbook = val;
       },
       immediate: true,
     },
     handbook: {
       handler(val) {
-        console.log(2);
         this.setContent(val);
       },
     },

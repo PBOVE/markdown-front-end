@@ -27,7 +27,7 @@ export default {
   },
   head() {
     return {
-      title: `issues · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+      title: `issues · ${this.author} · ${this.storeProject.title} ● TBS.feel`,
     };
   },
   computed: {

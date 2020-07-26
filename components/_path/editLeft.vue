@@ -61,6 +61,7 @@
 
 <script>
 import dropDownList from "@/components/dropDownList/index.vue";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: { dropDownList },
@@ -103,7 +104,7 @@ export default {
       MTop: 0,
       MLeft: 0,
       MShow: false,
-      // 更新选中的节点
+      // 更新选择的节点
       selectData: "",
       selectRoot: "",
       selectDom: "",
@@ -112,22 +113,27 @@ export default {
       scrollTop: 0,
       // 加载标志位
       loading: false,
+      // 选中的
+      selected: 0,
     };
   },
+  computed: {
+    ...mapGetters("author", ["storeSelectPost", "storeProjectList"]),
+  },
   created() {
-    let { list } = this.$store.state.author.project;
+    let list = this.storeProjectList;
     list = JSON.parse(JSON.stringify(list));
-    list.unshift({ name: "首页", type: "note", _id: 0 });
     this.treeData = this.handleDate(list);
     this.$set(this.treeData, 0, {
       title: "首页",
-      type: "note",
+      type: "home",
       id: 0,
       selected: true,
       treeId: 0,
     });
   },
   methods: {
+    ...mapMutations("author", ["setSelectPost"]),
     // 滚动条滚动
     mainScroll() {
       this.scrollTop = this.$refs.mainRef.scrollTop;
@@ -135,12 +141,16 @@ export default {
     // 自定义渲染内容
     renderContent(h, { root, node, data }) {
       let domArray = [
-        h("div", { class: ["tree-row"] }, [
+        h("div", { class: ["tree-row", "index-text-hidden"] }, [
           h("i", {
             class: [`tree-row-icon-${data.type}`],
             style: { marginRight: "8px" },
           }),
-          h("span", data.title),
+          h(
+            "div",
+            { class: ["index-text-hidden", "tree-row-title"] },
+            data.title,
+          ),
         ]),
       ];
       if (data.treeId !== 0) {
@@ -226,9 +236,9 @@ export default {
     },
     // 异步加载子节点
     async loadData(node, callback) {
-      const params = { author: this.author, path: this.path };
-      const { data } = await this.$request.queryPostList(node.id, params);
-      const childData = this.handleDate(data);
+      const params = { author: this.author, path: this.path, id: node.id };
+      const { data } = await this.$request.queryPostList(params);
+      const childData = this.handleDate(data.list);
       callback(childData);
     },
     // 处理 点击 事件
@@ -344,11 +354,12 @@ export default {
         !this.selectData.children.length
       ) {
         this.$set(this.selectData, "loading", true);
-        const { data: child } = await this.$request.queryPostList(
-          this.selectData.id,
-          params,
-        );
-        const childData = this.handleDate(child);
+
+        const { data: child } = await this.$request.queryPostList({
+          ...params,
+          id: this.selectData.id,
+        });
+        const childData = this.handleDate(child.list);
         this.$set(this.selectData, "children", childData);
         this.$set(this.selectData, "loading", false);
         this.$set(this.selectData, "expand", true);
@@ -396,6 +407,9 @@ export default {
       if (value !== data.title) {
         await this.updateNodeName(value.replace(/(^\s*)|(\s*$)/g, ""), data.id);
         this.$set(data, "title", value);
+        if (data.id === this.selected) {
+          this.setSelectPost({ id: data.id, title: value });
+        }
       }
       this.$delete(data, "render");
     },
@@ -417,7 +431,9 @@ export default {
         const parentKey = node.parent;
         const parent = root[parentKey];
         const index = parent.children.indexOf(data.nodeKey);
-        parent.node.children.splice(index, 1);
+        const parentNode = parent.node;
+        parentNode.children.splice(index, 1);
+        if (!parent.node.children.length) this.$delete(parentNode, "loading");
       } else {
         const index = this.treeData.findIndex((el) => el.id === data.id);
         this.treeData.splice(index, 1);
@@ -425,13 +441,16 @@ export default {
     },
     // 点击树节点时触发
     async selectTreeNode(node, data) {
-      // this.$set(data, "selected", true);
-      // const { data: content } = await this.$request.queryPostContent({
-      //   author: this.author,
-      //   path: this.path,
-      //   id: data.id,
-      // });
-      // this.$store.commit("author/setContent", content || "");
+      this.$set(data, "selected", true);
+      this.selected = data.id;
+      if (this.storeSelectPost.id === data.id) return;
+      this.$emit("on-loading", true);
+      this.setSelectPost({ id: data.id, title: data.title });
+      const params = { author: this.author, path: this.path };
+      if (data.id) params.id = data.id;
+      const { data: details } = await this.$request.queryPostDetails(params);
+      this.$store.commit("author/setContent", details.content);
+      this.$emit("on-loading", false);
     },
   },
 };

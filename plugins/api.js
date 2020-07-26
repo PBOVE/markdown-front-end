@@ -59,15 +59,17 @@ const request = {
   // 更新知识库文章
   updatePContent: params => axios.put('/post/content', params, header),
   // 获取列表
-  queryPostList: (id, params) => axios.get(`/post/list/${id}`, { params, progress: false }),
+  queryPostList: params => axios.get(`/post/list`, { params, progress: false }),
   // 获取列表内容
-  queryPostContent: params => axios.get(`/post/content`, { params }),
+  queryPostDetails: params => axios.get(`/post/details`, { params }),
   // 创建文章列表
   createPost: params => axios.post('/post', params, header),
   // 更新文章列表
   updatePost: params => axios.put('/post', params, header),
   // 删除文章文章列表
   deletePost: params => axios.delete('/post', { data: params }, header),
+  // 验证文章存在
+  validArticle: params => axios.get('/valid/article', { params }),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

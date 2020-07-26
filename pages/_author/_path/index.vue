@@ -9,29 +9,32 @@
   <div class="index-wrap">
     <div class="index-content">
       <div class="index-left">
-        <div class="index-left-header">
-          <img
-            v-if="updateUser.images"
-            :src="'/api/storage/preview/' + updateUser.images"
-            class="main-user-image"
-          />
-          <div v-else class="main-user-portrait">{{updateUser.userName|name}}</div>
-          <nuxt-link
-            :to="'/' + updateUser.userName"
-            class="index-left-header-link"
-          >{{updateUser.userName}}</nuxt-link>
-          <div
-            class="index-left-header-time"
-            :title="$timeConversion(storeProject.updateTime)"
-          >{{storeProject.updateTime|TimeFilter}}</div>
+        <div class="index-list-wrap border">
+          <div class="index-list-header">
+            <span class="index-title index-page-flex-middle">
+              <img src="@/assets/images/link.svg" class="index-title-img" />
+              <nuxt-link :to="projectLink" class="index-title-link">{{storeProject.title}}</nuxt-link>
+              <div v-for="(item, index) in storeParentList" :key="item._id">
+                <span class="split-line">/</span>
+                <nuxt-link
+                  v-if="storeParentList.length - 1 !== index"
+                  class="index-title-link"
+                  :to="projectLink"
+                >{{item.name}}</nuxt-link>
+                <span v-else>{{item.name}}</span>
+              </div>
+            </span>
+            <div class="index-select-icon">
+              <Icon type="md-arrow-round-back" :class="{unselect:!left}" />
+              <Icon type="md-arrow-round-forward" :class="{unselect:!right}" />
+            </div>
+          </div>
+          <index-list />
         </div>
-        <div v-if="storeFormat==='richText'" ref="editor" v-html="storeContent" class="richText" />
-        <client-only v-if="storeFormat==='markdown'">
-          <v-md-preview height="100%" ref="editor" :text="storeContent" />
-        </client-only>
+        <nuxt-child />
       </div>
       <div class="index-right">
-        <div class="index-right-header">目录</div>
+        <div class="index-right-header" v-if="titles.lengrh">目录</div>
         <div
           v-for="(anchor,index) in titles"
           class="index-titles index-page-flex-middle"
@@ -40,7 +43,7 @@
           :title="anchor.title"
           @click="handleAnchorClick(anchor)"
         >
-          <span class="index-titles-li">{{ anchor.title }}</span>
+          <span class="index-text-hidden">{{ anchor.title }}</span>
         </div>
       </div>
     </div>
@@ -51,9 +54,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import indexList from "@/components/_path/indexList.vue";
+import projectHeader from "@/components/_path/projectHeader.vue";
 
 export default {
   transition: "fade",
+  components: { indexList, projectHeader },
   filters: {
     name(name) {
       return name ? name[0].toUpperCase() : "";
@@ -63,23 +69,33 @@ export default {
     return {
       // 标题
       titles: [],
+      // 右
+      right: "",
+      // 左
+      left: "",
     };
   },
   computed: {
-    ...mapGetters("author", ["storeProject", "storeContent", "storeFormat"]),
+    ...mapGetters("author", ["storeProject", "storeFormat", "storeParentList"]),
     updateUser() {
       return this.storeProject.updateUser;
     },
+    projectLink() {
+      return `/${this.storeProject.author}/${this.storeProject.path}`;
+    },
+    IslistId() {
+      return !this.$route.params.id;
+    },
   },
   mounted() {
-    const { format } = this.storeProject;
-    if (format === "richText") {
-      this.handleRTitles();
-    } else if (format === "markdown") {
-      this.$nextTick(() => {
-        this.handleMTitles();
-      });
-    }
+    // const { format } = this.storeProject;
+    // if (format === "richText") {
+    //   this.handleRTitles();
+    // } else if (format === "markdown") {
+    //   this.$nextTick(() => {
+    //     this.handleMTitles();
+    //   });
+    // }
   },
   methods: {
     // 处理 mankdown 语法编辑目录
@@ -88,16 +104,16 @@ export default {
         ".v-md-editor-preview h1,h2,h3,h4,h5,h6",
       );
       const titles = Array.from(anchors).filter(
-        title => !!title.innerText.trim(),
+        (title) => !!title.innerText.trim(),
       );
       if (!titles.length) {
         this.titles = [];
         return;
       }
       const hTags = Array.from(
-        new Set(titles.map(title => title.tagName)),
+        new Set(titles.map((title) => title.tagName)),
       ).sort();
-      this.titles = titles.map(el => ({
+      this.titles = titles.map((el) => ({
         title: el.innerText,
         lineIndex: el.getAttribute("data-v-md-line"),
         indent: hTags.indexOf(el.tagName),
@@ -107,14 +123,14 @@ export default {
     handleRTitles() {
       const anchors = this.$refs.editor.querySelectorAll("h1,h2,h3,h4,h5,h6");
       const titles = Array.from(anchors).filter(
-        title => !!title.innerText.trim(),
+        (title) => !!title.innerText.trim(),
       );
       if (!titles.length) {
         this.titles = [];
         return;
       }
       const hTags = Array.from(
-        new Set(titles.map(title => title.tagName)),
+        new Set(titles.map((title) => title.tagName)),
       ).sort();
       this.titles = titles.map((el, index) => {
         el.setAttribute("data-v-rt-line", index + 1);
@@ -168,38 +184,21 @@ export default {
   max-width: 1200px;
   width: 100%;
 }
-.richText {
-  padding: 20px;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
+
 .index-left {
   flex-shrink: 0;
   width: 75%;
-  border: 1px solid #e1e4e8;
-  border-radius: 8px;
-  overflow: hidden;
 }
-.index-left-header {
+.index-list-header {
   display: flex;
   align-items: center;
-  margin: -1px -1px 0;
+  justify-content: space-between;
   padding: 16px;
+  border-bottom: 1px solid #dcdee2;
   background-color: #f1f8ff;
-  border: 1px solid #c8e1ff;
-  border-radius: 8px 8px 0 0;
+  word-break: break-all;
 }
-.index-left-header-link {
-  margin: 0 10px;
-  color: #000;
-}
-.index-left-header-link:hover {
-  text-decoration: underline;
-}
-.index-left-header-time {
-  color: #586069;
-}
+
 .index-right {
   flex: 1;
   width: 25%;
@@ -224,10 +223,48 @@ export default {
 .index-titles:hover {
   background: #f8f8f9;
 }
-.index-titles-li {
-  white-space: nowrap;
+.border {
+  margin: 0 0 20px 0;
+  border: 1px solid #c8e1ff;
+  border-radius: 8px;
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+.unselect,
+.unselect :hover {
+  color: #c5c8ce !important;
+  cursor: default !important;
+}
+.index-title {
+  flex-wrap: wrap;
+}
+.index-title-link:hover {
+  text-decoration: underline;
+}
+.index-title-img {
+  width: 20px;
+  height: 20px;
+  margin: 0 16px 0 0;
+}
+.index-select-icon {
+  flex-shrink: 0;
+}
+.index-select-icon i:first-of-type {
+  margin: 0 10px 0 0;
+}
+.index-select-icon i {
+  font-size: 16px;
+  cursor: pointer;
+}
+.index-select-icon i:hover {
+  color: #2d8cf0;
+}
+.index-home {
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.split-line {
+  margin: 0 0px 0 3px;
 }
 @media screen and (max-width: 1240px) {
   .index-content {
@@ -244,20 +281,4 @@ export default {
   }
 }
 </style>
-<style >
-.richText table {
-  border: 1px dashed #bbb;
-  border-collapse: collapse;
-}
-.richText td {
-  border: 1px dashed #bbb;
-  padding: 0.4rem;
-}
-.richText p {
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-}
-</style>
+

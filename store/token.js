@@ -7,20 +7,20 @@ export const state = () => ({
   isGetToken: false,
 });
 
-export const mutations: any = {
-  setToken(state: any, token: string) {
+export const mutations = {
+  setToken(state, token) {
     state.access_token = token;
   },
-  setIsGetToken(state: any) {
+  setIsGetToken(state) {
     state.isGetToken = true;
   },
-  removeToken(state: any) {
+  removeToken(state) {
     state.access_token = '';
     state.isGetToken = false;
   },
 };
 export const getters = {
-  getIsGetToken(state: any) {
+  getIsGetToken(state) {
     return state.isGetToken;
   },
 };

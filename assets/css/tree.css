@@ -11,6 +11,10 @@
 .ivu-tree-arrow i {
   font-size: 16px;
 }
+.tree-select.ivu-tree-title-selected,
+.tree-select.ivu-tree-title-selected:hover {
+  background-color: #d5e8fc;
+}
 .tree-row-wrap {
   display: flex;
   align-content: center;
@@ -27,6 +31,7 @@
   display: flex;
   align-items: center;
 }
+.tree-row-icon-home,
 .tree-row-icon-file,
 .tree-row-icon-note {
   flex-shrink: 0;
@@ -41,6 +46,9 @@
 }
 .tree-row-icon-note {
   background-image: url('../images/note.svg');
+}
+.tree-row-icon-home {
+  background-image: url('../images/home.svg');
 }
 .tree-row-icon {
   margin: 0 0 0 5px;

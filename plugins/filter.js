@@ -31,7 +31,7 @@ Vue.filter('TimeFilter', time => {
       break;
     }
   }
-  return dateValue + '前更新';
+  return dateValue + '前';
 });
 Vue.prototype.$timeConversion = time => {
   const date = new Date(time);

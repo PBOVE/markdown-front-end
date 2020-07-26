@@ -7,8 +7,9 @@
 
 <template>
   <div class="edit-wrap">
-    <editLeft class="edit-left" />
+    <editLeft class="edit-left" @on-loading="handleLoading" />
     <div class="edit-right">
+      <Spin size="large" fix v-show="spinShow" />
       <tinymce-editor v-if="storeFormat==='richText'" @on-save="handleSave" />
       <markdown-editor v-else-if="storeFormat==='markdown'" @on-save="handleSave" />
     </div>
@@ -17,7 +18,7 @@
 
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import tinymceEditor from "@/components/EditorTinymce/index.vue";
 import markdownEditor from "@/components/EditorMarkdown/index.vue";
 import editLeft from "@/components/_path/editLeft.vue";
@@ -36,17 +37,25 @@ export default {
     return {
       author: this.$route.params.author,
       path: this.$route.params.path,
+      spinShow: false,
     };
   },
   head() {
     return {
-      title: `编辑 · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+      title: `编辑 · ${this.storeSelectPost.title || "首页"} ● TBS.feel`,
     };
   },
   computed: {
-    ...mapGetters("author", ["storeFormat", "storeProject"]),
+    ...mapGetters("author", ["storeFormat", "storeProject", "storeSelectPost"]),
+  },
+  mounted() {
+    this.setSelectPost({ id: 0, title: "首页" });
+  },
+  beforeDestroy() {
+    this.setSelectPost({});
   },
   methods: {
+    ...mapMutations("author", ["setSelectPost"]),
     // 保存
     async handleSave(content) {
       try {
@@ -55,12 +64,18 @@ export default {
           path: this.path,
           content,
         };
+        const id = this.storeSelectPost.id;
+        if (id) params.id = id;
         await this.$request.updatePContent(params);
         this.$Message.success({
           background: true,
           content: "保存成功",
         });
       } catch (err) {}
+    },
+    // 处理加载
+    handleLoading(value) {
+      this.spinShow = value;
     },
   },
 };
@@ -73,6 +88,7 @@ export default {
   height: 100%;
 }
 .edit-right {
+  position: relative;
   flex: 1;
 }
 @media screen and (max-width: 900px) {

@@ -40,7 +40,7 @@ export default {
   },
   head() {
     return {
-      title: `留言 · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+      title: `留言 · ${this.author} · ${this.storeProject.path} ● TBS.feel`,
     };
   },
   computed: {

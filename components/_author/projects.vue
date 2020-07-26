@@ -12,14 +12,10 @@
         <Input v-model="search" placeholder="搜索" @on-enter="handleSearch" />
       </div>
       <div class="index-page-header-right">
-        <Button
-          type="primary"
-          style="min-width:80px; margin-right:20px"
-          icon="ios-search"
-          @click="handleSearch"
-        >搜索</Button>
+        <Button type="primary" style="min-width:80px;" icon="ios-search" @click="handleSearch">搜索</Button>
         <Button
           v-if="author===storeUser.userName&&storeUser.authentication"
+          style="margin-left:20px"
           type="success"
           icon="md-add"
           to="/new"

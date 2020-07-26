@@ -53,7 +53,7 @@ export default {
   },
   head() {
     return {
-      title: `设置 · ${this.author}/${this.storeProject.path} ● TBS.feel`,
+      title: `设置 · ${this.author} · ${this.storeProject.title} ● TBS.feel`,
     };
   },
   computed: {

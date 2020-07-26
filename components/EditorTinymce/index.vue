@@ -15,7 +15,7 @@
 
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import tinymceVue from "@tinymce/tinymce-vue";
 let tinymce;
 if (process.client) {
@@ -121,12 +121,19 @@ export default {
   watch: {
     storeContent: {
       handler(val) {
-        this.handbook = val;
+
+        // this.handbook = val;
       },
       immediate: true,
     },
+    handbook: {
+      handler(val) {
+        this.setContent(val);
+      },
+    },
   },
   methods: {
+    ...mapMutations("author", ["setContent"]),
     // 图片上传
     async imagesUpload(blobInfo, success, failure) {
       let file = blobInfo.blob();
