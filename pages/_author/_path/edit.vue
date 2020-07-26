@@ -37,7 +37,7 @@ export default {
     const { author, path } = params;
     const { data } = await app.$request.queryPostDetails({ author, path });
     store.commit("author/setContent", data.content);
-    store.commit("author/setSelectPost",{ id: 0, title: "首页" });
+    store.commit("author/setSelectPost", { id: 0, title: "首页" });
   },
   data() {
     return {
@@ -96,7 +96,7 @@ export default {
 }
 @media screen and (max-width: 900px) {
   .edit-left {
-    display: none;
+    display: none !important;
   }
 }
 </style>
