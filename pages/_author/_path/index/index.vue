@@ -24,10 +24,16 @@ export default {
   components: { projectHeader },
   async asyncData({ params, app, store }) {
     const { author, path, id } = params;
-    const { data } = await app.$request.queryPostDetails({ author, path });
-    const { images, content, updateTime, userName } = data;
-    const { list } = store.state.author;
-    store.commit("author/setPostList", list);
+    const [{ data: details }, { data: listData }] = await Promise.all([
+      app.$request.queryPostDetails({ author, path }),
+      app.$request.queryPostList({ author, path }),
+    ]);
+    const { images, content, updateTime, userName } = details;
+    const to = `/${author}/${path}`;
+    store.commit("author/setPostList", [
+      { _id: 0, name: "首页", type: "home", updateTime, to },
+      ...listData.list,
+    ]);
     store.commit("author/setParentList", []);
     return { content, images, userName, updateTime };
   },

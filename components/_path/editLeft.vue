@@ -354,7 +354,6 @@ export default {
         !this.selectData.children.length
       ) {
         this.$set(this.selectData, "loading", true);
-
         const { data: child } = await this.$request.queryPostList({
           ...params,
           id: this.selectData.id,

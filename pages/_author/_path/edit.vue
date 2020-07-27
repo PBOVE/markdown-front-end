@@ -35,8 +35,15 @@ export default {
   },
   async asyncData({ store, params, app }) {
     const { author, path } = params;
-    const { data } = await app.$request.queryPostDetails({ author, path });
-    store.commit("author/setContent", data.content);
+    const [{ data: details }, { data: listData }] = await Promise.all([
+      app.$request.queryPostDetails({ author, path }),
+      app.$request.queryPostList({ author, path }),
+    ]);
+    store.commit("author/setProjectList", [
+      { _id: 0, name: "首页", type: "home" },
+      ...listData.list,
+    ]);
+    store.commit("author/setContent", details.content);
     store.commit("author/setSelectPost", { id: 0, title: "首页" });
   },
   data() {

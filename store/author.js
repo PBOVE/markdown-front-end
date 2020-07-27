@@ -34,14 +34,13 @@ export const mutations = {
   setProjectList(state, data) {
     const list = JSON.stringify(data);
     state.list = JSON.parse(list);
-    state.postList = JSON.parse(list);
   },
   // 设置首页目录
   setPostList(state, data) {
     const list = JSON.stringify(data);
     state.postList = JSON.parse(list);
   },
-  // 设置首页目录
+  // 设置父亲目录
   setParentList(state, data) {
     const list = JSON.stringify(data);
     state.parentList = JSON.parse(list);

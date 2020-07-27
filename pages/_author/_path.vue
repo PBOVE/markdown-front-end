@@ -140,20 +140,7 @@ export default {
   async fetch({ params, app, store }) {
     const { author, path } = params;
     const { data } = await app.$request.projectContent({ author, path });
-    if (data) {
-      store.commit("author/setProject", data);
-      const updateTime = data.updateTime;
-      store.commit("author/setProjectList", [
-        {
-          _id: 0,
-          name: "首页",
-          type: "home",
-          updateTime,
-          to: `/${author}/${path}`,
-        },
-        ...data.list,
-      ]);
-    }
+    store.commit("author/setProject", data);
   },
   filters: {
     nickName(name) {
