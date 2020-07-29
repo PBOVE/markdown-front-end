@@ -75,7 +75,7 @@ export default {
     userImageSrc() {
       return this.storeAuthorUser.images;
     },
-    ...mapGetters("user", ["storeUser", "storeNickName"]),
+    ...mapGetters("user", ["storeUser", "userState"]),
     ...mapGetters("author", [
       "storeAuthorUser",
       "storeAuthorNumber",
@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     async handleButton() {
+      if (!this.userState) return this.$router.push("/login");
       const username = this.storeAuthorUser.userName;
       const isFans = this.storeAuthorNumber.isFans;
       let data;
