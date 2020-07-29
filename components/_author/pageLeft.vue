@@ -111,7 +111,7 @@ export default {
   border: 1px solid #c5c8ce;
 }
 .alt-wrap {
-  font-size: 200px;
+  font-size: 160px;
   font-family: Georgia;
   background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
   color: #fff;

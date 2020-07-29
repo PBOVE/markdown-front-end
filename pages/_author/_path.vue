@@ -130,7 +130,8 @@ export default {
   components: { publicHeader },
   async validate({ params, app, store }) {
     const { author, path } = params;
-    return await app.$request.validArticle({ author, path });
+    const { data } = await app.$request.validArticle({ author, path });
+    return data;
   },
   async asyncData({ params, app }) {
     const { author: username } = params;
