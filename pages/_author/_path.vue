@@ -13,35 +13,19 @@
         <div class="middle">
           <Icon v-if="storeProject.share" type="ios-podium-outline" class="path-header-icon" />
           <Icon v-else type="ios-lock-outline" class="path-header-icon" />
-          <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
+          <userCard
+            :images="user.images"
+            :nickName="user.nickName"
+            :userName="user.userName"
+            :signature="user.signature"
+            :province="user.location.province"
+            :city="user.location.city"
+          >
             <nuxt-link
               :to="'/' + storeProject.author"
               class="path-header-title"
             >{{storeProject.author}}</nuxt-link>
-            <div class="middle" slot="title">
-              <img
-                v-if="user.images"
-                :src="'/api/storage/preview/' + user.images"
-                class="path-poptip-image"
-              />
-              <div v-else class="path-poptip-portrait middle">{{user.nickName|nickName}}</div>
-              <div style="margin:5px 0px 0 15px;">
-                <div
-                  style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;"
-                >{{user.nickName}}</div>
-                <div style="font-size:16px;  letter-spacing: 0.05em;">{{user.userName}}</div>
-                <div style="color:#515a6e;">
-                  <Icon type="ios-pin-outline" />
-                  <span v-if="user.location">{{user.location.province}} {{user.location.city}}</span>
-                  <span v-else></span>
-                </div>
-              </div>
-            </div>
-            <div class="api" slot="content">
-              <Icon type="ios-stats-outline" />
-              {{user.signature}}
-            </div>
-          </Poptip>
+          </userCard>
           <span class="path-header-line">/</span>
           <span>{{storeProject.title}}</span>
           <span v-if="storeSelectPost.title" class="path-header-line">/</span>
@@ -123,11 +107,12 @@
 
 
 <script>
-import publicHeader from "@/components/publicHeader/index.vue";
 import { mapGetters } from "vuex";
+import publicHeader from "@/components/publicHeader/index.vue";
+import userCard from "@/components/userCard/index.vue";
 
 export default {
-  components: { publicHeader },
+  components: { publicHeader, userCard },
   async validate({ params, app, store }) {
     const { author, path } = params;
     const { data } = await app.$request.validArticle({ author, path });
@@ -144,9 +129,6 @@ export default {
     store.commit("author/setProject", data);
   },
   filters: {
-    nickName(name) {
-      return name ? name[0].toUpperCase() : "";
-    },
     shareFilter(share) {
       return share ? "" : "仅自己可见";
     },
