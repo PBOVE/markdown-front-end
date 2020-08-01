@@ -70,6 +70,12 @@ const request = {
   deletePost: params => axios.delete('/post', { data: params }, header),
   // 验证文章存在
   validArticle: params => axios.get('/valid/article', { params }),
+  // 获取留言列表
+  queryIssues: params => axios.get('/issue', { params }),
+  // 获取留言详情
+  issuesDetails: id => axios.get(`/issue/${id}`),
+  // 创建留言
+  createIssues: params => axios.post('/issue', params),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

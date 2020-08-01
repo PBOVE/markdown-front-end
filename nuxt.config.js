@@ -16,6 +16,8 @@ module.exports = {
    * 使用watchQuery属性可以监听参数字符串的更改
    */
   watchQuery: true,
+  // disable Nuxt Telemetry
+  telemetry: false,
   /*
   ** Customize the progress-bar color
   */

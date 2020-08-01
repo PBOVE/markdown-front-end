@@ -12,7 +12,7 @@
         <div class="index-list-wrap border">
           <div class="index-list-header">
             <span class="index-title index-page-flex-middle">
-              <img src="@/assets/images/link.svg" class="index-title-img" />
+              <img src="@/assets/svg/link.svg" class="index-title-img" />
               <nuxt-link :to="projectLink" class="index-title-link">{{storeProject.title}}</nuxt-link>
               <div v-for="(item, index) in storeParentList" :key="item._id">
                 <span class="split-line">/</span>

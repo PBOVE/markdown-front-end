@@ -46,10 +46,10 @@
           >
             <img
               v-if="item.islike"
-              src="@/assets/images/star.svg"
+              src="@/assets/svg/star.svg"
               class="index-page-row-star-image"
             />
-            <img v-else src="@/assets/images/unstar.svg" class="index-page-row-star-image" />
+            <img v-else src="@/assets/svg/unstar.svg" class="index-page-row-star-image" />
             <span>{{item.islike?'取消':'赞'}}</span>
           </div>
         </div>

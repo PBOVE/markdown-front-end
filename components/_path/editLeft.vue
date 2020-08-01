@@ -77,11 +77,11 @@ export default {
       // 添加列表
       addList: [
         {
-          src: require("@/assets/images/file.svg"),
+          src: require("@/assets/svg/file.svg"),
           name: "新建分组",
         },
         {
-          src: require("@/assets/images/note.svg"),
+          src: require("@/assets/svg/note.svg"),
           name: "新建文档",
         },
       ],
@@ -92,11 +92,11 @@ export default {
       // 更多列表
       moreList: [
         {
-          src: require("@/assets/images/rename.svg"),
+          src: require("@/assets/svg/rename.svg"),
           name: "重命名",
         },
         {
-          src: require("@/assets/images/delete.svg"),
+          src: require("@/assets/svg/delete.svg"),
           name: "删除",
         },
       ],

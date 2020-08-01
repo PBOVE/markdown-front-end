@@ -4,6 +4,7 @@ export const namespaced = true;
 
 export const state = () => ({
   data: {},
+  // 用户登录
   userState: false,
   weather: '',
 });

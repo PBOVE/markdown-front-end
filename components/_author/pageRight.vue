@@ -9,17 +9,20 @@
   <div class="page-right">
     <div class="header">
       <nuxt-link class="header-row" :to="'/'+author" :class="{border:!tab}">
-        <Icon type="ios-book-outline" />概述
+        <Icon type="ios-book-outline" />
+        <span>概述</span>
       </nuxt-link>
       <nuxt-link
         class="header-row"
         :to="'/'+ author + '?tab=projects'"
         :class="{border:tab==='projects'}"
       >
-        <Icon type="ios-folder-open-outline" />我的
+        <Icon type="ios-folder-open-outline" />
+        <span>{{fileName}}</span>
       </nuxt-link>
       <nuxt-link class="header-row" :to="'/'+author + '?tab=likes'" :class="{border:tab==='likes'}">
-        <Icon type="ios-heart-outline" />喜欢
+        <Icon type="ios-heart-outline" />
+        <span>喜欢</span>
       </nuxt-link>
     </div>
   </div>
@@ -27,6 +30,8 @@
 
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -34,10 +39,16 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("user", ["storeUserState", "storeUserName"]),
     tab() {
       const paramsPath = ["projects", "likes"];
       const { tab } = this.$route.query;
       return paramsPath.includes(tab) ? tab : "";
+    },
+    fileName() {
+      if (!this.storeUserState) return "他的";
+      else if (this.storeUserName === this.author) return "我的";
+      return "他的";
     },
   },
 };

@@ -15,7 +15,7 @@
     >
       <img
         v-if="item.type"
-        :src="require('@/assets/images/'+item.type+'.svg')"
+        :src="require('@/assets/svg/'+item.type+'.svg')"
         class="row-wrap-img"
       />
       <div class="row-right index-text-hidden">

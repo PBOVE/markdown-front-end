@@ -9,7 +9,7 @@
   <div class="error">
     <public-header :shadow="true" />
     <div class="error-box">
-      <img src="@/assets/images/404.svg" />
+      <img src="@/assets/svg/404.svg" />
       <div class="error-tips">抱歉，您访问的页面不存在。</div>
       <Button type="primary">
         <nuxt-link to="/" class="error-link">返回首页</nuxt-link>

@@ -17,24 +17,16 @@
           <Input v-model="title" placeholder="标题" />
         </div>
         <div class="issues-new-content-main">
-          <div class="main-header">
-            <div class="main-header-button button-select">编辑</div>
-            <div class="main-header-button">视图</div>
-          </div>
-          <client-only>
-            <v-md-editor
-              v-model="handbook"
-              mode="edit"
-              placeholder="留言"
-              :toolbar="toolbar"
-              :left-toolbar="leftToolbar"
-              :right-toolbar="rightToolbar"
-              :codemirrorConfig="codemirrorConfig"
-            />
-          </client-only>
+          <modify-edit ref="modifyEdit" />
         </div>
         <div class="issues-new-footer">
-          <div class="main-success-button index-page-margin-left-16">创 建</div>
+          <Button
+            type="success"
+            style="width:80px;"
+            :loading="loading"
+            :disabled="!title.length"
+            @click="createIssues"
+          >创 建</Button>
         </div>
       </div>
     </div>
@@ -44,8 +36,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+import modifyEdit from "@/components/EditorMarkdown/modify.vue";
 
 export default {
+  components: { modifyEdit },
   filters: {
     filterNume(name) {
       return name ? name[0].toUpperCase() : "";
@@ -55,43 +49,34 @@ export default {
     return {
       // 作者
       author: this.$route.params.author,
+      // 路径
+      path: this.$route.params.path,
       // 留言标题
       title: "",
-      // 内容
-      handbook: "",
-      // 左侧侧工具栏
-      leftToolbar: "",
-      rightToolbar: "title bold | ul ol table hr | link code",
-      // 初始化 Codemirror 的配置
-      codemirrorConfig: {
-        lineNumbers: false,
-      },
-      // 自定义工具栏
-      toolbar: {
-        title: {
-          title: "标题",
-          icon: "v-md-icon-title",
-          action(editor) {
-            editor.insert(selected => {
-              const content = selected || "标题";
-              return {
-                text: `### ${content}`,
-                selected: content,
-              };
-            });
-          },
-        },
-      },
+      // 加载
+      loading: false,
     };
   },
   head() {
     return {
-      title: `新建 issues · ${this.author} · ${this.storeProject.path} ● TBS.feel`,
+      title: `新建 issues ● TBS.feel`,
     };
   },
   computed: {
     ...mapGetters("author", ["storeProject"]),
     ...mapGetters("user", ["storeUserName", "storeImages", "storeUser"]),
+  },
+  methods: {
+    // 创建留言
+    createIssues() {
+      const { author, path, title } = this;
+      this.loading = true;
+      this.$refs.modifyEdit.handlesave(async (content) => {
+        const params = { author, path, title, content };
+        const { data } = await this.$request.createIssues(params);
+        this.$router.push(`/${author}/${path}/issues/${data.id}`);
+      });
+    },
   },
 };
 </script>
@@ -150,31 +135,9 @@ export default {
 }
 .issues-new-content-main {
   margin: 10px 0 0 0;
-  position: relative;
   height: 300px;
 }
-.main-header {
-  position: absolute;
-  top: 0px;
-  left: 10px;
-}
-.main-header-button {
-  display: inline-block;
-  padding: 0 20px;
-  height: 41px;
-  line-height: 41px;
-  cursor: pointer;
-}
-.button-select {
-  border-radius: 8px 8px 0 0;
-  background: #fff;
-  border: 1px solid #dcdee2;
-  border-bottom: 0;
-}
-.v-md-editor {
-  box-shadow: none;
-  height: calc(100% - 20px);
-}
+
 .issues-new-footer {
   display: flex;
   justify-content: flex-end;
@@ -205,30 +168,8 @@ export default {
   .issues-new-image {
     display: none;
   }
-  .main-header {
-    position: static;
-    display: flex;
-    justify-content: center;
-    margin: 0 0 10px;
-    padding: 10px;
-  }
   .issues-new-content-main {
     height: auto;
-  }
-  .v-md-editor {
-    height: 200px;
-  }
-  .main-header-button {
-    flex: 1;
-    height: 32px;
-    line-height: 32px;
-    text-align: center;
-    border: 1px solid #dcdee2;
-    background: #f8f8f9;
-    border-radius: 4px;
-  }
-  .main-header-button:last-of-type {
-    margin: 0 0 0 10px;
   }
 }
 </style>
@@ -238,35 +179,5 @@ export default {
 }
 .issues-new-wrap .ivu-input:focus {
   background-color: #fff;
-}
-.issues-new-wrap .CodeMirror-focused {
-  border: 1px solid #57a3f3 !important;
-  box-shadow: 0 0 0 2px rgba(45, 140, 240, 0.2);
-  background-color: #fff !important;
-}
-.issues-new-wrap .ivu-input::placeholder {
-  color: #808695;
-}
-.issues-new-wrap .CodeMirror {
-  height: calc(100% - 13px) !important;
-  margin: 10px 10px 0;
-  border: 1px solid #dcdee2;
-  width: calc(100% - 20px);
-  border-radius: 8px;
-  background-color: #fafbfc;
-  transition: border 0.2s ease-in-out, background 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-}
-.issues-new-wrap .CodeMirror-placeholder {
-  color: #808695 !important;
-}
-.issues-new-wrap .v-md-icon-title::before {
-  content: "H";
-}
-.issues-new-wrap .v-md-editor__left-area{
-  display: none;
-}
-.issues-new-wrap .v-md-editor__toolbar-left+.v-md-editor__toolbar-right{
-  margin: 0;
 }
 </style>

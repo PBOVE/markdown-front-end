@@ -80,7 +80,7 @@
           <RadioGroup v-model="share">
             <Radio label="1" class="row-middle">
               <div class="row-middle" style="margin-left:10px">
-                <img src="@/assets/images/ic-unlock.svg" class="row-image" />
+                <img src="@/assets/svg/ic-unlock.svg" class="row-image" />
                 <div class="row-right">
                   <div class="row-title">所有人可见</div>
                   <div class="row-content">对所有人可见</div>
@@ -89,7 +89,7 @@
             </Radio>
             <Radio label="0" class="row-middle" style="margin-top:20px;">
               <div class="row-middle" style="margin-left:10px">
-                <img src="@/assets/images/ic-lock.svg" class="row-image" />
+                <img src="@/assets/svg/ic-lock.svg" class="row-image" />
                 <div class="row-right">
                   <div class="row-title">仅自己可见</div>
                   <div class="row-content">仅自己和文档库成员可见</div>

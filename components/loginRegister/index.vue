@@ -48,7 +48,7 @@ export default {
 .login-register-wrap {
   height: 100vh;
   width: 100vw;
-  background-image: url("../../assets/images/background.svg");
+  background-image: url("../../assets/svg/background.svg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-size: cover;

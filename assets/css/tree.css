@@ -42,13 +42,13 @@
 }
 
 .tree-row-icon-file {
-  background-image: url('../images/file.svg');
+  background-image: url('../svg/file.svg');
 }
 .tree-row-icon-note {
-  background-image: url('../images/note.svg');
+  background-image: url('../svg/note.svg');
 }
 .tree-row-icon-home {
-  background-image: url('../images/home.svg');
+  background-image: url('../svg/home.svg');
 }
 .tree-row-icon {
   margin: 0 0 0 5px;
