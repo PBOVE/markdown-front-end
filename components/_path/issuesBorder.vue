@@ -40,7 +40,7 @@ export default {
   display: flex;
   align-items: flex-start;
 }
-.index-page-flex-middle {
+.issues-border-left {
   padding: 6px 0 0;
 }
 .issues-border-image {
