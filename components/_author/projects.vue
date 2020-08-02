@@ -44,11 +44,7 @@
             class="index-page-flex-middle index-page-row-star"
             @click="handleLike( JSON.stringify(item),index)"
           >
-            <img
-              v-if="item.islike"
-              src="@/assets/svg/star.svg"
-              class="index-page-row-star-image"
-            />
+            <img v-if="item.islike" src="@/assets/svg/star.svg" class="index-page-row-star-image" />
             <img v-else src="@/assets/svg/unstar.svg" class="index-page-row-star-image" />
             <span>{{item.islike?'取消':'赞'}}</span>
           </div>
@@ -83,7 +79,7 @@ export default {
   data() {
     return {
       // 搜索内容
-      search: this.$route.query.q,
+      search: this.$route.query.q || "",
       // 用户页面
       author: this.$route.params.author,
       // 当前页面

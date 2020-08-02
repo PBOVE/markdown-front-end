@@ -18,8 +18,8 @@
             :nickName="user.nickName"
             :userName="user.userName"
             :signature="user.signature"
-            :province="user.location.province"
-            :city="user.location.city"
+            :province="user.province"
+            :city="user.city"
           >
             <nuxt-link
               :to="'/' + storeProject.author"
@@ -120,8 +120,12 @@ export default {
   },
   async asyncData({ params, app }) {
     const { author: username } = params;
-    const { data } = await app.$request.queryUser({ username });
-    return { user: data };
+    const { data: user } = await app.$request.queryUser({ username });
+    if (user.location) {
+      user.province = user.location.province;
+      user.city = user.location.city;
+    }
+    return { user };
   },
   async fetch({ params, app, store }) {
     const { author, path } = params;

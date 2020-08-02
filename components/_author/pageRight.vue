@@ -46,9 +46,9 @@ export default {
       return paramsPath.includes(tab) ? tab : "";
     },
     fileName() {
-      if (!this.storeUserState) return "他的";
+      if (!this.storeUserState) return "文档";
       else if (this.storeUserName === this.author) return "我的";
-      return "他的";
+      return "文档";
     },
   },
 };

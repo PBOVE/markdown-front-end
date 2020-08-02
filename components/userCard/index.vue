@@ -39,8 +39,8 @@ export default {
     nickName: String,
     userName: String,
     signature: String,
-    province: String,
-    city: String,
+    province: [String, undefined],
+    city: [String, undefined],
   },
   filters: {
     nickName(name) {
