@@ -176,6 +176,9 @@ export default {
   .issues-header-input {
     width: calc(100% - 90px);
   }
+  .issues-index-wrap {
+    padding: 0px 20px;
+  }
 }
 @media screen and (max-width: 400px) {
   .issues-header {

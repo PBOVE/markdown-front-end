@@ -238,8 +238,11 @@ export default {
   .issues-details-wrap {
     padding: 0 20px;
   }
+  .issues-details-right {
+    width: 30%;
+  }
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   .issues-details-right {
     display: none;
   }
@@ -249,5 +252,19 @@ export default {
   .issues-box {
     padding: 0;
   }
+}
+</style>
+<style>
+.right-main th,
+.right-main td 
+
+
+{
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+.right-main tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
 }
 </style>
