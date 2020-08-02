@@ -51,6 +51,7 @@ export default {
 .issues-border-right {
   position: relative;
   flex: 1;
+  width: calc(100% - 45px);
   margin: 0 0 0 16px;
   border-radius: 8px;
   border: 1px solid #d1d5da;

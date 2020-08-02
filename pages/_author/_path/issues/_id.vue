@@ -11,7 +11,10 @@
       <div class="header-title-wrap index-page-flex-middle">
         <div class="header-title index-text-hidden">{{title}}</div>
         <div style="header-right">
-          <div class="main-success-button index-page-margin-left-16">
+          <div
+            v-if="storeUserState&&(storeUserName === createUser.userName||storeUserName === author)"
+            class="main-success-button index-page-margin-left-16"
+          >
             <Icon type="ios-create-outline" />编辑
           </div>
         </div>
@@ -239,6 +242,9 @@ export default {
 @media screen and (max-width: 700px) {
   .issues-details-right {
     display: none;
+  }
+  .issues-details-left {
+    width: 100%;
   }
 }
 </style>

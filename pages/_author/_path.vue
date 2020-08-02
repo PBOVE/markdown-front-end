@@ -320,7 +320,7 @@ export default {
     display: none;
   }
   .path-main {
-    padding: 0 2%;
+    padding: 10px 2% 0;
   }
   .path-main-link {
     flex: 1;
