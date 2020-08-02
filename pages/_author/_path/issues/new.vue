@@ -9,7 +9,7 @@
   <div class="issues-new-wrap">
     <div class="issues-new-left">
       <div class="issues-new-image">
-        <img v-if="storeImages" :src="storeImages" class="main-user-image" />
+        <img v-if="storeImages" :src="storeImages" />
         <div v-else class="main-user-portrait">{{storeUserName|filterNume}}</div>
       </div>
       <div class="issues-new-content">
@@ -100,6 +100,7 @@ export default {
 .issues-new-image img {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 .issues-new-image div {
   font-size: 20px;

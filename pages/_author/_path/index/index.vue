@@ -43,6 +43,13 @@ export default {
   computed: {
     ...mapGetters("author", [, "storeFormat"]),
   },
+  mounted() {
+    if (process.browser && this.storeFormat === "richText") {
+      this.$refs.editor
+        .querySelectorAll("pre code")
+        .forEach((block) => Prism.highlightElement(block));
+    }
+  },
 };
 </script>
 

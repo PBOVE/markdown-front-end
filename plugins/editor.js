@@ -21,6 +21,8 @@ import vim from 'highlight.js/lib/languages/vim';
 import sql from 'highlight.js/lib/languages/sql';
 import go from 'highlight.js/lib/languages/go';
 
+
+
 // emoji
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 
@@ -40,6 +42,22 @@ VMdEditor.use(githubTheme, {
     hljs.registerLanguage('vm', vim);
     hljs.registerLanguage('sql', sql);
     hljs.registerLanguage('go', go);
+  },
+});
+
+const tagList = [ 'input', 'style', 'script' ];
+
+VMdEditor.xss.extend({
+  // 扩展白名单
+  onTag(tag, html, options) {
+    if (tagList.includes(tag)) return html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return html;
+  },
+});
+VMdPreview.xss.extend({
+  onTag(tag, html, options) {
+    if (tagList.includes(tag)) return html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return html;
   },
 });
 VMdPreview.use(githubTheme);

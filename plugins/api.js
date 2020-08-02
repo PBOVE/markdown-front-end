@@ -4,6 +4,7 @@ import showStatus from '@/utils/message';
 
 const header = { headers: { 'Content-Type': 'application/json;charset=UTF-8' } };
 const fileHeader = { headers: { 'Content-Type': 'multipart/form-data' } };
+const textHeader = { headers: { 'Content-Type': 'text/plain' } };
 
 const request = {
   // 获取 token
@@ -76,6 +77,10 @@ const request = {
   issuesDetails: id => axios.get(`/issue/${id}`),
   // 创建留言
   createIssues: params => axios.post('/issue', params),
+  // 评论
+  comment: (id, data) => axios.post(`/issue/${id}`, data, textHeader),
+  // 删除留言
+  deleteIssues: id => axios.delete(`/issue/${id}`),
 };
 
 //2) 定义axios变量等待接收axios,保证axios可用

@@ -28,7 +28,7 @@
         <img
           v-if="storeImages"
           :src="storeImages"
-          class="main-user-image"
+          class="main-user-rotate-image"
           data-user-portrait="true"
         />
         <div v-else class="main-user-portrait" data-user-portrait="true">{{storeNickName|nickName}}</div>

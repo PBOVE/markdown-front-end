@@ -22,31 +22,46 @@
         <div class="issues-blankslate-title">问题</div>
         <div>您有什么不理解的吗?</div>
       </div>
+      <div class="issues-main-header">
+        <Dropdown trigger="click">
+          <a href="javascript:void(0)">
+            排序
+            <Icon type="ios-arrow-down"></Icon>
+          </a>
+          <DropdownMenu slot="list">
+            <DropdownItem>最新创建</DropdownItem>
+            <DropdownItem>最早创建</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </div>
       <nuxt-link
         v-for="item in issues"
         class="row-wrap index-page-flex-between"
         :to="link + item._id"
         :key="item._id"
       >
-        <div class="row-left">
+        <div class="row-left index-text-hidden">
           <div class="row-left-left">
             <Icon type="ios-bookmark" color="#2b85e4" size="18" />
           </div>
-          <div>
-            <div style="font-size:18px; margin:0 0 3px;">{{item.title}}</div>
+          <div class="index-text-hidden">
+            <div style="font-size:18px; margin:0 0 3px;" class="index-text-hidden">{{item.title}}</div>
             <div style="font-size:12px; color:#586069;">
-              <span>{{item.createUser}}</span>
-              <span>{{item.createTime|timeConversion}}</span>
+              <span>{{item.createUser}} 创建于</span>
+              <span>{{item.createTime|TimeFilter}}</span>
+              
             </div>
           </div>
         </div>
         <div class="row-right index-page-flex-middle">
-          <img src="@/assets/svg/chat.svg" class="row-image" />
-          <span>{{item.answer}}</span>
+          <div v-if="item.number" class="row-chat-num">
+            <img src="@/assets/svg/chat.svg" class="row-image" />
+            <span>{{item.number}}</span>
+          </div>
         </div>
       </nuxt-link>
       <div class="main-center-middle issues-main-footer">
-        <Page :total="40" size="small" />
+        <Page :total="totalElements" size="small" />
       </div>
     </div>
   </div>
@@ -59,19 +74,8 @@ import { mapGetters } from "vuex";
 export default {
   async asyncData({ app, params }) {
     const { author, path } = params;
-    const { data: issues } = await app.$request.queryIssues({ author, path });
-    return { issues };
-  },
-  filters: {
-    timeConversion(time) {
-      const date = new Date(time);
-      const completion = (num) => {
-        return num.toString().padStart(2, "0");
-      };
-      return `${date.getFullYear()}年${completion(
-        date.getMonth() + 1,
-      )}月${completion(date.getDate())}日`;
-    },
+    const { data } = await app.$request.queryIssues({ author, path });
+    return { issues: data.content, totalElements: data.totalElements };
   },
   data() {
     return {
@@ -107,9 +111,14 @@ export default {
 }
 .issues-main {
   margin: 20px 0 0 0;
-  padding: 20px 0;
+  padding: 0 0 20px;
   border: 1px solid #dcdee2;
   border-radius: 8px;
+}
+.issues-main-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
 }
 .issues-blankslate {
   padding: 70px;
@@ -138,6 +147,10 @@ export default {
 .row-left {
   display: flex;
 }
+.row-right {
+  margin: 0 0 0 10px;
+  width: 30px;
+}
 .row-left-left {
   margin: 0 10px 0 0;
   padding: 4px 0 0 0;
@@ -147,8 +160,15 @@ export default {
   height: 16px;
   margin: 0 6px 0 0;
 }
+.row-chat-num {
+  display: flex;
+  align-items: flex-start;
+}
 .issues-main-footer {
   margin: 20px 0 0;
+}
+.ivu-dropdown-item {
+  color: #000;
 }
 @media screen and (max-width: 750px) {
   .issues-header-left {
@@ -165,9 +185,6 @@ export default {
   .main-success-button {
     margin: 10px 0 0;
     width: 80px;
-  }
-  .issues-main {
-    border: 0;
   }
 }
 </style>

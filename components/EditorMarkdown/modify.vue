@@ -29,6 +29,16 @@
 
 <script>
 export default {
+  model: {
+    prop: "model",
+    event: "parent-event",
+  },
+  props: {
+    model: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       // 内容
@@ -57,6 +67,19 @@ export default {
         },
       },
     };
+  },
+  watch: {
+    handbook: {
+      handler(value) {
+        this.$emit("parent-event", value);
+      },
+    },
+    model: {
+      handler(value) {
+        this.handbook = value;
+      },
+      immediate: true,
+    },
   },
   methods: {
     // 上传照片

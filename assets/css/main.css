@@ -17,6 +17,12 @@
 .ivu-select {
   color: #000;
 }
+.ivu-btn-success {
+  background: #2ea44f;
+}
+.ivu-btn-success[disabled] {
+  background-color: #f7f7f7;
+}
 .github-markdown-body {
   font-size: 14px !important;
   color: #24292e;
@@ -45,8 +51,8 @@
   display: none;
 }
 
-
-.main-user-image {
+.main-user-image,
+.main-user-rotate-image {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -65,7 +71,7 @@
   justify-content: center;
   user-select: none;
 }
-.main-user-image:hover {
+.main-user-rotate-image:hover {
   transform: rotate(666turn);
   transition: all 60s cubic-bezier(.34, 0, .84, 1) 1s;
 }

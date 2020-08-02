@@ -25,7 +25,8 @@
     "tinymce": "^5.4.0",
     "view-design": "^4.2.0",
     "vue-cropper": "^0.5.4",
-    "vue-prism-component": "^1.2.0"
+    "vue-prism-component": "^1.2.0",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
