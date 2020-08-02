@@ -49,7 +49,6 @@
             <div style="font-size:12px; color:#586069;">
               <span>{{item.createUser}} 创建于</span>
               <span>{{item.createTime|TimeFilter}}</span>
-              
             </div>
           </div>
         </div>

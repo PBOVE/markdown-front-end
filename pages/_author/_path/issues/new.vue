@@ -39,6 +39,9 @@ import { mapGetters } from "vuex";
 import modifyEdit from "@/components/EditorMarkdown/modify.vue";
 
 export default {
+  validate({ store }) {
+    return store.state.user.data.authentication;
+  },
   components: { modifyEdit },
   filters: {
     filterNume(name) {

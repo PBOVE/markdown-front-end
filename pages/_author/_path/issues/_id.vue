@@ -42,7 +42,7 @@
         />
         <Divider class="issues-details-divider" />
         <issues-border
-          v-if="storeUserState"
+          v-if="storeUserState&&storeUser.authentication"
           class="issues-box"
           :userName="storeUser.nickName"
           :images="storeUser.images"
