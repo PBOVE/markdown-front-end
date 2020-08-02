@@ -246,5 +246,8 @@ export default {
   .issues-details-left {
     width: 100%;
   }
+  .issues-box {
+    padding: 0;
+  }
 }
 </style>
