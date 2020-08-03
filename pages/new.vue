@@ -26,6 +26,8 @@
             :list="textList"
           />
         </div>
+        <div class="new-tip">富文本编辑器，Rich Text Editor, 简称 RTE, 是一种可内嵌于浏览器，所见即所得的文本编辑器。</div>
+        <div class="new-tip">Markdown 编辑器是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。</div>
         <Divider />
         <div class="row row-flex">
           <div>
@@ -99,7 +101,7 @@
           </RadioGroup>
         </div>
         <Divider />
-        <Button type="success" :loading="loading" @click="handleSubmit">添 加</Button>
+        <Button type="success" :loading="loading" @click="handleSubmit">新 建</Button>
       </div>
     </div>
   </div>
@@ -244,7 +246,7 @@ export default {
 .new-tip {
   color: #515a6e;
 }
-.new-tip{
+.new-tip {
   margin: 6px 0 0 0;
 }
 .row-title {
