@@ -33,7 +33,6 @@ export default {
   async asyncData({ store, params, app }) {
     const { author, path, id } = params;
     const { data } = await app.$request.queryPostList({ author, path, id });
-    console.log(data);
     store.commit("author/setProjectList", [
       { _id: 0, name: "首页", type: "home" },
       ...data.list,
