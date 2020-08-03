@@ -7,11 +7,9 @@
 
 <template>
   <div class="edit-wrap">
-    <editLeft class="edit-left" @on-loading="handleLoading" />
+    <editLeft class="edit-left" />
     <div class="edit-right">
-      <Spin size="large" fix v-show="spinShow" />
-      <tinymce-editor v-if="storeFormat==='richText'" @on-save="handleSave" />
-      <markdown-editor v-else-if="storeFormat==='markdown'" @on-save="handleSave" />
+      <nuxt-child />
     </div>
   </div>
 </template>
@@ -19,13 +17,12 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import tinymceEditor from "@/components/EditorTinymce/index.vue";
-import markdownEditor from "@/components/EditorMarkdown/index.vue";
+
 import editLeft from "@/components/_path/editLeft.vue";
 
 export default {
   transition: "fade",
-  components: { tinymceEditor, markdownEditor, editLeft },
+  components: { editLeft },
   validate({ store, params }) {
     const { user, author } = store.state;
     return (
@@ -35,23 +32,14 @@ export default {
   },
   async asyncData({ store, params, app }) {
     const { author, path } = params;
-    const [{ data: details }, { data: listData }] = await Promise.all([
-      app.$request.queryPostDetails({ author, path }),
-      app.$request.queryPostList({ author, path }),
-    ]);
+    const { data } = await app.$request.queryPostList({ author, path });
     store.commit("author/setProjectList", [
       { _id: 0, name: "首页", type: "home" },
-      ...listData.list,
+      ...data.list,
     ]);
-    store.commit("author/setContent", details.content);
-    store.commit("author/setSelectPost", { id: 0, title: "首页" });
   },
   data() {
-    return {
-      author: this.$route.params.author,
-      path: this.$route.params.path,
-      spinShow: false,
-    };
+    return {};
   },
   head() {
     return {
@@ -59,34 +47,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("author", ["storeFormat", "storeProject", "storeSelectPost"]),
+    ...mapGetters("author", ["storeProject", "storeSelectPost"]),
   },
   beforeDestroy() {
     this.setSelectPost({});
   },
   methods: {
     ...mapMutations("author", ["setSelectPost"]),
-    // 保存
-    async handleSave(content) {
-      try {
-        const params = {
-          author: this.author,
-          path: this.path,
-          content,
-        };
-        const id = this.storeSelectPost.id;
-        if (id) params.id = id;
-        await this.$request.updatePContent(params);
-        this.$Message.success({
-          background: true,
-          content: "保存成功",
-        });
-      } catch (err) {}
-    },
-    // 处理加载
-    handleLoading(value) {
-      this.spinShow = value;
-    },
   },
 };
 </script>

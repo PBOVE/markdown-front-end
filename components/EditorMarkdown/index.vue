@@ -25,8 +25,6 @@
 
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-
 export default {
   data() {
     return {
@@ -44,22 +42,6 @@ export default {
       codemirrorConfig: {},
     };
   },
-  computed: {
-    ...mapGetters("author", ["storeContent"]),
-  },
-  watch: {
-    storeContent: {
-      handler(val) {
-        this.handbook = val;
-      },
-      immediate: true,
-    },
-    handbook: {
-      handler(val) {
-        this.setContent(val);
-      },
-    },
-  },
   mounted() {
     if (window.innerWidth < 500) {
       this.mode = "edit";
@@ -69,7 +51,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("author", ["setContent"]),
     // 保存
     async handleSave(content) {
       this.$emit("on-save", content);
@@ -96,6 +77,10 @@ export default {
           desc: files[0].name.replace(/\..+/, ""),
         });
       } catch (err) {}
+    },
+    // 设置内容
+    setUserByInput(value) {
+      this.handbook = value;
     },
   },
 };

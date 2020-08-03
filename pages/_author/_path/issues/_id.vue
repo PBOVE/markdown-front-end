@@ -169,7 +169,6 @@ export default {
           const { data } = await this.$request.deleteIssues(this.id);
           this.$Modal.remove();
           this.$router.push(`/${this.author}/${this.path}/issues`);
-          console.log(data);
         },
       });
     },

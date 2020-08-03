@@ -60,8 +60,10 @@ export default {
   },
   methods: {
     handleClick(item) {
+      if (this.select === item.label) return;
       this.select = item.label;
       this.$emit("parent-event", item.value);
+      this.listShow = false;
     },
   },
 };

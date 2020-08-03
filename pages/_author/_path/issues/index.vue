@@ -17,13 +17,8 @@
       </nuxt-link>
     </div>
     <div class="issues-main">
-      <div v-if="!issues.length" class="issues-blankslate">
-        <img src="@/assets/svg/issues.svg" class="issues-main-image" />
-        <div class="issues-blankslate-title">问题</div>
-        <div>您有什么不理解的吗?</div>
-      </div>
       <div class="issues-main-header">
-        <Dropdown trigger="click">
+        <Dropdown trigger="click" v-if="issues.length">
           <a href="javascript:void(0)">
             排序
             <Icon type="ios-arrow-down"></Icon>
@@ -33,6 +28,11 @@
             <DropdownItem>最早创建</DropdownItem>
           </DropdownMenu>
         </Dropdown>
+      </div>
+      <div v-if="!issues.length" class="issues-blankslate">
+        <img src="@/assets/svg/issues.svg" class="issues-main-image" />
+        <div class="issues-blankslate-title">问题</div>
+        <div>您有什么不理解的吗?</div>
       </div>
       <nuxt-link
         v-for="item in issues"
@@ -59,7 +59,7 @@
           </div>
         </div>
       </nuxt-link>
-      <div class="main-center-middle issues-main-footer">
+      <div v-if="issues.length" class="main-center-middle issues-main-footer">
         <Page :total="totalElements" size="small" />
       </div>
     </div>

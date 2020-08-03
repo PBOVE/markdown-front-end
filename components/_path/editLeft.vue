@@ -124,13 +124,6 @@ export default {
     let list = this.storeProjectList;
     list = JSON.parse(JSON.stringify(list));
     this.treeData = this.handleDate(list);
-    this.$set(this.treeData, 0, {
-      title: "首页",
-      type: "home",
-      id: 0,
-      selected: true,
-      treeId: 0,
-    });
   },
   methods: {
     ...mapMutations("author", ["setSelectPost"]),
@@ -306,6 +299,12 @@ export default {
           child.loading = false;
           child.children = [];
         }
+        if (
+          this.$route.params.id === item._id ||
+          (!this.$route.params.id && item._id === 0)
+        ) {
+          child.selected = true;
+        }
         childData.push(child);
       });
       return childData;
@@ -330,6 +329,7 @@ export default {
       this.$nextTick(() => {
         const inputDom = this.getInputDom(newNode.treeId);
         inputDom.focus();
+        inputDom.setSelectionRange(0, 4);
       });
     },
     // 选中更多列表
@@ -381,6 +381,7 @@ export default {
       this.$nextTick(() => {
         const inputDom = this.getInputDom(newNode.treeId);
         inputDom.focus();
+        inputDom.setSelectionRange(0, 4);
       });
       this.loading = false;
     },
@@ -443,13 +444,10 @@ export default {
       this.$set(data, "selected", true);
       this.selected = data.id;
       if (this.storeSelectPost.id === data.id) return;
-      this.$emit("on-loading", true);
       this.setSelectPost({ id: data.id, title: data.title });
-      const params = { author: this.author, path: this.path };
-      if (data.id) params.id = data.id;
-      const { data: details } = await this.$request.queryPostDetails(params);
-      this.$store.commit("author/setContent", details.content);
-      this.$emit("on-loading", false);
+      if (data.id) {
+        this.$router.push(`/${this.author}/${this.path}/edit/${data.id}`);
+      } else this.$router.push(`/${this.author}/${this.path}/edit`);
     },
   },
 };

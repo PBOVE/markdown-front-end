@@ -15,7 +15,6 @@
 
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
 import tinymceVue from "@tinymce/tinymce-vue";
 let tinymce;
 if (process.client) {
@@ -115,24 +114,7 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapGetters("author", ["storeContent"]),
-  },
-  watch: {
-    storeContent: {
-      handler(val) {
-        this.handbook = val;
-      },
-      immediate: true,
-    },
-    handbook: {
-      handler(val) {
-        this.setContent(val);
-      },
-    },
-  },
   methods: {
-    ...mapMutations("author", ["setContent"]),
     // 图片上传
     async imagesUpload(blobInfo, success, failure) {
       let file = blobInfo.blob();
@@ -148,6 +130,10 @@ export default {
     // 保存
     contentSave() {
       this.$emit("on-save", this.handbook);
+    },
+    // 设置内容
+    setUserByInput(value) {
+      this.handbook = value;
     },
   },
 };
