@@ -72,6 +72,7 @@ export default {
       // 作者 和 路径
       author: this.$route.params.author,
       path: this.$route.params.path,
+      id: this.$route.params.id,
       // 树节点
       treeId: 0,
       // 添加列表
@@ -115,6 +116,7 @@ export default {
       loading: false,
       // 选中的
       selected: 0,
+      selectedData: "",
     };
   },
   computed: {
@@ -124,6 +126,16 @@ export default {
     let list = this.storeProjectList;
     list = JSON.parse(JSON.stringify(list));
     this.treeData = this.handleDate(list);
+  },
+  watch: {
+    $route(to) {
+      const { id } = to.params;
+      if (!id) {
+        this.$set(this.treeData[0], "selected", true);
+        this.$set(this.selectedData, "selected", false);
+        this.selected = 0;
+      }
+    },
   },
   methods: {
     ...mapMutations("author", ["setSelectPost"]),
@@ -296,13 +308,15 @@ export default {
           disabled: item.type === "file" ? true : false,
         };
         if (item.isParent) {
-          child.loading = false;
-          child.children = [];
+          if (item.children) {
+            child.children = this.handleDate(item.children);
+            child.expand = true;
+          } else {
+            child.loading = false;
+            child.children = [];
+          }
         }
-        if (
-          this.$route.params.id === item._id ||
-          (!this.$route.params.id && item._id === 0)
-        ) {
+        if (this.id === item._id || (!this.id && item._id === 0)) {
           child.selected = true;
         }
         childData.push(child);
@@ -443,6 +457,7 @@ export default {
     async selectTreeNode(node, data) {
       this.$set(data, "selected", true);
       this.selected = data.id;
+      this.selectedData = data;
       if (this.storeSelectPost.id === data.id) return;
       this.setSelectPost({ id: data.id, title: data.title });
       if (data.id) {

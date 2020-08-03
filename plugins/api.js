@@ -99,6 +99,7 @@ export default ({ $axios, store }, inject) => {
     if (code === 200 && msg === 'OK') {
       return response.data;
     }
+
     return Promise.reject(code);
   });
   axios.onError(error => {
