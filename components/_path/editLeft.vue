@@ -124,8 +124,8 @@ export default {
     $route(to) {
       const { id } = to.params;
       if (!id) {
-        this.$set(this.treeData[0], 'selected', true);
         this.$set(this.selectedData, 'selected', false);
+        this.$set(this.treeData[0], 'selected', true); 
         this.selected = 0;
       }
     },
@@ -447,7 +447,7 @@ export default {
         parentNode.children.splice(index, 1);
         if (!parent.node.children.length) this.$delete(parentNode, 'loading');
       } else {
-        const index = this.treeData.findIndex(el => el.id === data.id);
+        const index = this.treeData.findIndex((el) => el.id === data.id);
         this.treeData.splice(index, 1);
       }
     },
