@@ -4,37 +4,45 @@
 *
 */
 
-
 <template>
-  <issues-border :images="images" :userName="userName">
+  <issues-border :images="images" :user-name="userName">
     <div class="right-header index-page-flex-middle">
       <div>
-        <nuxt-link :to="'/' + userName" class="right-header-link">{{userName}}</nuxt-link>
+        <nuxt-link :to="'/' + userName" class="right-header-link">{{ userName }}</nuxt-link>
         <span
           class="right-header-time"
           :title="$timeConversion(createTime)"
-        >{{createTime|TimeFilter}}</span>
+        >{{ createTime|TimeFilter }}</span>
       </div>
       <div>
         <Icon type="ios-more" size="30" />
       </div>
     </div>
-    <div class="right-main" ref="rightMain" v-html="mdCompile(content)" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div ref="rightMain" class="right-main" v-html="mdCompile(content)" />
   </issues-border>
 </template>
 
-
 <script>
-import issuesBorder from "@/components/_path/issuesBorder.vue";
-import hljs from "highlight.js";
-import Marked from "marked";
-import xss from "xss";
+import issuesBorder from '@/components/_path/issuesBorder.vue';
+import Prism from 'prismjs';
+import Marked from 'marked';
+import xss from 'xss';
 
 export default {
-  props: ["images", "userName", "createTime", "content"],
   components: { issuesBorder },
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['images', 'userName', 'createTime', 'content'],
   data() {
     return {};
+  },
+  mounted() {
+    if (process.browser) {
+      this.$refs.rightMain
+        .querySelectorAll('pre code')
+        // eslint-disable-next-line no-undef
+        .forEach(block => Prism.highlightElement(block));
+    }
   },
   methods: {
     mdCompile(content) {
@@ -42,16 +50,8 @@ export default {
       return Marked(html);
     },
   },
-  mounted() {
-    if (process.browser) {
-      this.$refs.rightMain
-        .querySelectorAll("pre code")
-        .forEach((block) => Prism.highlightElement(block));
-    }
-  },
 };
 </script>
-
 
 <style scoped>
 .issues-card-wrap {
@@ -79,5 +79,4 @@ export default {
 .right-main {
   padding: 20px;
 }
-
 </style>

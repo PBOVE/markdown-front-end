@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="location-wrap">
     <public-header :search-hide="true" />
@@ -22,10 +21,10 @@
         <div class="location-content-title" style="padding:18px 0;">更改地区</div>
         <div class="location-title">
           <span
-            class="location-account"
             v-if="storeLocation"
-          >{{storeLocation.province}} {{storeLocation.city}}</span>
-          <span class="location-account" v-else></span>
+            class="location-account"
+          >{{ storeLocation.province }} {{ storeLocation.city }}</span>
+          <span v-else class="location-account"></span>
           <Icon type="md-create" class="location-title-icon curpoin" @click="openModal" />
         </div>
       </div>
@@ -33,7 +32,7 @@
     <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
       <div class="modal-edit-header">
         <div>地区</div>
-        <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
+        <Icon type="md-close" size="18" class="modal-close" @click="modalShow=false" />
       </div>
       <div class="modal-title">选择您所在的地区</div>
       <div class="modal-input-wrap">
@@ -56,14 +55,13 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import cityList from "@/utils/cities";
-import publicHeader from "@/components/publicHeader/index.vue";
+import { mapGetters } from 'vuex';
+import cityList from '@/utils/cities';
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader },
   data() {
     return {
@@ -74,20 +72,23 @@ export default {
       // 城市列表
       cityList,
       // 省
-      province: "",
+      province: '',
       // 城市
-      city: "",
+      city: '',
     };
   },
   head() {
     return {
-      title: "地区 ● TBS.feel",
+      title: '地区 ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("user", ["storeLocation"]),
+    ...mapGetters('user', ['storeLocation']),
   },
+  // eslint-disable-next-line vue/order-in-components
   watch: {},
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     // 打开对话框
     openModal() {
@@ -95,8 +96,8 @@ export default {
         this.province = this.storeLocation.province;
         this.city = this.storeLocation.city;
       } else {
-        this.province = "北京";
-        this.city = "北京";
+        this.province = '北京';
+        this.city = '北京';
       }
       this.modalShow = true;
     },
@@ -105,7 +106,7 @@ export default {
       this.city = Object.keys(this.cityList[value])[0];
     },
     // 发送修改
-    async update(value) {
+    async update() {
       if (this.loading) return;
       if (this.storeLocation && this.storeLocation.city === this.city) {
         this.modalShow = false;
@@ -120,8 +121,8 @@ export default {
             adcode: this.cityList[this.province][this.city],
           },
         });
-        this.$store.commit("user/setUser", data.user);
-        this.$store.commit("user/setWeather", data.weather);
+        this.$store.commit('user/setUser', data.user);
+        this.$store.commit('user/setWeather', data.weather);
         this.modalShow = false;
       } catch (err) {}
       this.loading = false;
@@ -129,7 +130,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .location-content {
@@ -197,4 +197,3 @@ export default {
   margin: 10px 0 0 0;
 }
 </style>
-

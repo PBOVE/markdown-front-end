@@ -4,35 +4,29 @@
 *
 */
 
-
 <template>
   <div class="index-list-wrap">
     <nuxt-link
       v-for="item in storePostList"
-      class="row-wrap tree-row"
       :key="item._id"
+      class="row-wrap tree-row"
       :to="item.to ? item.to : link + item._id "
     >
-      <img
-        v-if="item.type"
-        :src="require('@/assets/svg/'+item.type+'.svg')"
-        class="row-wrap-img"
-      />
+      <img v-if="item.type" :src="require('@/assets/svg/'+item.type+'.svg')" class="row-wrap-img" />
       <div class="row-right index-text-hidden">
-        <div class="row-right-title index-text-hidden" :style="item.style">{{item.name}}</div>
+        <div class="row-right-title index-text-hidden" :style="item.style">{{ item.name }}</div>
         <div
           v-if="item.updateTime"
           class="row-right-time"
           :title="$timeConversion(item.updateTime)"
-        >{{item.updateTime|TimeFilter}}</div>
+        >{{ item.updateTime|TimeFilter }}</div>
       </div>
     </nuxt-link>
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -42,14 +36,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("author", ["storePostList"]),
+    ...mapGetters('author', ['storePostList']),
     link() {
       return `/${this.author}/${this.path}/tree/`;
     },
   },
 };
 </script>
-
 
 <style scoped>
 .row-wrap {

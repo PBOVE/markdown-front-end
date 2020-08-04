@@ -4,37 +4,36 @@
 *
 */
 
-
 <template>
   <AutoComplete
-    :style="{display:searchHide?'none':''}"
+    v-model="inputData"
     placeholder="搜索"
     icon="ios-search"
-    v-model="inputData"
     :clearable="true"
+    :style="{display:searchHide?'none':''}"
     @on-change="contentChange"
     @on-select="handelSelect"
   >
     <Option
       v-for="(item,index) in searchData"
-      class="search-ul"
       :key="index"
+      class="search-ul"
       :value="item.author + '/' + item.path"
     >
       <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
         <Icon type="md-list-box" />
-        {{item.author}} / {{item.title}}
-        <span class="search-private" v-if="!item.share">仅自己可见</span>
+        {{ item.author }} / {{ item.title }}
+        <span v-if="!item.share" class="search-private">仅自己可见</span>
       </nuxt-link>
     </Option>
   </AutoComplete>
 </template>
 
-
 <script>
 export default {
   props: {
-    "search-hide": {
+    // eslint-disable-next-line vue/prop-name-casing
+    'search-hide': {
       type: Boolean,
       default: false,
     },
@@ -42,18 +41,18 @@ export default {
   data() {
     return {
       // 输入数据
-      inputData: "",
+      inputData: '',
       // 搜索数据
       searchData: [],
       // 数据加载中
       loading: false,
-      asyncTitle: "",
+      asyncTitle: '',
     };
   },
   methods: {
     // 搜索内容发送变化
     contentChange(value) {
-      const search = value.replace(/(^\s*)|(\s*$)/g, "");
+      const search = value.replace(/(^\s*)|(\s*$)/g, '');
       if (search) this.asyncSearch(search);
     },
     // 异步搜索
@@ -69,7 +68,7 @@ export default {
       this.loading = false;
       if (this.asyncTitle) {
         const asyncTitle = this.asyncTitle;
-        this.asyncTitle = "";
+        this.asyncTitle = '';
         this.asyncSearch(asyncTitle);
       }
     },
@@ -80,7 +79,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .search-li {

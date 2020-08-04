@@ -4,12 +4,11 @@
 *
 */
 
-
 <template>
   <div class="issues-border">
     <div class="index-page-flex-middle issues-border-left">
       <img v-if="images" :src="imageLink + images" class="issues-border-image" />
-      <div v-else class="main-user-portrait">{{userName|name}}</div>
+      <div v-else class="main-user-portrait">{{ userName|name }}</div>
     </div>
     <div class="issues-border-right">
       <slot />
@@ -17,23 +16,22 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  props: ["images", "userName"],
   filters: {
     name(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['images', 'userName'],
   data() {
     return {
-      imageLink: "/api/storage/preview/",
+      imageLink: '/api/storage/preview/',
     };
   },
 };
 </script>
-
 
 <style scoped>
 .issues-border {
@@ -58,7 +56,7 @@ export default {
 }
 .issues-border-right::before,
 .issues-border-right::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   top: 12px;

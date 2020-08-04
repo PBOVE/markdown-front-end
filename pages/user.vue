@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="user-wrap">
     <public-header />
@@ -42,21 +41,15 @@
   </div>
 </template>
 
-
 <script>
-import publicHeader from "@/components/publicHeader/index.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader },
   data() {
     return {
-      pathArray: ["/user", "/user/personal", "/user/security"],
-    };
-  },
-  head() {
-    return {
-      title: "账户 ● TBS.feel",
+      pathArray: ['/user', '/user/personal', '/user/security'],
     };
   },
   computed: {
@@ -64,9 +57,13 @@ export default {
       return this.$route.path;
     },
   },
+  head() {
+    return {
+      title: '账户 ● TBS.feel',
+    };
+  },
 };
 </script>
-
 
 <style scoped>
 .user-wrap {

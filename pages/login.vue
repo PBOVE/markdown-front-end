@@ -4,19 +4,18 @@
 *
 */
 
-
 <template>
   <login-register>
     <div class="login-from-wrap">
       <div style="text-align:left; margin-bottom:1.1rem;">账户密码登录</div>
-      <div class="login-group" ref="accountRef">
+      <div ref="accountRef" class="login-group">
         <label for="account">用户名/邮箱</label>
         <input
           id="account"
+          v-model="account"
           type="text"
           placeholder="请输入用户名/邮箱"
           autocomplete="off"
-          v-model="account"
           @keyup.enter="handleLoginEvent($event)"
         />
         <div class="login-group-tips">
@@ -24,15 +23,15 @@
           <span>请输入用户名</span>
         </div>
       </div>
-      <div class="login-group" ref="passwordRef">
+      <div ref="passwordRef" class="login-group">
         <label for="password">密码</label>
 
         <div class="login-group-input-wrap">
           <input
             id="password"
+            v-model="password"
             autocomplete="off"
             placeholder="请输入密码"
-            v-model="password"
             :type="eye?'password':'text'"
             @keyup.enter="handleLoginEvent($event)"
           />
@@ -63,19 +62,17 @@
     </div>
   </login-register>
 </template>
-
-
 <script>
-import loginRegister from "@/components/loginRegister/index.vue";
+import loginRegister from '@/components/loginRegister/index.vue';
 
 export default {
   components: { loginRegister },
   data() {
     return {
       // 账户
-      account: "",
+      account: '',
       // 密码
-      password: "",
+      password: '',
       // 记住密码
       rememberMe: false,
       // 查看密码
@@ -84,17 +81,12 @@ export default {
       loading: false,
     };
   },
-  head() {
-    return {
-      title: "登录 ● TBS.feel",
-    };
-  },
   watch: {
     account() {
-      this.$refs.accountRef.classList.remove("from-error");
+      this.$refs.accountRef.classList.remove('from-error');
     },
     password() {
-      this.$refs.passwordRef.classList.remove("from-error");
+      this.$refs.passwordRef.classList.remove('from-error');
     },
   },
   methods: {
@@ -112,27 +104,26 @@ export default {
         const params = {
           account: this.account,
           password: this.password,
-          "remember-me": this.rememberMe,
+          'remember-me': this.rememberMe,
         };
         await this.$request.LoginIn(params);
         const { data } = await this.$request.GetToken();
-        this.$cookies.set("access_token", data._csrf.token);
-        this.$store.commit("user/setWeather", data.weather);
-        this.$store.commit("user/setUser", data.user);
-        this.$store.commit("token/setToken", data._csrf.token);
+        this.$cookies.set('access_token', data._csrf.token);
+        this.$store.commit('user/setWeather', data.weather);
+        this.$store.commit('user/setUser', data.user);
+        this.$store.commit('token/setToken', data._csrf.token);
         this.$router.push(
           this.$route.query.redirect || `/${data.user.userName}`,
         );
       } catch (err) {
         this.cancelAnimation(ripples);
-        return;
       }
     },
     // 处理动画
     handleAnimation(event) {
       const x = event.offsetX;
       const y = event.offsetY;
-      const ripples = document.createElement("span");
+      const ripples = document.createElement('span');
       ripples.style.left = `${x}px`;
       ripples.style.top = `${y}px`;
       this.$refs.loginbtn.appendChild(ripples);
@@ -147,26 +138,30 @@ export default {
     },
     // 检测
     verifyContent() {
-      const account = this.account.replace(/\s+/g, "");
-      const password = this.password.replace(/\s+/g, "");
+      const account = this.account.replace(/\s+/g, '');
+      const password = this.password.replace(/\s+/g, '');
       let valid = true;
       if (!account) {
-        this.$refs.accountRef.classList.add("from-error");
+        this.$refs.accountRef.classList.add('from-error');
         valid = false;
       }
       if (!password) {
-        this.$refs.passwordRef.classList.add("from-error");
+        this.$refs.passwordRef.classList.add('from-error');
         valid = false;
       }
       return valid;
     },
   },
+  head() {
+    return {
+      title: '登录 ● TBS.feel',
+    };
+  },
 };
 </script>
 
-
 <style scoped>
-@import url("@/assets/css/login.css");
+@import url('@/assets/css/login.css');
 .from-check {
   display: flex;
   align-items: center;
@@ -181,4 +176,3 @@ export default {
   background-color: rgb(34, 47, 255);
 }
 </style>
-

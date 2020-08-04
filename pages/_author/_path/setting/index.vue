@@ -4,20 +4,19 @@
 *
 */
 
-
 <template>
   <div class="setting-index-wrap">
     <div class="setting-index-header">基本设置</div>
     <Divider />
     <div class="setting-title">文档库名称</div>
     <div class="setting-input-wrap">
-      <input type="text" class="setting-input" v-model="title" />
-      <div class="setting-input-suffix">{{titleSize}}</div>
+      <input v-model="title" type="text" class="setting-input" />
+      <div class="setting-input-suffix">{{ titleSize }}</div>
     </div>
     <div class="setting-title">文档库描述</div>
     <div class="setting-input-wrap">
-      <input type="text" class="setting-input" v-model="description" />
-      <div class="setting-input-suffix">{{descriptionSize}}</div>
+      <input v-model="description" type="text" class="setting-input" />
+      <div class="setting-input-suffix">{{ descriptionSize }}</div>
     </div>
     <button
       class="main-success-button setting-button"
@@ -27,37 +26,36 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
       author: this.$route.params.author,
       path: this.$route.params.path,
-      //名称
-      title: "",
-      titleSize: "0/30",
-      //名称
-      description: "",
-      descriptionSize: "0/60",
+      // 名称
+      title: '',
+      titleSize: '0/30',
+      // 名称
+      description: '',
+      descriptionSize: '0/60',
       // 加载
       loading: false,
     };
   },
   computed: {
-    ...mapGetters("author", ["storeProject"]),
+    ...mapGetters('author', ['storeProject']),
   },
   watch: {
-    "storeProject.title": {
+    'storeProject.title': {
       handler(value) {
         this.title = value;
         this.titleSize = `${value.length || 0}/60`;
       },
       immediate: true,
     },
-    "storeProject.description": {
+    'storeProject.description': {
       handler(value) {
         this.description = value;
         this.descriptionSize = `${value.length || 0}/60`;
@@ -76,7 +74,7 @@ export default {
       if (this.description !== this.storeProject.description) {
         params.description = this.description;
       }
-      if (JSON.stringify(params) === "{}") return;
+      if (JSON.stringify(params) === '{}') return;
       this.loading = true;
       params.author = this.author;
       params.path = this.path;
@@ -84,16 +82,15 @@ export default {
         const { data } = await this.$request.updateProject(params);
         this.$Message.success({
           background: true,
-          content: "更新成功",
+          content: '更新成功',
         });
-        this.$store.commit("author/setProject", data);
+        this.$store.commit('author/setProject', data);
       } catch (err) {}
       this.loading = false;
     },
   },
 };
 </script>
-
 
 <style scoped>
 .setting-index-header {
@@ -104,7 +101,7 @@ export default {
   font-weight: 600;
 }
 .setting-title::after {
-  content: ":";
+  content: ':';
   margin: 0 3px;
 }
 .setting-input-wrap {

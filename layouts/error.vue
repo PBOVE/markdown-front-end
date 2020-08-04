@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="error">
     <public-header :shadow="true" />
@@ -19,7 +18,7 @@
 </template>
 
 <script>
-import publicHeader from "@/components/publicHeader/index.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
   components: { publicHeader },
@@ -28,7 +27,7 @@ export default {
   },
   head() {
     return {
-      title: "页面没有找到 ● TBS.feel",
+      title: '页面没有找到 ● TBS.feel',
     };
   },
 };

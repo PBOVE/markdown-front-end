@@ -4,38 +4,35 @@
 *
 */
 
-
 <template>
   <div class="weather-wrap main-center-middle">
-    <span>{{storeWeather.city|cityFilter}}</span>
+    <span>{{ storeWeather.city|cityFilter }}</span>
     <img :src="imgSrc" class="weather-svg" />
-    <span>{{storeWeather.weather}}</span>
-    <span>{{storeWeather.temperature}}℃</span>
+    <span>{{ storeWeather.weather }}</span>
+    <span>{{ storeWeather.temperature }}℃</span>
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   filters: {
     cityFilter(city) {
-      return city.replace(/市|省|城区|区/, "");
+      return city.replace(/市|省|城区|区/, '');
     },
   },
   data() {
     return {};
   },
   computed: {
-    ...mapGetters("user", ["storeWeather"]),
+    ...mapGetters('user', ['storeWeather']),
     imgSrc() {
       return `/weather/${this.storeWeather.weather}.svg`;
     },
   },
 };
 </script>
-
 
 <style scoped>
 .weather-wrap {

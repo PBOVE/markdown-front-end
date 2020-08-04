@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <Modal
     v-model="modalShow"
@@ -34,21 +33,21 @@
           <div :style="{width:width-hidden+'px'}">
             <span style="padding:0 10px; cursor:pointer;" @click="viewSelect=0">上传照片</span>
             <Icon type="md-arrow-dropright" style="padding:0 10px 0 0;" size="18" />
-            <span>{{fileName}}</span>
+            <span>{{ fileName }}</span>
           </div>
-          <div style="font-size:14px; margin-left:20px" v-show="hidden">图片预览：</div>
+          <div v-show="hidden" style="font-size:14px; margin-left:20px">图片预览：</div>
         </div>
         <div class="drop-flex">
           <div class="drop-content-left" :style="{height:height+'px',width:width-hidden+'px'}">
             <crop-image
               ref="cropImage"
-              :imgSrc="imgSrc"
-              :cropHeight="150"
-              :cropWidth="150"
+              :img-src="imgSrc"
+              :crop-height="150"
+              :crop-width="150"
               @on-callback="getCanvasPos"
             />
           </div>
-          <div class="drop-content-right" v-show="hidden">
+          <div v-show="hidden" class="drop-content-right">
             <div class="show-preview" :style="previewStyle">
               <div :style="previews.div">
                 <img :src="previews.url" :style="previews.img" />
@@ -65,15 +64,14 @@
   </Modal>
 </template>
 
-
 <script>
-import cropImage from "@/components/cropImage/index.vue";
+import cropImage from '@/components/cropImage/index.vue';
 
 export default {
   components: { cropImage },
   model: {
-    prop: "model",
-    event: "model-event",
+    prop: 'model',
+    event: 'model-event',
   },
   props: {
     model: Boolean,
@@ -87,9 +85,9 @@ export default {
       // 视图选择
       viewSelect: 0,
       // 文件名称
-      fileName: "",
+      fileName: '',
       // 图谱连接
-      imgSrc: "",
+      imgSrc: '',
       // 预览链接
       previews: {},
       previewStyle: {},
@@ -106,14 +104,14 @@ export default {
   watch: {
     modalShow(value) {
       if (!value) {
-        this.$emit("model-event", false);
+        this.$emit('model-event', false);
       }
     },
     model(value) {
       if (value) {
         this.modalShow = true;
-        this.imgSrc = "";
-        this.fileName = "";
+        this.imgSrc = '';
+        this.fileName = '';
         this.viewSelect = 0;
         this.disabled = true;
         this.loading = false;
@@ -126,10 +124,10 @@ export default {
       this.width = window.innerWidth - 20;
       this.height = this.width * 0.618;
     }
-    window.addEventListener("resize", this.clientSize);
+    window.addEventListener('resize', this.clientSize);
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.clientSize);
+    window.removeEventListener('resize', this.clientSize);
   },
   methods: {
     // 窗口变化
@@ -152,12 +150,12 @@ export default {
         return;
       }
       if (file.size > 1024 * 1024 * 5) {
-        this.$Message.warning("文件太大,请不要上传文件大于 3M 的图片");
+        this.$Message.warning('文件太大,请不要上传文件大于 3M 的图片');
         return;
       }
       this.fileName = file.name;
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.imgSrc = e.target.result;
         this.viewSelect = 1;
         this.disabled = false;
@@ -168,10 +166,10 @@ export default {
     getCanvasPos(data) {
       this.previews = data;
       this.previewStyle = {
-        width: data.w + "px",
-        height: data.h + "px",
-        overflow: "hidden",
-        margin: "0",
+        width: data.w + 'px',
+        height: data.h + 'px',
+        overflow: 'hidden',
+        margin: '0',
         zoom: 150 / data.w,
       };
     },
@@ -180,13 +178,13 @@ export default {
       const BlobString = await this.$refs.cropImage.onCubeImg();
       try {
         this.loading = true;
-        let formData = new FormData();
-        formData.append("file", BlobString, this.fileName);
+        const formData = new FormData();
+        formData.append('file', BlobString, this.fileName);
         const { data: images } = await this.$request.uploadFile(formData);
         if (images[0]) {
           const params = { images: images[0] };
           const { data } = await this.$request.updataUserMsg(params);
-          this.$store.commit("user/setUser", data);
+          this.$store.commit('user/setUser', data);
           this.modalShow = false;
         }
       } catch (err) {}
@@ -195,7 +193,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .set-head-portrait-wrap {

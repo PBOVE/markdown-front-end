@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="setting-wrap">
     <div class="setting-content">
@@ -34,12 +33,11 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   validate({ store, params }) {
     const userState = store.state.user.userState;
     const userName = store.state.user.data.userName;
@@ -56,15 +54,15 @@ export default {
       title: `设置 · ${this.author} · ${this.storeProject.title} ● TBS.feel`,
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
     projectPath() {
       return `/${this.author}/${this.path}/setting`;
     },
-    ...mapGetters("author", ["storeProject"]),
+    ...mapGetters('author', ['storeProject']),
   },
 };
 </script>
-
 
 <style scoped>
 .setting-content {

@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="login-register-wrap main-center-middle">
     <div class="login-from-wrap">
@@ -33,7 +32,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   data() {
@@ -42,7 +40,6 @@ export default {
   methods: {},
 };
 </script>
-
 
 <style scoped>
 .login-register-wrap {
@@ -147,4 +144,3 @@ export default {
   transition: opacity 0.4s;
 }
 </style>
-

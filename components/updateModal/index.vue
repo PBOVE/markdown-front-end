@@ -4,24 +4,23 @@
 *
 */
 
-
 <template>
   <Modal v-model="modalShow" class-name="modal-vertical-center" width="350" :footer-hide="true">
     <div class="modal-edit-header">
-      <div>{{headerTitle}}</div>
-      <Icon type="md-close" size="18" @click="modalShow=false" class="modal-close" />
+      <div>{{ headerTitle }}</div>
+      <Icon type="md-close" size="18" class="modal-close" @click="modalShow=false" />
     </div>
-    <div class="modal-title">{{title}}</div>
+    <div class="modal-title">{{ title }}</div>
     <div class="modal-input-wrap">
       <input
         ref="modalInput"
+        v-model="content"
         type="text"
         class="modal-input"
-        v-model="content"
         :maxlength="maxlength"
         @keydown.enter="handleButton"
       />
-      <div v-if="maxlength" maxlength class="modal-input-prefix">{{handleLegth(content)}}</div>
+      <div v-if="maxlength" maxlength class="modal-input-prefix">{{ handleLegth(content) }}</div>
     </div>
 
     <div class="modal-footer">
@@ -30,7 +29,6 @@
     </div>
   </Modal>
 </template>
-
 
 <script>
 export default {
@@ -43,9 +41,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // eslint-disable-next-line vue/require-default-prop
     title: {
       type: String,
     },
+    // eslint-disable-next-line vue/require-default-prop
     headerTitle: {
       type: String,
     },
@@ -55,7 +55,7 @@ export default {
       // 对话框
       modalShow: false,
       // 输入框输入内容
-      content: "",
+      content: '',
     };
   },
   methods: {
@@ -69,7 +69,7 @@ export default {
     },
     // 处理点击
     handleButton() {
-      this.$emit("on-button", this.content, () => (this.modalShow = false));
+      this.$emit('on-button', this.content, () => (this.modalShow = false));
     },
     handleLegth(value) {
       if (value) return `${value.length}/${this.maxlength}`;
@@ -78,7 +78,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .modal-input-wrap {

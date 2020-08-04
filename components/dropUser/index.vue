@@ -4,23 +4,22 @@
 *
 */
 
-
 <template>
   <transition name="userDrop">
-    <div class="user-drop-box" v-show="model" @click.stop>
-      <Spin fix v-show="loading" />
+    <div v-show="model" class="user-drop-box" @click.stop>
+      <Spin v-show="loading" fix />
       <div class="box-header">
         <div class="header-content">
           <img v-if="storeImages" :src="storeImages" class="box-header-image" />
-          <div class="header-nickname" v-else>{{storeUser.nickName|userName}}</div>
+          <div v-else class="header-nickname">{{ storeUser.nickName|userName }}</div>
           <div class="header-icon-wrap">
             <div class="header-icon" @click="openHeadPortrait">
               <Icon type="ios-camera" size="18" />
             </div>
           </div>
         </div>
-        <div class="header-name">{{storeUser.nickName}}</div>
-        <div class="header-name">{{storeUser.userName}}</div>
+        <div class="header-name">{{ storeUser.nickName }}</div>
+        <div class="header-name">{{ storeUser.userName }}</div>
         <router-link to="/user" class="header-link-user">管理您的 TBS.feel 账号</router-link>
       </div>
       <Divider />
@@ -34,22 +33,21 @@
   </transition>
 </template>
 
-
 <script>
 // 点击上传照片
-import headPortrait from "@/components/headPortrait/index.vue";
-import { mapGetters } from "vuex";
+import headPortrait from '@/components/headPortrait/index.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: { headPortrait },
   filters: {
     userName(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
   model: {
-    prop: "model",
-    event: "model-event",
+    prop: 'model',
+    event: 'model-event',
   },
   props: {
     model: Boolean,
@@ -63,42 +61,41 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser", "storeImages"]),
+    ...mapGetters('user', ['storeUser', 'storeImages']),
   },
   mounted() {
-    window.addEventListener("click", this.globalEvent);
+    window.addEventListener('click', this.globalEvent);
   },
   beforeDestroy() {
-    window.removeEventListener("click", this.globalEvent);
+    window.removeEventListener('click', this.globalEvent);
   },
   methods: {
     // 注册全局事件
     globalEvent(evnet) {
       const target = evnet.target;
-      if (target.dataset.userPortrait === "true") {
-        this.$emit("model-event", !this.model);
+      if (target.dataset.userPortrait === 'true') {
+        this.$emit('model-event', !this.model);
       } else {
-        this.$emit("model-event", false);
+        this.$emit('model-event', false);
       }
     },
     // 打开修改照片
     openHeadPortrait() {
       this.headPortrait = true;
-      this.$emit("model-event", false);
+      this.$emit('model-event', false);
     },
     // 点击退出
     async buttonEvent() {
       try {
         this.loading = true;
         await this.$request.LoginOut();
-        this.$store.commit("token/removeToken");
-        this.$router.push("/login");
+        this.$store.commit('token/removeToken');
+        this.$router.push('/login');
       } catch (err) {}
     },
   },
 };
 </script>
-
 
 <style scoped>
 .user-drop-box {

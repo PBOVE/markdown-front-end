@@ -4,68 +4,66 @@
 *
 */
 
-
 <template>
   <div class="page-left-wrap">
     <div class="header-wrap">
       <div class="header">
         <img v-if="userImageSrc" :src="'/api/storage/preview/'+userImageSrc" class="image" />
-        <div v-else class="alt-wrap main-center-middle">{{storeAuthorUser.nickName|handleName}}</div>
+        <div v-else class="alt-wrap main-center-middle">{{ storeAuthorUser.nickName|handleName }}</div>
       </div>
       <div class="middle">
-        <div class="middle-title">{{storeAuthorUser.nickName}}</div>
-        <div class="middle-content">{{storeAuthorUser.userName}}</div>
+        <div class="middle-title">{{ storeAuthorUser.nickName }}</div>
+        <div class="middle-content">{{ storeAuthorUser.userName }}</div>
       </div>
     </div>
     <div class="icon-wrap">
       <Icon type="ios-pin-outline" />
       <span
         v-if="storeAuthorLocaltion"
-      >{{storeAuthorLocaltion.province}} {{storeAuthorLocaltion.city}}</span>
+      >{{ storeAuthorLocaltion.province }} {{ storeAuthorLocaltion.city }}</span>
       <span v-else>未填写</span>
     </div>
     <div class="icon-wrap">
       <Icon type="ios-paper-outline" />
-      <span>{{storeAuthorUser.signature||'未填写'}}</span>
+      <span>{{ storeAuthorUser.signature||'未填写' }}</span>
     </div>
     <Button
+      v-if="storeUser.userName===storeAuthorUser.userName"
       style="width:100%"
       size="large"
-      v-if="storeUser.userName===storeAuthorUser.userName"
       to="/user"
     >编辑</Button>
     <Button
+      v-else-if="storeAuthorNumber.isFans"
       style="width:100%"
       size="large"
-      v-else-if="storeAuthorNumber.isFans"
       @click="handleButton"
     >取消关注</Button>
-    <Button style="width:100%" size="large" v-else @click="handleButton">关注</Button>
+    <Button v-else style="width:100%" size="large" @click="handleButton">关注</Button>
     <div class="middle-number">
       <div class="middle-number-row">
         <Icon type="ios-people-outline" />
-        {{storeAuthorUser.fans}} 粉丝
+        {{ storeAuthorUser.fans }} 粉丝
       </div>
       <div class="middle-number-row">
         <Icon type="ios-paw-outline" />
-        {{storeAuthorUser.followes}} 关注
+        {{ storeAuthorUser.followes }} 关注
       </div>
       <div class="middle-number-row">
         <Icon type="ios-star-outline" />
-        {{storeAuthorNumber.like}} 获赞
+        {{ storeAuthorNumber.like }} 获赞
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   filters: {
     handleName(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
   data() {
@@ -75,27 +73,26 @@ export default {
     userImageSrc() {
       return this.storeAuthorUser.images;
     },
-    ...mapGetters("user", ["storeUser", "userState"]),
-    ...mapGetters("author", [
-      "storeAuthorUser",
-      "storeAuthorNumber",
-      "storeAuthorLocaltion",
+    ...mapGetters('user', ['storeUser', 'userState']),
+    ...mapGetters('author', [
+      'storeAuthorUser',
+      'storeAuthorNumber',
+      'storeAuthorLocaltion',
     ]),
   },
   methods: {
     async handleButton() {
-      if (!this.userState) return this.$router.push("/login");
+      if (!this.userState) return this.$router.push('/login');
       const username = this.storeAuthorUser.userName;
       const isFans = this.storeAuthorNumber.isFans;
       let data;
       if (isFans) data = await this.$request.unfollowUser({ username });
       else data = await this.$request.followUser({ username });
-      this.$store.commit("author/setAuthor", data.data);
+      this.$store.commit('author/setAuthor', data.data);
     },
   },
 };
 </script>
-
 
 <style scoped>
 .header {

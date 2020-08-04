@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="home-page-wrap">
     <public-header :shadow="true" />
@@ -13,10 +12,9 @@
   </div>
 </template>
 
-
 <script>
-import publicHeader from "@/components/publicHeader/index.vue";
-import publicFooter from "@/components/publicFooter/index.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
+import publicFooter from '@/components/publicFooter/index.vue';
 
 export default {
   components: { publicHeader, publicFooter },
@@ -25,7 +23,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .home-page-wrap {

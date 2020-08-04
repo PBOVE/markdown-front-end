@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="index-wrap">
     <div class="index-content">
@@ -13,15 +12,15 @@
           <div class="index-list-header">
             <span class="index-title index-page-flex-middle">
               <img src="@/assets/svg/link.svg" class="index-title-img" />
-              <nuxt-link :to="projectLink" class="index-title-link">{{storeProject.title}}</nuxt-link>
+              <nuxt-link :to="projectLink" class="index-title-link">{{ storeProject.title }}</nuxt-link>
               <div v-for="(item, index) in storeParentList" :key="item._id">
                 <span class="split-line">/</span>
                 <nuxt-link
                   v-if="storeParentList.length - 1 !== index"
                   class="index-title-link"
                   :to="projectLink"
-                >{{item.name}}</nuxt-link>
-                <span v-else>{{item.name}}</span>
+                >{{ item.name }}</nuxt-link>
+                <span v-else>{{ item.name }}</span>
               </div>
             </span>
             <div class="index-select-icon">
@@ -34,11 +33,11 @@
         <nuxt-child />
       </div>
       <div class="index-right">
-        <div class="index-right-header" v-if="titles.lengrh">目录</div>
+        <div v-if="titles.lengrh" class="index-right-header">目录</div>
         <div
           v-for="(anchor,index) in titles"
-          class="index-titles index-page-flex-middle"
           :key="index"
+          class="index-titles index-page-flex-middle"
           :style="{ padding: `8px 0 8px ${anchor.indent * 15}px` }"
           :title="anchor.title"
           @click="handleAnchorClick(anchor)"
@@ -51,18 +50,16 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import indexList from "@/components/_path/indexList.vue";
-import projectHeader from "@/components/_path/projectHeader.vue";
+import { mapGetters } from 'vuex';
+import indexList from '@/components/_path/indexList.vue';
 
 export default {
-  transition: "fade",
-  components: { indexList, projectHeader },
+  transition: 'fade',
+  components: { indexList },
   filters: {
     name(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
   data() {
@@ -70,13 +67,13 @@ export default {
       // 标题
       titles: [],
       // 右
-      right: "",
+      right: '',
       // 左
-      left: "",
+      left: '',
     };
   },
   computed: {
-    ...mapGetters("author", ["storeProject", "storeFormat", "storeParentList"]),
+    ...mapGetters('author', ['storeProject', 'storeFormat', 'storeParentList']),
     updateUser() {
       return this.storeProject.updateUser;
     },
@@ -101,42 +98,42 @@ export default {
     // 处理 mankdown 语法编辑目录
     handleMTitles() {
       const anchors = this.$refs.editor.$el.querySelectorAll(
-        ".v-md-editor-preview h1,h2,h3,h4,h5,h6",
+        '.v-md-editor-preview h1,h2,h3,h4,h5,h6',
       );
       const titles = Array.from(anchors).filter(
-        (title) => !!title.innerText.trim(),
+        title => !!title.textContent.trim(),
       );
       if (!titles.length) {
         this.titles = [];
         return;
       }
       const hTags = Array.from(
-        new Set(titles.map((title) => title.tagName)),
+        new Set(titles.map(title => title.tagName)),
       ).sort();
-      this.titles = titles.map((el) => ({
-        title: el.innerText,
-        lineIndex: el.getAttribute("data-v-md-line"),
+      this.titles = titles.map(el => ({
+        title: el.textContent,
+        lineIndex: el.getAttribute('data-v-md-line'),
         indent: hTags.indexOf(el.tagName),
       }));
     },
     // 处理富文本编辑器
     handleRTitles() {
-      const anchors = this.$refs.editor.querySelectorAll("h1,h2,h3,h4,h5,h6");
+      const anchors = this.$refs.editor.querySelectorAll('h1,h2,h3,h4,h5,h6');
       const titles = Array.from(anchors).filter(
-        (title) => !!title.innerText.trim(),
+        title => !!title.textContent.trim(),
       );
       if (!titles.length) {
         this.titles = [];
         return;
       }
       const hTags = Array.from(
-        new Set(titles.map((title) => title.tagName)),
+        new Set(titles.map(title => title.tagName)),
       ).sort();
       this.titles = titles.map((el, index) => {
-        el.setAttribute("data-v-rt-line", index + 1);
+        el.setAttribute('data-v-rt-line', index + 1);
         return {
-          title: el.innerText,
-          lineIndex: el.getAttribute("data-v-rt-line"),
+          title: el.textContent,
+          lineIndex: el.getAttribute('data-v-rt-line'),
           indent: hTags.indexOf(el.tagName),
         };
       });
@@ -147,11 +144,11 @@ export default {
       const { lineIndex } = anchor;
       const { format } = this.storeProject;
       let heading;
-      if (format === "richText") {
+      if (format === 'richText') {
         heading = editor.querySelector(
           `.richText [data-v-rt-line="${lineIndex}"]`,
         );
-      } else if (format === "markdown") {
+      } else if (format === 'markdown') {
         heading = editor.$el.querySelector(
           `.v-md-editor-preview [data-v-md-line="${lineIndex}"]`,
         );
@@ -165,13 +162,12 @@ export default {
       const pos = this.$elementOffset(heading);
       window.scrollTo({
         top: pos.top - 100,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     },
   },
 };
 </script>
-
 
 <style scoped>
 .index-wrap {
@@ -212,7 +208,7 @@ export default {
   cursor: pointer;
 }
 .index-titles::before {
-  content: "";
+  content: '';
   display: inline-block;
   margin: 0 5px 0;
   width: 5px;
@@ -281,4 +277,3 @@ export default {
   }
 }
 </style>
-

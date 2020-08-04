@@ -4,13 +4,12 @@
 *
 */
 
-
 <template>
   <div class="issues-new-wrap">
     <div class="issues-new-left">
       <div class="issues-new-image">
         <img v-if="storeImages" :src="storeImages" />
-        <div v-else class="main-user-portrait">{{storeUserName|filterNume}}</div>
+        <div v-else class="main-user-portrait">{{ storeUserName|filterNume }}</div>
       </div>
       <div class="issues-new-content">
         <div class="issues-new-content-header">
@@ -33,10 +32,9 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import modifyEdit from "@/components/EditorMarkdown/modify.vue";
+import { mapGetters } from 'vuex';
+import modifyEdit from '@/components/EditorMarkdown/modify.vue';
 
 export default {
   validate({ store }) {
@@ -45,7 +43,7 @@ export default {
   components: { modifyEdit },
   filters: {
     filterNume(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
   data() {
@@ -55,26 +53,28 @@ export default {
       // 路径
       path: this.$route.params.path,
       // 留言标题
-      title: "",
+      title: '',
       // 加载
       loading: false,
     };
   },
   head() {
     return {
-      title: `新建 issues ● TBS.feel`,
+      title: '新建 issues ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("author", ["storeProject"]),
-    ...mapGetters("user", ["storeUserName", "storeImages", "storeUser"]),
+    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('user', ['storeUserName', 'storeImages', 'storeUser']),
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     // 创建留言
     createIssues() {
       const { author, path, title } = this;
       this.loading = true;
-      this.$refs.modifyEdit.handlesave(async (content) => {
+      this.$refs.modifyEdit.handlesave(async(content) => {
         const params = { author, path, title, content };
         const { data } = await this.$request.createIssues(params);
         this.$router.push(`/${author}/${path}/issues/${data.id}`);
@@ -83,7 +83,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .issues-new-wrap {
@@ -117,7 +116,7 @@ export default {
 }
 .issues-new-content::before,
 .issues-new-content::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   top: 11px;

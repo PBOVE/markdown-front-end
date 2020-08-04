@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="password-wrap">
     <public-header :search-hide="true" />
@@ -29,27 +28,27 @@
           >
             <FormItem prop="srcPassword">
               <Input
-                placeholder="原密码"
                 v-model="updateData.srcPassword"
+                placeholder="原密码"
                 size="large"
                 type="password"
                 :password="true"
               />
             </FormItem>
             <FormItem prop="password">
-              <Input placeholder="新密码" v-model="updateData.password" size="large" type="password" />
+              <Input v-model="updateData.password" placeholder="新密码" size="large" type="password" />
             </FormItem>
             <div class="tip">
               <div>
                 密码强度：
-                <span :style="{color:strokeColor}" style="font-weight:bold">{{strength}}</span>
+                <span :style="{color:strokeColor}" style="font-weight:bold">{{ strength }}</span>
               </div>
               <div class="tip-content">请至少输入 6 个字符。请不要使用容易被猜到的密码。</div>
             </div>
             <FormItem label prop="again">
               <Input
-                placeholder="新密码（重复）"
                 v-model="updateData.again "
+                placeholder="新密码（重复）"
                 size="large"
                 type="password"
               />
@@ -69,19 +68,17 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader },
 
   data() {
-    const validatePass = (rule, value, callback) => {
+    const validatePass = (_rule, _value, callback) => {
       if (this.updateData.again) {
-        this.$refs.updateData.validateField("again");
+        this.$refs.updateData.validateField('again');
       }
       callback();
     };
@@ -91,49 +88,49 @@ export default {
       // 数据
       updateData: {
         // 新密码
-        password: "",
+        password: '',
         // 原密码
-        srcPassword: "",
+        srcPassword: '',
         // 确认密码
-        again: "",
+        again: '',
       },
       // 强度
-      strength: "",
+      strength: '',
       // 颜色
-      strokeColor: "",
+      strokeColor: '',
       // 规则
       rules: {
         srcPassword: [
           {
             required: true,
-            message: "请输入原密码",
-            trigger: "blur",
+            message: '请输入原密码',
+            trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: "请输入新密码",
-            trigger: "blur",
+            message: '请输入新密码',
+            trigger: 'blur',
           },
           {
             pattern: /^.{6,}$/,
-            message: "请至少输入 6 个字符",
-            trigger: "blur",
+            message: '请至少输入 6 个字符',
+            trigger: 'blur',
           },
-          { validator: validatePass, trigger: "blur" },
+          { validator: validatePass, trigger: 'blur' },
         ],
         again: [
           {
             required: true,
-            message: "请输入新密码（重复）",
-            trigger: "blur",
+            message: '请输入新密码（重复）',
+            trigger: 'blur',
           },
           {
-            type: "string",
-            message: "两次输入的新密码必须相同",
-            trigger: "blur",
-            validator: (rule, value) => {
+            type: 'string',
+            message: '两次输入的新密码必须相同',
+            trigger: 'blur',
+            validator: (_rule, value) => {
               const { password } = this.updateData;
               if (!password) return true;
               return value === password;
@@ -143,52 +140,52 @@ export default {
       },
     };
   },
-  head() {
-    return {
-      title: "密码 ● TBS.feel",
-    };
-  },
   watch: {
-    "updateData.password": {
+    'updateData.password': {
       handler(val) {
         if (val.length === 0) {
-          this.strength = "";
+          this.strength = '';
         } else if (val.length < 6) {
-          this.strength = "低";
-          this.strokeColor = "#ed4014";
+          this.strength = '低';
+          this.strokeColor = '#ed4014';
         } else if (val.length < 20) {
-          this.strength = "中";
-          this.strokeColor = "#ff9900";
+          this.strength = '中';
+          this.strokeColor = '#ff9900';
         } else {
-          this.strength = "高";
-          this.strokeColor = "#19be6b";
+          this.strength = '高';
+          this.strokeColor = '#19be6b';
         }
       },
     },
   },
   methods: {
     // 发送验证
+    // eslint-disable-next-line require-await
     async handleButton(name) {
-      this.$refs[name].validate(async val => {
+      this.$refs[name].validate(async(val) => {
         if (!val) return;
         this.loading = true;
         const { srcPassword, password } = this.updateData;
         try {
-          const data = await this.$request.password({ srcPassword, password });
+          await this.$request.password({ srcPassword, password });
           this.$Message.success({
-            content: "密码修改成功",
+            content: '密码修改成功',
             duration: 5,
             background: true,
           });
-          this.updateData = { srcPassword: "", password: "", again: "" };
+          this.updateData = { srcPassword: '', password: '', again: '' };
         } catch (err) {}
         this.loading = false;
       });
     },
   },
+  head() {
+    return {
+      title: '密码 ● TBS.feel',
+    };
+  },
 };
 </script>
-
 
 <style scoped>
 .password-wrap {

@@ -4,26 +4,23 @@
 *
 */
 
-
 <template>
-  <div class="container"></div>
+  <div class="container" />
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   data() {
     return {};
   },
   computed: {
-    ...mapGetters("user", ["storeWeather"]),
+    ...mapGetters('user', ['storeWeather']),
   },
 };
 </script>
-
 
 <style scoped>
 </style>

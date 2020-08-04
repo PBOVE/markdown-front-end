@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <Alert
     v-if="storeUserState&&!storeUser.authentication"
@@ -24,20 +23,18 @@
   </Alert>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {};
   },
   computed: {
-    ...mapGetters("user", ["storeUserName", "storeUserState", "storeUser"]),
+    ...mapGetters('user', ['storeUserName', 'storeUserState', 'storeUser']),
   },
 };
 </script>
-
 
 <style scoped>
 .dashboard-tip {

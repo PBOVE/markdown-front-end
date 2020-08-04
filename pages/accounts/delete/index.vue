@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="password-wrap">
     <public-header :search-hide="true" />
@@ -28,20 +27,18 @@
           <Input v-model="password" type="password" size="large" placeholder="请输入密码" />
         </div>
         <div style="margin-top:25px;">
-          <Button type="primary" size="large" @click="handleButton" :loading="loading">删除账户</Button>
+          <Button type="primary" size="large" :loading="loading" @click="handleButton">删除账户</Button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader },
 
   data() {
@@ -51,43 +48,41 @@ export default {
       // 设置按钮为加载中状态
       loading: false,
       // 密码
-      password: "",
-    };
-  },
-  head() {
-    return {
-      title: "账户删除 ● TBS.feel",
+      password: '',
     };
   },
 
   methods: {
-    async handleButton() {
+    handleButton() {
       if (!this.password) {
         this.$Message.info({
           background: true,
-          content: "请您输入您的 TBS.feel 账户密码",
+          content: '请您输入您的 TBS.feel 账户密码',
           duration: 5,
         });
         return;
       }
       this.$Message.info({
         background: true,
-        content: "系统升级中暂时无法删除",
+        content: '系统升级中暂时无法删除',
         duration: 5,
       });
-      return;
-      try {
-        this.loading = true;
-        await this.$request.deleteAccount({ password: this.password });
-        this.$store.commit("token/removeToken");
-        this.$router.push("/login");
-      } catch (err) {}
-      this.loading = false;
+      // try {
+      //   this.loading = true;
+      //   await this.$request.deleteAccount({ password: this.password });
+      //   this.$store.commit('token/removeToken');
+      //   this.$router.push('/login');
+      // } catch (err) {}
+      // this.loading = false;
     },
+  },
+  head() {
+    return {
+      title: '账户删除 ● TBS.feel',
+    };
   },
 };
 </script>
-
 
 <style scoped>
 .delete-content {

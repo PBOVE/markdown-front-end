@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="signature-wrap">
     <public-header :search-hide="true" />
@@ -21,7 +20,7 @@
       <div class="signature-box">
         <div class="signature-content-title" style="padding:18px 0;">简介</div>
         <div class="signature-title">
-          <span class="signature-account">{{storeSignature}}</span>
+          <span class="signature-account">{{ storeSignature }}</span>
           <Icon type="md-create" class="signature-title-icon curpoin" @click="openModal" />
         </div>
       </div>
@@ -29,7 +28,7 @@
     <update-modal
       ref="updateModal"
       title="简介"
-      headerTitle="简介"
+      header-title="简介"
       :maxlength="60"
       :loading="loading"
       @on-button="update"
@@ -37,14 +36,13 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
-import updateModal from "@/components/updateModal/index.vue";
+import { mapGetters } from 'vuex';
+import publicHeader from '@/components/publicHeader/index.vue';
+import updateModal from '@/components/updateModal/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader, updateModal },
   data() {
     return {
@@ -54,12 +52,14 @@ export default {
   },
   head() {
     return {
-      title: "名称 ● TBS.feel",
+      title: '名称 ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("user", ["storeSignature"]),
+    ...mapGetters('user', ['storeSignature']),
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     // 打开对话框
     openModal() {
@@ -75,7 +75,7 @@ export default {
           signature: value.substr(0, 60),
         };
         const { data } = await this.$request.updataUserMsg(params);
-        this.$store.commit("user/setUser", data.user);
+        this.$store.commit('user/setUser', data.user);
         callback();
       } catch (err) {}
       this.loading = false;
@@ -83,7 +83,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .signature-content {
@@ -147,4 +146,3 @@ export default {
   cursor: pointer;
 }
 </style>
-

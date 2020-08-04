@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="new-wrap">
     <public-header :shadow="true" />
@@ -19,8 +18,8 @@
           <div class="row-title row-must">文档格式</div>
           <div class="row-content">请选择文档格式</div>
           <select-box
-            class="select"
             v-model="select"
+            class="select"
             header-title="格式"
             default="Markdown编辑器"
             :list="textList"
@@ -35,7 +34,7 @@
             <div class="row-flex">
               <div class="row-person row-middle row-border">
                 <img :src="storeImages" class="row-person-img" />
-                <span>{{storeUserName}}</span>
+                <span>{{ storeUserName }}</span>
               </div>
               <span class="row-line">/</span>
             </div>
@@ -44,7 +43,7 @@
             <div class="row-title row-must">文档库路径</div>
             <div class="row-input-tool">
               <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
-                <input v-model="path" ref="pathRef" type="text" class="row-input" />
+                <input ref="pathRef" v-model="path" type="text" class="row-input" />
               </Poptip>
             </div>
           </div>
@@ -55,13 +54,13 @@
           <div class="row-title row-must">文档库名称</div>
           <div class="row-main row-position">
             <input
-              v-model="title"
               ref="titleRef"
+              v-model="title"
               class="row-input row-input-position"
               type="text"
               maxlength="30"
             />
-            <div class="row-size-position">{{titleSize}}</div>
+            <div class="row-size-position">{{ titleSize }}</div>
           </div>
         </div>
         <Divider />
@@ -74,7 +73,7 @@
               type="text"
               maxlength="60"
             />
-            <div class="row-size-position">{{descriptionSize}}</div>
+            <div class="row-size-position">{{ descriptionSize }}</div>
           </div>
         </div>
         <Divider />
@@ -107,11 +106,10 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
-import selectBox from "@/components/selectBox/index.vue";
+import { mapGetters } from 'vuex';
+import publicHeader from '@/components/publicHeader/index.vue';
+import selectBox from '@/components/selectBox/index.vue';
 
 export default {
   validate({ store }) {
@@ -121,52 +119,52 @@ export default {
   data() {
     return {
       // 选择器选择
-      select: "markdown",
+      select: 'markdown',
       textList: [
-        { label: "Markdown编辑器", value: "markdown" },
-        { label: "富文本编辑器", value: "richText" },
+        { label: 'Markdown编辑器', value: 'markdown' },
+        { label: '富文本编辑器', value: 'richText' },
       ],
       // 路径
-      path: "",
-      content: "请输入路径",
+      path: '',
+      content: '请输入路径',
       // 分享
-      share: "1",
+      share: '1',
       // 描述
-      description: "",
-      descriptionSize: "0/60",
+      description: '',
+      descriptionSize: '0/60',
       // 名称
-      title: "",
-      titleSize: "0/30",
-      // 路径
-      path: "",
+      title: '',
+      titleSize: '0/30',
       // 加载
       loading: false,
     };
   },
   head() {
     return {
-      title: "新建 ● TBS.feel",
+      title: '新建 ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("user", ["storeUserName", "storeImages"]),
+    ...mapGetters('user', ['storeUserName', 'storeImages']),
   },
+  // eslint-disable-next-line vue/order-in-components
   watch: {
     path(value) {
-      this.$refs.pathRef.classList.remove("row-error");
-      const dom = document.querySelector(".ivu-poptip-popper");
-      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]\-]+/g;
-      if (!value.replace(/[\s]+/g, "")) {
-        this.content = "请输入路径";
+      this.$refs.pathRef.classList.remove('row-error');
+      const dom = document.querySelector('.ivu-poptip-popper');
+      const reg = /[\s!@#$%^&*()+=|\\/?.<>,:;"'{}[\]]+/g;
+      if (!value.replace(/[\s]+/g, '')) {
+        this.content = '请输入路径';
       } else {
-        const newValue = value.replace(reg, "-");
-        const regPath = /^[A-Za-z0-9\-]+$/;
+        const newValue = value.replace(reg, '-');
+        const regPath = /^[A-Za-z0-9-]+$/;
         if (regPath.test(newValue)) {
           this.content = `路径为 ${newValue}`;
-          dom.classList.remove("poptip-error");
+          dom.classList.remove('poptip-error');
         } else {
-          dom.classList.add("poptip-error");
-          this.content = `路径只能包含数字,字母,和连字符`;
+          dom.classList.add('poptip-error');
+          this.content = '路径只能包含数字,字母,和连字符';
         }
       }
     },
@@ -174,20 +172,21 @@ export default {
       this.descriptionSize = `${value.length}/60`;
     },
     title(value) {
-      this.$refs.titleRef.classList.remove("row-error");
+      this.$refs.titleRef.classList.remove('row-error');
       this.titleSize = `${value.length}/30`;
     },
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     async handleSubmit() {
       if (this.loading) return;
       const result = this.verifyContent();
-      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
+      const reg = /[\s!@#$%^&*()+=|\\/?.<>,:;"'{}[\]]+/g;
       if (!result) return;
       this.loading = true;
       const params = {
-        path: this.path.replace(reg, "-"),
-        share: this.share === "1",
+        path: this.path.replace(reg, '-'),
+        share: this.share === '1',
         format: this.select,
         title: this.title,
         description: this.description,
@@ -196,23 +195,23 @@ export default {
         await this.$request.createProject(params);
         this.$router.push(`/${this.storeUserName}/${params.path}/edit`);
       } catch (err) {
-        this.$refs.pathRef.classList.add("row-error");
+        this.$refs.pathRef.classList.add('row-error');
       }
       this.loading = false;
     },
     // 检测
     verifyContent() {
-      const reg = /[\s!@#$%^&*()+=|\\\/?\.<>\.,:;"'{}[\]]+/g;
+      const reg = /[\s!@#$%^&*()+=|\\/?.<>,:;"'{}[\]]+/g;
       let verid = true;
       if (
-        !this.path.replace(/[\s]+/g, "") ||
-        !/^[A-Za-z0-9\-]+$/.test(this.path.replace(reg, "-"))
+        !this.path.replace(/[\s]+/g, '') ||
+        !/^[A-Za-z0-9-]+$/.test(this.path.replace(reg, '-'))
       ) {
-        this.$refs.pathRef.classList.add("row-error");
+        this.$refs.pathRef.classList.add('row-error');
         verid = false;
       }
       if (!this.title) {
-        this.$refs.titleRef.classList.add("row-error");
+        this.$refs.titleRef.classList.add('row-error');
         verid = false;
       }
       return verid;
@@ -220,7 +219,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .new-wrap {
@@ -260,7 +258,7 @@ export default {
   width: 200px;
 }
 .row-must::before {
-  content: "*";
+  content: '*';
   color: #ed4014;
   margin: 0 3px 0 0;
 }

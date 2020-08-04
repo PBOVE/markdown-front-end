@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <login-register>
     <div class="login-from-wrap">
@@ -12,15 +11,15 @@
       <Alert type="warning">
         <div class="forget-tip">忘记密码了？请输入您的电子邮箱，我们会发送重设邮件到您的邮箱。</div>
       </Alert>
-      <div class="login-group" ref="emailRef">
+      <div ref="emailRef" class="login-group">
         <label for="forget-email">电子邮件地址</label>
         <div class="login-group-input-wrap">
           <input
             id="forget-email"
+            v-model="email"
             type="text"
             placeholder="请输入邮箱"
             autocomplete="off"
-            v-model="email"
             @keydown.enter="handleSubmitEvent($event)"
             @blur="handleBlurEvent"
           />
@@ -32,7 +31,7 @@
         </div>
         <div class="login-group-tips">
           <Icon type="md-information-circle" size="16" />
-          <span>{{emailErrorText}}</span>
+          <span>{{ emailErrorText }}</span>
         </div>
       </div>
       <button ref="submitref" class="login-button" @click="handleSubmitEvent($event)">确定</button>
@@ -43,34 +42,28 @@
   </login-register>
 </template>
 
-
 <script>
-import loginRegister from "@/components/loginRegister/index.vue";
+import loginRegister from '@/components/loginRegister/index.vue';
 export default {
   components: { loginRegister },
   data() {
     return {
       // 提示消息
-      emailErrorText: "",
+      emailErrorText: '',
       // 邮箱
-      email: "",
+      email: '',
       // 设置按钮为加载中状态
       loading: false,
       // 邮箱查询等待
       emailLoad: 2,
       // 查询邮箱
-      queryEmail: "",
-    };
-  },
-  head() {
-    return {
-      title: "忘记密码 ● TBS.feel",
+      queryEmail: '',
     };
   },
   watch: {
     email() {
       this.emailLoad = 2;
-      this.$refs.emailRef.classList.remove("from-error");
+      this.$refs.emailRef.classList.remove('from-error');
     },
   },
   methods: {
@@ -85,14 +78,14 @@ export default {
         this.cancelAnimation(ripples);
         return;
       } else if (this.emailLoad !== 0) {
-        this.$Message.info({ content: "验证邮箱中，请稍等", background: true });
+        this.$Message.info({ content: '验证邮箱中，请稍等', background: true });
         this.cancelAnimation(ripples);
         return;
       }
       try {
         await this.$request.forgetEmail({ email: this.email });
-        const content = "您的邮件已发送，请前往您的邮箱中查看";
-        this.email = "";
+        const content = '您的邮件已发送，请前往您的邮箱中查看';
+        this.email = '';
         this.loading = false;
         this.$Message.success({ duration: 10, content, background: true });
       } catch (err) {}
@@ -100,29 +93,29 @@ export default {
     },
     // 失去焦点
     handleBlurEvent() {
-      const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      const emailReg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
       if (!this.email) {
         this.emailLoad = 2;
       } else if (!emailReg.test(this.email)) {
         this.emailLoad = -1;
-        this.$refs.emailRef.classList.add("from-error");
-        this.emailErrorText = "邮箱格式错误";
+        this.$refs.emailRef.classList.add('from-error');
+        this.emailErrorText = '邮箱格式错误';
       } else {
         this.queryEmailMethod(this.email);
       }
     },
     // 检测数据
     verifyData() {
-      const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      const emailReg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
       let verify = true;
       if (!this.email) {
         verify = false;
-        this.$refs.emailRef.classList.add("from-error");
-        this.emailErrorText = "请输入邮箱地址";
+        this.$refs.emailRef.classList.add('from-error');
+        this.emailErrorText = '请输入邮箱地址';
       } else if (!emailReg.test(this.email)) {
         verify = false;
-        this.$refs.emailRef.classList.add("from-error");
-        this.emailErrorText = "邮箱格式错误";
+        this.$refs.emailRef.classList.add('from-error');
+        this.emailErrorText = '邮箱格式错误';
       }
       return verify;
     },
@@ -130,7 +123,7 @@ export default {
     handleAnimation(event) {
       const x = event.offsetX;
       const y = event.offsetY;
-      const ripples = document.createElement("span");
+      const ripples = document.createElement('span');
       ripples.style.left = `${x}px`;
       ripples.style.top = `${y}px`;
       this.$refs.submitref.appendChild(ripples);
@@ -153,25 +146,29 @@ export default {
         this.emailLoad = 0;
       } else {
         this.emailLoad = -1;
-        this.$refs.emailRef.classList.add("from-error");
-        this.emailErrorText = "此邮箱地址未分配给任何用户账号";
+        this.$refs.emailRef.classList.add('from-error');
+        this.emailErrorText = '此邮箱地址未分配给任何用户账号';
       }
     },
     // 打开对话框
     openModal() {
       this.$Modal.info({
-        title: "收不到邮件 ?",
-        content: "请尝试到广告邮件、订阅邮件、垃圾邮件等目录找找看。",
-        okText: "确定",
+        title: '收不到邮件 ?',
+        content: '请尝试到广告邮件、订阅邮件、垃圾邮件等目录找找看。',
+        okText: '确定',
       });
     },
+  },
+  head() {
+    return {
+      title: '忘记密码 ● TBS.feel',
+    };
   },
 };
 </script>
 
-
 <style scoped>
-@import url("@/assets/css/login.css");
+@import url('@/assets/css/login.css');
 .forget-tip {
   margin: 5px;
   color: rgba(0, 0, 0, 0.65);

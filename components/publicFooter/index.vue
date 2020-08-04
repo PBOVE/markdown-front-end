@@ -4,13 +4,11 @@
 *
 */
 
-
 <template>
   <div class="footer">
     <a href="http://www.beian.miit.gov.cn" target="_blank" class="footer-link">陕ICP备20007146号</a>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -19,7 +17,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .footer {

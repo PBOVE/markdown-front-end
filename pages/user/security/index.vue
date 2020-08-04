@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="user-security-index-wrap">
     <div class="user-border">
@@ -38,14 +37,10 @@
   </div>
 </template>
 
-
 <script>
-// 点击上传照片
-import headPortrait from "@/components/headPortrait/index.vue";
 
 export default {
-  transition: "fade",
-  components: { headPortrait },
+  transition: 'fade',
   data() {
     return {};
   },

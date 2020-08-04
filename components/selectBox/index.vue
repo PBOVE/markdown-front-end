@@ -4,31 +4,30 @@
 *
 */
 
-
 <template>
   <div class="select-box-wrap" tabindex="0" @blur="listShow=false">
     <div class="select-selection middle-center" @click="listShow=!listShow">
-      <span style="color:#24292e;font-weight: 500;opacity: .75;">{{headerTitle}}:</span>
-      <span style="margin:0 3px;">{{select}}</span>
+      <span style="color:#24292e;font-weight: 500;opacity: .75;">{{ headerTitle }}:</span>
+      <span style="margin:0 3px;">{{ select }}</span>
       <Icon type="md-arrow-dropdown" />
     </div>
     <transition name="list">
-      <div class="select-ul-wrap" :style="{width:listWidth}" v-show="listShow">
+      <div v-show="listShow" class="select-ul-wrap" :style="{width:listWidth}">
         <div class="select-ul">
           <div class="select-ul-header border">
-            <span>选择{{headerTitle}}</span>
+            <span>选择{{ headerTitle }}</span>
             <Icon type="md-close" class="select-ul-header-icon" @click="listShow=false" />
           </div>
           <div
             v-for="item in list"
-            class="select-li border"
             :key="item.value"
+            class="select-li border"
             @click="handleClick(item)"
           >
             <div class="select-li-icon">
-              <Icon type="md-checkmark" v-if="item.value===parent" />
+              <Icon v-if="item.value===parent" type="md-checkmark" />
             </div>
-            <div>{{item.label}}</div>
+            <div>{{ item.label }}</div>
           </div>
         </div>
       </div>
@@ -36,19 +35,23 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  props: {
-    list: Array,
-    parent: String,
-    default: String,
-    "header-title": String,
-    "list-width": String,
-  },
   model: {
-    prop: "parent",
-    event: "parent-event",
+    prop: 'parent',
+    event: 'parent-event',
+  },
+  props: {
+    // eslint-disable-next-line vue/require-default-prop
+    list: Array,
+    // eslint-disable-next-line vue/require-default-prop
+    parent: String,
+    // eslint-disable-next-line vue/require-default-prop
+    default: String,
+    // eslint-disable-next-line vue/require-default-prop
+    headerTitle: String,
+    // eslint-disable-next-line vue/require-default-prop
+    listWidth: String,
   },
   data() {
     return {
@@ -62,13 +65,12 @@ export default {
     handleClick(item) {
       if (this.select === item.label) return;
       this.select = item.label;
-      this.$emit("parent-event", item.value);
+      this.$emit('parent-event', item.value);
       this.listShow = false;
     },
   },
 };
 </script>
-
 
 <style scoped>
 .select-box-wrap {

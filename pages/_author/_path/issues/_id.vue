@@ -4,12 +4,11 @@
 *
 */
 
-
 <template>
   <div class="issues-details-wrap">
     <div class="issues-details-header">
       <div class="header-title-wrap index-page-flex-middle">
-        <div class="header-title index-text-hidden">{{title}}</div>
+        <div class="header-title index-text-hidden">{{ title }}</div>
         <div style="header-right">
           <div
             v-if="storeUserState&&(storeUserName === createUser.userName||storeUserName === author)"
@@ -20,8 +19,8 @@
         </div>
       </div>
       <div style="font-size:14px; color:#586069; margin-top:10px;">
-        <span>{{createTime|TimeFilter}}</span>
-        <span>{{createUser.userName}} 创建</span>
+        <span>{{ createTime|TimeFilter }}</span>
+        <span>{{ createUser.userName }} 创建</span>
       </div>
     </div>
     <Divider />
@@ -30,29 +29,29 @@
         <issues-card
           class="issues-box"
           :images="createUser.images"
-          :userName="createUser.userName"
-          :createTime="createTime"
+          :user-name="createUser.userName"
+          :create-time="createTime"
           :content="content"
         />
         <issues-card
-          class="issues-box"
           v-for="item in answer"
-          :images="item.user.images"
-          :userName="item.user.userName"
-          :createTime="item.time"
-          :content="item.content"
           :key="item.id"
+          class="issues-box"
+          :images="item.user.images"
+          :user-name="item.user.userName"
+          :create-time="item.time"
+          :content="item.content"
         />
         <Divider class="issues-details-divider" />
         <issues-border
           v-if="storeUserState&&storeUser.authentication"
           class="issues-box"
-          :userName="storeUser.nickName"
+          :user-name="storeUser.nickName"
           :images="storeUser.images"
         >
           <div class="issues-details-edit-wrap">
             <div class="issues-details-edit">
-              <modify-edit v-model="editContent" ref="modifyEdit" />
+              <modify-edit ref="modifyEdit" v-model="editContent" />
             </div>
             <div class="issues-details-edit-footer">
               <Button
@@ -68,20 +67,20 @@
       <div class="issues-details-right">
         <div class="issues-right-title">发起者</div>
         <div class="index-page-flex-middle">
-          <div style="font-size:16px;color:#515a6e;">{{createUser.userName}}</div>
+          <div style="font-size:16px;color:#515a6e;">{{ createUser.userName }}</div>
         </div>
         <Divider />
         <div class="issues-right-title">参与者</div>
         <div class="index-page-flex-middle">
           <nuxt-link
             v-for="(value,key) in participants"
+            :key="key"
             class="participants"
             :to="'/'+key"
-            :key="key"
             :title="key"
           >
             <img v-if="value" class="main-user-image" :src="imageLink + value" />
-            <div v-else class="main-user-portrait">{{key|filterNume}}</div>
+            <div v-else class="main-user-portrait">{{ key|filterNume }}</div>
           </nuxt-link>
         </div>
         <Divider />
@@ -95,19 +94,23 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import issuesCard from "@/components/_path/issuesCard.vue";
-import issuesBorder from "@/components/_path/issuesBorder.vue";
-import modifyEdit from "@/components/EditorMarkdown/modify.vue";
+import { mapGetters } from 'vuex';
+import issuesCard from '@/components/_path/issuesCard.vue';
+import issuesBorder from '@/components/_path/issuesBorder.vue';
+import modifyEdit from '@/components/EditorMarkdown/modify.vue';
 
 export default {
   components: { issuesCard, issuesBorder, modifyEdit },
   validate({ params }) {
     const { id } = params;
-    const reg = new RegExp("^[0-9a-fA-F]{24}$");
+    const reg = new RegExp('^[0-9a-fA-F]{24}$');
     return reg.test(id);
+  },
+  filters: {
+    filterNume(name) {
+      return name ? name[0].toUpperCase() : '';
+    },
   },
   async asyncData({ params, app }) {
     const { id } = params;
@@ -115,14 +118,9 @@ export default {
     const { answer, createUser, title, createTime, content } = details;
     const participants = {};
     participants[createUser.userName] = createUser.images;
-    answer.forEach((el) => (participants[el.user.userName] = el.user.images));
+    answer.forEach(el => (participants[el.user.userName] = el.user.images));
 
     return { answer, createUser, createTime, content, title, participants };
-  },
-  filters: {
-    filterNume(name) {
-      return name ? name[0].toUpperCase() : "";
-    },
   },
   data() {
     return {
@@ -130,17 +128,17 @@ export default {
       // 禁止输入
       disabled: true,
       // 输入的内容
-      editContent: "",
+      editContent: '',
       // 留言 id
       author: this.$route.params.author,
       path: this.$route.params.path,
       id: this.$route.params.id,
       // 连接
-      imageLink: "/api/storage/preview/",
+      imageLink: '/api/storage/preview/',
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser", "storeUserState", "storeUserName"]),
+    ...mapGetters('user', ['storeUser', 'storeUserState', 'storeUserName']),
   },
   watch: {
     editContent(value) {
@@ -152,7 +150,7 @@ export default {
     async handleComment() {
       this.loading = true;
       const { data } = await this.$request.comment(this.id, this.editContent);
-      this.editContent = "";
+      this.editContent = '';
       this.loading = false;
       this.answer.push(data);
       this.$set(this.participants, data.user.userName, data.user.images);
@@ -160,13 +158,13 @@ export default {
     // 处理删除
     handleDelete() {
       this.$Modal.confirm({
-        title: "提示",
-        content: "您确定要删除此留言吗?",
+        title: '提示',
+        content: '您确定要删除此留言吗?',
         loading: true,
-        okText: "确定",
-        cancelText: "取消",
-        onOk: async () => {
-          const { data } = await this.$request.deleteIssues(this.id);
+        okText: '确定',
+        cancelText: '取消',
+        onOk: async() => {
+          await this.$request.deleteIssues(this.id);
           this.$Modal.remove();
           this.$router.push(`/${this.author}/${this.path}/issues`);
         },
@@ -175,7 +173,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .issues-details {
@@ -255,10 +252,7 @@ export default {
 </style>
 <style>
 .right-main th,
-.right-main td 
-
-
-{
+.right-main td {
   padding: 6px 13px;
   border: 1px solid #dfe2e5;
 }

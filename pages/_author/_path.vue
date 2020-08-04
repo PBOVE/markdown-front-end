@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="path-wrap scroll">
     <public-header />
@@ -15,8 +14,8 @@
           <Icon v-else type="ios-lock-outline" class="path-header-icon" />
           <userCard
             :images="user.images"
-            :nickName="user.nickName"
-            :userName="user.userName"
+            :nick-name="user.nickName"
+            :user-name="user.userName"
             :signature="user.signature"
             :province="user.province"
             :city="user.city"
@@ -24,16 +23,16 @@
             <nuxt-link
               :to="'/' + storeProject.author"
               class="path-header-title"
-            >{{storeProject.author}}</nuxt-link>
+            >{{ storeProject.author }}</nuxt-link>
           </userCard>
           <span class="path-header-line">/</span>
-          <span>{{storeProject.title}}</span>
+          <span>{{ storeProject.title }}</span>
           <span v-if="storeSelectPost.title" class="path-header-line">/</span>
-          <span>{{storeSelectPost.title}}</span>
+          <span>{{ storeSelectPost.title }}</span>
           <div
             v-if="!storeProject.share"
             class="path-header-share"
-          >{{storeProject.share|shareFilter}}</div>
+          >{{ storeProject.share|shareFilter }}</div>
         </div>
         <div class="middle">
           <!-- <div class="path-button middle">
@@ -105,18 +104,27 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
-import userCard from "@/components/userCard/index.vue";
+import { mapGetters } from 'vuex';
+import publicHeader from '@/components/publicHeader/index.vue';
+import userCard from '@/components/userCard/index.vue';
 
 export default {
   components: { publicHeader, userCard },
-  async validate({ params, app, store }) {
+  async validate({ params, app }) {
     const { author, path } = params;
     const { data } = await app.$request.validArticle({ author, path });
     return data;
+  },
+  filters: {
+    shareFilter(share) {
+      return share ? '' : '仅自己可见';
+    },
+  },
+  async fetch({ params, app, store }) {
+    const { author, path } = params;
+    const { data } = await app.$request.projectContent({ author, path });
+    store.commit('author/setProject', data);
   },
   async asyncData({ params, app }) {
     const { author: username } = params;
@@ -126,16 +134,6 @@ export default {
       user.city = user.location.city;
     }
     return { user };
-  },
-  async fetch({ params, app, store }) {
-    const { author, path } = params;
-    const { data } = await app.$request.projectContent({ author, path });
-    store.commit("author/setProject", data);
-  },
-  filters: {
-    shareFilter(share) {
-      return share ? "" : "仅自己可见";
-    },
   },
   data() {
     return {
@@ -152,14 +150,15 @@ export default {
       title: `${this.author} · ${this.storeProject.title} ● TBS.feel`,
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("author", ["storeProject", "storeEdit", "storeSelectPost"]),
-    ...mapGetters("user", ["storeUserName"]),
+    ...mapGetters('author', ['storeProject', 'storeEdit', 'storeSelectPost']),
+    ...mapGetters('user', ['storeUserName']),
     // 路径
     resultPath() {
       const { author, path } = this.storeProject;
       const reg = new RegExp(`/${author}/${path}`);
-      const router = this.$route.path.replace(reg, "");
+      const router = this.$route.path.replace(reg, '');
       let result = 0;
       if (/^\/edit/.test(router)) result = 1;
       else if (/^\/issues/.test(router)) result = 2;
@@ -173,6 +172,7 @@ export default {
       return `/${author}/${path}`;
     },
   },
+  // eslint-disable-next-line vue/order-in-components
   mounted() {
     if (window.innerWidth < 300) {
       this.width = window.innerWidth - 20;
@@ -180,11 +180,13 @@ export default {
     if (window.innerWidth < 500) {
       this.setting = true;
     }
-    window.addEventListener("resize", this.clientSize);
+    window.addEventListener('resize', this.clientSize);
   },
+  // eslint-disable-next-line vue/order-in-components
   beforeDestroy() {
-    window.removeEventListener("resize", this.clientSize);
+    window.removeEventListener('resize', this.clientSize);
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     clientSize() {
       if (window.innerWidth < 300) {
@@ -196,7 +198,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .path-wrap {
@@ -328,7 +329,7 @@ export default {
     text-align: center;
   }
   .path-main-down {
-    content: "";
+    content: '';
   }
 }
 </style>

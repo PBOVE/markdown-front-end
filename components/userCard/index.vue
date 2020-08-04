@@ -4,48 +4,51 @@
 *
 */
 
-
 <template>
   <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
     <slot />
-    <div class="index-page-flex-middle" slot="title">
+    <div slot="title" class="index-page-flex-middle">
       <img v-if="images" :src="'/api/storage/preview/' + images" class="path-poptip-image" />
-      <div v-else class="path-poptip-portrait index-page-flex-middle">{{nickName|nickName}}</div>
+      <div v-else class="path-poptip-portrait index-page-flex-middle">{{ nickName|nickName }}</div>
       <div style="margin:5px 0px 0 15px;">
-        <div style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;">{{nickName}}</div>
-        <div style="font-size:16px;  letter-spacing: 0.05em;">{{userName}}</div>
+        <div style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;">{{ nickName }}</div>
+        <div style="font-size:16px;  letter-spacing: 0.05em;">{{ userName }}</div>
         <div style="color:#515a6e;">
           <Icon type="ios-pin-outline" />
-          <span v-if="province">{{province}} {{city}}</span>
+          <span v-if="province">{{ province }} {{ city }}</span>
           <span v-else></span>
         </div>
       </div>
     </div>
-    <div class="api" slot="content">
+    <div slot="content" class="api">
       <Icon type="ios-stats-outline" />
-      {{signature}}
+      {{ signature }}
     </div>
   </Poptip>
 </template>
 
-
 <script>
 export default {
+  filters: {
+    nickName(name) {
+      return name ? name[0].toUpperCase() : '';
+    },
+  },
   props: {
     images: {
       type: [String, undefined],
-      default: "",
+      default: '',
     },
+    // eslint-disable-next-line vue/require-default-prop
     nickName: String,
+    // eslint-disable-next-line vue/require-default-prop
     userName: String,
+    // eslint-disable-next-line vue/require-default-prop
     signature: String,
+    // eslint-disable-next-line vue/require-default-prop
     province: [String, undefined],
+    // eslint-disable-next-line vue/require-default-prop
     city: [String, undefined],
-  },
-  filters: {
-    nickName(name) {
-      return name ? name[0].toUpperCase() : "";
-    },
   },
   data() {
     return {
@@ -60,10 +63,10 @@ export default {
     if (window.innerWidth < 500) {
       this.setting = true;
     }
-    window.addEventListener("resize", this.clientSize);
+    window.addEventListener('resize', this.clientSize);
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.clientSize);
+    window.removeEventListener('resize', this.clientSize);
   },
   methods: {
     clientSize() {
@@ -76,7 +79,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .path-poptip-portrait,

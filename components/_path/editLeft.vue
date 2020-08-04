@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="edit-left-wrap side-nov">
     <div class="header index-page-flex-middle">
@@ -15,12 +14,12 @@
           <DropdownMenu slot="list">
             <DropdownItem
               v-for="(item,index) in addList"
+              :key="index"
               class="index-page-flex-middle header-list"
               :name="item.name"
-              :key="index"
             >
               <img :src="item.src" class="header-list-svg" />
-              <span>{{item.name}}</span>
+              <span>{{ item.name }}</span>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -36,21 +35,21 @@
       />
     </div>
     <drop-down-list
-      :dataList="addList"
+      :data-list="addList"
       :left="ALeft"
       :top="ATop"
       :show="AShow"
-      :scrollTop="scrollTop"
+      :scroll-top="scrollTop"
       @on-close="addClose"
       @on-open="addOpen"
       @on-click="selectAddList"
     />
     <drop-down-list
-      :dataList="moreList"
+      :data-list="moreList"
       :left="MLeft"
       :top="MTop"
       :show="MShow"
-      :scrollTop="scrollTop"
+      :scroll-top="scrollTop"
       @on-close="MoreClose"
       @on-open="MoreOpen"
       @on-click="selectMoreList"
@@ -58,10 +57,9 @@
   </div>
 </template>
 
-
 <script>
-import dropDownList from "@/components/dropDownList/index.vue";
-import { mapGetters, mapMutations } from "vuex";
+import dropDownList from '@/components/dropDownList/index.vue';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: { dropDownList },
@@ -78,12 +76,12 @@ export default {
       // 添加列表
       addList: [
         {
-          src: require("@/assets/svg/file.svg"),
-          name: "新建分组",
+          src: require('@/assets/svg/file.svg'),
+          name: '新建分组',
         },
         {
-          src: require("@/assets/svg/note.svg"),
-          name: "新建文档",
+          src: require('@/assets/svg/note.svg'),
+          name: '新建文档',
         },
       ],
       // 添加列表 偏移量
@@ -93,12 +91,12 @@ export default {
       // 更多列表
       moreList: [
         {
-          src: require("@/assets/svg/rename.svg"),
-          name: "重命名",
+          src: require('@/assets/svg/rename.svg'),
+          name: '重命名',
         },
         {
-          src: require("@/assets/svg/delete.svg"),
-          name: "删除",
+          src: require('@/assets/svg/delete.svg'),
+          name: '删除',
         },
       ],
       // 更多列表 偏移量
@@ -106,54 +104,54 @@ export default {
       MLeft: 0,
       MShow: false,
       // 更新选择的节点
-      selectData: "",
-      selectRoot: "",
-      selectDom: "",
-      selectNode: "",
+      selectData: '',
+      selectRoot: '',
+      selectDom: '',
+      selectNode: '',
       // 滚动条 滚动
       scrollTop: 0,
       // 加载标志位
       loading: false,
       // 选中的
       selected: 0,
-      selectedData: "",
+      selectedData: '',
     };
   },
   computed: {
-    ...mapGetters("author", ["storeSelectPost", "storeProjectList"]),
+    ...mapGetters('author', ['storeSelectPost', 'storeProjectList']),
+  },
+  watch: {
+    $route(to) {
+      const { id } = to.params;
+      if (!id) {
+        this.$set(this.treeData[0], 'selected', true);
+        this.$set(this.selectedData, 'selected', false);
+        this.selected = 0;
+      }
+    },
   },
   created() {
     let list = this.storeProjectList;
     list = JSON.parse(JSON.stringify(list));
     this.treeData = this.handleDate(list);
   },
-  watch: {
-    $route(to) {
-      const { id } = to.params;
-      if (!id) {
-        this.$set(this.treeData[0], "selected", true);
-        this.$set(this.selectedData, "selected", false);
-        this.selected = 0;
-      }
-    },
-  },
   methods: {
-    ...mapMutations("author", ["setSelectPost"]),
+    ...mapMutations('author', ['setSelectPost']),
     // 滚动条滚动
     mainScroll() {
       this.scrollTop = this.$refs.mainRef.scrollTop;
     },
     // 自定义渲染内容
     renderContent(h, { root, node, data }) {
-      let domArray = [
-        h("div", { class: ["tree-row", "index-text-hidden"] }, [
-          h("i", {
+      const domArray = [
+        h('div', { class: ['tree-row', 'index-text-hidden'] }, [
+          h('i', {
             class: [`tree-row-icon-${data.type}`],
-            style: { marginRight: "8px" },
+            style: { marginRight: '8px' },
           }),
           h(
-            "div",
-            { class: ["index-text-hidden", "tree-row-title"] },
+            'div',
+            { class: ['index-text-hidden', 'tree-row-title'] },
             data.title,
           ),
         ]),
@@ -162,9 +160,9 @@ export default {
         domArray.push(this.renderFileOrOther(h, { root, node, data }));
       }
       return h(
-        "div",
+        'div',
         {
-          class: ["tree-row-wrap"],
+          class: ['tree-row-wrap'],
           attrs: { id: `tree-${data.treeId}-wrap` },
           on: { dblclick: () => this.onDblClick(data) },
         },
@@ -173,30 +171,30 @@ export default {
     },
     // 当前节点渲染内容
     renderData(h, { root, node, data }) {
-      let domArray = [
-        h("div", { class: ["tree-row"] }, [
-          h("i", {
+      const domArray = [
+        h('div', { class: ['tree-row'] }, [
+          h('i', {
             class: [`tree-row-icon-${data.type}`],
-            style: { marginRight: "8px" },
+            style: { marginRight: '8px' },
           }),
-          h("Input", {
+          h('Input', {
             attrs: { id: `tree-${data.treeId}-input` },
             props: {
               value: data.title,
-              size: "small",
+              size: 'small',
             },
             on: {
-              "on-blur": () => this.handleInputTitle(data),
-              "on-enter": () => this.handleInputTitleEnter(data),
+              'on-blur': () => this.handleInputTitle(data),
+              'on-enter': () => this.handleInputTitleEnter(data),
             },
           }),
         ]),
       ];
       domArray.push(this.renderFileOrOther(h, { root, node, data }));
       return h(
-        "div",
+        'div',
         {
-          class: ["tree-row-wrap"],
+          class: ['tree-row-wrap'],
           attrs: { id: `tree-${data.treeId}-wrap` },
           on: { dblclick: () => this.onDblClick(data) },
         },
@@ -205,35 +203,35 @@ export default {
     },
     // 渲染文件还是其他
     renderFileOrOther(h, { root, node, data }) {
-      if (data.type === "file") {
-        return h("div", { class: ["tree-row"] }, [
-          h("Icon", {
-            class: ["tree-row-icon"],
-            props: { type: "md-add" },
+      if (data.type === 'file') {
+        return h('div', { class: ['tree-row'] }, [
+          h('Icon', {
+            class: ['tree-row-icon'],
+            props: { type: 'md-add' },
             attrs: { id: `tree-${data.treeId}-add` },
             nativeOn: {
               mouseenter: () =>
-                this.handleMouseEvent("A", { root, node, data }),
+                this.handleMouseEvent('A', { root, node, data }),
               mouseleave: () => this.addClose(),
             },
           }),
-          h("Icon", {
-            class: ["tree-row-icon"],
-            props: { type: "md-more" },
+          h('Icon', {
+            class: ['tree-row-icon'],
+            props: { type: 'md-more' },
             nativeOn: {
               mouseenter: () =>
-                this.handleMouseEvent("M", { root, node, data }),
+                this.handleMouseEvent('M', { root, node, data }),
               mouseleave: () => this.MoreClose(),
             },
           }),
         ]);
       }
-      return h("div", { class: ["tree-row"] }, [
-        h("Icon", {
-          class: ["tree-row-icon"],
-          props: { type: "md-more" },
+      return h('div', { class: ['tree-row'] }, [
+        h('Icon', {
+          class: ['tree-row-icon'],
+          props: { type: 'md-more' },
           nativeOn: {
-            mouseenter: () => this.handleMouseEvent("M", { root, node, data }),
+            mouseenter: () => this.handleMouseEvent('M', { root, node, data }),
             mouseleave: () => this.MoreClose(),
           },
         }),
@@ -250,7 +248,7 @@ export default {
     handleMouseEvent(type, { root, node, data }) {
       if (this.loading) return;
       const event = window.event;
-      const { target, pageY } = event;
+      const { target } = event;
       const pos = this.$elementOffset(target);
       this[`${type}Top`] = pos.top;
       this[`${type}Left`] = pos.left;
@@ -261,39 +259,39 @@ export default {
       this.selectDom = document.querySelector(
         `#tree-${this.selectData.treeId}-wrap`,
       ).parentNode;
-      this.selectDom.classList.add("tree-select");
+      this.selectDom.classList.add('tree-select');
     },
     // 添加 菜单 关闭
     addClose() {
       this.AShow = false;
-      this.selectDom.classList.remove("tree-select");
+      this.selectDom.classList.remove('tree-select');
     },
     // 添加 菜单 打开
     addOpen() {
       this.AShow = true;
-      this.selectDom.classList.add("tree-select");
+      this.selectDom.classList.add('tree-select');
     },
     // 更多 菜单 关闭
     MoreClose() {
       this.MShow = false;
-      this.selectDom.classList.remove("tree-select");
+      this.selectDom.classList.remove('tree-select');
     },
     // 添加 菜单 打开
     MoreOpen() {
       this.MShow = true;
-      this.selectDom.classList.add("tree-select");
+      this.selectDom.classList.add('tree-select');
     },
     // 处理双击事件
     onDblClick(data) {
       if (data.loading !== undefined && !data.children.length) {
-        this.$set(data, "loading", true);
+        this.$set(data, 'loading', true);
         this.loadData(data, (child) => {
-          this.$set(data, "children", child);
-          this.$set(data, "loading", false);
-          this.$set(data, "expand", true);
+          this.$set(data, 'children', child);
+          this.$set(data, 'loading', false);
+          this.$set(data, 'expand', true);
         });
       } else {
-        this.$set(data, "expand", !data.expand);
+        this.$set(data, 'expand', !data.expand);
       }
     },
     // 处理数据
@@ -305,7 +303,7 @@ export default {
           id: item._id,
           treeId: this.treeId++,
           type: item.type,
-          disabled: item.type === "file" ? true : false,
+          disabled: item.type === 'file',
         };
         if (item.isParent) {
           if (item.children) {
@@ -329,12 +327,12 @@ export default {
         author: this.author,
         path: this.path,
       };
-      if (name === "新建分组") {
-        params.name = "新建分组";
-        params.type = "file";
-      } else if (name === "新建文档") {
-        params.name = "新建文档";
-        params.type = "note";
+      if (name === '新建分组') {
+        params.name = '新建分组';
+        params.type = 'file';
+      } else if (name === '新建文档') {
+        params.name = '新建文档';
+        params.type = 'note';
       }
       const { data } = await this.$request.createPost(params);
       const [newNode] = this.handleDate([data]);
@@ -349,8 +347,8 @@ export default {
     // 选中更多列表
     async selectMoreList(name) {
       this.loading = true;
-      if (name === "重命名") await this.modifyTitle(this.selectData);
-      else if (name === "删除") {
+      if (name === '重命名') await this.modifyTitle(this.selectData);
+      else if (name === '删除') {
         await this.deleteNode(
           this.selectRoot,
           this.selectNode,
@@ -367,22 +365,22 @@ export default {
         this.selectData.loading !== undefined &&
         !this.selectData.children.length
       ) {
-        this.$set(this.selectData, "loading", true);
+        this.$set(this.selectData, 'loading', true);
         const { data: child } = await this.$request.queryPostList({
           ...params,
           id: this.selectData.id,
         });
         const childData = this.handleDate(child.list);
-        this.$set(this.selectData, "children", childData);
-        this.$set(this.selectData, "loading", false);
-        this.$set(this.selectData, "expand", true);
+        this.$set(this.selectData, 'children', childData);
+        this.$set(this.selectData, 'loading', false);
+        this.$set(this.selectData, 'expand', true);
       }
-      if (name === "新建分组") {
-        params.name = "新建分组";
-        params.type = "file";
-      } else if (name === "新建文档") {
-        params.name = "新建文档";
-        params.type = "note";
+      if (name === '新建分组') {
+        params.name = '新建分组';
+        params.type = 'file';
+      } else if (name === '新建文档') {
+        params.name = '新建文档';
+        params.type = 'note';
       }
       params.parentId = this.selectData.id;
       const { data } = await this.$request.createPost(params);
@@ -390,8 +388,8 @@ export default {
       newNode.render = this.renderData;
       const children = this.selectData.children || [];
       children.push(newNode);
-      this.$set(this.selectData, "children", children);
-      this.$set(this.selectData, "expand", true);
+      this.$set(this.selectData, 'children', children);
+      this.$set(this.selectData, 'expand', true);
       this.$nextTick(() => {
         const inputDom = this.getInputDom(newNode.treeId);
         inputDom.focus();
@@ -401,7 +399,7 @@ export default {
     },
     // 修改名称
     modifyTitle(node) {
-      this.$set(node, "render", this.renderData);
+      this.$set(node, 'render', this.renderData);
       this.$nextTick(() => {
         const inputDom = this.getInputDom(node.treeId);
         inputDom.focus();
@@ -419,23 +417,23 @@ export default {
       const inputDom = this.getInputDom(data.treeId);
       const { value } = inputDom;
       if (value !== data.title) {
-        await this.updateNodeName(value.replace(/(^\s*)|(\s*$)/g, ""), data.id);
-        this.$set(data, "title", value);
+        await this.updateNodeName(value.replace(/(^\s*)|(\s*$)/g, ''), data.id);
+        this.$set(data, 'title', value);
         if (data.id === this.selected) {
           this.setSelectPost({ id: data.id, title: value });
         }
       }
-      this.$delete(data, "render");
+      this.$delete(data, 'render');
     },
     // 获取inputdom
     getInputDom(id) {
       const treeId = `#tree-${id}-input`;
-      return document.querySelector(treeId).querySelector("input");
+      return document.querySelector(treeId).querySelector('input');
     },
     // 更新节点名称
     async updateNodeName(name, id) {
       const params = { author: this.author, path: this.path, name, id };
-      const data = await this.$request.updatePost(params);
+      await this.$request.updatePost(params);
     },
     // 删除节点名称
     async deleteNode(root, node, data) {
@@ -447,15 +445,16 @@ export default {
         const index = parent.children.indexOf(data.nodeKey);
         const parentNode = parent.node;
         parentNode.children.splice(index, 1);
-        if (!parent.node.children.length) this.$delete(parentNode, "loading");
+        if (!parent.node.children.length) this.$delete(parentNode, 'loading');
       } else {
-        const index = this.treeData.findIndex((el) => el.id === data.id);
+        const index = this.treeData.findIndex(el => el.id === data.id);
         this.treeData.splice(index, 1);
       }
     },
     // 点击树节点时触发
-    async selectTreeNode(node, data) {
-      this.$set(data, "selected", true);
+    // eslint-disable-next-line require-await
+    async selectTreeNode(_node, data) {
+      this.$set(data, 'selected', true);
       this.selected = data.id;
       this.selectedData = data;
       if (this.storeSelectPost.id === data.id) return;
@@ -467,7 +466,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .side-nov {
@@ -513,4 +511,3 @@ export default {
   height: 18px;
 }
 </style>
-

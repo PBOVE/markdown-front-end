@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="edit-wrap">
     <editLeft class="edit-left" />
@@ -14,14 +13,13 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from 'vuex';
 
-import editLeft from "@/components/_path/editLeft.vue";
+import editLeft from '@/components/_path/editLeft.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { editLeft },
   validate({ store, params }) {
     const { user, author } = store.state;
@@ -33,8 +31,8 @@ export default {
   async asyncData({ store, params, app }) {
     const { author, path, id } = params;
     const { data } = await app.$request.queryPostList({ author, path, id });
-    store.commit("author/setProjectList", [
-      { _id: 0, name: "首页", type: "home" },
+    store.commit('author/setProjectList', [
+      { _id: 0, name: '首页', type: 'home' },
       ...data.list,
     ]);
   },
@@ -43,21 +41,23 @@ export default {
   },
   head() {
     return {
-      title: `编辑 · ${this.storeSelectPost.title || "首页"} ● TBS.feel`,
+      title: `编辑 · ${this.storeSelectPost.title || '首页'} ● TBS.feel`,
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("author", ["storeProject", "storeSelectPost"]),
+    ...mapGetters('author', ['storeProject', 'storeSelectPost']),
   },
+  // eslint-disable-next-line vue/order-in-components
   beforeDestroy() {
     this.setSelectPost({});
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
-    ...mapMutations("author", ["setSelectPost"]),
+    ...mapMutations('author', ['setSelectPost']),
   },
 };
 </script>
-
 
 <style scoped>
 .edit-wrap {

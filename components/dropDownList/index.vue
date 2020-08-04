@@ -4,28 +4,26 @@
 *
 */
 
-
 <template>
   <transition name="drop">
     <div
-      class="drop-list-wrap"
-      ref="listWrap"
       v-show="show"
+      ref="listWrap"
+      class="drop-list-wrap"
       :style="{left:left + 'px',top:setTop + 26 + 'px','transform-origin':placement}"
     >
       <div
         v-for="(item,index) in dataList"
-        class="drop-list-row"
         :key="index"
+        class="drop-list-row"
         @click="selectItem(item.name)"
       >
         <img :src="item.src" class="drop-list-img" />
-        <div>{{item.name}}</div>
+        <div>{{ item.name }}</div>
       </div>
     </div>
   </transition>
 </template>
-
 
 <script>
 export default {
@@ -50,17 +48,17 @@ export default {
       // 设置高度
       setTop: 0,
       // 提示框出现的位置
-      placement: "center top",
+      placement: 'center top',
     };
   },
   watch: {
     top: {
       handler(value) {
         const height = this.dataList.length * 35;
-        this.placement = "center top";
+        this.placement = 'center top';
         if (height + value + 40 > this.innerHeight) {
           this.setTop = value - height - 40 - this.scrollTop;
-          this.placement = "center bottom";
+          this.placement = 'center bottom';
         } else this.setTop = value - this.scrollTop;
       },
       immediate: true,
@@ -68,10 +66,10 @@ export default {
     scrollTop: {
       handler(value) {
         const height = this.dataList.length * 35;
-        this.placement = "center top";
+        this.placement = 'center top';
         if (height + this.top + 40 > this.innerHeight) {
           this.setTop = this.top - height - 40 - value;
-          this.placement = "center bottom";
+          this.placement = 'center bottom';
         } else this.setTop = this.top - value;
       },
       immediate: true,
@@ -80,29 +78,28 @@ export default {
   mounted() {
     this.innerHeight = window.innerHeight;
     this.$refs.listWrap.addEventListener(
-      "mouseenter",
+      'mouseenter',
       () => {
-        this.$emit("on-open");
+        this.$emit('on-open');
       },
       false,
     );
     this.$refs.listWrap.addEventListener(
-      "mouseleave",
+      'mouseleave',
       () => {
-        if (this.show) this.$emit("on-close");
+        if (this.show) this.$emit('on-close');
       },
       false,
     );
   },
   methods: {
     selectItem(name) {
-      this.$emit("on-close");
-      this.$emit("on-click", name);
+      this.$emit('on-close');
+      this.$emit('on-click', name);
     },
   },
 };
 </script>
-
 
 <style scoped>
 .drop-list-wrap {

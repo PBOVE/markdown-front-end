@@ -1,11 +1,11 @@
 import Vue from 'vue';
 
-Vue.filter('TimeFilter', time => {
+Vue.filter('TimeFilter', (time) => {
   const dateStart = new Date(time);
   const dateEnd = new Date();
   const DateValue = [ 1000, 60, 60, 24, 30, 12, Infinity ];
   let dateValue = dateEnd - dateStart;
-  for (var i = 0; i < DateValue.length - 1; i++) {
+  for (let i = 0; i < DateValue.length - 1; i++) {
     dateValue /= DateValue[i];
     if (dateValue < DateValue[i + 1]) {
       switch (i) {
@@ -33,16 +33,16 @@ Vue.filter('TimeFilter', time => {
   }
   return dateValue + '前';
 });
-Vue.prototype.$timeConversion = time => {
+Vue.prototype.$timeConversion = (time) => {
   const date = new Date(time);
-  const completion = num => {
+  const completion = (num) => {
     return num.toString().padStart(2, '0');
   };
   return `${date.getFullYear()}年${completion(date.getMonth() + 1)}月${completion(date.getDate())}日 ${completion(
     date.getHours(),
   )}:${completion(date.getMinutes())}`;
 };
-Vue.prototype.$elementOffset = el => {
+Vue.prototype.$elementOffset = (el) => {
   let actualTop = el.offsetTop;
   let actualLeft = el.offsetLeft;
   let current = el.offsetParent;

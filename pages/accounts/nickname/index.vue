@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="nick-name-wrap">
     <public-header :search-hide="true" />
@@ -21,7 +20,7 @@
       <div class="nick-name-box">
         <div class="nick-name-content-title" style="padding:18px 0;">更改昵称</div>
         <div class="nick-name-title">
-          <span class="nick-name-account">{{storeNickName}}</span>
+          <span class="nick-name-account">{{ storeNickName }}</span>
           <Icon type="md-create" class="nick-name-title-icon curpoin" @click="openModal" />
         </div>
       </div>
@@ -29,21 +28,20 @@
     <update-modal
       ref="updateModal"
       title="昵称"
-      headerTitle="更改昵称"
+      header-title="更改昵称"
       :loading="loading"
       @on-button="update"
     />
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
-import updateModal from "@/components/updateModal/index.vue";
+import { mapGetters } from 'vuex';
+import publicHeader from '@/components/publicHeader/index.vue';
+import updateModal from '@/components/updateModal/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader, updateModal },
   data() {
     return {
@@ -53,12 +51,14 @@ export default {
   },
   head() {
     return {
-      title: "昵称 ● TBS.feel",
+      title: '昵称 ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("user", ["storeNickName"]),
+    ...mapGetters('user', ['storeNickName']),
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     // 打开对话框
     openModal() {
@@ -73,7 +73,7 @@ export default {
         const { data } = await this.$request.updataUserMsg({
           nickName: value,
         });
-        this.$store.commit("user/setUser", data.user);
+        this.$store.commit('user/setUser', data.user);
         callback();
       } catch (err) {}
       this.loading = false;
@@ -81,7 +81,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .nick-name-content {
@@ -145,4 +144,3 @@ export default {
   cursor: pointer;
 }
 </style>
-

@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="issues-index-wrap">
     <div class="issues-header index-page-flex-between">
@@ -18,7 +17,7 @@
     </div>
     <div class="issues-main">
       <div class="issues-main-header">
-        <Dropdown trigger="click" v-if="issues.length">
+        <Dropdown v-if="issues.length" trigger="click">
           <a href="javascript:void(0)">
             排序
             <Icon type="ios-arrow-down"></Icon>
@@ -36,26 +35,26 @@
       </div>
       <nuxt-link
         v-for="item in issues"
+        :key="item._id"
         class="row-wrap index-page-flex-between"
         :to="link + item._id"
-        :key="item._id"
       >
         <div class="row-left index-text-hidden">
           <div class="row-left-left">
             <Icon type="ios-bookmark" color="#2b85e4" size="18" />
           </div>
           <div class="index-text-hidden">
-            <div style="font-size:18px; margin:0 0 3px;" class="index-text-hidden">{{item.title}}</div>
+            <div style="font-size:18px; margin:0 0 3px;" class="index-text-hidden">{{ item.title }}</div>
             <div style="font-size:12px; color:#586069;">
-              <span>{{item.createUser}} 创建于</span>
-              <span>{{item.createTime|TimeFilter}}</span>
+              <span>{{ item.createUser }} 创建于</span>
+              <span>{{ item.createTime|TimeFilter }}</span>
             </div>
           </div>
         </div>
         <div class="row-right index-page-flex-middle">
           <div v-if="item.number" class="row-chat-num">
             <img src="@/assets/svg/chat.svg" class="row-image" />
-            <span>{{item.number}}</span>
+            <span>{{ item.number }}</span>
           </div>
         </div>
       </nuxt-link>
@@ -66,9 +65,8 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   async asyncData({ app, params }) {
@@ -78,7 +76,7 @@ export default {
   },
   data() {
     return {
-      value: "",
+      value: '',
       // 作者
       author: this.$route.params.author,
       // 路径
@@ -90,15 +88,15 @@ export default {
       title: `留言 · ${this.author} · ${this.storeProject.path} ● TBS.feel`,
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("author", ["storeProject"]),
+    ...mapGetters('author', ['storeProject']),
     link() {
       return `/${this.author}/${this.path}/issues/`;
     },
   },
 };
 </script>
-
 
 <style scoped>
 .issues-index-wrap {

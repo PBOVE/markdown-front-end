@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .ts,.js,.vue ."
   },
   "dependencies": {
     "@kangc/v-md-editor": "^1.4.5",
@@ -30,6 +31,8 @@
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
+    "@nuxtjs/eslint-config-typescript": "^3.0.0",
+    "eslint": "^7.6.0",
     "nodemon": "^1.18.9"
   }
 }

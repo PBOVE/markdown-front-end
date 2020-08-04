@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="email-wrap">
     <public-header :search-hide="true" />
@@ -20,10 +19,10 @@
       <div class="email-content-title">您可用于登录自己帐号的电子邮件地址。万一您无法访问自己的帐号，我们还可以通过这些电子邮件地址与您联系。</div>
       <div class="email-box">
         <div>
-          <span class="email-account">{{storeEmail}}</span>
+          <span class="email-account">{{ storeEmail }}</span>
           <span
             :style="{color:storeUser.authentication?'#19be6b':'#ed4014'}"
-          >{{storeUser.authentication|authentication}}</span>
+          >{{ storeUser.authentication|authentication }}</span>
         </div>
         <div v-if="!storeUser.authentication" class="email-again" @click="modalFlag=true">发送验证邮件</div>
       </div>
@@ -39,7 +38,7 @@
       <div class="email-modal-content">
         <div class="email-modal-left">
           <div>验证邮件已发送至</div>
-          <div style="color: #000;">{{storeEmail}}</div>
+          <div style="color: #000;">{{ storeEmail }}</div>
         </div>
         <div class="email-modal-right">
           <img src="@/assets/images/email.png" width="80px" />
@@ -53,17 +52,16 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import publicHeader from "@/components/publicHeader/index.vue";
+import { mapGetters } from 'vuex';
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { publicHeader },
   filters: {
     authentication(state) {
-      return state ? "(已验证)" : "(待验证)";
+      return state ? '(已验证)' : '(待验证)';
     },
   },
   data() {
@@ -76,19 +74,21 @@ export default {
   },
   head() {
     return {
-      title: "电子邮箱地址 ● TBS.feel",
+      title: '电子邮箱地址 ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("user", ["storeEmail", "storeUser"]),
+    ...mapGetters('user', ['storeEmail', 'storeUser']),
   },
+  // eslint-disable-next-line vue/order-in-components
   methods: {
     // 发送验证
     async sendVerify() {
       try {
         this.loading = true;
         await this.$request.verifyEmail();
-        const content = "您的验证邮件已发送，请前往您的邮箱中查看";
+        const content = '您的验证邮件已发送，请前往您的邮箱中查看';
         this.$Message.success({ duration: 10, content, background: true });
       } catch (code) {}
       this.modalFlag = false;
@@ -97,7 +97,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .email-content {
@@ -184,4 +183,3 @@ export default {
   }
 }
 </style>
-

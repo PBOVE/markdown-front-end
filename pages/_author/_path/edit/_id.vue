@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="edit-content">
     <tinymce-editor v-if="storeFormat==='richText'" ref="editor" @on-save="handleSave" />
@@ -12,20 +11,19 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import tinymceEditor from "@/components/EditorTinymce/index.vue";
-import markdownEditor from "@/components/EditorMarkdown/index.vue";
+import { mapGetters } from 'vuex';
+import tinymceEditor from '@/components/EditorTinymce/index.vue';
+import markdownEditor from '@/components/EditorMarkdown/index.vue';
 
 export default {
   components: { tinymceEditor, markdownEditor },
   async asyncData({ store, params, app }) {
     const { author, path, id } = params;
     const { data } = await app.$request.queryPostDetails({ author, path, id });
-    store.commit("author/setSelectPost", {
+    store.commit('author/setSelectPost', {
       id: id || 0,
-      title: id ? data.name : "首页",
+      title: id ? data.name : '首页',
     });
     return { content: data.content, random: Math.random() };
   },
@@ -36,10 +34,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("author", ["storeFormat", "storeSelectPost"]),
-  },
-  mounted() {
-    this.$refs.editor.setUserByInput(this.content);
+    ...mapGetters('author', ['storeFormat', 'storeSelectPost']),
   },
   watch: {
     random: {
@@ -47,6 +42,9 @@ export default {
         this.$refs.editor.setUserByInput(this.content);
       },
     },
+  },
+  mounted() {
+    this.$refs.editor.setUserByInput(this.content);
   },
   methods: {
     // 保存
@@ -62,14 +60,13 @@ export default {
         await this.$request.updatePContent(params);
         this.$Message.success({
           background: true,
-          content: "保存成功",
+          content: '保存成功',
         });
       } catch (err) {}
     },
   },
 };
 </script>
-
 
 <style scoped>
 .edit-content {

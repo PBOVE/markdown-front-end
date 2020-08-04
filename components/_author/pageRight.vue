@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="page-right">
     <div class="header">
@@ -18,7 +17,7 @@
         :class="{border:tab==='projects'}"
       >
         <Icon type="ios-folder-open-outline" />
-        <span>{{fileName}}</span>
+        <span>{{ fileName }}</span>
       </nuxt-link>
       <nuxt-link class="header-row" :to="'/'+author + '?tab=likes'" :class="{border:tab==='likes'}">
         <Icon type="ios-heart-outline" />
@@ -28,9 +27,8 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -39,21 +37,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUserState", "storeUserName"]),
+    ...mapGetters('user', ['storeUserState', 'storeUserName']),
     tab() {
-      const paramsPath = ["projects", "likes"];
+      const paramsPath = ['projects', 'likes'];
       const { tab } = this.$route.query;
-      return paramsPath.includes(tab) ? tab : "";
+      return paramsPath.includes(tab) ? tab : '';
     },
     fileName() {
-      if (!this.storeUserState) return "文档";
-      else if (this.storeUserName === this.author) return "我的";
-      return "文档";
+      if (!this.storeUserState) return '文档';
+      else if (this.storeUserName === this.author) return '我的';
+      return '文档';
     },
   },
 };
 </script>
-
 
 <style scoped>
 .page-right {
@@ -78,7 +75,7 @@ export default {
   font-weight: bold;
 }
 .header-row::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: 0;

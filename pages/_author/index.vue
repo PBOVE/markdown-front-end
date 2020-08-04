@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="index-wrap">
     <public-header :shadow="true" />
@@ -29,18 +28,17 @@
   </div>
 </template>
 
-
 <script>
-import publicHeader from "@/components/publicHeader/index.vue";
-import validRemind from "@/components/validRemind/index.vue";
-import pageLeft from "@/components/_author/pageLeft.vue";
-import pageRight from "@/components/_author/pageRight.vue";
-import indexPage from "@/components/_author/index.vue";
-import projectPage from "@/components/_author/projects.vue";
-import likesPage from "@/components/_author/likes.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
+import validRemind from '@/components/validRemind/index.vue';
+import pageLeft from '@/components/_author/pageLeft.vue';
+import pageRight from '@/components/_author/pageRight.vue';
+import indexPage from '@/components/_author/index.vue';
+import projectPage from '@/components/_author/projects.vue';
+import likesPage from '@/components/_author/likes.vue';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: {
     publicHeader,
     validRemind,
@@ -55,15 +53,20 @@ export default {
     const { data } = await app.$request.registerQuery(query);
     return data;
   },
+  async fetch({ store, app, params }) {
+    const { author: username } = params;
+    const { data } = await app.$request.queryUser({ username });
+    store.commit('author/setAuthor', data);
+  },
   async asyncData({ params, app, query }) {
     const { author } = params;
     const { tab, page, q } = query;
     let projects, likes;
-    if (tab === "projects") {
+    if (tab === 'projects') {
       const request = { author, page: page ? page - 1 : 0, title: q };
       const { data } = await app.$request.getProject(request);
       projects = data;
-    } else if (tab === "likes") {
+    } else if (tab === 'likes') {
       const request = { author, page: page ? page - 1 : 0 };
       const { data } = await app.$request.queryUserLike(request);
       likes = data;
@@ -71,26 +74,16 @@ export default {
     return { projects, likes };
   },
   async watchQuery() {},
-  async fetch({ store, app, params }) {
-    const { author: username } = params;
-    const { data } = await app.$request.queryUser({ username });
-    store.commit("author/setAuthor", data);
-  },
   data() {
     return {
       alertShow: false,
     };
   },
-  head() {
-    return {
-      title: `${this.$route.params.author} ● TBS.feel`,
-    };
-  },
   computed: {
     tab() {
-      const paramsPath = ["projects", "likes"];
+      const paramsPath = ['projects', 'likes'];
       const { tab } = this.$route.query;
-      return paramsPath.includes(tab) ? tab : "";
+      return paramsPath.includes(tab) ? tab : '';
     },
   },
   methods: {
@@ -99,9 +92,13 @@ export default {
       this.$set(this.projects.content, index, row);
     },
   },
+  head() {
+    return {
+      title: `${this.$route.params.author} ● TBS.feel`,
+    };
+  },
 };
 </script>
-
 
 <style scoped>
 .index-wrap {

@@ -4,20 +4,19 @@
 *
 */
 
-
 <template>
   <login-Register>
     <div class="register-wrap">
       <div style="text-align:left; margin-bottom:1.1rem;">邮箱注册</div>
-      <div class="login-group" ref="emailRef">
+      <div ref="emailRef" class="login-group">
         <label for="email">邮箱</label>
         <div class="login-group-input-wrap">
           <input
             id="email"
+            v-model="email"
             type="text"
             placeholder="请输入邮箱"
             autocomplete="off"
-            v-model="email"
             @blur="handleBlur(1)"
             @keyup.enter="handleRegisterEvent($event)"
           />
@@ -29,7 +28,7 @@
         </div>
         <div class="login-group-tips">
           <Icon type="md-information-circle" size="16" />
-          <span>{{emailErrorText}}</span>
+          <span>{{ emailErrorText }}</span>
         </div>
       </div>
       <Poptip
@@ -39,15 +38,15 @@
         content="用户名只能包含字母数字字符或单个连字符，不能以连字符开头或结尾。"
         placement="top-start"
       >
-        <div class="login-group" ref="usernameRef">
+        <div ref="usernameRef" class="login-group">
           <label for="username">用户名</label>
           <div class="login-group-input-wrap">
             <input
               id="username"
+              v-model="username"
               type="text"
               placeholder="请输入用户名"
               autocomplete="off"
-              v-model="username"
               @keyup.enter="handleRegisterEvent($event)"
             />
             <div class="login-group-input-suffix main-center-middle">
@@ -63,13 +62,13 @@
           </div>
           <div class="login-group-tips">
             <Icon type="md-information-circle" size="16" />
-            <span>{{usernameErrorText}}</span>
+            <span>{{ usernameErrorText }}</span>
           </div>
         </div>
       </Poptip>
       <Poptip word-wrap class="register-poptip" trigger="focus" placement="top-start">
         <div slot="content" class="register-poptip-content">
-          <div>强度: {{strength}}</div>
+          <div>强度: {{ strength }}</div>
           <Progress
             class="register-poptip-content-progress"
             :percent="percent"
@@ -78,20 +77,20 @@
           />
           <div>请至少输入 6 个字符。请不要使用容易被猜到的密码。</div>
         </div>
-        <div class="login-group" ref="passwordRef">
+        <div ref="passwordRef" class="login-group">
           <label for="password">密码</label>
           <input
             id="password"
+            v-model="password"
             type="password"
             placeholder="请输入密码"
             autocomplete="off"
-            v-model="password"
             @blur="handleBlur(3)"
             @keyup.enter="handleRegisterEvent($event)"
           />
           <div class="login-group-tips">
             <Icon type="md-information-circle" size="16" />
-            <span>{{passwordErrorText}}</span>
+            <span>{{ passwordErrorText }}</span>
           </div>
         </div>
       </Poptip>
@@ -103,30 +102,29 @@
   </login-Register>
 </template>
 
-
 <script>
-import loginRegister from "@/components/loginRegister/index.vue";
+import loginRegister from '@/components/loginRegister/index.vue';
 
 export default {
   components: { loginRegister },
   data() {
     return {
       // 用户名
-      username: "",
+      username: '',
       // 密码
-      password: "",
+      password: '',
       // 邮箱
-      email: "",
+      email: '',
       // 用户名错误
-      usernameErrorText: "",
+      usernameErrorText: '',
       // 密码错误
-      passwordErrorText: "",
+      passwordErrorText: '',
       // 邮箱错误
-      emailErrorText: "",
+      emailErrorText: '',
       // 进度条颜色
-      strokeColor: "#ed4014",
+      strokeColor: '#ed4014',
       // 强度
-      strength: "低",
+      strength: '低',
       // 百分比
       percent: 0,
       // 设置按钮为加载中状态
@@ -134,25 +132,20 @@ export default {
       // 用户名查询等待
       usernameLoad: 2,
       // 查询用户名
-      queryName: "",
+      queryName: '',
       // 邮箱查询等待
       emailLoad: 2,
       // 查询邮箱
-      queryEmail: "",
-    };
-  },
-  head() {
-    return {
-      title: "注册 ● TBS.feel",
+      queryEmail: '',
     };
   },
   watch: {
     email() {
-      this.handleError("email", "remove");
+      this.handleError('email', 'remove');
       this.emailLoad = 2;
     },
     username(name) {
-      const usernameReg = /^[A-Za-z0-9]+([\-]?[A-Za-z0-9]+)*$/;
+      const usernameReg = /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/;
       const nameRules = [
         /^user$/,
         /^accounts$/,
@@ -163,33 +156,33 @@ export default {
         /^500$/,
         /^new$/,
       ];
-      const verifyName = nameRule => {
+      const verifyName = (nameRule) => {
         return nameRule.test(name);
       };
-      this.handleError("username", "remove");
+      this.handleError('username', 'remove');
       if (!name) {
         this.usernameLoad = 2;
       } else if (!usernameReg.test(this.username)) {
         this.usernameLoad = -1;
-        this.handleError("username", "add", "用户名格式错误");
+        this.handleError('username', 'add', '用户名格式错误');
       } else if (nameRules.some(verifyName)) {
         this.usernameLoad = -1;
-        this.handleError("username", "add", `用户名 ${name} 不可用`);
+        this.handleError('username', 'add', `用户名 ${name} 不可用`);
       } else this.queryNameMethod(name);
     },
     password(val) {
-      this.handleError("password", "remove");
+      this.handleError('password', 'remove');
       if (val.length < 6) {
-        this.strength = "低";
-        this.strokeColor = "#ed4014";
+        this.strength = '低';
+        this.strokeColor = '#ed4014';
         this.percent = val.length * 5;
       } else if (val.length < 20) {
-        this.strength = "中";
-        this.strokeColor = "#ff9900";
+        this.strength = '中';
+        this.strokeColor = '#ff9900';
         this.percent = val.length * 5;
       } else {
-        this.strength = "高";
-        this.strokeColor = "#19be6b";
+        this.strength = '高';
+        this.strokeColor = '#19be6b';
         this.percent = 100;
       }
     },
@@ -197,45 +190,44 @@ export default {
   methods: {
     // 处理失去焦点
     handleBlur(type) {
-      const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-      const usernameReg = /^[A-Za-z0-9]+([\-]?[A-Za-z0-9]+)*$/;
+      const emailReg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
       if (type === 1) {
         if (!this.email) {
           this.emailLoad = 2;
         } else if (!emailReg.test(this.email)) {
           this.emailLoad = -1;
-          this.handleError("email", "add", "邮箱地址格式错误");
+          this.handleError('email', 'add', '邮箱地址格式错误');
         } else {
           this.queryEmailMethod(this.email);
         }
       } else if (type === 3 && this.password && this.password.length < 6) {
-        this.handleError("password", "add", "密码强度太低");
+        this.handleError('password', 'add', '密码强度太低');
       }
     },
     // 验证数据
     verifyData() {
-      const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-      const usernameReg = /^[A-Za-z0-9]+([\-]?[A-Za-z0-9]+)*$/;
+      const emailReg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+      const usernameReg = /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/;
       let flag = true;
       if (!this.email) {
-        this.handleError("email", "add", "请输入邮箱地址");
+        this.handleError('email', 'add', '请输入邮箱地址');
         flag = false;
       } else if (!emailReg.test(this.email)) {
-        this.handleError("email", "add", "邮箱地址格式错误");
+        this.handleError('email', 'add', '邮箱地址格式错误');
         flag = false;
       }
       if (!this.username) {
-        this.handleError("username", "add", "请输入用户名");
+        this.handleError('username', 'add', '请输入用户名');
         flag = false;
       } else if (!usernameReg.test(this.username)) {
-        this.handleError("username", "add", "用户名格式错误");
+        this.handleError('username', 'add', '用户名格式错误');
         flag = false;
       }
       if (!this.password) {
-        this.handleError("password", "add", "请输入密码");
+        this.handleError('password', 'add', '请输入密码');
         flag = false;
       } else if (this.password.length < 6) {
-        this.handleError("password", "add", "密码强度太低");
+        this.handleError('password', 'add', '密码强度太低');
         flag = false;
       }
       return flag;
@@ -253,7 +245,7 @@ export default {
       if (this.emailLoad !== 0 || this.usernameLoad !== 0) {
         this.$Message.info({
           background: true,
-          content: "数据验证中,请稍等",
+          content: '数据验证中,请稍等',
           duration: 5,
         });
         this.cancelAnimation(ripples);
@@ -264,18 +256,18 @@ export default {
         password: this.password,
         email: this.email,
       });
-      this.$router.push("/login");
+      this.$router.push('/login');
     },
     // 处理错误
     handleError(name, type, tips) {
-      this.$refs[`${name}Ref`].classList[type]("from-error");
+      this.$refs[`${name}Ref`].classList[type]('from-error');
       if (tips) this[`${name}ErrorText`] = tips;
     },
     // 处理动画
     handleAnimation(event) {
       const x = event.offsetX;
       const y = event.offsetY;
-      const ripples = document.createElement("span");
+      const ripples = document.createElement('span');
       ripples.style.left = `${x}px`;
       ripples.style.top = `${y}px`;
       this.$refs.loginbtn.appendChild(ripples);
@@ -296,15 +288,15 @@ export default {
       }
       this.usernameLoad = 1;
       const { data } = await this.$request.registerQuery({ name });
-      if (this.usernameLoad === -1) return (this.queryName = "");
+      if (this.usernameLoad === -1) return (this.queryName = '');
       this.usernameLoad = 2;
       if (this.queryName) {
         const queryName = this.queryName;
-        this.queryName = "";
+        this.queryName = '';
         this.queryNameMethod(queryName);
       } else if (data) {
         this.usernameLoad = -1;
-        this.handleError("username", "add", `用户名 ${name} 已存在`);
+        this.handleError('username', 'add', `用户名 ${name} 已存在`);
       } else if (this.username) {
         this.usernameLoad = 0;
       }
@@ -317,18 +309,22 @@ export default {
       const { data } = await this.$request.registerQuery({ email });
       if (data) {
         this.emailLoad = -1;
-        this.handleError("email", "add", `邮箱 ${email} 已存在`);
+        this.handleError('email', 'add', `邮箱 ${email} 已存在`);
       } else {
         this.emailLoad = 0;
       }
     },
   },
+  head() {
+    return {
+      title: '注册 ● TBS.feel',
+    };
+  },
 };
 </script>
 
-
 <style scoped>
-@import url("@/assets/css/login.css");
+@import url('@/assets/css/login.css');
 .register-poptip {
   width: 100%;
   position: relative;

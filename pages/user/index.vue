@@ -4,15 +4,14 @@
 *
 */
 
-
 <template>
   <div class="user-index-wrap">
     <div class="ui-header">
       <div class="ui-portrait-wrap layout-center">
         <img v-if="storeImages" :src="storeImages" class="ui-portrait-image" />
-        <div v-else class="ui-portrait layout-center">{{storeNickName|userName}}</div>
+        <div v-else class="ui-portrait layout-center">{{ storeNickName|userName }}</div>
       </div>
-      <div class="ui-title">欢迎使用，{{storeNickName}}</div>
+      <div class="ui-title">欢迎使用，{{ storeNickName }}</div>
       <div class="ui-tip">管理自己的信息和安全，从而让 TBS.feel 更好地为您服务</div>
     </div>
     <div class="ui-main">
@@ -44,15 +43,14 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   filters: {
     userName(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
   data() {
@@ -60,15 +58,15 @@ export default {
   },
   head() {
     return {
-      title: "账户 ● TBS.feel",
+      title: '账户 ● TBS.feel',
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("user", ["storeNickName", "storeImages"]),
+    ...mapGetters('user', ['storeNickName', 'storeImages']),
   },
 };
 </script>
-
 
 <style scoped>
 .user-index-wrap {

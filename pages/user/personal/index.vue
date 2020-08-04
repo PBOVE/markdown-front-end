@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="user-personal-index-wrap">
     <div class="user-border">
@@ -20,7 +19,7 @@
           </div>
           <div class="user-middle-right layout-middle-img">
             <img v-if="storeImages" :src="storeImages" class="msg-row-image" />
-            <div v-else class="msg-row-Nimage">{{storeUser.nickName|userName}}</div>
+            <div v-else class="msg-row-Nimage">{{ storeUser.nickName|userName }}</div>
             <div class="msg-row-image-camera">
               <Icon type="ios-camera" size="20" color="#c5c8ce" />
             </div>
@@ -30,14 +29,14 @@
       <div class="user-row">
         <div class="user-row-main user-middle">
           <div class="user-row-title">用户名</div>
-          <div class="user-row-content">{{storeUser.userName}}</div>
+          <div class="user-row-content">{{ storeUser.userName }}</div>
         </div>
       </div>
       <div class="user-row">
         <nuxt-link to="/accounts/nickname" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">昵称</div>
-            <div class="user-row-content">{{storeUser.nickName}}</div>
+            <div class="user-row-content">{{ storeUser.nickName }}</div>
           </div>
           <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
@@ -48,7 +47,10 @@
         <nuxt-link to="/accounts/location" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">地区</div>
-            <div class="user-row-content" v-if="storeLocation">{{storeLocation.province}} {{storeLocation.city}}</div>
+            <div
+              v-if="storeLocation"
+              class="user-row-content"
+            >{{ storeLocation.province }} {{ storeLocation.city }}</div>
           </div>
           <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
@@ -59,7 +61,7 @@
         <nuxt-link to="/accounts/signature" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">简介</div>
-            <div class="user-row-content">{{storeUser.signature}}</div>
+            <div class="user-row-content">{{ storeUser.signature }}</div>
           </div>
           <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
@@ -70,13 +72,13 @@
       <div class="user-row">
         <div class="user-row-main user-middle">
           <div class="user-row-title">创建时间</div>
-          <div class="user-row-content">{{storeUser.createTime|TimeConversion}}</div>
+          <div class="user-row-content">{{ storeUser.createTime|TimeConversion }}</div>
         </div>
       </div>
       <div class="user-row">
         <div class="user-row-main user-middle">
           <div class="user-row-title">更新时间</div>
-          <div class="user-row-content">{{storeUser.updateTime|TimeConversion}}</div>
+          <div class="user-row-content">{{ storeUser.updateTime|TimeConversion }}</div>
         </div>
       </div>
     </div>
@@ -89,7 +91,7 @@
         <nuxt-link to="/accounts/email" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">电子邮箱</div>
-            <div class="user-row-content">{{storeUser.email}}</div>
+            <div class="user-row-content">{{ storeUser.email }}</div>
           </div>
           <div class="user-middle-right">
             <Icon type="ios-arrow-forward" size="20" />
@@ -101,31 +103,30 @@
   </div>
 </template>
 
-
 <script>
 // 点击上传照片
-import headPortrait from "@/components/headPortrait/index.vue";
-import { mapGetters } from "vuex";
+import headPortrait from '@/components/headPortrait/index.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   components: { headPortrait },
   filters: {
     userName(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
     TimeConversion(time) {
       const date = new Date(time);
-      const completion = num => {
-        return num.toString().padStart(2, "0");
+      const completion = (num) => {
+        return num.toString().padStart(2, '0');
       };
       return (
         date.getFullYear() +
-        "年" +
+        '年' +
         completion(date.getMonth() + 1) +
-        "月" +
+        '月' +
         completion(date.getDate()) +
-        "日"
+        '日'
       );
     },
   },
@@ -136,11 +137,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser", "storeImages", "storeLocation"]),
+    ...mapGetters('user', ['storeUser', 'storeImages', 'storeLocation']),
   },
 };
 </script>
-
 
 <style scoped>
 .msg-row-image,

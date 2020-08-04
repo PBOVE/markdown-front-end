@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="user-personal-wrap">
     <div style="text-align:center;font-size:26px;">个人信息</div>
@@ -13,16 +12,14 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  transition: "fade",
+  transition: 'fade',
   data() {
     return {};
   },
 };
 </script>
-
 
 <style scoped>
 .user-personal-wrap {

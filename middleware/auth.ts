@@ -1,6 +1,6 @@
 import { Middleware } from '@nuxt/types';
 
-const authMiddleware: Middleware = async context => {
+const authMiddleware: Middleware = async(context: any) => {
   const { app, store, route, redirect } = context;
   let token = app.$cookies.get('access_token');
   if (!store.state.token.isGetToken) {

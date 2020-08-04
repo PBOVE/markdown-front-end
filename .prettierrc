@@ -2,4 +2,7 @@
   "semicolons":false,
   "trailingComma":"all",
   "semi": true,
+  "bracketSpacing": true,
+  "singleQuote": true,
+  "jsxBracketSameLine": true,
 }

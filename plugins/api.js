@@ -1,4 +1,3 @@
-import qs from 'qs';
 import { Message } from 'view-design';
 import showStatus from '@/utils/message';
 
@@ -42,7 +41,7 @@ const request = {
   // 验证 requestId
   verifyRequestId: (requestId, params) => axios.get(`/valid/${requestId}`, { params }),
   // 上传文件
-  uploadFile: data => axios.post(`/storage`, data, fileHeader),
+  uploadFile: data => axios.post('/storage', data, fileHeader),
   // 获取知识库
   getProject: params => axios.get('/article', { params, progress: false }),
   // 创建知识库
@@ -60,9 +59,9 @@ const request = {
   // 更新知识库文章
   updatePContent: params => axios.put('/post/content', params, header),
   // 获取列表
-  queryPostList: params => axios.get(`/post/list`, { params, progress: false }),
+  queryPostList: params => axios.get('/post/list', { params, progress: false }),
   // 获取列表内容
-  queryPostDetails: params => axios.get(`/post/details`, { params }),
+  queryPostDetails: params => axios.get('/post/details', { params }),
   // 创建文章列表
   createPost: params => axios.post('/post', params, header),
   // 更新文章列表
@@ -83,18 +82,18 @@ const request = {
   deleteIssues: id => axios.delete(`/issue/${id}`),
 };
 
-//2) 定义axios变量等待接收axios,保证axios可用
+// 2) 定义axios变量等待接收axios,保证axios可用
 let axios = null;
 export default ({ $axios, store }, inject) => {
   const isClient = process.client;
   // let isServer = process.server;
-  //3 保存内置的axios
+  // 3 保存内置的axios
   axios = $axios;
   axios.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-  axios.onRequest(config => {
+  axios.onRequest((config) => {
     config.headers['X-XSRF-TOKEN'] = store.state.token.access_token;
   });
-  axios.onResponse(response => {
+  axios.onResponse((response) => {
     const { code, msg } = response.data;
     if (code === 200 && msg === 'OK') {
       return response.data;
@@ -102,7 +101,7 @@ export default ({ $axios, store }, inject) => {
 
     return Promise.reject(code);
   });
-  axios.onError(error => {
+  axios.onError((error) => {
     if (isClient) {
       let message;
       if (typeof error === 'number') {
@@ -114,6 +113,6 @@ export default ({ $axios, store }, inject) => {
       Message.error({ content: message, duration: 10, background: true });
     }
   });
-  //4) 将自定义函数交于nuxt
+  // 4) 将自定义函数交于nuxt
   inject('request', request);
 };

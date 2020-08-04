@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="index-page-wrap">
     <div class="index-page-header">
@@ -24,20 +23,20 @@
     </div>
     <div class="index-page-content">
       <div
-        class="index-page-row index-page-flex-between"
         v-for="(item,index) in projects.content"
         :key="item.path"
+        class="index-page-row index-page-flex-between"
       >
         <div class="index-page-row-left">
           <div class="index-page-flex-middle index-page-row-start">
-            <nuxt-link class="index-page-row-link" :to="'/'+author+'/'+item.path">{{item.title}}</nuxt-link>
-            <div v-if="!item.share" class="index-page-row-share">{{item.share|shareFilter}}</div>
+            <nuxt-link class="index-page-row-link" :to="'/'+author+'/'+item.path">{{ item.title }}</nuxt-link>
+            <div v-if="!item.share" class="index-page-row-share">{{ item.share|shareFilter }}</div>
           </div>
-          <div class="index-page-row-description">{{item.description}}</div>
+          <div class="index-page-row-description">{{ item.description }}</div>
           <div
             class="index-page-row-time"
             :title="$timeConversion(item.updateTime)"
-          >{{item.updateTime|TimeFilter}}</div>
+          >{{ item.updateTime|TimeFilter }}</div>
         </div>
         <div class="index-page-row-right">
           <div
@@ -46,12 +45,12 @@
           >
             <img v-if="item.islike" src="@/assets/svg/star.svg" class="index-page-row-star-image" />
             <img v-else src="@/assets/svg/unstar.svg" class="index-page-row-star-image" />
-            <span>{{item.islike?'取消':'赞'}}</span>
+            <span>{{ item.islike?'取消':'赞' }}</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="index-page-footer index-page-flex-middle" v-if="projects.totalElements">
+    <div v-if="projects.totalElements" class="index-page-footer index-page-flex-middle">
       <Page
         size="small"
         :total="projects.totalElements"
@@ -63,23 +62,21 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import selectBox from "@/components/selectBox/index.vue";
+import { mapGetters } from 'vuex';
 
 export default {
-  components: { selectBox },
-  props: ["projects"],
   filters: {
     shareFilter(share) {
-      return share ? "" : "仅自己可见";
+      return share ? '' : '仅自己可见';
     },
   },
+  // eslint-disable-next-line vue/require-prop-types
+  props: [ 'projects' ],
   data() {
     return {
       // 搜索内容
-      search: this.$route.query.q || "",
+      search: this.$route.query.q || '',
       // 用户页面
       author: this.$route.params.author,
       // 当前页面
@@ -89,17 +86,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["storeUser", "storeUserState"]),
+    ...mapGetters('user', ['storeUser', 'storeUserState']),
   },
   methods: {
     // 处理搜索
     handleSearch() {
-      const q = this.search.replace(/(^\s*)|(\s*$)/g, "");
+      const q = this.search.replace(/(^\s*)|(\s*$)/g, '');
       if (!q) return;
       this.$router.push({
         path: `/${this.author}`,
         query: {
-          tab: "projects",
+          tab: 'projects',
           q,
           page: 1,
         },
@@ -110,7 +107,7 @@ export default {
       this.$router.push({
         path: `/${this.author}`,
         query: {
-          tab: "projects",
+          tab: 'projects',
           q: this.$route.query.q,
           page,
         },
@@ -131,6 +128,3 @@ export default {
   },
 };
 </script>
-
-
-

@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="contactemail-link-wrap">
     <public-header :shadow="true" />
@@ -20,16 +19,15 @@
   </div>
 </template>
 
-
 <script>
-import publicHeader from "@/components/publicHeader/index.vue";
+import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
   components: { publicHeader },
   async validate({ params, app }) {
     try {
       const { data } = await app.$request.verifyRequestId(params.requestId, {
-        type: "email",
+        type: 'email',
       });
       return data;
     } catch (err) {}
@@ -44,12 +42,12 @@ export default {
       const { requestId } = this.$route.params;
       await this.$request.verifyEmailLink(requestId);
       const { data } = await this.$request.GetToken();
-      if (data.user) this.$store.commit("user/setUser", data.user);
+      if (data.user) this.$store.commit('user/setUser', data.user);
       this.verify = 1;
-      const content = "邮箱认证成功,页面将在 6 秒后,跳转至首页";
+      const content = '邮箱认证成功,页面将在 6 秒后,跳转至首页';
       this.$Message.success({ duration: 5, content, background: true });
       setTimeout(() => {
-        this.$router.push("/");
+        this.$router.push('/');
       }, 6000);
     } catch (code) {
       this.verify = 2;
@@ -57,7 +55,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .link-box {

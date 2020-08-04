@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="public-header-wrap" :class="{'public-shadow':shadow}">
     <div class="public-header-left nav-middle">
@@ -31,7 +30,7 @@
           class="main-user-rotate-image"
           data-user-portrait="true"
         />
-        <div v-else class="main-user-portrait" data-user-portrait="true">{{storeNickName|nickName}}</div>
+        <div v-else class="main-user-portrait" data-user-portrait="true">{{ storeNickName|nickName }}</div>
       </div>
       <div v-else>
         <nuxt-link to="/login">
@@ -43,18 +42,17 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import dropUser from "@/components/dropUser/index.vue";
-import weatherView from "@/components/publicHeader/weather.vue";
-import searchView from "@/components/publicHeader/search.vue";
+import { mapGetters } from 'vuex';
+import dropUser from '@/components/dropUser/index.vue';
+import weatherView from '@/components/publicHeader/weather.vue';
+import searchView from '@/components/publicHeader/search.vue';
 
 export default {
   components: { dropUser, weatherView, searchView },
   filters: {
     nickName(name) {
-      return name ? name[0].toUpperCase() : "";
+      return name ? name[0].toUpperCase() : '';
     },
   },
   props: {
@@ -62,7 +60,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    "search-hide": {
+    // eslint-disable-next-line vue/prop-name-casing
+    'search-hide': {
       type: Boolean,
       default: false,
     },
@@ -74,12 +73,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", [
-      "storeNickName",
-      "storeImages",
-      "storeUserName",
-      "storeUserState",
-      "storeWeather",
+    ...mapGetters('user', [
+      'storeNickName',
+      'storeImages',
+      'storeUserName',
+      'storeUserState',
+      'storeWeather',
     ]),
     // 用户页
     userPage() {
@@ -88,7 +87,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .public-header-wrap {

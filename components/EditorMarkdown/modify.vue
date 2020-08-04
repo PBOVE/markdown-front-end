@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="modify-md-wrap">
     <div class="modify-header">
@@ -18,7 +17,7 @@
         :toolbar="toolbar"
         :left-toolbar="leftToolbar"
         :right-toolbar="rightToolbar"
-        :codemirrorConfig="codemirrorConfig"
+        :codemirror-config="codemirrorConfig"
         :disabled-menus="[]"
         @upload-image="handleUploadImage"
       />
@@ -26,26 +25,25 @@
   </div>
 </template>
 
-
 <script>
 export default {
   model: {
-    prop: "model",
-    event: "parent-event",
+    prop: 'model',
+    event: 'parent-event',
   },
   props: {
     model: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   data() {
     return {
       // 内容
-      handbook: "",
+      handbook: '',
       // 左侧侧工具栏
-      leftToolbar: "",
-      rightToolbar: "title bold | ul ol table hr | link code",
+      leftToolbar: '',
+      rightToolbar: 'title bold | ul ol table hr | link code',
       // 初始化 Codemirror 的配置
       codemirrorConfig: {
         lineNumbers: false,
@@ -53,11 +51,11 @@ export default {
       // 自定义工具栏
       toolbar: {
         title: {
-          title: "标题",
-          icon: "v-md-icon-title",
+          title: '标题',
+          icon: 'v-md-icon-title',
           action(editor) {
             editor.insert((selected) => {
-              const content = selected || "标题";
+              const content = selected || '标题';
               return {
                 text: `### ${content}`,
                 selected: content,
@@ -71,7 +69,7 @@ export default {
   watch: {
     handbook: {
       handler(value) {
-        this.$emit("parent-event", value);
+        this.$emit('parent-event', value);
       },
     },
     model: {
@@ -83,15 +81,14 @@ export default {
   },
   methods: {
     // 上传照片
-    async handleUploadImage(event, insertImage, files) {
-      const reg = /^image/;
-      let fileData = new FormData();
-      fileData.append("file", files[0]);
+    async handleUploadImage(_event, insertImage, files) {
+      const fileData = new FormData();
+      fileData.append('file', files[0]);
       try {
         const { data } = await this.$request.uploadFile(fileData);
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
-          desc: files[0].name.replace(/\..+/, ""),
+          desc: files[0].name.replace(/\..+/, ''),
         });
       } catch (err) {}
     },
@@ -102,7 +99,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .modify-md-wrap {
@@ -163,7 +159,7 @@ export default {
   color: #808695 !important;
 }
 .modify-md-wrap .v-md-icon-title::before {
-  content: "H";
+  content: 'H';
 }
 .modify-md-wrap .v-md-editor__left-area {
   display: none;

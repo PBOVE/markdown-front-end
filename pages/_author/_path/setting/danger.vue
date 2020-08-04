@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="delete">
     <div class="setting-delete-header">危险操作</div>
@@ -23,7 +22,7 @@
       <div class="model-header">您确定要删除吗?</div>
       <div class="model-main">
         此操作无法撤消。这将永久删除
-        <strong>{{storeProject.author}}/{{storeProject.title}}</strong> 文档库
+        <strong>{{ storeProject.author }}/{{ storeProject.title }}</strong> 文档库
       </div>
       <div class="model-tip">请输入文档库路径, 表示确认删除此文档库</div>
       <Input v-model="projectPath" />
@@ -35,9 +34,8 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -47,7 +45,7 @@ export default {
       // 对话框
       modalShow: false,
       // 知识库路径
-      projectPath: "",
+      projectPath: '',
       // 设置按钮为禁用状态
       disabled: true,
       // 加载
@@ -55,7 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("author", ["storeProject"]),
+    ...mapGetters('author', ['storeProject']),
   },
   watch: {
     projectPath(val) {
@@ -82,7 +80,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .setting-delete-header {

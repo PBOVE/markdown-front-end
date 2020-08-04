@@ -4,7 +4,6 @@
 *
 */
 
-
 <template>
   <div class="issues-wrap">
     <div class="issues-content">
@@ -13,12 +12,11 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  transition: "fade",
+  transition: 'fade',
   data() {
     return {
       // 作者
@@ -30,12 +28,12 @@ export default {
       title: `issues · ${this.author} · ${this.storeProject.title} ● TBS.feel`,
     };
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters("author", ["storeProject"]),
+    ...mapGetters('author', ['storeProject']),
   },
 };
 </script>
-
 
 <style scoped>
 .issues-wrap {

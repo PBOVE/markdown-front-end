@@ -68,6 +68,13 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    vendor: [ 'axios', 'vue-cropper' ], //为防止重复打包
+    vendor: [ 'axios', 'vue-cropper' ], // 为防止重复打包
+  },
+  typescript: {
+    typeCheck: {
+      eslint: {
+        files: './**/*.{ts,js,vue}',
+      },
+    },
   },
 };
