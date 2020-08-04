@@ -197,7 +197,6 @@ export default {
       } catch (err) {
         this.$refs.pathRef.classList.add('row-error');
       }
-      this.loading = false;
     },
     // 检测
     verifyContent() {
