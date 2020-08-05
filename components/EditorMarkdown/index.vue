@@ -33,7 +33,7 @@ export default {
       // 模式
       mode: 'editable',
       // 左侧侧工具栏
-      leftToolbar: 'save | undo redo clear | image  emoji',
+      leftToolbar: 'save | undo redo clear | image emoji',
       // 右侧工具栏
       rightToolbar: 'preview toc sync-scroll fullscreen',
       // 初始化 Codemirror 的配置
@@ -41,7 +41,7 @@ export default {
     };
   },
   mounted() {
-    if (window.innerWidth < 500) {
+    if (window.innerWidth <= 500) {
       this.mode = 'edit';
       this.rightToolbar = 'fullscreen';
       this.leftToolbar = 'save | undo redo clear | emoji ';
