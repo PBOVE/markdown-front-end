@@ -241,7 +241,7 @@ export default {
     async loadData(node, callback) {
       const params = { author: this.author, path: this.path, id: node.id };
       const { data } = await this.$request.queryPostList(params);
-      const childData = this.handleDate(data.list);
+      const childData = this.handleDate(data);
       callback(childData);
     },
     // 处理 点击 事件
@@ -316,6 +316,7 @@ export default {
         }
         if (this.id === item._id || (!this.id && item._id === 0)) {
           child.selected = true;
+          this.selectedData = child;
         }
         childData.push(child);
       });
@@ -370,7 +371,7 @@ export default {
           ...params,
           id: this.selectData.id,
         });
-        const childData = this.handleDate(child.list);
+        const childData = this.handleDate(child);
         this.$set(this.selectData, 'children', childData);
         this.$set(this.selectData, 'loading', false);
         this.$set(this.selectData, 'expand', true);

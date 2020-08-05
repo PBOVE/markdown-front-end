@@ -18,16 +18,14 @@
         <Icon type="ios-more" size="30" />
       </div>
     </div>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div ref="rightMain" class="right-main" v-html="mdCompile(content)" />
+    <client-only>
+      <v-md-preview ref="editor" height="100%" :text="content" />
+    </client-only>
   </issues-border>
 </template>
 
 <script>
 import issuesBorder from '@/components/_path/issuesBorder.vue';
-import Prism from 'prismjs';
-import Marked from 'marked';
-import xss from 'xss';
 
 export default {
   components: { issuesBorder },
@@ -36,20 +34,8 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    if (process.browser) {
-      this.$refs.rightMain
-        .querySelectorAll('pre code')
-        // eslint-disable-next-line no-undef
-        .forEach(block => Prism.highlightElement(block));
-    }
-  },
-  methods: {
-    mdCompile(content) {
-      const html = xss(content);
-      return Marked(html);
-    },
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 
@@ -75,8 +61,5 @@ export default {
 }
 .right-header-time {
   color: #515a6e;
-}
-.right-main {
-  padding: 20px;
 }
 </style>

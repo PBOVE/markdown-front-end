@@ -17,22 +17,20 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Prism from 'prismjs';
+// import Prism from 'prismjs';
 import projectHeader from '@/components/_path/projectHeader.vue';
 
 export default {
   components: { projectHeader },
   async asyncData({ params, app, store }) {
     const { author, path } = params;
-    const [{ data: details }, { data: listData }] = await Promise.all([
-      app.$request.queryPostDetails({ author, path }),
-      app.$request.queryPostList({ author, path }),
-    ]);
+    const { data } = await app.$request.queryPostListParent({ author, path });
+    const { list, details } = data;
     const { images, content, updateTime, userName } = details;
     const to = `/${author}/${path}`;
     store.commit('author/setPostList', [
       { _id: 0, name: '首页', type: 'home', updateTime, to },
-      ...listData.list,
+      ...list,
     ]);
     store.commit('author/setParentList', []);
     return { content, images, userName, updateTime };
@@ -44,11 +42,11 @@ export default {
     ...mapGetters('author', ['storeFormat']),
   },
   mounted() {
-    if (process.browser && this.storeFormat === 'richText') {
-      this.$refs.editor
-        .querySelectorAll('pre code')
-        .forEach(block => Prism.highlightElement(block));
-    }
+    // if (process.browser && this.storeFormat === 'richText') {
+    //   this.$refs.editor
+    //     .querySelectorAll('pre code')
+    //     .forEach(block => Prism.highlightElement(block));
+    // }
   },
 };
 </script>

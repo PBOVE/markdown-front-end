@@ -11,6 +11,29 @@ import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
 // emoji
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp.min.js';
+import 'prismjs/components/prism-css.min.js';
+import 'prismjs/components/prism-dart.min.js';
+import 'prismjs/components/prism-docker.min.js';
+import 'prismjs/components/prism-git.min.js';
+import 'prismjs/components/prism-go.min.js';
+import 'prismjs/components/prism-http.min.js';
+import 'prismjs/components/prism-icon.min.js';
+import 'prismjs/components/prism-java.min.js';
+import 'prismjs/components/prism-jq.min.js';
+import 'prismjs/components/prism-json.min.js';
+import 'prismjs/components/prism-jsonp.min.js';
+import 'prismjs/components/prism-kotlin.min.js';
+import 'prismjs/components/prism-markdown.min.js';
+import 'prismjs/components/prism-nginx.min.js';
+import 'prismjs/components/prism-python.min.js';
+import 'prismjs/components/prism-regex.min.js';
+import 'prismjs/components/prism-sass.min.js';
+import 'prismjs/components/prism-powershell.min.js';
+import 'prismjs/components/prism-sql.min.js';
+import 'prismjs/components/prism-vim.min.js';
+
 VMdEditor.use(createEmojiPlugin());
 VMdEditor.use(vuepressTheme);
 

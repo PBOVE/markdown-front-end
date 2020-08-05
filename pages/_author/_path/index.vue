@@ -18,7 +18,7 @@
                 <nuxt-link
                   v-if="storeParentList.length - 1 !== index"
                   class="index-title-link"
-                  :to="projectLink"
+                  :to="projectLink + '/tree/' + item._id"
                 >{{ item.name }}</nuxt-link>
                 <span v-else>{{ item.name }}</span>
               </div>

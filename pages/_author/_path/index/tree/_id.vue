@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Prism from 'prismjs';
+// import Prism from 'prismjs';
 import projectHeader from '@/components/_path/projectHeader.vue';
 
 export default {
@@ -30,27 +30,33 @@ export default {
   async asyncData({ params, app, store }) {
     const { author, path, id } = params;
     const request = { author, path, id };
-    const { data } = await app.$request.queryPostDetails(request);
-    const { images, content, updateTime, userName, name: title } = data;
-    const isFile = data.type === 'file';
-    if (isFile) {
-      const { data: listData } = await app.$request.queryPostList(request);
-      const { list, parent } = listData;
-      store.commit('author/setPostList', [
-        {
-          _id: -1,
-          name: '...',
-          type: false,
-          style: { 'font-weight': 600, color: '#0366d6', margin: '0 0 0 3px' },
-          to:
-            parent.length !== 1
-              ? `/${author}/${path}/tree/${parent[0]._id}`
-              : `/${author}/${path}`,
-        },
+    const { data } = await app.$request.queryPostListParent(request);
+    const { list, details, parent } = data;
+    const { images, content, updateTime, userName, name: title } = details;
+    let postList = [];
+    const to = `/${author}/${path}`;
+    const len = parent.length;
+    if (len) {
+      const style = {
+        'font-weight': 600,
+        color: '#0366d6',
+        margin: '0 0 0 3px',
+      };
+      const link = len > 1 ? `${to}/tree/${parent[len - 2]._id}` : to;
+      postList = [
+        { _id: -1, name: '...', type: false, style, to: link },
         ...list,
-      ]);
-      store.commit('author/setParentList', parent);
+      ];
+    } else {
+      const time = store.state.author.project.updateTime;
+      postList = [
+        { _id: 0, name: '首页', type: 'home', updateTime: time, to },
+        ...list,
+      ];
     }
+    store.commit('author/setPostList', postList);
+    store.commit('author/setParentList', parent);
+    const isFile = details.type === 'file';
     return { content, images, userName, updateTime, title, isFile };
   },
   data() {
@@ -60,11 +66,11 @@ export default {
     ...mapGetters('author', ['storeFormat']),
   },
   mounted() {
-    if (process.browser && this.storeFormat === 'richText') {
-      this.$refs.editor
-        .querySelectorAll('pre code')
-        .forEach(block => Prism.highlightElement(block));
-    }
+    // if (process.browser && this.storeFormat === 'richText') {
+    //   this.$refs.editor
+    //     .querySelectorAll('pre code')
+    //     .forEach(block => Prism.highlightElement(block));
+    // }
   },
 };
 </script>

@@ -21,11 +21,11 @@
     "Helvetica Neue", sans-serif;
 }
 .richText table {
-  border: 1px dashed #bbb;
+  border: 1px solid #ccc;
   border-collapse: collapse;
 }
 .richText td {
-  border: 1px dashed #bbb;
+  border: 1px solid #ccc;
   padding: 0.4rem;
 }
 .richText p {
@@ -119,6 +119,9 @@
 .token.operator,
 .token.url {
   background: transparent !important;
+}
+pre {
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 550px) {

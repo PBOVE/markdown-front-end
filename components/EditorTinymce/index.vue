@@ -33,7 +33,6 @@ if (process.client) {
   require('tinymce/plugins/advlist');
   require('tinymce/plugins/autolink');
   require('tinymce/plugins/autosave');
-  require('tinymce/plugins/codesample');
   require('tinymce/plugins/colorpicker');
   require('tinymce/plugins/contextmenu');
   require('tinymce/plugins/directionality');
@@ -90,7 +89,7 @@ export default {
         mobile: {
           menubar: true,
           plugins: [
-            'lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview toc',
+            'lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link preview toc',
           ],
           // 当tinymce检测到当前环境为移动设备时，该参数允许你配置在移动设备生效配置参数。
           toolbar: 'save | undo redo | bold italic forecolor backcolor ',
@@ -99,7 +98,7 @@ export default {
         images_upload_handler: this.imagesUpload,
         // 插件
         plugins: [
-          'lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link codesample preview toc',
+          'lists advlist insertdatetime table image paste wordcount hr print charmap save code media pagebreak searchreplace  fullscreen link preview toc',
         ],
         toolbar:
           'save |undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |  blockquote | removeformat ',

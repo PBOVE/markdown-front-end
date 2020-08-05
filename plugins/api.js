@@ -60,6 +60,10 @@ const request = {
   updatePContent: params => axios.put('/post/content', params, header),
   // 获取列表
   queryPostList: params => axios.get('/post/list', { params, progress: false }),
+  // 获取列表
+  queryPostListRoot: params => axios.get('/post/list/root', { params, progress: false }),
+  // 获取列表
+  queryPostListParent: params => axios.get('/post/list/parent', { params }),
   // 获取列表内容
   queryPostDetails: params => axios.get('/post/details', { params }),
   // 创建文章列表
