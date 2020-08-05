@@ -113,6 +113,14 @@
   text-overflow: ellipsis;
 }
 
+.language-css .token.string,
+.style .token.string,
+.token.entity,
+.token.operator,
+.token.url {
+  background: transparent !important;
+}
+
 @media screen and (max-width: 550px) {
   .index-page-header {
     flex-direction: column;
