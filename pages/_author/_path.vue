@@ -56,7 +56,7 @@
           class="middle path-main-link"
           :class="{ border: resultPath === 0 }"
           :to="projectPath"
-        >文章</nuxt-link>
+        >文档</nuxt-link>
         <nuxt-link
           v-if="storeEdit || author === storeUserName"
           class="middle path-main-link"

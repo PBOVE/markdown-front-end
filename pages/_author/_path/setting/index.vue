@@ -80,10 +80,7 @@ export default {
       params.path = this.path;
       try {
         const { data } = await this.$request.updateProject(params);
-        this.$Message.success({
-          background: true,
-          content: '更新成功',
-        });
+        this.$Message.success({ background: true, content: '更新成功' });
         this.$store.commit('author/setProject', data);
       } catch (err) {}
       this.loading = false;

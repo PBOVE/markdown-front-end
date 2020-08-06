@@ -18,7 +18,7 @@
             </h1>
           </div>
           <div class="title-content">
-            <div>路还在走，请不要回头。。。</div>
+            <div></div>
           </div>
           <div class="circle" />
         </div>

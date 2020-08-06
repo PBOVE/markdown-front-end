@@ -9,7 +9,11 @@
 .index-page-margin-left-16 {
   margin: 0 0 0 16px;
 }
-
+.index-between-modal{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .button-follow {
   box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04), inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
   border: 1px solid rgba(27, 31, 35, 0.15);
