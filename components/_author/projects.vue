@@ -72,7 +72,7 @@ export default {
     },
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: [ 'projects' ],
+  props: ['projects'],
   data() {
     return {
       // 搜索内容
@@ -92,7 +92,6 @@ export default {
     // 处理搜索
     handleSearch() {
       const q = this.search.replace(/(^\s*)|(\s*$)/g, '');
-      if (!q) return;
       this.$router.push({
         path: `/${this.author}`,
         query: {
