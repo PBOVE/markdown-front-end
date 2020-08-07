@@ -76,8 +76,8 @@ export default {
       this.projectPath = '';
       if (share) {
         this.share = '1';
-        this.public = '该文档库当前是对所有人可见';
-        this.private = '仅自己和文档库成员可见';
+        this.public = '该文档库当前对所有人可见';
+        this.private = '仅自己可见';
       } else {
         this.share = '0';
         this.public = '对所有人可见';
