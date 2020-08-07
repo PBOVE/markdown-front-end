@@ -32,6 +32,7 @@ import 'prismjs/components/prism-regex.min.js';
 import 'prismjs/components/prism-sass.min.js';
 import 'prismjs/components/prism-powershell.min.js';
 import 'prismjs/components/prism-sql.min.js';
+import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-vim.min.js';
 
 VMdEditor.use(createEmojiPlugin());
