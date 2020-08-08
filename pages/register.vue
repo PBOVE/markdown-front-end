@@ -31,13 +31,11 @@
           <span>{{ emailErrorText }}</span>
         </div>
       </div>
-      <Poptip
-        word-wrap
-        class="register-poptip"
-        trigger="focus"
-        content="用户名只能包含字母数字字符或单个连字符，不能以连字符开头或结尾。"
-        placement="top-start"
-      >
+      <Poptip word-wrap class="register-poptip" trigger="focus" placement="top-start">
+        <div slot="content">
+          <div>用户名只能包含字母数字字符或单个连字符，不能以连字符开头或结尾。</div>
+          <div>成功注册后用户名将无法修改</div>
+        </div>
         <div ref="usernameRef" class="login-group">
           <label for="username">用户名</label>
           <div class="login-group-input-wrap">

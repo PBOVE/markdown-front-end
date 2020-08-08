@@ -5,8 +5,6 @@ export const state = () => ({
   author: {},
   // 知识库信息
   project: {},
-  // 内容
-  content: '',
   // 选中 post
   selectPost: {},
   // 目录
@@ -21,10 +19,6 @@ export const mutations = {
   },
   setProject(state, data) {
     state.project = JSON.parse(JSON.stringify(data));
-  },
-  // 设置内容
-  setContent(state, data) {
-    state.content = data;
   },
   // 设置选中 Post
   setSelectPost(state, data) {
@@ -64,9 +58,6 @@ export const getters = {
   },
   storeFormat(state) {
     return state.project.format;
-  },
-  storeContent(state) {
-    return state.content;
   },
   storeSelectPost(state) {
     return state.selectPost;

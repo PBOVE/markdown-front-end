@@ -37,7 +37,7 @@
       <div class="email-modal-title">验证邮件</div>
       <div class="email-modal-content">
         <div class="email-modal-left">
-          <div>验证邮件已发送至</div>
+          <div>验证邮件发送至</div>
           <div style="color: #000;">{{ storeEmail }}</div>
         </div>
         <div class="email-modal-right">
