@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { _updatePassword } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
@@ -167,7 +168,7 @@ export default {
         this.loading = true;
         const { srcPassword, password } = this.updateData;
         try {
-          await this.$request.password({ srcPassword, password });
+          await _updatePassword({ srcPassword, password });
           this.$Message.success({
             content: '密码修改成功',
             duration: 5,

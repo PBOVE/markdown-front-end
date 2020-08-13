@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { _queryProject } from '@/api/article';
+
 export default {
   props: {
     // eslint-disable-next-line vue/prop-name-casing
@@ -63,7 +65,7 @@ export default {
       }
       this.loading = true;
       const params = { title };
-      const { data } = await this.$request.getProject(params);
+      const { data } = await _queryProject(params);
       this.searchData = data.content;
       this.loading = false;
       if (this.asyncTitle) {

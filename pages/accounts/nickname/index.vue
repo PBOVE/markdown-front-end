@@ -37,6 +37,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _updateAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 import updateModal from '@/components/updateModal/index.vue';
 
@@ -70,7 +71,7 @@ export default {
       if (value === this.storeNickName) return callback();
       try {
         this.loading = true;
-        const { data } = await this.$request.updataUserMsg({
+        const { data } = await _updateAccount({
           nickName: value,
         });
         this.$store.commit('user/setUser', data.user);

@@ -33,7 +33,6 @@ module.exports = {
     'plugins/viewUI',
     'plugins/api',
     'plugins/filter',
-    { src: 'plugins/prism', ssr: false },
     { src: 'plugins/editor', ssr: false },
     { src: 'plugins/vue-cropper', ssr: false },
   ],
@@ -52,14 +51,14 @@ module.exports = {
 
   proxy: {
     '/api': {
-      target: 'https://tibis.top',
+      target: 'http://127.0.0.1:7001',
     },
   },
   /**
    * router
    */
   router: {
-    middleware: [ 'auth', 'view' ],
+    middleware: [ 'auth', 'view', 'access' ],
   },
   /*
   ** Build configuration

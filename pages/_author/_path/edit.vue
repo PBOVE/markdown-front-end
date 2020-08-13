@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { _queryPostListRoot } from '@/api/post';
 import { mapGetters, mapMutations } from 'vuex';
 
 import editLeft from '@/components/_path/editLeft.vue';
@@ -28,9 +29,9 @@ export default {
       (author.project.edit || params.author === user.data.userName)
     );
   },
-  async asyncData({ store, params, app }) {
+  async asyncData({ store, params }) {
     const { author, path, id } = params;
-    const { data } = await app.$request.queryPostListRoot({ author, path, id });
+    const { data } = await _queryPostListRoot({ author, path, id });
     store.commit('author/setProjectList', [
       { _id: 0, name: '首页', type: 'home' },
       ...data.list,

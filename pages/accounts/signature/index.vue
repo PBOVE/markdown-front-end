@@ -38,6 +38,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _updateAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 import updateModal from '@/components/updateModal/index.vue';
 
@@ -74,7 +75,7 @@ export default {
         const params = {
           signature: value.substr(0, 60),
         };
-        const { data } = await this.$request.updataUserMsg(params);
+        const { data } = await _updateAccount(params);
         this.$store.commit('user/setUser', data.user);
         callback();
       } catch (err) {}

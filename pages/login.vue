@@ -62,8 +62,10 @@
     </div>
   </login-register>
 </template>
+
 <script>
 import loginRegister from '@/components/loginRegister/index.vue';
+import { _login, _token } from '@/api/user';
 
 export default {
   components: { loginRegister },
@@ -106,8 +108,8 @@ export default {
           password: this.password,
           'remember-me': this.rememberMe,
         };
-        await this.$request.LoginIn(params);
-        const { data } = await this.$request.GetToken();
+        await _login(params);
+        const { data } = await _token();
         this.$cookies.set('access_token', data._csrf.token);
         this.$store.commit('user/setWeather', data.weather);
         this.$store.commit('user/setUser', data.user);

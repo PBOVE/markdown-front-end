@@ -108,6 +108,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _newArticle } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
 import selectBox from '@/components/selectBox/index.vue';
 
@@ -192,7 +193,7 @@ export default {
         description: this.description,
       };
       try {
-        await this.$request.createProject(params);
+        await _newArticle(params);
         this.$router.push(`/${this.storeUserName}/${params.path}/edit`);
       } catch (err) {
         this.$refs.pathRef.classList.add('row-error');

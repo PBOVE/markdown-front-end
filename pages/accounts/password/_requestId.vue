@@ -58,12 +58,15 @@
 </template>
 
 <script>
+import { _forgetEmailLink } from '@/api/account';
+import { _verifyRequestId } from '@/api/valid';
 import loginRegister from '@/components/loginRegister/index.vue';
+
 export default {
   components: { loginRegister },
-  async validate({ params, app }) {
+  async validate({ params }) {
     try {
-      const { data } = await app.$request.verifyRequestId(params.requestId, {
+      const { data } = await _verifyRequestId(params.requestId, {
         type: 'password',
       });
       return data;
@@ -124,7 +127,7 @@ export default {
         const params = {
           password: this.password,
         };
-        await this.$request.forgetEmailLink(requestId, params);
+        await _forgetEmailLink(requestId, params);
         const content = '密码更换成功';
         this.$Message.success({ duration: 8, content, background: true });
         this.$router.push('/login');

@@ -37,6 +37,7 @@
 // 点击上传照片
 import headPortrait from '@/components/headPortrait/index.vue';
 import { mapGetters } from 'vuex';
+import { _logout } from '@/api/user';
 
 export default {
   components: { headPortrait },
@@ -88,7 +89,7 @@ export default {
     async buttonEvent() {
       try {
         this.loading = true;
-        await this.$request.LoginOut();
+        await _logout();
         this.$store.commit('token/removeToken');
         this.$router.push('/login');
       } catch (err) {}

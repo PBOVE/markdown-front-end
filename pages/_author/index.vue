@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { _queryProject } from '@/api/article';
+import { _queryAccount, _queryAccountLike, _queryRegister } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 import validRemind from '@/components/validRemind/index.vue';
 import pageLeft from '@/components/_author/pageLeft.vue';
@@ -48,27 +50,27 @@ export default {
     projectPage,
     likesPage,
   },
-  async validate({ params, app }) {
+  async validate({ params }) {
     const query = { name: params.author };
-    const { data } = await app.$request.registerQuery(query);
+    const { data } = await _queryRegister(query);
     return data;
   },
-  async fetch({ store, app, params }) {
+  async fetch({ store, params }) {
     const { author: username } = params;
-    const { data } = await app.$request.queryUser({ username });
+    const { data } = await _queryAccount({ username });
     store.commit('author/setAuthor', data);
   },
-  async asyncData({ params, app, query }) {
+  async asyncData({ params, query }) {
     const { author } = params;
     const { tab, page, q } = query;
     let projects, likes;
     if (tab === 'projects') {
       const request = { author, page: page ? page - 1 : 0, title: q };
-      const { data } = await app.$request.getProject(request);
+      const { data } = await _queryProject(request);
       projects = data;
     } else if (tab === 'likes') {
       const request = { author, page: page ? page - 1 : 0 };
-      const { data } = await app.$request.queryUserLike(request);
+      const { data } = await _queryAccountLike(request);
       likes = data;
     }
     return { projects, likes };

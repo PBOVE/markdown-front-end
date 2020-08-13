@@ -64,6 +64,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _articleLike, _articleUnLike } from '@/api/article';
 
 export default {
   filters: {
@@ -119,8 +120,8 @@ export default {
       }
       const row = JSON.parse(parseRow);
       const params = { author: this.author, path: row.path };
-      if (row.islike) await this.$request.projectUnLike(params);
-      else await this.$request.projectLike(params);
+      if (row.islike) await _articleUnLike(params);
+      else await _articleLike(params);
       row.islike = !row.islike;
       this.$set(this.projects.content, index, row);
     },

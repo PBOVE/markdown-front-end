@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import { _queryRegister, _register } from '@/api/user';
 import loginRegister from '@/components/loginRegister/index.vue';
 
 export default {
@@ -249,7 +250,7 @@ export default {
         this.cancelAnimation(ripples);
         return;
       }
-      await this.$request.register({
+      await _register({
         username: this.username,
         password: this.password,
         email: this.email,
@@ -285,7 +286,7 @@ export default {
         return;
       }
       this.usernameLoad = 1;
-      const { data } = await this.$request.registerQuery({ name });
+      const { data } = await _queryRegister({ name });
       if (this.usernameLoad === -1) return (this.queryName = '');
       this.usernameLoad = 2;
       if (this.queryName) {
@@ -304,7 +305,7 @@ export default {
       if (this.emailLoad === 1 || this.queryEmail === email) return;
       this.emailLoad = 1;
       this.queryEmail = email;
-      const { data } = await this.$request.registerQuery({ email });
+      const { data } = await _queryRegister({ email });
       if (data) {
         this.emailLoad = -1;
         this.handleError('email', 'add', `邮箱 ${email} 已存在`);

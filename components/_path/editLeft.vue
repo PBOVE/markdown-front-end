@@ -58,8 +58,9 @@
 </template>
 
 <script>
-import dropDownList from '@/components/dropDownList/index.vue';
 import { mapGetters, mapMutations } from 'vuex';
+import { _queryPostList, _newPost, _updatePost, _deletePost } from '@/api/post';
+import dropDownList from '@/components/dropDownList/index.vue';
 
 export default {
   components: { dropDownList },
@@ -240,7 +241,7 @@ export default {
     // 异步加载子节点
     async loadData(node, callback) {
       const params = { author: this.author, path: this.path, id: node.id };
-      const { data } = await this.$request.queryPostList(params);
+      const { data } = await _queryPostList(params);
       const childData = this.handleDate(data);
       callback(childData);
     },
@@ -335,7 +336,7 @@ export default {
         params.name = '新建文档';
         params.type = 'note';
       }
-      const { data } = await this.$request.createPost(params);
+      const { data } = await _newPost(params);
       const [newNode] = this.handleDate([data]);
       newNode.render = this.renderData;
       this.treeData.push(newNode);
@@ -367,7 +368,7 @@ export default {
         !this.selectData.children.length
       ) {
         this.$set(this.selectData, 'loading', true);
-        const { data: child } = await this.$request.queryPostList({
+        const { data: child } = await _queryPostList({
           ...params,
           id: this.selectData.id,
         });
@@ -384,7 +385,7 @@ export default {
         params.type = 'note';
       }
       params.parentId = this.selectData.id;
-      const { data } = await this.$request.createPost(params);
+      const { data } = await _newPost(params);
       const [newNode] = this.handleDate([data]);
       newNode.render = this.renderData;
       const children = this.selectData.children || [];
@@ -434,12 +435,12 @@ export default {
     // 更新节点名称
     async updateNodeName(name, id) {
       const params = { author: this.author, path: this.path, name, id };
-      await this.$request.updatePost(params);
+      await _updatePost(params);
     },
     // 删除节点名称
     async deleteNode(root, node, data) {
       const params = { author: this.author, path: this.path, id: data.id };
-      await this.$request.deletePost(params);
+      await _deletePost(params);
       if (node.parent) {
         const parentKey = node.parent;
         const parent = root[parentKey];

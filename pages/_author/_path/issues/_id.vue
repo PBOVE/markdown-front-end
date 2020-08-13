@@ -96,6 +96,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _issuesDetails, _comment, _deleteIssues } from '@/api/issues';
 import issuesCard from '@/components/_path/issuesCard.vue';
 import issuesBorder from '@/components/_path/issuesBorder.vue';
 import modifyEdit from '@/components/EditorMarkdown/modify.vue';
@@ -112,9 +113,9 @@ export default {
       return name ? name[0].toUpperCase() : '';
     },
   },
-  async asyncData({ params, app }) {
+  async asyncData({ params }) {
     const { id } = params;
-    const { data: details } = await app.$request.issuesDetails(id);
+    const { data: details } = await _issuesDetails(id);
     const { answer, createUser, title, createTime, content } = details;
     const participants = {};
     participants[createUser.userName] = createUser.images;
@@ -149,7 +150,7 @@ export default {
     // 处理评论
     async handleComment() {
       this.loading = true;
-      const { data } = await this.$request.comment(this.id, this.editContent);
+      const { data } = await _comment(this.id, this.editContent);
       this.editContent = '';
       this.loading = false;
       this.answer.push(data);
@@ -164,7 +165,7 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: async() => {
-          await this.$request.deleteIssues(this.id);
+          await _deleteIssues(this.id);
           this.$Modal.remove();
           this.$router.push(`/${this.author}/${this.path}/issues`);
         },

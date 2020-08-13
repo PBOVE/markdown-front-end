@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { _uploadFile } from '@/api/account';
 import tinymceVue from '@tinymce/tinymce-vue';
 
 if (process.client) {
@@ -117,7 +118,7 @@ export default {
       const Filedata = new FormData();
       Filedata.append('file', file);
       try {
-        const { data } = await this.$request.uploadFile(Filedata);
+        const { data } = await _uploadFile(Filedata);
         success(`/api/storage/preview/${data[0]}`);
       } catch (err) {
         failure(err);

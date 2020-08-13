@@ -69,7 +69,7 @@ export default {
       });
       // try {
       //   this.loading = true;
-      //   await this.$request.deleteAccount({ password: this.password });
+      //   await _deleteAccount({ password: this.password });
       //   this.$store.commit('token/removeToken');
       //   this.$router.push('/login');
       // } catch (err) {}

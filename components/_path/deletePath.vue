@@ -30,6 +30,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _deleteArticle } from '@/api/article';
 
 export default {
   data() {
@@ -60,11 +61,11 @@ export default {
       this.projectPath = '';
     },
     // 处理提交
-    handleSubmit() {
+    async handleSubmit() {
       this.loading = true;
       const { author, path } = this.$route.params;
       try {
-        this.$request.deleteProject({ author, path });
+        await _deleteArticle({ author, path });
         this.$router.push(`/${author}`);
       } catch (err) {}
       this.loading = false;

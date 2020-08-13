@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { _updateAccount } from '@/api/user';
+import { _uploadFile } from '@/api/account';
 import cropImage from '@/components/cropImage/index.vue';
 
 export default {
@@ -180,10 +182,10 @@ export default {
         this.loading = true;
         const formData = new FormData();
         formData.append('file', BlobString, this.fileName);
-        const { data: images } = await this.$request.uploadFile(formData);
+        const { data: images } = await _uploadFile(formData);
         if (images[0]) {
           const params = { images: images[0] };
-          const { data } = await this.$request.updataUserMsg(params);
+          const { data } = await _updateAccount(params);
           this.$store.commit('user/setUser', data);
           this.modalShow = false;
         }

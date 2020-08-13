@@ -35,6 +35,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import modifyEdit from '@/components/EditorMarkdown/modify.vue';
+import { _newIssues } from '@/api/issues';
 
 export default {
   validate({ store }) {
@@ -76,7 +77,7 @@ export default {
       this.loading = true;
       this.$refs.modifyEdit.handlesave(async(content) => {
         const params = { author, path, title, content };
-        const { data } = await this.$request.createIssues(params);
+        const { data } = await _newIssues(params);
         this.$router.push(`/${author}/${path}/issues/${data.id}`);
       });
     },

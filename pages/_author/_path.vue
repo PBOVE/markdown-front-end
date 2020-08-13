@@ -106,14 +106,17 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _queryAccount } from '@/api/user';
+import { _validArticle } from '@/api/valid';
+import { _articleContent } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
 import userCard from '@/components/userCard/index.vue';
 
 export default {
   components: { publicHeader, userCard },
-  async validate({ params, app }) {
+  async validate({ params }) {
     const { author, path } = params;
-    const { data } = await app.$request.validArticle({ author, path });
+    const { data } = await _validArticle({ author, path });
     return data;
   },
   filters: {
@@ -121,14 +124,14 @@ export default {
       return share ? '' : '仅自己可见';
     },
   },
-  async fetch({ params, app, store }) {
+  async fetch({ params, store }) {
     const { author, path } = params;
-    const { data } = await app.$request.projectContent({ author, path });
+    const { data } = await _articleContent({ author, path });
     store.commit('author/setProject', data);
   },
-  async asyncData({ params, app }) {
+  async asyncData({ params }) {
     const { author: username } = params;
-    const { data: user } = await app.$request.queryUser({ username });
+    const { data: user } = await _queryAccount({ username });
     if (user.location) {
       user.province = user.location.province;
       user.city = user.location.city;

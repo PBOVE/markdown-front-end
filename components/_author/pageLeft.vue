@@ -59,6 +59,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { _followAccount, _unfollowAccount } from '@/api/user';
 
 export default {
   filters: {
@@ -86,8 +87,8 @@ export default {
       const username = this.storeAuthorUser.userName;
       const isFans = this.storeAuthorNumber.isFans;
       let data;
-      if (isFans) data = await this.$request.unfollowUser({ username });
-      else data = await this.$request.followUser({ username });
+      if (isFans) data = await _unfollowAccount({ username });
+      else data = await _followAccount({ username });
       this.$store.commit('author/setAuthor', data.data);
     },
   },

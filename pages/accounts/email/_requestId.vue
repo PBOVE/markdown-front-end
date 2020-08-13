@@ -20,15 +20,16 @@
 </template>
 
 <script>
+import { _verifyEmailLink } from '@/api/account';
+import { _verifyRequestId } from '@/api/valid';
 import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
   components: { publicHeader },
-  async validate({ params, app }) {
+  async validate({ params }) {
     try {
-      const { data } = await app.$request.verifyRequestId(params.requestId, {
-        type: 'email',
-      });
+      const { requestId } = params;
+      const { data } = await _verifyRequestId(requestId, { type: 'email' });
       return data;
     } catch (err) {}
   },
@@ -40,7 +41,7 @@ export default {
   async mounted() {
     try {
       const { requestId } = this.$route.params;
-      await this.$request.verifyEmailLink(requestId);
+      await _verifyEmailLink(requestId);
       const { data } = await this.$request.GetToken();
       if (data.user) this.$store.commit('user/setUser', data.user);
       this.verify = 1;

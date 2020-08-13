@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { _uploadFile } from '@/api/account';
+
 export default {
   data() {
     return {
@@ -62,7 +64,7 @@ export default {
       // });
       fileData.append('file', files[0]);
       try {
-        const { data } = await this.$request.uploadFile(fileData);
+        const { data } = await _uploadFile(fileData);
         // const images = [];
         // files.forEach((file, index) => {
         //   images.push({

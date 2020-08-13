@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { _uploadFile } from '@/api/account';
+
 export default {
   model: {
     prop: 'model',
@@ -85,7 +87,7 @@ export default {
       const fileData = new FormData();
       fileData.append('file', files[0]);
       try {
-        const { data } = await this.$request.uploadFile(fileData);
+        const { data } = await _uploadFile(fileData);
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
           desc: files[0].name.replace(/\..+/, ''),
