@@ -42,8 +42,6 @@ export default {
     try {
       const { requestId } = this.$route.params;
       await _verifyEmailLink(requestId);
-      const { data } = await this.$request.GetToken();
-      if (data.user) this.$store.commit('user/setUser', data.user);
       this.verify = 1;
       const content = '邮箱认证成功,页面将在 6 秒后,跳转至首页';
       this.$Message.success({ duration: 5, content, background: true });
