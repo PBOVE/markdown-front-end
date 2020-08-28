@@ -5,10 +5,10 @@
 */
 
 <template>
-  <issues-border :images="images" :user-name="userName">
+  <issues-border :images="images" :title="nickName">
     <div class="right-header index-page-flex-middle">
       <div>
-        <nuxt-link :to="'/' + userName" class="right-header-link">{{ userName }}</nuxt-link>
+        <nuxt-link :to="'/' + userName" class="right-header-link">{{ nickName }}</nuxt-link>
         <span
           class="right-header-time"
           :title="$timeConversion(createTime)"
@@ -30,7 +30,7 @@ import issuesBorder from '@/components/_path/issuesBorder.vue';
 export default {
   components: { issuesBorder },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['images', 'userName', 'createTime', 'content'],
+  props: ['images', 'userName', 'createTime', 'content', 'nickName'],
   data() {
     return {};
   },

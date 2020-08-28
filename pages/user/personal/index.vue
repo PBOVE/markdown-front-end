@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="user-row">
-        <nuxt-link to="/accounts/nickname" class="user-row-main user-middle">
+        <nuxt-link to="/account/nickname" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">昵称</div>
             <div class="user-row-content">{{ storeUser.nickName }}</div>
@@ -44,7 +44,7 @@
         </nuxt-link>
       </div>
       <div class="user-row">
-        <nuxt-link to="/accounts/location" class="user-row-main user-middle">
+        <nuxt-link to="/account/location" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">地区</div>
             <div
@@ -58,7 +58,7 @@
         </nuxt-link>
       </div>
       <div class="user-row">
-        <nuxt-link to="/accounts/signature" class="user-row-main user-middle">
+        <nuxt-link to="/account/signature" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">简介</div>
             <div class="user-row-content">{{ storeUser.signature }}</div>
@@ -88,7 +88,7 @@
         <img src="@/assets/images/email_1.png" width="50px" />
       </div>
       <div class="user-row user-row-email">
-        <nuxt-link to="/accounts/email" class="user-row-main user-middle">
+        <nuxt-link to="/account/email" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
             <div class="user-row-title">电子邮箱</div>
             <div class="user-row-content">{{ storeUser.email }}</div>

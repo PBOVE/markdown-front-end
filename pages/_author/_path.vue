@@ -10,7 +10,7 @@
     <Affix>
       <div class="path-header">
         <div class="middle">
-          <Icon v-if="storeProject.share" type="ios-podium-outline" class="path-header-icon" />
+          <Icon v-if="storeArticle.share" type="ios-podium-outline" class="path-header-icon" />
           <Icon v-else type="ios-lock-outline" class="path-header-icon" />
           <userCard
             :images="user.images"
@@ -21,18 +21,18 @@
             :city="user.city"
           >
             <nuxt-link
-              :to="'/' + storeProject.author"
+              :to="'/' + storeArticle.author"
               class="path-header-title"
-            >{{ storeProject.author }}</nuxt-link>
+            >{{ storeArticle.author }}</nuxt-link>
           </userCard>
           <span class="path-header-line">/</span>
-          <span>{{ storeProject.title }}</span>
+          <span>{{ storeArticle.title }}</span>
           <span v-if="storeSelectPost.title" class="path-header-line">/</span>
           <span>{{ storeSelectPost.title }}</span>
           <div
-            v-if="!storeProject.share"
+            v-if="!storeArticle.share"
             class="path-header-share"
-          >{{ storeProject.share|shareFilter }}</div>
+          >{{ storeArticle.share|shareFilter }}</div>
         </div>
         <div class="middle">
           <!-- <div class="path-button middle">
@@ -47,7 +47,7 @@
               <Icon type="ios-thumbs-up-outline" class="path-button-icon" />
               <span>点赞</span>
             </div>
-            <div class="path-button-right">{{storeProject.likes}}</div>
+            <div class="path-button-right">{{storeArticle.likes}}</div>
           </div>-->
         </div>
       </div>
@@ -108,7 +108,7 @@
 import { mapGetters } from 'vuex';
 import { _queryAccount } from '@/api/user';
 import { _validArticle } from '@/api/valid';
-import { _articleContent } from '@/api/article';
+import { _articleDetails } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
 import userCard from '@/components/userCard/index.vue';
 
@@ -121,13 +121,13 @@ export default {
   },
   filters: {
     shareFilter(share) {
-      return share ? '' : '仅自己可见';
+      return share ? '' : '仅文档成员可见';
     },
   },
   async fetch({ params, store }) {
     const { author, path } = params;
-    const { data } = await _articleContent({ author, path });
-    store.commit('author/setProject', data);
+    const { data } = await _articleDetails({ author, path });
+    store.commit('author/setArticle', data);
   },
   async asyncData({ params }) {
     const { author: username } = params;
@@ -150,16 +150,16 @@ export default {
   },
   head() {
     return {
-      title: `${this.author} · ${this.storeProject.title} ● TBS.feel`,
+      title: `${this.author} · ${this.storeArticle.title} ● TBS.feel`,
     };
   },
   // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters('author', ['storeProject', 'storeEdit', 'storeSelectPost']),
+    ...mapGetters('author', ['storeArticle', 'storeEdit', 'storeSelectPost']),
     ...mapGetters('user', ['storeUserName']),
     // 路径
     resultPath() {
-      const { author, path } = this.storeProject;
+      const { author, path } = this.storeArticle;
       const reg = new RegExp(`/${author}/${path}`);
       const router = this.$route.path.replace(reg, '');
       let result = 0;
@@ -171,7 +171,7 @@ export default {
     },
     // 路径
     projectPath() {
-      const { author, path } = this.storeProject;
+      const { author, path } = this.storeArticle;
       return `/${author}/${path}`;
     },
   },

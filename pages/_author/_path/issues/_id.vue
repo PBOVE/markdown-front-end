@@ -30,6 +30,7 @@
           class="issues-box"
           :images="createUser.images"
           :user-name="createUser.userName"
+          :nick-name="createUser.nickName"
           :create-time="createTime"
           :content="content"
         />
@@ -38,6 +39,7 @@
           :key="item.id"
           class="issues-box"
           :images="item.user.images"
+          :nick-name="item.user.nickName"
           :user-name="item.user.userName"
           :create-time="item.time"
           :content="item.content"
@@ -46,7 +48,7 @@
         <issues-border
           v-if="storeUserState&&storeUser.authentication"
           class="issues-box"
-          :user-name="storeUser.nickName"
+          :title="storeUser.nickName"
           :images="storeUser.images"
         >
           <div class="issues-details-edit-wrap">
@@ -67,7 +69,7 @@
       <div class="issues-details-right">
         <div class="issues-right-title">发起者</div>
         <div class="index-page-flex-middle">
-          <div style="font-size:16px;color:#515a6e;">{{ createUser.userName }}</div>
+          <div style="font-size:16px;color:#515a6e;">{{ createUser.nickName }}</div>
         </div>
         <Divider />
         <div class="issues-right-title">参与者</div>
@@ -76,11 +78,11 @@
             v-for="(value,key) in participants"
             :key="key"
             class="participants"
-            :to="'/'+key"
-            :title="key"
+            :to="'/'+value._id"
+            :title="value.userName"
           >
-            <img v-if="value" class="main-user-image" :src="imageLink + value" />
-            <div v-else class="main-user-portrait">{{ key|filterNume }}</div>
+            <img v-if="value.images" class="main-user-image" :src="imageLink + value.images" />
+            <div v-else class="main-user-portrait">{{ value.nickName | filterNume }}</div>
           </nuxt-link>
         </div>
         <Divider />
@@ -118,9 +120,11 @@ export default {
     const { data: details } = await _issuesDetails(id);
     const { answer, createUser, title, createTime, content } = details;
     const participants = {};
-    participants[createUser.userName] = createUser.images;
-    answer.forEach(el => (participants[el.user.userName] = el.user.images));
-
+    participants[createUser._id] = createUser;
+    answer.forEach((el) => {
+      participants[el.user._id] = el.user;
+    });
+    console.log(details);
     return { answer, createUser, createTime, content, title, participants };
   },
   data() {
@@ -224,7 +228,7 @@ export default {
 }
 .participants {
   margin: 0 10px 0 0;
-  font-size: 0px;
+  font-size: px;
   border: 3px solid transparent;
 }
 .participants:hover {

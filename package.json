@@ -12,14 +12,13 @@
     "lint": "eslint --ext .ts,.js,.vue ."
   },
   "dependencies": {
-    "@kangc/v-md-editor": "^1.4.5",
+    "@kangc/v-md-editor": "^1.4.10",
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/proxy": "^2.0.0",
     "@tinymce/tinymce-vue": "^3.2.2",
     "cookie-universal-nuxt": "^2.1.4",
     "cross-env": "^5.2.0",
     "koa": "^2.6.2",
-    "marked": "^1.1.1",
     "nuxt": "^2.12.2",
     "prismjs": "^1.20.0",
     "qs": "^6.9.4",

@@ -5,11 +5,11 @@ const ignorePaths: string[] = [
   '/user',
   '/user/personal',
   '/user/security',
-  '/accounts/nickname',
-  '/accounts/delete',
-  '/accounts/email',
-  '/accounts/password',
-  '/accounts/location',
+  '/account/nickname',
+  '/account/delete',
+  '/account/email',
+  '/account/password',
+  '/account/location',
   '/:author/:path/issues/new',
 ];
 const redirectPath = [ '/login', '/register', '/password_reset' ];

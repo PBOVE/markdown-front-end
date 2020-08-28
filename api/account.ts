@@ -15,4 +15,4 @@ export const _verifyEmailLink = (id: any) => axios.$put(`/account/email/${id}`);
 export const _forgetEmailLink = (id: any, params: any) => axios.$put(`/account/password/${id}`, params, header);
 
 // 上传文件
-export const _uploadFile = (params: any) => axios.post('/storage', params, fileHeader);
+export const _uploadFile = (params: any) => axios.$post('/storage', params, fileHeader);

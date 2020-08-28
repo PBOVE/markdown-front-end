@@ -65,7 +65,7 @@ export default {
   filters: {
     handleName(name) {
       return name ? name[0].toUpperCase() : '';
-    },
+    }
   },
   data() {
     return {};
@@ -78,8 +78,8 @@ export default {
     ...mapGetters('author', [
       'storeAuthorUser',
       'storeAuthorNumber',
-      'storeAuthorLocaltion',
-    ]),
+      'storeAuthorLocaltion'
+    ])
   },
   methods: {
     async handleButton() {
@@ -90,8 +90,8 @@ export default {
       if (isFans) data = await _unfollowAccount({ username });
       else data = await _followAccount({ username });
       this.$store.commit('author/setAuthor', data.data);
-    },
-  },
+    }
+  }
 };
 </script>
 

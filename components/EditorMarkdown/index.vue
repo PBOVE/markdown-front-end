@@ -92,3 +92,17 @@ export default {
   overflow: hidden;
 }
 </style>
+<style >
+.markdown-wrap .v-md-icon-save:before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url('../../assets/svg/save.svg');
+  background-size: 100% 100%;
+
+}
+.markdown-wrap .v-md-editor__toolbar-item-save{
+  line-height: 32px;
+}
+</style>

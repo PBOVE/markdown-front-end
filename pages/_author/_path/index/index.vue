@@ -6,7 +6,7 @@
 
 <template>
   <div class="index-home">
-    <project-header title="首页" :images="images" :name="userName" :time="updateTime" />
+    <project-header title="首页" :images="options.images" :name="options.nickName" :link="options.userName" :time="options.pdateTime" />
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="storeFormat==='richText'" ref="editor" class="richText" v-html="content" />
     <client-only v-if="storeFormat==='markdown'">
@@ -17,36 +17,29 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import Prism from 'prismjs';
+import { _queryPostListParent } from '@/api/post';
 import projectHeader from '@/components/_path/projectHeader.vue';
 
 export default {
   components: { projectHeader },
-  async asyncData({ params, app, store }) {
+  async asyncData({ params, store }) {
     const { author, path } = params;
-    const { data } = await app.$request.queryPostListParent({ author, path });
+    const { data } = await _queryPostListParent({ author, path });
     const { list, details } = data;
-    const { images, content, updateTime, userName } = details;
+    const { images, content, updateTime, nickName, userName } = details;
     const to = `/${author}/${path}`;
     store.commit('author/setPostList', [
       { _id: 0, name: '首页', type: 'home', updateTime, to },
       ...list,
     ]);
     store.commit('author/setParentList', []);
-    return { content, images, userName, updateTime };
+    return { options: { images, updateTime, nickName, userName }, content };
   },
   data() {
     return {};
   },
   computed: {
     ...mapGetters('author', ['storeFormat']),
-  },
-  mounted() {
-    // if (process.browser && this.storeFormat === 'richText') {
-    //   this.$refs.editor
-    //     .querySelectorAll('pre code')
-    //     .forEach(block => Prism.highlightElement(block));
-    // }
   },
 };
 </script>

@@ -25,12 +25,12 @@ export default {
   },
   head() {
     return {
-      title: `issues · ${this.author} · ${this.storeProject.title} ● TBS.feel`,
+      title: `issues · ${this.author} · ${this.storeArticle.title} ● TBS.feel`,
     };
   },
   // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
   },
 };
 </script>

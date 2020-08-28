@@ -119,7 +119,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', ['storeSelectPost', 'storeProjectList']),
+    ...mapGetters('author', ['storeSelectPost', 'storeArticleList']),
   },
   watch: {
     $route(to) {
@@ -132,7 +132,7 @@ export default {
     },
   },
   created() {
-    let list = this.storeProjectList;
+    let list = this.storeArticleList;
     list = JSON.parse(JSON.stringify(list));
     this.treeData = this.handleDate(list);
   },

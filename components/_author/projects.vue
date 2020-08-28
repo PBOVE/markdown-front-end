@@ -8,7 +8,7 @@
   <div class="index-page-wrap">
     <div class="index-page-header">
       <div class="index-page-header-left">
-        <Input v-model="search" placeholder="搜索当前用户文档库" @on-enter="handleSearch" />
+        <Input v-model="search" placeholder="搜索当前用户文档" @on-enter="handleSearch" />
       </div>
       <div class="index-page-header-right">
         <Button type="primary" style="min-width:80px;" icon="ios-search" @click="handleSearch">搜索</Button>
@@ -23,7 +23,7 @@
     </div>
     <div class="index-page-content">
       <div
-        v-for="(item,index) in projects.content"
+        v-for="(item,index) in articles.content"
         :key="item.path"
         class="index-page-row index-page-flex-between"
       >
@@ -35,8 +35,8 @@
           <div class="index-page-row-description">{{ item.description }}</div>
           <div
             class="index-page-row-time"
-            :title="$timeConversion(item.updateTime)"
-          >{{ item.updateTime|TimeFilter }}</div>
+            :title="$timeConversion(item.time)"
+          >{{ item.time|TimeFilter }}</div>
         </div>
         <div class="index-page-row-right">
           <div
@@ -50,10 +50,10 @@
         </div>
       </div>
     </div>
-    <div v-if="projects.totalElements" class="index-page-footer index-page-flex-middle">
+    <div v-if="articles.totalElements" class="index-page-footer index-page-flex-middle">
       <Page
         size="small"
-        :total="projects.totalElements"
+        :total="articles.totalElements"
         :page-size="10"
         :current="current"
         @on-change="pageChange"
@@ -69,11 +69,11 @@ import { _articleLike, _articleUnLike } from '@/api/article';
 export default {
   filters: {
     shareFilter(share) {
-      return share ? '' : '仅自己可见';
+      return share ? '' : '仅文档成员可见';
     },
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['projects'],
+  props: ['articles'],
   data() {
     return {
       // 搜索内容
@@ -96,7 +96,7 @@ export default {
       this.$router.push({
         path: `/${this.author}`,
         query: {
-          tab: 'projects',
+          tab: 'articles',
           q,
           page: 1,
         },
@@ -107,7 +107,7 @@ export default {
       this.$router.push({
         path: `/${this.author}`,
         query: {
-          tab: 'projects',
+          tab: 'articles',
           q: this.$route.query.q,
           page,
         },
@@ -123,7 +123,7 @@ export default {
       if (row.islike) await _articleUnLike(params);
       else await _articleLike(params);
       row.islike = !row.islike;
-      this.$set(this.projects.content, index, row);
+      this.$set(this.articles.content, index, row);
     },
   },
 };

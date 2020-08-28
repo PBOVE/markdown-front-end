@@ -6,7 +6,13 @@
 
 <template>
   <div v-if="!isFile" class="index-home">
-    <project-header :title="title" :images="images" :name="userName" :time="updateTime" />
+    <project-header
+      :title="option.title"
+      :images="option.images"
+      :name="option.nickName"
+      :link="option.userName"
+      :time="option.updateTime"
+    />
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="storeFormat==='richText'" ref="editor" class="richText" v-html="content" />
     <client-only v-if="storeFormat==='markdown'">
@@ -17,7 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import Prism from 'prismjs';
+import { _queryPostListParent } from '@/api/post';
 import projectHeader from '@/components/_path/projectHeader.vue';
 
 export default {
@@ -27,12 +33,13 @@ export default {
     const reg = new RegExp('^[0-9a-fA-F]{24}$');
     return reg.test(id);
   },
-  async asyncData({ params, app, store }) {
+  async asyncData({ params, store }) {
     const { author, path, id } = params;
     const request = { author, path, id };
-    const { data } = await app.$request.queryPostListParent(request);
+    const { data } = await _queryPostListParent(request);
     const { list, details, parent } = data;
-    const { images, content, updateTime, userName, name: title } = details;
+    const { images, content, updateTime, nickName, userName, name: title, } = details;
+    const option = { images, updateTime, nickName, title, userName };
     let postList = [];
     const to = `/${author}/${path}`;
     const len = parent.length;
@@ -48,7 +55,7 @@ export default {
         ...list,
       ];
     } else {
-      const time = store.state.author.project.updateTime;
+      const time = store.state.author.article.updateTime;
       postList = [
         { _id: 0, name: '首页', type: 'home', updateTime: time, to },
         ...list,
@@ -57,7 +64,7 @@ export default {
     store.commit('author/setPostList', postList);
     store.commit('author/setParentList', parent);
     const isFile = details.type === 'file';
-    return { content, images, userName, updateTime, title, isFile };
+    return { content, option, isFile };
   },
   data() {
     return {};

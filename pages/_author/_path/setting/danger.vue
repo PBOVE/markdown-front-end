@@ -10,8 +10,8 @@
     <Divider />
     <div class="index-between-modal">
       <div class="setting-delete-left">
-        <div class="setting-delete-title">文档库可见性</div>
-        <div>当前文档库{{ storeProject.share|share }}。</div>
+        <div class="setting-delete-title">文档可见性</div>
+        <div>当前文档{{ storeArticle.share|share }}。</div>
       </div>
       <div class="setting-delete-roght">
         <Button type="error" @click="handleSubmit('share')">更改</Button>
@@ -21,7 +21,7 @@
     <div class="index-between-modal">
       <div class="setting-delete-left">
         <div class="setting-delete-title">删除</div>
-        <div>删除文档库将会连同其相关的所有数据一起删除。</div>
+        <div>删除文档将会连同其相关的所有数据一起删除。</div>
       </div>
       <div class="setting-delete-roght">
         <Button type="error" @click="handleSubmit('delete')">删除</Button>
@@ -41,7 +41,7 @@ export default {
   filters: {
     share(value) {
       if (value) return '对所有人可见';
-      else return '仅自己和文档库成员可见';
+      else return '仅自己和文档成员可见';
     },
   },
   components: { changeShare, deletePath },
@@ -52,11 +52,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
   },
   watch: {
     projectPath(val) {
-      if (val === this.storeProject.path) {
+      if (val === this.storeArticle.path) {
         this.disabled = false;
       } else {
         this.disabled = true;
@@ -68,7 +68,7 @@ export default {
     handleSubmit(type) {
       switch (type) {
         case 'share':
-          this.$refs.changeShare.init(this.storeProject.share);
+          this.$refs.changeShare.init(this.storeArticle.share);
           break;
         case 'delete':
           this.$refs.deletePath.init();

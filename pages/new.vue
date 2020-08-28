@@ -10,7 +10,7 @@
     <div class="main scroll">
       <div class="content">
         <div class="content-header">
-          <div class="content-header-title">新建文档库</div>
+          <div class="content-header-title">新建文档</div>
           <!-- <div class="new-tip">山不在高，有仙则名。水不在深，有龙则灵。</div> -->
         </div>
         <Divider />
@@ -30,7 +30,7 @@
         <Divider />
         <div class="row row-flex">
           <div>
-            <div class="row-title row-person row-person-title">所有者</div>
+            <div class="row-title row-person row-person-title">创建者</div>
             <div class="row-flex">
               <div class="row-person row-middle row-border">
                 <img :src="storeImages" class="row-person-img" />
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="row-input-right">
-            <div class="row-title row-must">文档库路径</div>
+            <div class="row-title row-must">文档路径</div>
             <div class="row-input-tool">
               <Poptip word-wrap trigger="focus" placement="bottom-start" :content="content">
                 <input ref="pathRef" v-model="path" type="text" class="row-input" />
@@ -48,10 +48,10 @@
             </div>
           </div>
         </div>
-        <div class="new-tip">通过您的 用户名 和 文档库路 径可以查询到您新建的文档库</div>
+        <div class="new-tip">通过您的 用户名 和 文档路 径可以查询到您新建的文档</div>
         <Divider />
         <div class="row">
-          <div class="row-title row-must">文档库名称</div>
+          <div class="row-title row-must">文档名称</div>
           <div class="row-main row-position">
             <input
               ref="titleRef"
@@ -65,7 +65,7 @@
         </div>
         <Divider />
         <div class="row">
-          <div class="row-title">文档库描述</div>
+          <div class="row-title">文档描述</div>
           <div class="row-main row-position">
             <input
               v-model="description"
@@ -92,8 +92,8 @@
               <div class="row-middle" style="margin-left:10px">
                 <img src="@/assets/svg/ic-lock.svg" class="row-image" />
                 <div class="row-right">
-                  <div class="row-title">仅自己可见</div>
-                  <div class="row-content">仅自己和文档库成员可见</div>
+                  <div class="row-title">仅文档成员可见</div>
+                  <div class="row-content">仅自己和文档成员可见</div>
                 </div>
               </div>
             </Radio>
@@ -196,6 +196,7 @@ export default {
         await _newArticle(params);
         this.$router.push(`/${this.storeUserName}/${params.path}/edit`);
       } catch (err) {
+        this.loading = false;
         this.$refs.pathRef.classList.add('row-error');
       }
     },

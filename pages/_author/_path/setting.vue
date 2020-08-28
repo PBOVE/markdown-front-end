@@ -51,7 +51,7 @@ export default {
   },
   head() {
     return {
-      title: `设置 · ${this.author} · ${this.storeProject.title} ● TBS.feel`,
+      title: `设置 · ${this.author} · ${this.storeArticle.title} ● TBS.feel`,
     };
   },
   // eslint-disable-next-line vue/order-in-components
@@ -59,7 +59,7 @@ export default {
     projectPath() {
       return `/${this.author}/${this.path}/setting`;
     },
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
   },
 };
 </script>

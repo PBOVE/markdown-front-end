@@ -1,15 +1,20 @@
 import Vue from 'vue';
+
 /**
  * 引入 VMdEditor VMdPreview
  */
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
+
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
 import '@kangc/v-md-editor/lib/style/preview.css';
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
 
-// emoji
+// 插件
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
+import createTodoListPlugin from '@kangc/v-md-editor/lib/plugins/todo-list/index';
+import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-cpp.min.js';
@@ -36,6 +41,9 @@ import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-vim.min.js';
 
 VMdEditor.use(createEmojiPlugin());
+VMdEditor.use(createKatexPlugin());
+VMdEditor.use(createTodoListPlugin());
+
 VMdEditor.use(vuepressTheme);
 
 const tagList = [ 'input', 'style', 'script' ];
@@ -55,6 +63,9 @@ VMdPreview.xss.extend({
 });
 VMdPreview.use(vuepressTheme);
 VMdPreview.use(createEmojiPlugin());
+VMdPreview.use(createKatexPlugin());
+VMdPreview.use(createTodoListPlugin());
+VMdPreview.use(createCopyCodePlugin());
 
 Vue.use(VMdEditor);
 Vue.use(VMdPreview);

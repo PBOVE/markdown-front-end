@@ -12,7 +12,7 @@
         <img src="@/assets/images/key.png" class="security-image" />
       </div>
       <div class="user-row">
-        <nuxt-link to="/accounts/password" class="user-row-main user-middle">
+        <nuxt-link to="/account/password" class="user-row-main user-middle">
           <div class="user-middle-left">
             <div class="user-row-title">密码</div>
             <div class="user-row-content">••••••••</div>
@@ -31,7 +31,7 @@
         <div class="user-title-content">您将无法使用需要通过该帐号登录的 “TBS.feel” 服务</div>
       </div>
       <div class="delete-account">
-        <nuxt-link to="/accounts/delete">删除你的账户</nuxt-link>
+        <nuxt-link to="/account/delete">删除你的账户</nuxt-link>
       </div>
     </div>
   </div>

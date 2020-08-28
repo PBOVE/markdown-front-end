@@ -32,7 +32,7 @@ export const _followAccount = (params: any) => axios.$post('/user/follow', param
 // 取消关注
 export const _unfollowAccount = (params: any) => axios.$delete('/user/follow', { data: params });
 
-// 查询 注册
+// 查询 注册 是否
 export const _queryRegister = (params: any) => axios.$get('/register/query', { params, ...config });
 
 // 注册

@@ -3,8 +3,8 @@ export const namespaced = true;
 export const state = () => ({
   // 用户信息,点赞数量
   author: {},
-  // 知识库信息
-  project: {},
+  // 文档信息
+  article: {},
   // 选中 post
   selectPost: {},
   // 目录
@@ -17,15 +17,15 @@ export const mutations = {
   setAuthor(state, data) {
     state.author = JSON.parse(JSON.stringify(data));
   },
-  setProject(state, data) {
-    state.project = JSON.parse(JSON.stringify(data));
+  setArticle(state, data) {
+    state.article = JSON.parse(JSON.stringify(data));
   },
   // 设置选中 Post
   setSelectPost(state, data) {
     state.selectPost = JSON.parse(JSON.stringify(data));
   },
   // 设置目录
-  setProjectList(state, data) {
+  setArticleList(state, data) {
     const list = JSON.stringify(data);
     state.list = JSON.parse(list);
   },
@@ -50,19 +50,19 @@ export const getters = {
   storeAuthorLocaltion(state) {
     return state.author.location;
   },
-  storeProject(state) {
-    return state.project;
+  storeArticle(state) {
+    return state.article;
   },
   storeEdit(state) {
-    return state.project.edit;
+    return state.article.edit;
   },
   storeFormat(state) {
-    return state.project.format;
+    return state.article.format;
   },
   storeSelectPost(state) {
     return state.selectPost;
   },
-  storeProjectList(state) {
+  storeArticleList(state) {
     return state.list;
   },
   storePostList(state) {

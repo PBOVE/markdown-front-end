@@ -23,14 +23,14 @@
       <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
         <Icon type="md-list-box" />
         {{ item.author }} / {{ item.title }}
-        <span v-if="!item.share" class="search-private">仅自己可见</span>
+        <span v-if="!item.share" class="search-private">仅文档成员可见</span>
       </nuxt-link>
     </Option>
   </AutoComplete>
 </template>
 
 <script>
-import { _queryProject } from '@/api/article';
+import { _queryArticle } from '@/api/article';
 
 export default {
   props: {
@@ -65,7 +65,7 @@ export default {
       }
       this.loading = true;
       const params = { title };
-      const { data } = await _queryProject(params);
+      const { data } = await _queryArticle(params);
       this.searchData = data.content;
       this.loading = false;
       if (this.asyncTitle) {

@@ -8,7 +8,7 @@
   <div class="issues-border">
     <div class="index-page-flex-middle issues-border-left">
       <img v-if="images" :src="imageLink + images" class="issues-border-image" />
-      <div v-else class="main-user-portrait">{{ userName|name }}</div>
+      <div v-else class="main-user-portrait">{{ title|name }}</div>
     </div>
     <div class="issues-border-right">
       <slot />
@@ -24,7 +24,7 @@ export default {
     },
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['images', 'userName'],
+  props: ['images', 'title'],
   data() {
     return {
       imageLink: '/api/storage/preview/',

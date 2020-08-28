@@ -13,8 +13,8 @@
       </nuxt-link>
       <nuxt-link
         class="header-row"
-        :to="'/'+ author + '?tab=projects'"
-        :class="{border:tab==='projects'}"
+        :to="'/'+ author + '?tab=articles'"
+        :class="{border:tab==='articles'}"
       >
         <Icon type="ios-folder-open-outline" />
         <span>{{ fileName }}</span>
@@ -39,7 +39,7 @@ export default {
   computed: {
     ...mapGetters('user', ['storeUserState', 'storeUserName']),
     tab() {
-      const paramsPath = ['projects', 'likes'];
+      const paramsPath = ['articles', 'likes'];
       const { tab } = this.$route.query;
       return paramsPath.includes(tab) ? tab : '';
     },

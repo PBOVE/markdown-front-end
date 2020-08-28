@@ -60,8 +60,8 @@ import { _articleLike, _articleUnLike } from '@/api/article';
 export default {
   filters: {
     shareFilter(share) {
-      return share ? '' : '仅自己可见';
-    },
+      return share ? '' : '仅文档成员可见';
+    }
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['likes'],
@@ -74,12 +74,12 @@ export default {
       // 当前页面
       current: this.$route.query.page
         ? parseInt(this.$route.query.page, 10)
-        : 1,
+        : 1
     };
   },
   computed: {
     ...mapGetters('user', ['storeUserState']),
-    ...mapGetters('author', ['storeAuthorUser']),
+    ...mapGetters('author', ['storeAuthorUser'])
   },
   watch: {
     async $route(to) {
@@ -88,14 +88,14 @@ export default {
       const params = { page, author: this.author };
       const { data } = await _queryAccountLike(params);
       this.like = data;
-    },
+    }
   },
   methods: {
     // 页面改变
     pageChange(page) {
       this.$router.push({
         path: `/${this.author}`,
-        query: { tab: 'likes', page },
+        query: { tab: 'likes', page }
       });
     },
     // 点赞
@@ -109,7 +109,7 @@ export default {
       else await _articleLike(params);
       row.islike = !row.islike;
       this.$set(this.likes.content, index, row);
-    },
-  },
+    }
+  }
 };
 </script>

@@ -16,23 +16,23 @@
 <script>
 import { _queryPostListRoot } from '@/api/post';
 import { mapGetters, mapMutations } from 'vuex';
-
+import { _articleDetails } from '@/api/article';
 import editLeft from '@/components/_path/editLeft.vue';
 
 export default {
   transition: 'fade',
   components: { editLeft },
-  validate({ store, params }) {
-    const { user, author } = store.state;
-    return (
-      user.userState &&
-      (author.project.edit || params.author === user.data.userName)
-    );
+  async validate({ store, params }) {
+    const { author, path } = params;
+    const { user } = store.state;
+    if (user.data.userName === author) return true;
+    const { data } = await _articleDetails({ author, path });
+    return data.edit;
   },
   async asyncData({ store, params }) {
     const { author, path, id } = params;
     const { data } = await _queryPostListRoot({ author, path, id });
-    store.commit('author/setProjectList', [
+    store.commit('author/setArticleList', [
       { _id: 0, name: '首页', type: 'home' },
       ...data.list,
     ]);
@@ -47,7 +47,7 @@ export default {
   },
   // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters('author', ['storeProject', 'storeSelectPost']),
+    ...mapGetters('author', ['storeArticle', 'storeSelectPost']),
   },
   // eslint-disable-next-line vue/order-in-components
   beforeDestroy() {

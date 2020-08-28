@@ -3,7 +3,7 @@ const header = { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }
 const config = { progress: false };
 
 // 获取知识库
-export const _queryProject = (params: any) => axios.$get('/article', { params, ...config });
+export const _queryArticle = (params: any) => axios.$get('/article', { params, ...config });
 
 // 创建知识库
 export const _newArticle = (params: any) => axios.$post('/article', params, header);
@@ -21,4 +21,4 @@ export const _articleLike = (params: any) => axios.$post('/article/like', params
 export const _articleUnLike = (params: any) => axios.$delete('/article/like', { data: params });
 
 // 获取文章内容
-export const _articleContent = (params: any) => axios.$get('/article/details', { params });
+export const _articleDetails = (params: any) => axios.$get('/article/details', { params });

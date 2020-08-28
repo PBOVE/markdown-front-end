@@ -7,17 +7,17 @@
 <template>
   <Modal v-model="modalShow" footer-hide width="530" style="color:#000" :closable="false">
     <div class="index-between-modal">
-      <div style="fontSize:16px; fontWeight: 600; ">删除文档库</div>
+      <div style="fontSize:16px; fontWeight: 600; ">删除文档</div>
       <Icon type="md-close" class="modal-close" size="16" @click="modalShow=false" />
     </div>
-    <Alert type="error" class="alert-wrap" style="fontWeight: 600;">警告：文档库删除无法撤消！请慎重操作！</Alert>
+    <Alert type="error" class="alert-wrap" style="fontWeight: 600;">警告：文档删除无法撤消！请慎重操作！</Alert>
     <div style="letter-spacing: 0.1rem">
-      该操作将永久删除文档库
-      <span class="highlight-red">{{ storeProject.title }}</span> 的数据，同时取消文档库的关联成员。
+      该操作将永久删除文档
+      <span class="highlight-red">{{ storeArticle.title }}</span> 的数据，同时取消文档的关联成员。
     </div>
     <div type="warning" style="margin:20px 0px 20px">
       请输入
-      <span style="fontWeight: 600;">{{ storeProject.author }}/{{ storeProject.path }}</span>
+      <span style="fontWeight: 600;">{{ storeArticle.author }}/{{ storeArticle.path }}</span>
       进行确认
     </div>
     <Input v-model="projectPath" />
@@ -46,11 +46,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
   },
   watch: {
     projectPath(val) {
-      const path = `${this.storeProject.author}/${this.storeProject.path}`;
+      const path = `${this.storeArticle.author}/${this.storeArticle.path}`;
       this.disabled = val !== path;
     },
   },

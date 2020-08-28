@@ -186,7 +186,7 @@ export default {
         if (images[0]) {
           const params = { images: images[0] };
           const { data } = await _updateAccount(params);
-          this.$store.commit('user/setUser', data);
+          this.$store.commit('user/setUser', data.user);
           this.modalShow = false;
         }
       } catch (err) {}

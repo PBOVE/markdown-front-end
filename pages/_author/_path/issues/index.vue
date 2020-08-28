@@ -86,12 +86,12 @@ export default {
   },
   head() {
     return {
-      title: `留言 · ${this.author} · ${this.storeProject.path} ● TBS.feel`,
+      title: `留言 · ${this.author} · ${this.storeArticle.path} ● TBS.feel`,
     };
   },
   // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
     link() {
       return `/${this.author}/${this.path}/issues/`;
     },

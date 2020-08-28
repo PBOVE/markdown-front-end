@@ -12,7 +12,7 @@
           <div class="index-list-header">
             <span class="index-title index-page-flex-middle">
               <img src="@/assets/svg/link.svg" class="index-title-img" />
-              <nuxt-link :to="projectLink" class="index-title-link">{{ storeProject.title }}</nuxt-link>
+              <nuxt-link :to="projectLink" class="index-title-link">{{ storeArticle.title }}</nuxt-link>
               <div v-for="(item, index) in storeParentList" :key="item._id">
                 <span class="split-line">/</span>
                 <nuxt-link
@@ -73,19 +73,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', ['storeProject', 'storeFormat', 'storeParentList']),
+    ...mapGetters('author', ['storeArticle', 'storeFormat', 'storeParentList']),
     updateUser() {
-      return this.storeProject.updateUser;
+      return this.storeArticle.updateUser;
     },
     projectLink() {
-      return `/${this.storeProject.author}/${this.storeProject.path}`;
+      return `/${this.storeArticle.author}/${this.storeArticle.path}`;
     },
     IslistId() {
       return !this.$route.params.id;
     },
   },
   mounted() {
-    // const { format } = this.storeProject;
+    // const { format } = this.storeArticle;
     // if (format === "richText") {
     //   this.handleRTitles();
     // } else if (format === "markdown") {
@@ -142,7 +142,7 @@ export default {
     handleAnchorClick(anchor) {
       const { editor } = this.$refs;
       const { lineIndex } = anchor;
-      const { format } = this.storeProject;
+      const { format } = this.storeArticle;
       let heading;
       if (format === 'richText') {
         heading = editor.querySelector(

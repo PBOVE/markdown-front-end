@@ -8,12 +8,12 @@
   <div class="setting-index-wrap">
     <div class="setting-index-header">基本设置</div>
     <Divider />
-    <div class="setting-title">文档库名称</div>
+    <div class="setting-title">文档名称</div>
     <div class="setting-input-wrap">
       <input v-model="title" type="text" class="setting-input" />
       <div class="setting-input-suffix">{{ titleSize }}</div>
     </div>
-    <div class="setting-title">文档库描述</div>
+    <div class="setting-title">文档描述</div>
     <div class="setting-input-wrap">
       <input v-model="description" type="text" class="setting-input" />
       <div class="setting-input-suffix">{{ descriptionSize }}</div>
@@ -46,17 +46,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
   },
   watch: {
-    'storeProject.title': {
+    'storeArticle.title': {
       handler(value) {
         this.title = value;
         this.titleSize = `${value.length || 0}/60`;
       },
       immediate: true,
     },
-    'storeProject.description': {
+    'storeArticle.description': {
       handler(value) {
         this.description = value;
         this.descriptionSize = `${value.length || 0}/60`;
@@ -69,10 +69,10 @@ export default {
     async handleSubbmit() {
       const params = {};
       if (this.loading) return;
-      if (this.title !== this.storeProject.title) {
+      if (this.title !== this.storeArticle.title) {
         params.title = this.title;
       }
-      if (this.description !== this.storeProject.description) {
+      if (this.description !== this.storeArticle.description) {
         params.description = this.description;
       }
       if (JSON.stringify(params) === '{}') return;
@@ -82,7 +82,7 @@ export default {
       try {
         const { data } = await _updateArticle(params);
         this.$Message.success({ background: true, content: '更新成功' });
-        this.$store.commit('author/setProject', data);
+        this.$store.commit('author/setArticle', data);
       } catch (err) {}
       this.loading = false;
     },

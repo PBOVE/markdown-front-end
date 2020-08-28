@@ -50,9 +50,6 @@
         </div>
       </div>
       <div class="from-check">
-        <Checkbox v-model="rememberMe" size="large">
-          <span style="fontSize:14px; marginLeft:0.5rem; ">记住密码</span>
-        </Checkbox>
         <nuxt-link to="/password_reset">忘记密码</nuxt-link>
       </div>
       <button ref="loginbtn" class="login-button" @click="handleLoginEvent($event)">登录</button>
@@ -75,8 +72,6 @@ export default {
       account: '',
       // 密码
       password: '',
-      // 记住密码
-      rememberMe: false,
       // 查看密码
       eye: true,
       // 设置按钮为加载中状态
@@ -106,7 +101,6 @@ export default {
         const params = {
           account: this.account,
           password: this.password,
-          'remember-me': this.rememberMe,
         };
         await _login(params);
         const { data } = await _token();
@@ -167,7 +161,7 @@ export default {
 .from-check {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: 1rem 0 1.2rem;
   user-select: none;
 }

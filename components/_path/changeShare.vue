@@ -7,7 +7,7 @@
 <template>
   <Modal v-model="modalShow" footer-hide width="530" style="color:#000" :closable="false">
     <div class="index-between-modal">
-      <div style="fontSize:16px; fontWeight: 600; ">更改文档库可见性</div>
+      <div style="fontSize:16px; fontWeight: 600; ">更改文档可见性</div>
       <Icon type="md-close" class="modal-close" size="16" @click="modalShow=false" />
     </div>
     <Alert type="error" class="alert-wrap" style="fontWeight: 600;">警告：这是潜在的破坏性行为！请慎重操作！</Alert>
@@ -20,14 +20,14 @@
       </Radio>
       <Radio label="0" class="row-middle">
         <div style="margin:0 0 0 10px">
-          <div class="row-title">仅自己可见</div>
+          <div class="row-title">仅文档成员可见</div>
           <div class="row-content">{{ private }}</div>
         </div>
       </Radio>
     </RadioGroup>
     <div type="warning" style="margin:0 0px 20px">
       请输入
-      <span style="fontWeight: 600;">{{ storeProject.author }}/{{ storeProject.path }}</span>
+      <span style="fontWeight: 600;">{{ storeArticle.author }}/{{ storeArticle.path }}</span>
       进行确认
     </div>
     <Input v-model="projectPath" />
@@ -62,11 +62,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', ['storeProject']),
+    ...mapGetters('author', ['storeArticle']),
   },
   watch: {
     projectPath(val) {
-      const path = `${this.storeProject.author}/${this.storeProject.path}`;
+      const path = `${this.storeArticle.author}/${this.storeArticle.path}`;
       this.disabled = val !== path;
     },
   },
@@ -77,24 +77,24 @@ export default {
       this.projectPath = '';
       if (share) {
         this.share = '1';
-        this.public = '该文档库当前对所有人可见';
-        this.private = '仅自己可见';
+        this.public = '该文档当前对所有人可见';
+        this.private = '仅文档成员可见';
       } else {
         this.share = '0';
         this.public = '对所有人可见';
-        this.private = '该文档库当前仅对自己可见';
+        this.private = '该文档当前仅对自己可见';
       }
     },
     // 处理提交
     async handleSubmit() {
-      const share = this.storeProject.share ? '1' : '0';
+      const share = this.storeArticle.share ? '1' : '0';
       if (share === this.share) return (this.modalShow = false);
       const { author, path } = this.$route.params;
       const params = { author, path };
       params.share = this.share === '1';
       this.loading = true;
       const { data } = await _updateArticle(params);
-      this.$store.commit('author/setProject', data);
+      this.$store.commit('author/setArticle', data);
       this.$Message.success({ background: true, content: '更新成功' });
       this.loading = false;
       this.modalShow = false;

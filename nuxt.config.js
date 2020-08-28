@@ -10,7 +10,13 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
     ],
-    link: [ { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css' },
+    ],
+    script: [
+      { src: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js' }
+    ],
   },
   /**
    * 使用watchQuery属性可以监听参数字符串的更改

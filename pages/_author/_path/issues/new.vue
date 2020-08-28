@@ -9,7 +9,7 @@
     <div class="issues-new-left">
       <div class="issues-new-image">
         <img v-if="storeImages" :src="storeImages" />
-        <div v-else class="main-user-portrait">{{ storeUserName|filterNume }}</div>
+        <div v-else class="main-user-portrait">{{ storeNickName|filterNume }}</div>
       </div>
       <div class="issues-new-content">
         <div class="issues-new-content-header">
@@ -66,8 +66,8 @@ export default {
   },
   // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters('author', ['storeProject']),
-    ...mapGetters('user', ['storeUserName', 'storeImages', 'storeUser']),
+    ...mapGetters('author', ['storeArticle']),
+    ...mapGetters('user', ['storeNickName', 'storeImages', 'storeUser']),
   },
   // eslint-disable-next-line vue/order-in-components
   methods: {

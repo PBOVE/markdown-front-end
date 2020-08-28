@@ -12,7 +12,6 @@ const accessor: Plugin = ({ app: { $axios, store } }) => {
   });
   $axios.onResponse((response: AxiosResponse) => {
     const { code, msg } = response.data;
-    console.log(code, msg);
     if (code === 200 && msg === 'OK') {
       return Promise.resolve(response);
     } else {

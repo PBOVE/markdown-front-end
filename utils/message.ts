@@ -48,16 +48,16 @@ const showStatus = (status: number) => {
       message = '请不要重复发送验证邮件,请前往您的邮箱中查看';
       break;
     case 4005:
-      message = '邮箱没有认证,无法使用此邮箱';
+      message = '操作失败,邮箱没有认证';
       break;
     case 4007:
       message = '密码输入错误,请重新输入密码';
       break;
     case 4008:
-      message = '知识库路径已经存在,请重新设置';
+      message = '文档路径已经存在,请重新设置';
       break;
     case 6000:
-      message = '系统未开放,无法创建知识库';
+      message = '系统未开放,无法创建文档';
       break;
     default:
       message = `连接出错(${status})!`;

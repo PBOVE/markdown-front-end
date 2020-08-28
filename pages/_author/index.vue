@@ -13,15 +13,7 @@
         <page-left class="index-content-left" />
         <div class="index-content-right">
           <page-right />
-          <transition name="fade" mode="out-in">
-            <index-page v-if="!tab" />
-            <project-page
-              v-else-if="tab==='projects'"
-              :projects="projects"
-              @on-change="projectData"
-            />
-            <likes-page v-else-if="tab==='likes'" :likes="likes" />
-          </transition>
+          <nuxt-child />
         </div>
       </div>
     </div>
@@ -29,27 +21,15 @@
 </template>
 
 <script>
-import { _queryProject } from '@/api/article';
-import { _queryAccount, _queryAccountLike, _queryRegister } from '@/api/user';
+import { _queryRegister, _queryAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 import validRemind from '@/components/validRemind/index.vue';
 import pageLeft from '@/components/_author/pageLeft.vue';
 import pageRight from '@/components/_author/pageRight.vue';
-import indexPage from '@/components/_author/index.vue';
-import projectPage from '@/components/_author/projects.vue';
-import likesPage from '@/components/_author/likes.vue';
 
 export default {
   transition: 'fade',
-  components: {
-    publicHeader,
-    validRemind,
-    pageLeft,
-    pageRight,
-    indexPage,
-    projectPage,
-    likesPage,
-  },
+  components: { publicHeader, validRemind, pageLeft, pageRight, },
   async validate({ params }) {
     const query = { name: params.author };
     const { data } = await _queryRegister(query);
@@ -60,39 +40,10 @@ export default {
     const { data } = await _queryAccount({ username });
     store.commit('author/setAuthor', data);
   },
-  async asyncData({ params, query }) {
-    const { author } = params;
-    const { tab, page, q } = query;
-    let projects, likes;
-    if (tab === 'projects') {
-      const request = { author, page: page ? page - 1 : 0, title: q };
-      const { data } = await _queryProject(request);
-      projects = data;
-    } else if (tab === 'likes') {
-      const request = { author, page: page ? page - 1 : 0 };
-      const { data } = await _queryAccountLike(request);
-      likes = data;
-    }
-    return { projects, likes };
-  },
-  async watchQuery() {},
   data() {
     return {
       alertShow: false,
     };
-  },
-  computed: {
-    tab() {
-      const paramsPath = ['projects', 'likes'];
-      const { tab } = this.$route.query;
-      return paramsPath.includes(tab) ? tab : '';
-    },
-  },
-  methods: {
-    // 数据改变
-    projectData(row, index) {
-      this.$set(this.projects.content, index, row);
-    },
   },
   head() {
     return {
