@@ -8,7 +8,7 @@
   <div class="issues-border">
     <div class="index-page-flex-middle issues-border-left">
       <img v-if="images" :src="imageLink + images" class="issues-border-image" />
-      <div v-else class="main-user-portrait">{{ title|name }}</div>
+      <div v-else-if="title" class="main-user-portrait">{{ title|name }}</div>
     </div>
     <div class="issues-border-right">
       <slot />
@@ -40,6 +40,7 @@ export default {
 }
 .issues-border-left {
   padding: 6px 0 0;
+  width: 30px;
 }
 .issues-border-image {
   width: 30px;

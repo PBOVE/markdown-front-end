@@ -26,14 +26,14 @@ export default {
     const { author, path } = params;
     const { data } = await _queryPostListParent({ author, path });
     const { list, details } = data;
-    const { images, content, updateTime, nickName, userName } = details;
+    const { content, updateTime, updateUser } = details;
     const to = `/${author}/${path}`;
     store.commit('author/setPostList', [
       { _id: 0, name: '首页', type: 'home', updateTime, to },
       ...list,
     ]);
     store.commit('author/setParentList', []);
-    return { options: { images, updateTime, nickName, userName }, content };
+    return { options: { updateTime, ...updateUser }, content };
   },
   data() {
     return {};

@@ -38,9 +38,9 @@
           v-for="item in answer"
           :key="item.id"
           class="issues-box"
-          :images="item.user.images"
-          :nick-name="item.user.nickName"
-          :user-name="item.user.userName"
+          :images="item.user?item.user.images:''"
+          :nick-name="item.user?item.user.nickName:''"
+          :user-name="item.user?item.user.userName:'/'"
           :create-time="item.time"
           :content="item.content"
         />
@@ -118,13 +118,17 @@ export default {
   async asyncData({ params }) {
     const { id } = params;
     const { data: details } = await _issuesDetails(id);
-    const { answer, createUser, title, createTime, content } = details;
+    const { answer, title, createTime, content } = details;
+    let { createUser } = details;
     const participants = {};
-    participants[createUser._id] = createUser;
+    if (createUser) {
+      participants[createUser._id] = createUser;
+    } else {
+      createUser = {};
+    }
     answer.forEach((el) => {
-      participants[el.user._id] = el.user;
+      if (el.user) { participants[el.user._id] = el.user; }
     });
-    console.log(details);
     return { answer, createUser, createTime, content, title, participants };
   },
   data() {

@@ -6,9 +6,9 @@
 
 <template>
   <div class="project-header-wrap index-page-flex-middle index-text-hidden">
-    <img v-if="images" :src="'/api/storage/preview/'+images" class="main-user-image margin" />
-    <div v-else class="main-user-portrait margin">{{ name|name }}</div>
-    <nuxt-link :to="'/' + link" class="margin project-header-name">{{ name }}</nuxt-link>
+    <img v-if="images&&link" :src="'/api/storage/preview/'+images" class="main-user-image margin" />
+    <div v-else-if="link" class="main-user-portrait margin">{{ name|name }}</div>
+    <nuxt-link v-if="link" :to="'/' + link" class="margin project-header-name">{{ name }}</nuxt-link>
     <div class="margin project-header-time" :title="$timeConversion(time)">{{ time|TimeFilter }}</div>
     <div class="margin project-header-title index-text-hidden">{{ title }}</div>
   </div>
@@ -26,7 +26,7 @@ export default {
     name: { type: String, default: '' },
     time: { type: String, default: '' },
     title: { type: String, default: '' },
-    link: { type: String, default: '/' },
+    link: { type: String, default: '' },
   },
   data() {
     return {};

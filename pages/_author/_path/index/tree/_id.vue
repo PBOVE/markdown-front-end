@@ -38,8 +38,8 @@ export default {
     const request = { author, path, id };
     const { data } = await _queryPostListParent(request);
     const { list, details, parent } = data;
-    const { images, content, updateTime, nickName, userName, name: title, } = details;
-    const option = { images, updateTime, nickName, title, userName };
+    const { content, updateTime, updateUser, name: title, } = details;
+    const option = { updateTime, title, ...updateUser };
     let postList = [];
     const to = `/${author}/${path}`;
     const len = parent.length;
