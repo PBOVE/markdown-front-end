@@ -6,7 +6,7 @@
 
 <template>
   <div class="edit-wrap">
-    <editLeft class="edit-left" />
+    <edit-left class="edit-left" />
     <div class="edit-right">
       <nuxt-child />
     </div>

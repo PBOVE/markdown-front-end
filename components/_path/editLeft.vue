@@ -23,7 +23,21 @@
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <Icon type="md-more" size="16" class="header-right-icon" />
+        <Dropdown placement="bottom-start">
+          <Icon type="md-more" size="16" class="header-right-icon" />
+          <!-- <DropdownMenu slot="list">
+            <DropdownItem
+              v-for="(item,index) in sortList"
+              :key="index"
+              class="index-page-flex-middle header-list"
+              :name="item.name"
+            >
+              <img :src="item.src" class="header-list-svg" />
+              <span>{{ item.name }}</span>
+              <Icon type="ios-arrow-down" class="header-list-sort-type" />
+            </DropdownItem>
+          </DropdownMenu> -->
+        </Dropdown>
       </div>
     </div>
     <div ref="mainRef" class="main scroll-hover" @scroll="mainScroll">
@@ -76,34 +90,29 @@ export default {
       treeId: 0,
       // 添加列表
       addList: [
-        {
-          src: require('@/assets/svg/file.svg'),
-          name: '新建分组',
-        },
-        {
-          src: require('@/assets/svg/note.svg'),
-          name: '新建文档',
-        },
+        { src: require('@/assets/svg/file.svg'), name: '新建分组', },
+        { src: require('@/assets/svg/note.svg'), name: '新建文档', },
       ],
+
       // 添加列表 偏移量
       ATop: 0,
       ALeft: 0,
       AShow: false,
       // 更多列表
       moreList: [
-        {
-          src: require('@/assets/svg/rename.svg'),
-          name: '重命名',
-        },
-        {
-          src: require('@/assets/svg/delete.svg'),
-          name: '删除',
-        },
+        { src: require('@/assets/svg/rename.svg'), name: '重命名' },
+        { src: require('@/assets/svg/delete.svg'), name: '删除', },
       ],
       // 更多列表 偏移量
       MTop: 0,
       MLeft: 0,
       MShow: false,
+      // 排序列表
+      sortList: [
+        { name: '创建时间' },
+        { name: '更新时间' },
+        { name: '文档名称' },
+      ],
       // 更新选择的节点
       selectData: '',
       selectRoot: '',
@@ -438,7 +447,7 @@ export default {
       await _updatePost(params);
     },
     // 删除节点名称
-    async deleteNode(root, node, data) {
+    async  deleteNode(root, node, data) {
       const params = { author: this.author, path: this.path, id: data.id };
       await _deletePost(params);
       if (node.parent) {
@@ -452,10 +461,12 @@ export default {
         const index = this.treeData.findIndex(el => el.id === data.id);
         this.treeData.splice(index, 1);
       }
+      if (data.id === this.selectedData.id) {
+        this.$router.push(`/${this.author}/${this.path}/edit`);
+      }
     },
     // 点击树节点时触发
-    // eslint-disable-next-line require-await
-    async selectTreeNode(_node, data) {
+    selectTreeNode(_node, data) {
       this.$set(data, 'selected', true);
       this.selected = data.id;
       this.selectedData = data;
@@ -511,5 +522,8 @@ export default {
   margin: 0 7px 0 0;
   width: 18px;
   height: 18px;
+}
+.header-list-sort-type{
+margin: 0 0 0 7px;
 }
 </style>
