@@ -67,8 +67,9 @@ export default {
       try {
         await _deleteArticle({ author, path });
         this.$router.push(`/${author}`);
-      } catch (err) {}
-      this.loading = false;
+      } catch (err) {
+        this.loading = false;
+      }
     },
   },
 };

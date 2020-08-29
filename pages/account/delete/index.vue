@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { _deleteAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
@@ -53,27 +54,20 @@ export default {
   },
 
   methods: {
-    handleButton() {
+    async handleButton() {
       if (!this.password) {
-        this.$Message.info({
-          background: true,
-          content: '请您输入您的 TBS.feel 账户密码',
-          duration: 5,
-        });
+        const content = '请您输入您的 TBS.feel 账户密码';
+        this.$Message.info({ background: true, content, duration: 5 });
         return;
       }
-      this.$Message.info({
-        background: true,
-        content: '系统升级中暂时无法删除',
-        duration: 5,
-      });
-      // try {
-      //   this.loading = true;
-      //   await _deleteAccount({ password: this.password });
-      //   this.$store.commit('token/removeToken');
-      //   this.$router.push('/login');
-      // } catch (err) {}
-      // this.loading = false;
+      try {
+        this.loading = true;
+        await _deleteAccount({ password: this.password });
+        this.$store.commit('token/removeToken');
+        this.$router.push('/login');
+      } catch (err) {
+        this.loading = false;
+      }
     },
   },
   head() {

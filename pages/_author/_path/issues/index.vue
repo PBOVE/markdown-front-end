@@ -31,39 +31,38 @@
       <div v-if="!issues.length" class="issues-blankslate">
         <img src="@/assets/svg/issues.svg" class="issues-main-image" />
         <div class="issues-blankslate-title">问题</div>
-        <div>
-          <div></div>
-          <nuxt-link
-            v-for="item in issues"
-            :key="item._id"
-            class="row-wrap index-page-flex-between"
-            :to="link + item._id"
-          >
-            <div class="row-left index-text-hidden">
-              <div class="row-left-left">
-                <Icon type="ios-bookmark" color="#2b85e4" size="18" />
-              </div>
-              <div class="index-text-hidden">
-                <div
-                  style="font-size:18px; margin:0 0 3px;"
-                  class="index-text-hidden"
-                >{{ item.title }}</div>
-                <div style="font-size:12px; color:#586069;">
-                  <span>{{ item.createUser }} 创建于</span>
-                  <span>{{ item.createTime|TimeFilter }}</span>
-                </div>
+      </div>
+      <div>
+        <nuxt-link
+          v-for="item in issues"
+          :key="item._id"
+          class="row-wrap index-page-flex-between"
+          :to="link + item._id"
+        >
+          <div class="row-left index-text-hidden">
+            <div class="row-left-left">
+              <Icon type="ios-bookmark" color="#2b85e4" size="18" />
+            </div>
+            <div class="index-text-hidden">
+              <div
+                style="font-size:18px; margin:0 0 3px;"
+                class="index-text-hidden"
+              >{{ item.title }}</div>
+              <div style="font-size:12px; color:#586069;">
+                <span>{{ item.createUser }} 创建于</span>
+                <span>{{ item.createTime|TimeFilter }}</span>
               </div>
             </div>
-            <div class="row-right index-page-flex-middle">
-              <div v-if="item.number" class="row-chat-num">
-                <img src="@/assets/svg/chat.svg" class="row-image" />
-                <span>{{ item.number }}</span>
-              </div>
-            </div>
-          </nuxt-link>
-          <div v-if="issues.length" class="main-center-middle issues-main-footer">
-            <Page :total="totalElements" size="small" />
           </div>
+          <div class="row-right index-page-flex-middle">
+            <div v-if="item.number" class="row-chat-num">
+              <img src="@/assets/svg/chat.svg" class="row-image" />
+              <span>{{ item.number }}</span>
+            </div>
+          </div>
+        </nuxt-link>
+        <div v-if="issues.length" class="main-center-middle issues-main-footer">
+          <Page :total="totalElements" size="small" />
         </div>
       </div>
     </div>
