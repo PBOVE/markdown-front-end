@@ -18,7 +18,6 @@
           </div>
           <div class="title-content">
             <div>Markdown是一种轻量级标记语言。 它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的HTML文档。</div>
-            <div>富文本编辑器，Rich Text Editor, 简称 RTE, 它提供类似于 Microsoft Word 的编辑功能，容易被不会编写 HTML 的用户并需要设置各种文本格式的用户所喜爱</div>
           </div>
           <div class="circle" />
         </div>

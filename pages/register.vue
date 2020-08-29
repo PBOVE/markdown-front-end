@@ -34,7 +34,6 @@
       <Poptip word-wrap class="register-poptip" trigger="focus" placement="top-start">
         <div slot="content">
           <div>用户名只能包含字母数字字符或单个连字符，不能以连字符开头或结尾。</div>
-          <div>成功注册后用户名将无法修改</div>
         </div>
         <div ref="usernameRef" class="login-group">
           <label for="username">用户名</label>
@@ -65,10 +64,11 @@
         </div>
       </Poptip>
       <Poptip word-wrap class="register-poptip" trigger="focus" placement="top-start">
-        <div slot="content" class="register-poptip-content">
+        <div slot="content">
           <div>强度: {{ strength }}</div>
           <Progress
             class="register-poptip-content-progress"
+            :transfer="true"
             :percent="percent"
             :stroke-color="strokeColor"
             :hide-info="true"
@@ -103,6 +103,7 @@
 <script>
 import { _queryRegister, _register } from '@/api/user';
 import loginRegister from '@/components/loginRegister/index.vue';
+import accountName from '@/utils/accountName';
 
 export default {
   components: { loginRegister },
@@ -145,16 +146,7 @@ export default {
     },
     username(name) {
       const usernameReg = /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/;
-      const nameRules = [
-        /^user$/,
-        /^accounts$/,
-        /^login$/,
-        /^register$/,
-        /^password_reset$/,
-        /^404$/,
-        /^500$/,
-        /^new$/,
-      ];
+      const nameRules = accountName;
       const verifyName = (nameRule) => {
         return nameRule.test(name);
       };
@@ -328,12 +320,8 @@ export default {
   width: 100%;
   position: relative;
 }
-.register-poptip-content {
-  display: flex;
-  flex-wrap: wrap;
-}
 .register-poptip-content-progress {
-  margin: 0.7rem 0;
+  margin: 0 0 3px 0;
 }
 </style>
 <style >

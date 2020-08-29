@@ -53,9 +53,7 @@ export default {
   },
   methods: {
     // 搜索内容发送变化
-    contentChange(value) {
-      const search = value.replace(/(^\s*)|(\s*$)/g, '');
-      if (search) this.asyncSearch(search);
+    contentChange() {
     },
     // 异步搜索
     async asyncSearch(title) {
