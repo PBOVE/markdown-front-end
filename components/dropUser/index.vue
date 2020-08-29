@@ -6,12 +6,17 @@
 
 <template>
   <transition name="userDrop">
-    <div v-show="model" class="user-drop-box" @click.stop>
+    <div class="user-drop-box" @click.stop>
       <Spin v-show="loading" fix />
       <div class="box-header">
         <div class="header-content">
-          <img v-if="storeImages" :src="storeImages" class="box-header-image" />
-          <div v-else class="header-nickname">{{ storeUser.nickName|userName }}</div>
+          <head-portrait-show
+            class="header-protrait"
+            :images="storeImages"
+            :name="storeUser.nickName"
+            :width="80"
+            :height="80"
+          />
           <div class="header-icon-wrap">
             <div class="header-icon" @click="openHeadPortrait">
               <Icon type="ios-camera" size="18" />
@@ -35,24 +40,13 @@
 
 <script>
 // 点击上传照片
-import headPortrait from '@/components/headPortrait/index.vue';
+import headPortrait from '@/components/headPortrait/setting.vue';
 import { mapGetters } from 'vuex';
 import { _logout } from '@/api/user';
+import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
-  components: { headPortrait },
-  filters: {
-    userName(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
-  },
-  model: {
-    prop: 'model',
-    event: 'model-event',
-  },
-  props: {
-    model: Boolean,
-  },
+  components: { headPortrait, headPortraitShow },
   data() {
     return {
       // 修改照片
@@ -64,22 +58,7 @@ export default {
   computed: {
     ...mapGetters('user', ['storeUser', 'storeImages']),
   },
-  mounted() {
-    window.addEventListener('click', this.globalEvent);
-  },
-  beforeDestroy() {
-    window.removeEventListener('click', this.globalEvent);
-  },
   methods: {
-    // 注册全局事件
-    globalEvent(evnet) {
-      const target = evnet.target;
-      if (target.dataset.userPortrait === 'true') {
-        this.$emit('model-event', !this.model);
-      } else {
-        this.$emit('model-event', false);
-      }
-    },
     // 打开修改照片
     openHeadPortrait() {
       this.headPortrait = true;
@@ -120,19 +99,6 @@ export default {
   position: relative;
   display: inline-block;
   font-size: 0;
-}
-.box-header-image,
-.header-nickname {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-.header-nickname {
-  line-height: 80px;
-  font-size: 22px;
-  font-family: Georgia;
-  color: #dff6f0;
-  background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
 }
 .box-main-button,
 .header-icon-wrap,

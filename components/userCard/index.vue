@@ -8,8 +8,12 @@
   <Poptip trigger="hover" placement="bottom-start" :width="width" :transfer="true">
     <slot />
     <div slot="title" class="index-page-flex-middle">
-      <img v-if="images" :src="'/api/storage/preview/' + images" class="path-poptip-image" />
-      <div v-else class="path-poptip-portrait index-page-flex-middle">{{ nickName|nickName }}</div>
+      <head-portrait-show
+        :images="images"
+        :name="nickName"
+        :width="60"
+        :height="60"
+      />
       <div style="margin:5px 0px 0 15px;">
         <div style="font-size:16px;font-weight:bold; letter-spacing: 0.05em;">{{ nickName }}</div>
         <div style="font-size:16px;  letter-spacing: 0.05em;">{{ userName }}</div>
@@ -28,12 +32,10 @@
 </template>
 
 <script>
+import headPortraitShow from '@/components/headPortrait/show.vue';
+
 export default {
-  filters: {
-    nickName(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
-  },
+  components: { headPortraitShow },
   props: {
     images: {
       type: [String, undefined],
@@ -81,16 +83,4 @@ export default {
 </script>
 
 <style scoped>
-.path-poptip-portrait,
-.path-poptip-image {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-}
-.path-poptip-portrait {
-  justify-content: center;
-  color: #fff;
-  font-size: 30px;
-  background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
-}
 </style>

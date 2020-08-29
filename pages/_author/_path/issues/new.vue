@@ -8,8 +8,12 @@
   <div class="issues-new-wrap">
     <div class="issues-new-left">
       <div class="issues-new-image">
-        <img v-if="storeImages" :src="storeImages" />
-        <div v-else class="main-user-portrait">{{ storeNickName|filterNume }}</div>
+        <head-portrait-show
+          :images="storeImages"
+          :name="storeNickName"
+          :width="30"
+          :height="30"
+        />
       </div>
       <div class="issues-new-content">
         <div class="issues-new-content-header">
@@ -36,17 +40,13 @@
 import { mapGetters } from 'vuex';
 import modifyEdit from '@/components/EditorMarkdown/modify.vue';
 import { _newIssues } from '@/api/issues';
+import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
   validate({ store }) {
     return store.state.user.data.authentication;
   },
-  components: { modifyEdit },
-  filters: {
-    filterNume(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
-  },
+  components: { modifyEdit, headPortraitShow },
   data() {
     return {
       // 作者
@@ -98,15 +98,6 @@ export default {
 }
 .issues-new-image {
   margin: 0 20px 0 0;
-}
-.issues-new-image div,
-.issues-new-image img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-.issues-new-image div {
-  font-size: 20px;
 }
 .issues-new-content {
   flex: 1;

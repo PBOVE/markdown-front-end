@@ -57,11 +57,6 @@ import indexList from '@/components/_path/indexList.vue';
 export default {
   transition: 'fade',
   components: { indexList },
-  filters: {
-    name(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
-  },
   data() {
     return {
       // 标题

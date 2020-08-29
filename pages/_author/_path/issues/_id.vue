@@ -81,8 +81,12 @@
             :to="'/'+value._id"
             :title="value.userName"
           >
-            <img v-if="value.images" class="main-user-image" :src="imageLink + value.images" />
-            <div v-else class="main-user-portrait">{{ value.nickName | filterNume }}</div>
+            <head-portrait-show
+              :images="value.images"
+              :name="value.nickName"
+              :width="30"
+              :height="30"
+            />
           </nuxt-link>
         </div>
         <Divider />
@@ -102,18 +106,14 @@ import { _issuesDetails, _comment, _deleteIssues } from '@/api/issues';
 import issuesCard from '@/components/_path/issuesCard.vue';
 import issuesBorder from '@/components/_path/issuesBorder.vue';
 import modifyEdit from '@/components/EditorMarkdown/modify.vue';
+import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
-  components: { issuesCard, issuesBorder, modifyEdit },
+  components: { issuesCard, issuesBorder, modifyEdit, headPortraitShow },
   validate({ params }) {
     const { id } = params;
     const reg = new RegExp('^[0-9a-fA-F]{24}$');
     return reg.test(id);
-  },
-  filters: {
-    filterNume(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
   },
   async asyncData({ params }) {
     const { id } = params;

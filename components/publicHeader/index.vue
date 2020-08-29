@@ -18,19 +18,14 @@
       <nuxt-link v-if="storeUserState" :to="userPage" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
-      <div
-        v-if="storeUserState"
-        class="user-portrait-wrap"
-        data-user-portrait="true"
-        :class="{'borderColor':userDropDown}"
-      >
-        <img
-          v-if="storeImages"
-          :src="storeImages"
-          class="main-user-rotate-image"
-          data-user-portrait="true"
+      <div v-if="storeUserState" @click.stop="openDropUser">
+        <head-portrait-show
+          :images="storeImages"
+          :name="storeNickName"
+          :width="30"
+          :height="30"
+          :select="true"
         />
-        <div v-else class="main-user-portrait" data-user-portrait="true">{{ storeNickName|nickName }}</div>
       </div>
       <div v-else>
         <nuxt-link to="/login">
@@ -38,7 +33,7 @@
         </nuxt-link>
       </div>
     </div>
-    <drop-user v-model="userDropDown" />
+    <drop-user v-show="userDropDown" />
   </div>
 </template>
 
@@ -47,14 +42,10 @@ import { mapGetters } from 'vuex';
 import dropUser from '@/components/dropUser/index.vue';
 import weatherView from '@/components/publicHeader/weather.vue';
 import searchView from '@/components/publicHeader/search.vue';
+import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
-  components: { dropUser, weatherView, searchView },
-  filters: {
-    nickName(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
-  },
+  components: { dropUser, weatherView, searchView, headPortraitShow },
   props: {
     shadow: {
       type: Boolean,
@@ -85,6 +76,21 @@ export default {
       return `/${this.storeUserName}`;
     },
   },
+  mounted() {
+    window.addEventListener('click', this.globalEvent);
+  },
+  beforeDestroy() {
+    window.removeEventListener('click', this.globalEvent);
+  },
+  methods: {
+    // 注册全局事件
+    globalEvent() {
+      if (this.userDropDown) this.userDropDown = false;
+    },
+    openDropUser() {
+      this.userDropDown = !this.userDropDown;
+    },
+  },
 };
 </script>
 
@@ -101,17 +107,6 @@ export default {
 }
 .public-header-right {
   font-size: 16px;
-}
-.user-portrait-wrap {
-  border: 3px solid transparent;
-  border-radius: 50%;
-  transition: border 0.3s;
-  font-family: Georgia;
-  font-size: 0;
-  cursor: pointer;
-}
-.user-portrait-wrap:hover {
-  border-color: #c5c8ce;
 }
 .borderColor {
   border-color: #c5c8ce;

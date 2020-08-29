@@ -12,7 +12,7 @@
         <div class="middle">
           <Icon v-if="storeArticle.share" type="ios-podium-outline" class="path-header-icon" />
           <Icon v-else type="ios-lock-outline" class="path-header-icon" />
-          <userCard
+          <user-card
             :images="user.images"
             :nick-name="user.nickName"
             :user-name="user.userName"
@@ -24,7 +24,7 @@
               :to="'/' + storeArticle.author"
               class="path-header-title"
             >{{ storeArticle.author }}</nuxt-link>
-          </userCard>
+          </user-card>
           <span class="path-header-line">/</span>
           <span>{{ storeArticle.title }}</span>
           <span v-if="storeSelectPost.title" class="path-header-line">/</span>

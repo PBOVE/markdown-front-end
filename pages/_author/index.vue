@@ -83,7 +83,6 @@ export default {
   .index-content {
     flex-direction: column;
     align-items: center;
-    padding: 5px 18px 0;
   }
   .index-content-left,
   .index-content-right {

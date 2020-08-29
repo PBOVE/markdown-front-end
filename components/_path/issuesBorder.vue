@@ -7,8 +7,12 @@
 <template>
   <div class="issues-border">
     <div class="index-page-flex-middle issues-border-left">
-      <img v-if="images" :src="imageLink + images" class="issues-border-image" />
-      <div v-else-if="title" class="main-user-portrait">{{ title|name }}</div>
+      <head-portrait-show
+        :images="images"
+        :name="title"
+        :width="30"
+        :height="30"
+      />
     </div>
     <div class="issues-border-right">
       <slot />
@@ -17,14 +21,20 @@
 </template>
 
 <script>
+import headPortraitShow from '@/components/headPortrait/show.vue';
+
 export default {
-  filters: {
-    name(name) {
-      return name ? name[0].toUpperCase() : '';
+  components: { headPortraitShow },
+  props: {
+    images: {
+      type: String,
+      default: ''
     },
+    title: {
+      type: String,
+      default: ''
+    }
   },
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['images', 'title'],
   data() {
     return {
       imageLink: '/api/storage/preview/',

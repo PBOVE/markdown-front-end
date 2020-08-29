@@ -6,8 +6,14 @@
 
 <template>
   <div class="project-header-wrap index-page-flex-middle index-text-hidden">
-    <img v-if="images&&link" :src="'/api/storage/preview/'+images" class="main-user-image margin" />
-    <div v-else-if="link" class="main-user-portrait margin">{{ name|name }}</div>
+    <head-portrait-show
+      v-if="link"
+      :images="images"
+      :name="name"
+      :width="25"
+      :height="25"
+      style="margin:0 10px 0 0;"
+    />
     <nuxt-link v-if="link" :to="'/' + link" class="margin project-header-name">{{ name }}</nuxt-link>
     <div class="margin project-header-time" :title="$timeConversion(time)">{{ time|TimeFilter }}</div>
     <div class="margin project-header-title index-text-hidden">{{ title }}</div>
@@ -15,12 +21,10 @@
 </template>
 
 <script>
+import headPortraitShow from '@/components/headPortrait/show.vue';
+
 export default {
-  filters: {
-    name(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
-  },
+  components: { headPortraitShow },
   props: {
     images: { type: String, default: '' },
     name: { type: String, default: '' },

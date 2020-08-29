@@ -100,7 +100,7 @@
           </RadioGroup>
         </div>
         <Divider />
-        <Button type="success" :loading="loading" @click="handleSubmit">新 建</Button>
+        <Button type="success" style="margin:30px 0" :loading="loading" @click="handleSubmit">新 建</Button>
       </div>
     </div>
   </div>

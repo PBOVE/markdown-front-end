@@ -18,8 +18,12 @@
             <div class="user-row-content user-row-content-tip">更改照片，可帮助您个性化您的帐号</div>
           </div>
           <div class="user-middle-right layout-middle-img">
-            <img v-if="storeImages" :src="storeImages" class="msg-row-image" />
-            <div v-else class="msg-row-Nimage">{{ storeUser.nickName|userName }}</div>
+            <head-portrait-show
+              :images="storeImages"
+              :name="storeUser.nickName"
+              :width="60"
+              :height="60"
+            />
             <div class="msg-row-image-camera">
               <Icon type="ios-camera" size="20" color="#c5c8ce" />
             </div>
@@ -105,16 +109,14 @@
 
 <script>
 // 点击上传照片
-import headPortrait from '@/components/headPortrait/index.vue';
+import headPortrait from '@/components/headPortrait/setting.vue';
+import headPortraitShow from '@/components/headPortrait/show.vue';
 import { mapGetters } from 'vuex';
 
 export default {
   transition: 'fade',
-  components: { headPortrait },
+  components: { headPortrait, headPortraitShow },
   filters: {
-    userName(name) {
-      return name ? name[0].toUpperCase() : '';
-    },
     TimeConversion(time) {
       const date = new Date(time);
       const completion = (num) => {
@@ -143,20 +145,6 @@ export default {
 </script>
 
 <style scoped>
-.msg-row-image,
-.msg-row-Nimage {
-  height: 60px;
-  width: 60px;
-}
-.msg-row-Nimage {
-  font-family: Georgia;
-  font-size: 18px;
-  text-align: center;
-  line-height: 60px;
-  color: #dff6f0;
-  font-weight: bold;
-  background: linear-gradient(130deg, #5c2a9d, #0779e4 80%);
-}
 .layout-middle-img {
   flex-shrink: 0;
   position: relative;
