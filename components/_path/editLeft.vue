@@ -9,7 +9,7 @@
     <div class="header index-page-flex-middle">
       <div class="header-left">目录</div>
       <div class="header-right">
-        <Dropdown placement="bottom-start" @on-click="DropdownAddSelect">
+        <Dropdown placement="bottom-start" @on-click="DropdownSelect">
           <Icon type="md-add" size="16" class="header-right-icon" />
           <DropdownMenu slot="list">
             <DropdownItem
@@ -20,30 +20,6 @@
             >
               <img :src="item.src" class="header-list-svg" />
               <span>{{ item.name }}</span>
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        <Dropdown placement="bottom-start" @on-click="DropdownSortSelect">
-          <Icon type="md-more" size="16" class="header-right-icon" />
-          <DropdownMenu slot="list">
-            <DropdownItem
-              v-for="(item,index) in sortList"
-              :key="index"
-              class="index-page-flex-middle header-list"
-              :name="index"
-            >
-              <img :src="item.src" class="header-list-svg" />
-              <span>{{ item.name }}</span>
-              <Icon
-                v-if="index * 2 === storeArticle.sort"
-                type="md-arrow-round-up"
-                class="header-list-sort-type"
-              />
-              <Icon
-                v-if="index * 2 + 1 === storeArticle.sort"
-                type="md-arrow-round-down"
-                class="header-list-sort-type"
-              />
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -82,10 +58,8 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { _queryPostList, _queryPostListRoot, _newPost, _updatePost, _deletePost } from '@/api/post';
-import { _updateArticle } from '@/api/article';
+import { _queryPostList, _newPost, _updatePost, _deletePost } from '@/api/post';
 import dropDownList from '@/components/dropDownList/index.vue';
-
 export default {
   components: { dropDownList },
   data() {
@@ -100,8 +74,8 @@ export default {
       treeId: 0,
       // 添加列表
       addList: [
-        { src: require('@/assets/svg/file.svg'), name: '新建分组' },
-        { src: require('@/assets/svg/note.svg'), name: '新建文档' },
+        { src: require('@/assets/svg/file.svg'), name: '新建分组', },
+        { src: require('@/assets/svg/note.svg'), name: '新建文档', },
       ],
       // 添加列表 偏移量
       ATop: 0,
@@ -110,7 +84,7 @@ export default {
       // 更多列表
       moreList: [
         { src: require('@/assets/svg/rename.svg'), name: '重命名' },
-        { src: require('@/assets/svg/delete.svg'), name: '删除' },
+        { src: require('@/assets/svg/delete.svg'), name: '删除', },
       ],
       // 更多列表 偏移量
       MTop: 0,
@@ -118,8 +92,9 @@ export default {
       MShow: false,
       // 排序列表
       sortList: [
-        { src: require('@/assets/svg/date.svg'), name: '修改日期' },
-        { src: require('@/assets/svg/name.svg'), name: '文档名称' },
+        { name: '创建时间' },
+        { name: '更新时间' },
+        { name: '文档名称' },
       ],
       // 更新选择的节点
       selectData: '',
@@ -136,11 +111,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('author', [
-      'storeSelectPost',
-      'storeArticleList',
-      'storeArticle',
-    ]),
+    ...mapGetters('author', ['storeSelectPost', 'storeArticleList']),
   },
   watch: {
     $route(to) {
@@ -153,16 +124,12 @@ export default {
     },
   },
   created() {
-    this.initData();
+    let list = this.storeArticleList;
+    list = JSON.parse(JSON.stringify(list));
+    this.treeData = this.handleDate(list);
   },
   methods: {
     ...mapMutations('author', ['setSelectPost']),
-    // 初始化 数据
-    initData() {
-      let list = this.storeArticleList;
-      list = JSON.parse(JSON.stringify(list));
-      this.treeData = this.handleDate(list);
-    },
     // 滚动条滚动
     mainScroll() {
       this.scrollTop = this.$refs.mainRef.scrollTop;
@@ -349,8 +316,18 @@ export default {
       return childData;
     },
     // 处理下拉列表选择
-    async DropdownAddSelect(name) {
-      const params = this.handleAddParams(name);
+    async DropdownSelect(name) {
+      const params = {
+        author: this.author,
+        path: this.path,
+      };
+      if (name === '新建分组') {
+        params.name = '新建分组';
+        params.type = 'file';
+      } else if (name === '新建文档') {
+        params.name = '新建文档';
+        params.type = 'note';
+      }
       const { data } = await _newPost(params);
       const [newNode] = this.handleDate([data]);
       newNode.render = this.renderData;
@@ -377,14 +354,14 @@ export default {
     // 选中 添加 列表
     async selectAddList(name) {
       this.loading = true;
+      const params = { author: this.author, path: this.path };
       if (
         this.selectData.loading !== undefined &&
         !this.selectData.children.length
       ) {
         this.$set(this.selectData, 'loading', true);
         const { data: child } = await _queryPostList({
-          author: this.author,
-          path: this.path,
+          ...params,
           id: this.selectData.id,
         });
         const childData = this.handleDate(child);
@@ -392,7 +369,13 @@ export default {
         this.$set(this.selectData, 'loading', false);
         this.$set(this.selectData, 'expand', true);
       }
-      const params = this.handleAddParams(name);
+      if (name === '新建分组') {
+        params.name = '新建分组';
+        params.type = 'file';
+      } else if (name === '新建文档') {
+        params.name = '新建文档';
+        params.type = 'note';
+      }
       params.parentId = this.selectData.id;
       const { data } = await _newPost(params);
       const [newNode] = this.handleDate([data]);
@@ -407,18 +390,6 @@ export default {
         inputDom.setSelectionRange(0, 4);
       });
       this.loading = false;
-    },
-    // 处理添加参数
-    handleAddParams(name) {
-      const params = { author: this.author, path: this.path };
-      if (name === '新建分组') {
-        params.name = '新建分组';
-        params.type = 'file';
-      } else if (name === '新建文档') {
-        params.name = '新建文档';
-        params.type = 'note';
-      }
-      return params;
     },
     // 修改名称
     modifyTitle(node) {
@@ -459,7 +430,7 @@ export default {
       await _updatePost(params);
     },
     // 删除节点名称
-    async deleteNode(root, node, data) {
+    async  deleteNode(root, node, data) {
       const params = { author: this.author, path: this.path, id: data.id };
       await _deletePost(params);
       if (node.parent) {
@@ -488,27 +459,6 @@ export default {
         this.$router.push(`/${this.author}/${this.path}/edit/${data.id}`);
       } else this.$router.push(`/${this.author}/${this.path}/edit`);
     },
-    // 处理排序选择
-    async DropdownSortSelect(type) {
-      let sort = this.storeArticle.sort;
-      sort ^= 1;
-      if (type === 0) {
-        sort -= Math.floor(sort / 2) * sort;
-      } else {
-        sort = ((Math.floor(sort / 2) + 1) % 2) * 2 || sort;
-      }
-      const { author, path, id } = this.$route.params;
-      const params = { author, path, sort };
-      const { data: article } = await _updateArticle(params);
-      this.$store.commit('author/setArticle', article);
-      const { data } = await _queryPostListRoot({ author, path, id });
-      this.$store.commit('author/setArticleList', [
-        { _id: 0, name: '首页', type: 'home' },
-        ...data.list,
-      ]);
-      this.initData();
-    },
-
   },
 };
 </script>
@@ -556,7 +506,7 @@ export default {
   width: 18px;
   height: 18px;
 }
-.header-list-sort-type {
-  margin: 0 0 0 7px;
+.header-list-sort-type{
+margin: 0 0 0 7px;
 }
 </style>
