@@ -52,26 +52,15 @@ export default {
   },
   methods: {
     // 保存
-    // eslint-disable-next-line require-await
-    async handleSave(content) {
+    handleSave(content) {
       this.$emit('on-save', content);
     },
     // 上传照片
     async handleUploadImage(_event, insertImage, files) {
       const fileData = new FormData();
-      // files.forEach(file => {
-      //   fileData.append("file", file);
-      // });
       fileData.append('file', files[0]);
       try {
         const { data } = await _uploadFile(fileData);
-        // const images = [];
-        // files.forEach((file, index) => {
-        //   images.push({
-        //     url: `/api/storage/preview/${data[index]}`,
-        //     desc: file.name.replace(/\..+/, ""),
-        //   });
-        // });
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
           desc: files[0].name.replace(/\..+/, ''),

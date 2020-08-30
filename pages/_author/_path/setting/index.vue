@@ -18,6 +18,16 @@
       <input v-model="description" type="text" class="setting-input" />
       <div class="setting-input-suffix">{{ descriptionSize }}</div>
     </div>
+    <div class="setting-title">文档排序</div>
+    <div class="setting-input-wrap">
+      <Select v-model="sort" placeholder="">
+        <Option
+          v-for="(item) in sortList"
+          :key="item.value"
+          :value="item.value"
+        >{{ item.label }}</Option>
+      </Select>
+    </div>
     <button
       class="main-success-button setting-button"
       :style="{background: loading?'#2ea44f88':''}"
@@ -41,6 +51,14 @@ export default {
       // 名称
       description: '',
       descriptionSize: '0/60',
+      // 排序
+      sort: 0,
+      sortList: [
+        { label: '修改日期 [ 升序 ]', value: 0 },
+        { label: '修改日期 [ 降序 ]', value: 1 },
+        { label: '文档名称 [ 升序 ]', value: 2 },
+        { label: '文档名称 [ 降序 ]', value: 3 },
+      ],
       // 加载
       loading: false,
     };
@@ -63,6 +81,12 @@ export default {
       },
       immediate: true,
     },
+    'storeArticle.sort': {
+      handler(value) {
+        this.sort = value;
+      },
+      immediate: true,
+    },
   },
   methods: {
     // 更新
@@ -74,6 +98,9 @@ export default {
       }
       if (this.description !== this.storeArticle.description) {
         params.description = this.description;
+      }
+      if (this.sort !== this.storeArticle.sort) {
+        params.sort = this.sort;
       }
       if (JSON.stringify(params) === '{}') return;
       this.loading = true;
@@ -142,5 +169,20 @@ export default {
   .setting-input {
     width: 100%;
   }
+}
+</style>
+<style >
+.setting-input-wrap .ivu-select-selection{
+  padding: 2px 0 0;
+  margin: 2px 0 0 0;
+  width: 400px;
+  height: 33px;
+  text-indent: 0.2em;
+  background: #fafbfc;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
+  border-radius: 4px;
+  outline: none;
 }
 </style>
