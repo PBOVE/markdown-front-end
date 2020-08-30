@@ -20,12 +20,8 @@
     </div>
     <div class="setting-title">文档排序</div>
     <div class="setting-input-wrap">
-      <Select v-model="sort" placeholder="">
-        <Option
-          v-for="(item) in sortList"
-          :key="item.value"
-          :value="item.value"
-        >{{ item.label }}</Option>
+      <Select v-model="sort" placeholder>
+        <Option v-for="(item) in sortList" :key="item.value" :value="item.value">{{ item.label }}</Option>
       </Select>
     </div>
     <button
@@ -171,8 +167,8 @@ export default {
   }
 }
 </style>
-<style >
-.setting-input-wrap .ivu-select-selection{
+<style>
+.setting-input-wrap .ivu-select-selection {
   padding: 2px 0 0;
   margin: 2px 0 0 0;
   width: 400px;
@@ -184,5 +180,20 @@ export default {
     inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
   border-radius: 4px;
   outline: none;
+}
+@media screen and (max-width: 800px) {
+  .setting-input-wrap .ivu-select-selection {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .setting-input-wrap .ivu-select-selection {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .setting-input-wrap .ivu-select-selection {
+    width: 100%;
+  }
 }
 </style>
