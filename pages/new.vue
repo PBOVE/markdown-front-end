@@ -33,8 +33,13 @@
             <div class="row-title row-person row-person-title">创建者</div>
             <div class="row-flex">
               <div class="row-person row-middle row-border">
-                <img :src="storeImages" class="row-person-img" />
-                <span>{{ storeUserName }}</span>
+                <head-portrait-show
+                  :images="storeImages"
+                  :name="storeNickName"
+                  :width="20"
+                  :height="20"
+                />
+                <span>{{ }}</span>
               </div>
               <span class="row-line">/</span>
             </div>
@@ -111,12 +116,13 @@ import { mapGetters } from 'vuex';
 import { _newArticle } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
 import selectBox from '@/components/selectBox/index.vue';
+import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
   validate({ store }) {
     return store.state.user.data.authentication;
   },
-  components: { publicHeader, selectBox },
+  components: { publicHeader, selectBox, headPortraitShow },
   data() {
     return {
       // 选择器选择
@@ -147,7 +153,7 @@ export default {
   },
   // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters('user', ['storeUserName', 'storeImages']),
+    ...mapGetters('user', ['storeNickName', 'storeUserName', 'storeImages']),
   },
   // eslint-disable-next-line vue/order-in-components
   watch: {
@@ -272,12 +278,6 @@ export default {
 }
 .row-person {
   justify-content: center;
-}
-.row-person-img {
-  margin: 0 10px 0 0;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
 }
 .row-middle {
   display: flex;

@@ -26,12 +26,12 @@
             >{{ storeArticle.author }}</nuxt-link>
           </user-card>
           <span class="path-header-line">/</span>
-          <span>{{ storeArticle.title }}</span>
+          <span class="index-text-hidden">{{ storeArticle.title }}</span>
           <span v-if="storeSelectPost.title" class="path-header-line">/</span>
-          <span>{{ storeSelectPost.title }}</span>
+          <span class="index-text-hidden">{{ storeSelectPost.title }}</span>
           <div
             v-if="!storeArticle.share"
-            class="path-header-share"
+            class="path-header-share index-text-hidden"
           >{{ storeArticle.share|shareFilter }}</div>
         </div>
         <div class="middle">

@@ -6,13 +6,13 @@
 
 <template>
   <div class="select-box-wrap" tabindex="0" @blur="listShow=false">
-    <div class="select-selection middle-center" @click="listShow=!listShow">
+    <div ref="listShow" class="select-selection index-page-flex-middle" @click="listShow=!listShow">
       <span style="color:#24292e;font-weight: 500;opacity: .75;">{{ headerTitle }}:</span>
-      <span style="margin:0 3px;">{{ select }}</span>
+      <span style="margin:0 3px;flex:1;">{{ select }}</span>
       <Icon type="md-arrow-dropdown" />
     </div>
     <transition name="list">
-      <div v-show="listShow" class="select-ul-wrap" :style="{width:listWidth}">
+      <div v-show="listShow" class="select-ul-wrap" :style="{width:listWidth,top:top+'px'}">
         <div class="select-ul">
           <div class="select-ul-header border">
             <span>选择{{ headerTitle }}</span>
@@ -39,33 +39,40 @@
 export default {
   model: {
     prop: 'parent',
-    event: 'parent-event',
   },
   props: {
     // eslint-disable-next-line vue/require-default-prop
-    list: Array,
-    // eslint-disable-next-line vue/require-default-prop
-    parent: String,
-    // eslint-disable-next-line vue/require-default-prop
-    default: String,
-    // eslint-disable-next-line vue/require-default-prop
-    headerTitle: String,
-    // eslint-disable-next-line vue/require-default-prop
-    listWidth: String,
+    list: { type: Array, default: () => [] },
+    parent: { type: [String, Number], default: '' },
+    default: { type: String, default: '' },
+    headerTitle: { type: String, default: '' },
+    listWidth: { type: String, default: '' },
   },
   data() {
     return {
-      // 选择
-      select: this.default,
       // 列表展示
       listShow: false,
+      // 设置底部
+      top: 32,
     };
+  },
+  computed: {
+    select() {
+      return this.list.find(el => el.value === this.parent).label;
+    },
+  },
+  mounted() {
+    const innerHeight = window.innerHeight;
+    const pos = this.$elementOffset(this.$refs.listShow);
+    if (pos.top + (this.list.length + 2) * 32 >= innerHeight) {
+      this.top = -1 * (this.list.length + 1.7) * 32;
+    }
+    console.log(pos.top, (this.list.length + 2) * 32, innerHeight);
   },
   methods: {
     handleClick(item) {
       if (this.select === item.label) return;
-      this.select = item.label;
-      this.$emit('parent-event', item.value);
+      this.$emit('input', item.value);
       this.listShow = false;
     },
   },
@@ -95,7 +102,8 @@ export default {
   transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
   cursor: pointer;
 }
-.select-selection:hover {
+.select-selection:hover,
+.select-selection:focus {
   background-color: #f3f4f6;
 }
 .select-ul-wrap {
@@ -108,7 +116,7 @@ export default {
   background: #fff;
 }
 .select-ul {
-  margin: 8px 0 16px;
+  margin: 8px 0 0 0;
   width: 100%;
   border: 1px solid #e1e4e8;
   border-radius: 8px;

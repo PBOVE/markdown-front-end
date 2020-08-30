@@ -20,9 +20,7 @@
     </div>
     <div class="setting-title">文档排序</div>
     <div class="setting-input-wrap">
-      <Select v-model="sort" placeholder>
-        <Option v-for="(item) in sortList" :key="item.value" :value="item.value">{{ item.label }}</Option>
-      </Select>
+      <select-box v-model="sort" class="setting-select" header-title="排序" :list="sortList" />
     </div>
     <button
       class="main-success-button setting-button"
@@ -35,8 +33,10 @@
 <script>
 import { mapGetters } from 'vuex';
 import { _updateArticle } from '@/api/article';
+import selectBox from '@/components/selectBox/index.vue';
 
 export default {
+  components: { selectBox },
   data() {
     return {
       author: this.$route.params.author,
@@ -130,6 +130,9 @@ export default {
   display: inline-block;
   margin: 0 0 30px 0;
 }
+.setting-select {
+  width: 400px;
+}
 .setting-input {
   margin: 2px 0 0 0;
   padding: 0 40px 0 0;
@@ -143,17 +146,23 @@ export default {
   border-radius: 4px;
   outline: none;
 }
+.setting-input:hover,
+.setting-input:focus {
+  background-color: #f3f4f6;
+}
 .setting-input-suffix {
   position: absolute;
   top: 8px;
   right: 5px;
 }
 @media screen and (max-width: 800px) {
+  .setting-select,
   .setting-input {
     width: 400px;
   }
 }
 @media screen and (max-width: 650px) {
+  .setting-select,
   .setting-input {
     width: 300px;
   }
@@ -162,37 +171,8 @@ export default {
   .setting-input-wrap {
     width: 100%;
   }
+  .setting-select,
   .setting-input {
-    width: 100%;
-  }
-}
-</style>
-<style>
-.setting-input-wrap .ivu-select-selection {
-  padding: 2px 0 0;
-  margin: 2px 0 0 0;
-  width: 400px;
-  height: 33px;
-  text-indent: 0.2em;
-  background: #fafbfc;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
-    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
-  border-radius: 4px;
-  outline: none;
-}
-@media screen and (max-width: 800px) {
-  .setting-input-wrap .ivu-select-selection {
-    width: 400px;
-  }
-}
-@media screen and (max-width: 650px) {
-  .setting-input-wrap .ivu-select-selection {
-    width: 300px;
-  }
-}
-@media screen and (max-width: 500px) {
-  .setting-input-wrap .ivu-select-selection {
     width: 100%;
   }
 }
