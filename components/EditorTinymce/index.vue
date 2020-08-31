@@ -147,6 +147,6 @@ export default {
 }
 .tinymce-wrap .tox-menubar {
   height: 41px;
-  background: none !important;
+  background: #ffffff !important;
 }
 </style>

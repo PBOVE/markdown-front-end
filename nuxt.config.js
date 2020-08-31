@@ -8,15 +8,13 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css' }
     ],
-    script: [
-      { src: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js' }
-    ],
+    script: [ { src: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js' } ]
   },
   /**
    * 使用watchQuery属性可以监听参数字符串的更改
@@ -40,7 +38,7 @@ module.exports = {
     'plugins/api',
     'plugins/filter',
     { src: 'plugins/editor', ssr: false },
-    { src: 'plugins/vue-cropper', ssr: false },
+    { src: 'plugins/vue-cropper', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -52,19 +50,22 @@ module.exports = {
   modules: [ '@nuxtjs/axios', '@nuxtjs/proxy', 'cookie-universal-nuxt' ],
   axios: {
     proxy: true, // Can be also an object with default options
-    prefix: '/api',
+    prefix: '/api'
   },
 
   proxy: {
-    '/api': {
-      target: 'http://127.0.0.1:7001/',
+    '/api/storage': {
+      target: 'https://tibis.top/'
     },
+    '/api': {
+      target: 'http://127.0.0.1:7001/'
+    }
   },
   /**
    * router
    */
   router: {
-    middleware: [ 'auth', 'view', 'access' ],
+    middleware: [ 'auth', 'view', 'access' ]
   },
   /*
   ** Build configuration
@@ -73,13 +74,13 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    vendor: [ 'axios', 'vue-cropper' ], // 为防止重复打包
+    vendor: [ 'axios', 'vue-cropper' ] // 为防止重复打包
   },
   typescript: {
     typeCheck: {
       eslint: {
-        files: './**/*.{ts,js,vue}',
-      },
-    },
-  },
+        files: './**/*.{ts,js,vue}'
+      }
+    }
+  }
 };

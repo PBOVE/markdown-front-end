@@ -67,7 +67,6 @@ export default {
     if (pos.top + (this.list.length + 2) * 32 >= innerHeight) {
       this.top = -1 * (this.list.length + 1.7) * 32;
     }
-    console.log(pos.top, (this.list.length + 2) * 32, innerHeight);
   },
   methods: {
     handleClick(item) {

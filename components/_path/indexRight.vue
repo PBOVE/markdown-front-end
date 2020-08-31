@@ -8,12 +8,11 @@
       :style="{ padding: `8px 0 8px ${anchor.indent * 15 + 8}px` }"
       :title="anchor.title"
     >
-      <Icon v-if="anchor.indent & 1" type="md-remove" />
-      <Icon v-else type="md-add" />
-      <span class="index-text-hidden">{{ anchor.title }}</span>
-
+      <!-- <Icon v-if="anchor.indent % 3 === 1" type="md-remove" />
+      <Icon v-else type="md-add" /> -->
+      <span v-if="anchor.indent === 0" class="index-text-title">{{ anchor.title }}</span>
+      <span v-else class="index-text-hidden">{{ anchor.title }}</span>
     </div>
-
   </div>
 </template>
 
@@ -65,14 +64,14 @@ export default {
 .index-titles {
   cursor: pointer;
 }
-.index-right-wrap{
-  border: 1px solid #e1e4e8 ;
+.index-right-wrap {
+  border: 1px solid #e1e4e8;
   border-radius: 8px;
 }
 .index-titles:hover {
   background: #f8f8f9;
 }
-.index-titles i{
+.index-titles i {
   margin: 0 5px 0 0;
   font-size: 10px;
   font-weight: bold;
@@ -81,5 +80,8 @@ export default {
   padding: 11.5px 16px;
   font-weight: bold;
   font-size: 16px;
+}
+.index-text-title{
+  font-weight: bold;
 }
 </style>
