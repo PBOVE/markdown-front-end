@@ -1,9 +1,3 @@
-/**
-*
-*  @author ZTiger
-*
-*/
-
 <template>
   <div class="index-wrap">
     <div class="index-content">
@@ -33,9 +27,12 @@
         <nuxt-child />
       </div>
       <div class="index-right">
-        <div>
+        <div class="index-right-title index-between-modal">
+          <span>关于</span>
         </div>
-
+        <div class="index-description">{{ storeArticle.description }}</div>
+        <Divider />
+        <index-right />
       </div>
     </div>
     <BackTop />
@@ -45,10 +42,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import indexList from '@/components/_path/indexList.vue';
+import indexRight from '@/components/_path/indexRight.vue';
 
 export default {
   transition: 'fade',
-  components: { indexList },
+  components: { indexList, indexRight },
   data() {
     return {
       // 标题
@@ -70,19 +68,6 @@ export default {
     IslistId() {
       return !this.$route.params.id;
     },
-  },
-  mounted() {
-    // const { format } = this.storeArticle;
-    // if (format === "richText") {
-    //   this.handleRTitles();
-    // } else if (format === "markdown") {
-    //   this.$nextTick(() => {
-    //     this.handleMTitles();
-    //   });
-    // }
-  },
-  methods: {
-
   },
 };
 </script>
@@ -117,25 +102,6 @@ export default {
   flex: 1;
   width: 25%;
   padding: 0 0 0 20px;
-}
-.index-right-header {
-  padding: 16px 0;
-  font-weight: 600;
-}
-.index-titles {
-  cursor: pointer;
-}
-.index-titles::before {
-  content: '';
-  display: inline-block;
-  margin: 0 5px 0;
-  width: 5px;
-  height: 5px;
-  background: #000;
-  border-radius: 50%;
-}
-.index-titles:hover {
-  background: #f8f8f9;
 }
 .border {
   margin: 0 0 20px 0;
@@ -179,6 +145,14 @@ export default {
 }
 .split-line {
   margin: 0 0px 0 3px;
+}
+.index-right-title {
+  padding: 11.5px 16px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.index-description{
+  margin: 10px 0;
 }
 @media screen and (max-width: 1240px) {
   .index-content {

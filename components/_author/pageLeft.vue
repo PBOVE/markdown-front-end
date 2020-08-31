@@ -11,14 +11,14 @@
         <head-portrait-show
           class="header-protrait"
           :images="userImageSrc"
-          :name="storeAuthorUser.nickName"
+          :name="storeAuthor.nickName"
           :width="portraitWidth"
           :height="portraitHeight"
         />
       </div>
       <div class="middle">
-        <div class="middle-title">{{ storeAuthorUser.nickName }}</div>
-        <div class="middle-content">{{ storeAuthorUser.userName }}</div>
+        <div class="middle-title">{{ storeAuthor.nickName }}</div>
+        <div class="middle-content">{{ storeAuthor.userName }}</div>
       </div>
     </div>
     <div class="icon-wrap">
@@ -30,16 +30,16 @@
     </div>
     <div class="icon-wrap">
       <Icon type="ios-paper-outline" />
-      <span>{{ storeAuthorUser.signature||'未填写' }}</span>
+      <span>{{ storeAuthor.signature||'未填写' }}</span>
     </div>
     <Button
-      v-if="storeUser.userName===storeAuthorUser.userName"
+      v-if="storeUser.userName===storeAuthor.userName"
       style="width:100%"
       size="large"
       to="/user"
     >编辑</Button>
     <Button
-      v-else-if="storeAuthorNumber.isFans"
+      v-else-if="storeAuthor.isFans"
       style="width:100%"
       size="large"
       @click="handleButton"
@@ -48,15 +48,15 @@
     <div class="middle-number">
       <div class="middle-number-row">
         <Icon type="ios-people-outline" />
-        {{ storeAuthorUser.fans }} 粉丝
+        {{ storeAuthor.fans }} 粉丝
       </div>
       <div class="middle-number-row">
         <Icon type="ios-paw-outline" />
-        {{ storeAuthorUser.followes }} 关注
+        {{ storeAuthor.followes }} 关注
       </div>
       <div class="middle-number-row">
         <Icon type="ios-star-outline" />
-        {{ storeAuthorNumber.like }} 获赞
+        {{ storeAuthor.like }} 获赞
       </div>
     </div>
   </div>
@@ -78,12 +78,11 @@ export default {
   },
   computed: {
     userImageSrc() {
-      return this.storeAuthorUser.images;
+      return this.storeAuthor.images;
     },
     ...mapGetters('user', ['storeUser', 'storeUserState']),
     ...mapGetters('author', [
-      'storeAuthorUser',
-      'storeAuthorNumber',
+      'storeAuthor',
       'storeAuthorLocaltion',
     ]),
   },
@@ -112,8 +111,8 @@ export default {
     // 点击分享
     async handleButton() {
       if (!this.storeUserState) return this.$router.push('/login');
-      const username = this.storeAuthorUser.userName;
-      const isFans = this.storeAuthorNumber.isFans;
+      const username = this.storeAuthor.userName;
+      const isFans = this.storeAuthor.isFans;
       let data;
       if (isFans) data = await _unfollowAccount({ username });
       else data = await _followAccount({ username });

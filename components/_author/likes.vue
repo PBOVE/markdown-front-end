@@ -6,7 +6,7 @@
 
 <template>
   <div class="index-page-wrap">
-    <div class="index-page-header">{{ storeAuthorUser.nickName }}</div>
+    <div class="index-page-header">{{ storeAuthor.nickName }}</div>
     <div class="index-page-content">
       <div
         v-for="(item,index) in likes.content"
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['storeUserState']),
-    ...mapGetters('author', ['storeAuthorUser'])
+    ...mapGetters('author', ['storeAuthor'])
   },
   watch: {
     async $route(to) {

@@ -13,21 +13,17 @@
       :link="option.userName"
       :time="option.updateTime"
     />
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="storeFormat==='richText'" ref="editor" class="richText" v-html="content" />
-    <client-only v-if="storeFormat==='markdown'">
-      <v-md-preview ref="editor" height="100%" :text="content" />
-    </client-only>
+    <index-show :content="content" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { _queryPostListParent } from '@/api/post';
 import projectHeader from '@/components/_path/projectHeader.vue';
+import indexShow from '@/components/_path/indexShow.vue';
 
 export default {
-  components: { projectHeader },
+  components: { projectHeader, indexShow },
   validate({ params }) {
     const { id } = params;
     const reg = new RegExp('^[0-9a-fA-F]{24}$');
@@ -38,7 +34,7 @@ export default {
     const request = { author, path, id };
     const { data } = await _queryPostListParent(request);
     const { list, details, parent } = data;
-    const { content, updateTime, updateUser, name: title, } = details;
+    const { content, updateTime, updateUser, name: title } = details;
     const option = { updateTime, title, ...updateUser };
     let postList = [];
     const to = `/${author}/${path}`;
@@ -70,7 +66,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters('author', ['storeFormat']),
+
   },
   mounted() {
     // if (process.browser && this.storeFormat === 'richText') {

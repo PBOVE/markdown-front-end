@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 export const namespaced = true;
 
 export const state = () => ({
@@ -11,40 +12,41 @@ export const state = () => ({
   list: [],
   postList: [],
   parentList: [],
+  // 锚点
+  customAnchor: []
 });
 
 export const mutations = {
   setAuthor(state, data) {
-    state.author = JSON.parse(JSON.stringify(data));
+    state.author = cloneDeep(data);
   },
   setArticle(state, data) {
-    state.article = JSON.parse(JSON.stringify(data));
+    state.article = cloneDeep(data);
   },
   // 设置选中 Post
   setSelectPost(state, data) {
-    state.selectPost = JSON.parse(JSON.stringify(data));
+    state.selectPost = cloneDeep(data);
   },
   // 设置目录
   setArticleList(state, data) {
-    const list = JSON.stringify(data);
-    state.list = JSON.parse(list);
+    state.list = cloneDeep(data);
   },
   // 设置首页目录
   setPostList(state, data) {
-    const list = JSON.stringify(data);
-    state.postList = JSON.parse(list);
+    state.postList = cloneDeep(data);
   },
   // 设置父亲目录
   setParentList(state, data) {
-    const list = JSON.stringify(data);
-    state.parentList = JSON.parse(list);
+    state.parentList = cloneDeep(data);
   },
+  // 设置锚点
+  setCustomAnchor(state, data) {
+    state.customAnchor = cloneDeep(data);
+  }
 };
 export const getters = {
-  storeAuthorUser(state) {
-    return state.author;
-  },
-  storeAuthorNumber(state) {
+  // 作者
+  storeAuthor(state) {
     return state.author;
   },
   storeAuthorLocaltion(state) {
@@ -71,4 +73,7 @@ export const getters = {
   storeParentList(state) {
     return state.parentList;
   },
+  storeCustomAnchor(state) {
+    return state.customAnchor;
+  }
 };

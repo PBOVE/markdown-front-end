@@ -7,21 +7,17 @@
 <template>
   <div class="index-home">
     <project-header title="首页" :images="options.images" :name="options.nickName" :link="options.userName" :time="options.pdateTime" />
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="storeFormat==='richText'" ref="editor" class="richText" v-html="content" />
-    <client-only v-if="storeFormat==='markdown'">
-      <v-md-preview ref="editor" height="100%" :text="content" />
-    </client-only>
+    <index-show :content="content" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { _queryPostListParent } from '@/api/post';
+import indexShow from '@/components/_path/indexShow.vue';
 import projectHeader from '@/components/_path/projectHeader.vue';
 
 export default {
-  components: { projectHeader },
+  components: { projectHeader, indexShow },
   async asyncData({ params, store }) {
     const { author, path } = params;
     const { data } = await _queryPostListParent({ author, path });
@@ -37,9 +33,6 @@ export default {
   },
   data() {
     return {};
-  },
-  computed: {
-    ...mapGetters('author', ['storeFormat']),
   },
 };
 </script>

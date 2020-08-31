@@ -1,66 +1,35 @@
 <template>
-  <div>
-    <div v-if="titles.lengrh" class="index-right-header">目录</div>
+  <div class="index-right-wrap">
+    <div class="index-titles-header">目录</div>
     <div
-      v-for="(anchor,index) in titles"
+      v-for="(anchor,index) in storeCustomAnchor"
       :key="index"
       class="index-titles index-page-flex-middle"
-      :style="{ padding: `8px 0 8px ${anchor.indent * 15}px` }"
+      :style="{ padding: `8px 0 8px ${anchor.indent * 15 + 8}px` }"
       :title="anchor.title"
-      @click="handleAnchorClick(anchor)"
     >
+      <Icon v-if="anchor.indent & 1" type="md-remove" />
+      <Icon v-else type="md-add" />
       <span class="index-text-hidden">{{ anchor.title }}</span>
+
     </div>
+
   </div>
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex';
 
+export default {
+  data() {
+    return {
+      titles: [],
+    };
+  },
+  computed: {
+    ...mapGetters('author', ['storeCustomAnchor']),
+  },
   methods: {
-    // 处理 mankdown 语法编辑目录
-    handleMTitles() {
-      const anchors = this.$refs.editor.$el.querySelectorAll(
-        '.v-md-editor-preview h1,h2,h3,h4,h5,h6',
-      );
-      const titles = Array.from(anchors).filter(
-        title => !!title.textContent.trim(),
-      );
-      if (!titles.length) {
-        this.titles = [];
-        return;
-      }
-      const hTags = Array.from(
-        new Set(titles.map(title => title.tagName)),
-      ).sort();
-      this.titles = titles.map(el => ({
-        title: el.textContent,
-        lineIndex: el.getAttribute('data-v-md-line'),
-        indent: hTags.indexOf(el.tagName),
-      }));
-    },
-    // 处理富文本编辑器
-    handleRTitles() {
-      const anchors = this.$refs.editor.querySelectorAll('h1,h2,h3,h4,h5,h6');
-      const titles = Array.from(anchors).filter(
-        title => !!title.textContent.trim(),
-      );
-      if (!titles.length) {
-        this.titles = [];
-        return;
-      }
-      const hTags = Array.from(
-        new Set(titles.map(title => title.tagName)),
-      ).sort();
-      this.titles = titles.map((el, index) => {
-        el.setAttribute('data-v-rt-line', index + 1);
-        return {
-          title: el.textContent,
-          lineIndex: el.getAttribute('data-v-rt-line'),
-          indent: hTags.indexOf(el.tagName),
-        };
-      });
-    },
     // 处理点击
     handleAnchorClick(anchor) {
       const { editor } = this.$refs;
@@ -88,10 +57,29 @@ export default {
         behavior: 'smooth',
       });
     },
-  }
+  },
 };
 </script>
 
-<style>
-
+<style  scoped>
+.index-titles {
+  cursor: pointer;
+}
+.index-right-wrap{
+  border: 1px solid #e1e4e8 ;
+  border-radius: 8px;
+}
+.index-titles:hover {
+  background: #f8f8f9;
+}
+.index-titles i{
+  margin: 0 5px 0 0;
+  font-size: 10px;
+  font-weight: bold;
+}
+.index-titles-header {
+  padding: 11.5px 16px;
+  font-weight: bold;
+  font-size: 16px;
+}
 </style>

@@ -40,22 +40,19 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    ...mapGetters('author', ['storeArticle', 'storeSelectPost']),
+  },
+  beforeDestroy() {
+    this.setSelectPost({});
+  },
+  methods: {
+    ...mapMutations('author', ['setSelectPost']),
+  },
   head() {
     return {
       title: `编辑 · ${this.storeSelectPost.title || '首页'} ● TBS.feel`,
     };
-  },
-  // eslint-disable-next-line vue/order-in-components
-  computed: {
-    ...mapGetters('author', ['storeArticle', 'storeSelectPost']),
-  },
-  // eslint-disable-next-line vue/order-in-components
-  beforeDestroy() {
-    this.setSelectPost({});
-  },
-  // eslint-disable-next-line vue/order-in-components
-  methods: {
-    ...mapMutations('author', ['setSelectPost']),
   },
 };
 </script>
