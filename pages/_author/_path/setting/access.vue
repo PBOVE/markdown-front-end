@@ -9,7 +9,7 @@
     </div>
     <setting-access-modal v-model="modalShow" @on-success="userAddSuccess" />
     <div class="access-border">
-      <div v-for="(item,index) in cooperation" :key="item._id" class="box-row">
+      <div v-for="(item,index) in cooperation" :key="item.userName" class="box-row">
         <head-portrait-show :images="item.images" :name="item.nickName" :width="30" :height="30" />
         <div class="index-between-modal" style="margin:0 0 0 10px; flex:1;">
           <div>
