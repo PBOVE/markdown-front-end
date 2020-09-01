@@ -22,3 +22,6 @@ export const _articleUnLike = (params: any) => axios.$delete('/article/like', { 
 
 // 获取文章内容
 export const _articleDetails = (params: any) => axios.$get('/article/details', { params });
+
+// 文章用户查询
+export const _queryArticleUser = (params: any) => axios.$get('/article/user', { params });

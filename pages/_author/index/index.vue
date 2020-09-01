@@ -29,6 +29,8 @@ export default {
       const request = { author, page: page ? page - 1 : 0 };
       const { data } = await _queryAccountLike(request);
       likes = data;
+    } else {
+
     }
     return { articles, likes };
   },

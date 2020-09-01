@@ -3,70 +3,56 @@
   <div class="setting-access-wrap">
     <div class="setting-access-header">访问设置</div>
     <Divider />
-    <Select
-      v-model="userSelect"
-      clearable
-      filterable
-      class="setting-access-select"
-      placeholder="添加文档成员"
-      not-found-text="没有找到匹配项"
-      loading-text="加载中"
-      :loading="loading"
-      :remote-method="remoteMethod"
-    >
-      <Option
-        v-for="item in userList"
-        :key="item.userName"
-        class="setting-access-li"
-        :value="item.userName"
-        :label="item.userName"
-      >
+    <setting-access-modal v-model="modalShow" />
+    <div style="margin:20px 0;">
+      <Button type="success" @click="modalShow=true">邀请协作</Button>
+    </div>
+    <div class="access-border">
+      <div v-for="item in cooperation" :key="item._id" class="box-row">
         <head-portrait-show :images="item.images" :name="item.nickName" :width="30" :height="30" />
-        <div style="margin:0 0 0 10px;">
-          <div class="setting-access-user">{{ item.userName }}</div>
-          <div style="color:#515a6e;">{{ item.nickName }}</div>
+        <div class="index-between-modal" style="margin:0 0 0 10px; flex:1;">
+          <div>
+            <div class="setting-access-user">{{ item.userName }}</div>
+            <div style="color:#515a6e;">{{ item.nickName }}</div>
+          </div>
+          <div class="access-delete" @click="deleteAccess(item._id)">
+            <img src="@/assets/svg/trash.svg" width="20px" />
+          </div>
         </div>
-      </Option>
-    </Select>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryUser } from '@/api/query';
-import { debounce } from 'lodash';
+import { _queryArticleUser } from '@/api/article';
 import headPortraitShow from '@/components/headPortrait/show.vue';
+import settingAccessModal from '@/components/_path/settingAccessModal.vue';
 
 export default {
-  components: { headPortraitShow },
+  components: { settingAccessModal, headPortraitShow },
+  async asyncData({ params }) {
+    const { author, path } = params;
+    const { data: cooperation } = await _queryArticleUser({ author, path });
+    return { cooperation };
+  },
   data() {
     return {
       author: this.$route.params.author,
       path: this.$route.params.path,
-      // 用户选择
-      userSelect: '',
-      // 用户
-      userList: [],
-      // 加载
-      loading: false,
+      // 展示
+      modalShow: false,
     };
   },
   computed: {
     ...mapGetters('author', ['storeArticle']),
   },
   methods: {
-    remoteMethod(query) {
-      this.debounceSearch(query.replace(/(^\s*)|(\s*$)/g, ''));
-    },
-    // 防抖
-    debounceSearch: debounce(async function(account) {
-      if (!account) return;
-      this.loading = true;
-      const { data } = await _queryUser({ account });
-
-      this.loading = false;
-      this.userList = data;
-    }, 400),
+    // 删除
+    deleteAccess() {
+      // console.log(id);
+    }
   },
 };
 </script>
@@ -76,29 +62,31 @@ export default {
   font-size: 24px;
   padding: 0 0 8px;
 }
-.setting-access-li {
+.access-border {
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+}
+.box-row {
   display: flex;
-  color: #000;
+  align-items: center;
+  padding: 10px 20px;
+}
+.box-row:not(:last-of-type) {
+  border-bottom: 1px solid #e1e4e8;
 }
 .setting-access-user {
   font-size: 16px;
   font-weight: 600;
 }
-</style>
-<style >
-.setting-access-select {
-  width: 400px;
-  height: 33px;
+.access-delete {
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  border-radius: 8px;
+  transition: all 0.4s;
+  cursor: pointer;
 }
-.setting-access-select .ivu-select-selection {
-  background: #fafbfc;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
-    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
-  border-radius: 4px;
-  outline: none;
-}
-.setting-access-select .ivu-select-input{
-  color: #000;
+.access-delete:hover {
+  background: #e8eaec;
 }
 </style>

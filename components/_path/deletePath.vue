@@ -5,7 +5,7 @@
 */
 
 <template>
-  <Modal v-model="modalShow" footer-hide width="530" style="color:#000" :closable="false">
+  <Modal v-model="modalShow" footer-hide width="430" style="color:#000" :closable="false">
     <div class="index-between-modal">
       <div style="fontSize:16px; fontWeight: 600; ">删除文档</div>
       <Icon type="md-close" class="modal-close" size="16" @click="modalShow=false" />
@@ -84,12 +84,8 @@ export default {
 .highlight-black,
 .highlight-red {
   font-weight: bold;
-  border-bottom: 2px dashed red;
   word-break: break-all;
   letter-spacing: 0rem;
-}
-.highlight-black {
-  border-bottom: 2px dashed black;
 }
 .modal-footer {
   padding: 20px 0 0;
