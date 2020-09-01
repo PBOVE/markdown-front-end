@@ -3,19 +3,20 @@
   <div class="setting-access-wrap">
     <div class="setting-access-header">访问设置</div>
     <Divider />
-    <setting-access-modal v-model="modalShow" />
+
     <div style="margin:20px 0;">
       <Button type="success" @click="modalShow=true">邀请协作</Button>
     </div>
+    <setting-access-modal v-model="modalShow" @on-success="userAddSuccess" />
     <div class="access-border">
-      <div v-for="item in cooperation" :key="item._id" class="box-row">
+      <div v-for="(item,index) in cooperation" :key="item._id" class="box-row">
         <head-portrait-show :images="item.images" :name="item.nickName" :width="30" :height="30" />
         <div class="index-between-modal" style="margin:0 0 0 10px; flex:1;">
           <div>
             <div class="setting-access-user">{{ item.userName }}</div>
             <div style="color:#515a6e;">{{ item.nickName }}</div>
           </div>
-          <div class="access-delete" @click="deleteAccess(item._id)">
+          <div class="access-delete" @click="deleteAccess(item,index)">
             <img src="@/assets/svg/trash.svg" width="20px" />
           </div>
         </div>
@@ -26,7 +27,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryArticleUser } from '@/api/article';
+import { _queryArticleUser, _deleteArticleUser } from '@/api/article';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 import settingAccessModal from '@/components/_path/settingAccessModal.vue';
 
@@ -50,9 +51,27 @@ export default {
   },
   methods: {
     // 删除
-    deleteAccess() {
-      // console.log(id);
-    }
+    deleteAccess(item, index) {
+      this.$Modal.confirm({
+        title: `删除 ${item.userName}`,
+        content: '您 确 定 要 删 除 该 协 作 者 吗 ?',
+        loading: true,
+        okText: '确定',
+        cancelText: '取消',
+        onOk: async() => {
+          const { author, path } = this;
+          await _deleteArticleUser({ author, path, username: item.userName });
+          this.$delete(this.cooperation, index);
+          this.$Modal.remove();
+        },
+      });
+    },
+    // 添加用户成功
+    async userAddSuccess() {
+      const { author, path } = this;
+      const { data } = await _queryArticleUser({ author, path });
+      this.cooperation = data;
+    },
   },
 };
 </script>

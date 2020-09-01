@@ -25,3 +25,6 @@ export const _articleDetails = (params: any) => axios.$get('/article/details', {
 
 // 文章用户查询
 export const _queryArticleUser = (params: any) => axios.$get('/article/user', { params });
+
+// 文章删除用户
+export const _deleteArticleUser = (params: any) => axios.$delete('/article/user', { params });

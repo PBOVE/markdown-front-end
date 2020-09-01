@@ -41,6 +41,7 @@
       <Button
         type="success"
         style="width:100%;height:32px;"
+        :loading="buttonLoding"
         :disabled="!selectUser.userName"
         @click="addArticleUser"
       >邀请协作</Button>
@@ -80,6 +81,8 @@ export default {
       modalShow: false,
       // 选择
       select: '',
+      // 加载
+      buttonLoding: false
     };
   },
   computed: {
@@ -119,8 +122,9 @@ export default {
     },
     // 添加文档成员
     async addArticleUser() {
+      if (this.buttonLoding) return;
       try {
-        console.log(this.selectUser);
+        this.buttonLoding = true;
         const params = {
           username: this.selectUser.userName,
           author: this.author,
@@ -128,11 +132,9 @@ export default {
         };
         await _articleInvite(params);
         this.modalShow = false;
-        this.$Message.success({
-          background: true,
-          content: '发送成功',
-          duration: 5,
-        });
+        this.buttonLoding = false;
+        this.$Message.success({ background: true, content: '发送成功', duration: 5, });
+        this.$emit('on-success');
       } catch (err) {}
     },
   },
