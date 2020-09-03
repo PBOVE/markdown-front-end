@@ -9,7 +9,7 @@
     <div class="forget-from-wrap">
       <div style="text-align:left; margin-bottom:1.1rem;">更换密码</div>
       <Poptip word-wrap class="forget-poptip" trigger="focus" placement="top-start">
-        <div slot="content" class="forget-poptip-content">
+        <div slot="content">
           <div>强度: {{ strength }}</div>
           <Progress
             class="forget-poptip-content-progress"
@@ -203,10 +203,6 @@ export default {
 .forget-poptip {
   width: 100%;
   position: relative;
-}
-.forget-poptip-content {
-  display: flex;
-  flex-wrap: wrap;
 }
 .forget-poptip-content-progress {
   margin: 0.7rem 0;
