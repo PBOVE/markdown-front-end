@@ -149,4 +149,8 @@ export default {
   height: 41px;
   background: #ffffff !important;
 }
+.tox-fullscreen .tox.tox-tinymce.tox-fullscreen{
+  z-index: 1010!important;
+}
+
 </style>
