@@ -52,6 +52,8 @@ export default {
       sortList: [
         { label: '修改日期 [ 升序 ]', value: 0 },
         { label: '修改日期 [ 降序 ]', value: 1 },
+        { label: '创建日期 [ 升序 ]', value: 4 },
+        { label: '创建日期 [ 降序 ]', value: 5 },
         { label: '文档名称 [ 升序 ]', value: 2 },
         { label: '文档名称 [ 降序 ]', value: 3 },
       ],

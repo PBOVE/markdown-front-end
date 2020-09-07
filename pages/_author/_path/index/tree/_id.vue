@@ -59,6 +59,7 @@ export default {
     }
     store.commit('author/setPostList', postList);
     store.commit('author/setParentList', parent);
+    store.commit('author/setCustomAnchor', []);
     const isFile = details.type === 'file';
     return { content, option, isFile };
   },

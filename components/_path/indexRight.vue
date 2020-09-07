@@ -1,5 +1,5 @@
 <template>
-  <div class="index-right-wrap">
+  <div v-if="storeCustomAnchor.length" class="index-right-wrap">
     <div class="index-titles-header">目录</div>
     <div
       v-for="(anchor,index) in storeCustomAnchor"
@@ -8,8 +8,7 @@
       :style="{ padding: `8px 0 8px ${anchor.indent * 15 + 8}px` }"
       :title="anchor.title"
     >
-      <!-- <Icon v-if="anchor.indent % 3 === 1" type="md-remove" />
-      <Icon v-else type="md-add" /> -->
+      <span class="circle" />
       <span v-if="anchor.indent === 0" class="index-text-title">{{ anchor.title }}</span>
       <span v-else class="index-text-hidden">{{ anchor.title }}</span>
     </div>
@@ -83,5 +82,13 @@ export default {
 }
 .index-text-title{
   font-weight: bold;
+}
+.circle{
+  display: inline-block;
+  height: 5px;
+  width: 5px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #000;
 }
 </style>

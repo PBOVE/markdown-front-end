@@ -18,6 +18,16 @@ export default {
   computed: {
     ...mapGetters('author', ['storeFormat']),
   },
+  watch: {
+    content: {
+      handler(value) {
+        if (!value) return;
+        const format = this.storeFormat;
+        if (format === 'richText') this.handleRTitles();
+        else if (format === 'markdown') this.$nextTick(() => this.handleMTitles());
+      },
+    }
+  },
   mounted() {
     const format = this.storeFormat;
     if (format === 'richText') this.handleRTitles();
