@@ -58,7 +58,7 @@ module.exports = {
       target: 'https://tibis.top/'
     },
     '/api': {
-      target: 'http://127.0.0.1:7001/'
+      target: 'https://tibis.top/'
     }
   },
   /**
