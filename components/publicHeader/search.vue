@@ -5,28 +5,18 @@
 */
 
 <template>
-  <AutoComplete
-    v-model="inputData"
-    placeholder="搜索"
-    icon="ios-search"
-    :clearable="true"
-    :style="{display:searchHide?'none':''}"
-    @on-change="contentChange"
-    @on-select="handelSelect"
-  >
-    <Option
-      v-for="(item,index) in searchData"
-      :key="index"
-      class="search-ul"
-      :value="item.author + '/' + item.path"
+  <div>
+    <div
+      class="header-search-wrap"
+      :style="{width:`${width}%`,'border-bottom':width?'1px solid #dcdee2':''}"
+      @click="handleClick"
     >
-      <nuxt-link :to="'/' + item.author + '/' + item.path" class="search-li user-middle">
-        <Icon type="md-list-box" />
-        {{ item.author }} / {{ item.title }}
-        <span v-if="!item.share" class="search-private">仅文档成员可见</span>
-      </nuxt-link>
-    </Option>
-  </AutoComplete>
+      <input ref="inputRef" type="text" class="search-input" placeholder="搜索" @blur="handleBlur" />
+      <div class="button-icon-wrap main-center-middle">
+        <Icon type="ios-search" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -49,12 +39,13 @@ export default {
       // 数据加载中
       loading: false,
       asyncTitle: '',
+      // 宽度
+      width: 0,
     };
   },
   methods: {
     // 搜索内容发送变化
-    contentChange() {
-    },
+    contentChange() {},
     // 异步搜索
     async asyncSearch(title) {
       if (this.loading) {
@@ -73,32 +64,45 @@ export default {
       }
     },
     // 处理选择
-    handelSelect(value) {
+    handleSelect(value) {
       this.$router.push(`/${value}`);
+    },
+    // 处理获取焦点
+    handleClick() {
+      this.width = 100;
+      this.$nextTick(() => {
+        this.$refs.inputRef.focus();
+      });
+    },
+    // 失去焦点
+    handleBlur() {
+      this.width = 0;
+      // this.width = 32;
     },
   },
 };
 </script>
 
 <style scoped>
-.search-li {
-  padding: 5px 10px 5px 0;
-  font-size: 14px;
-  color: #1b1f23;
-}
-.search-li i {
-  font-size: 14px;
-  color: #5c6b77;
-  margin: 0 10px 0 0;
-}
-.search-private {
-  font-size: 12px;
-  margin: 0 0 0 10px;
-  color: #586069;
-}
-</style>
-<style>
-.public-header-search .ivu-icon-ios-close {
+.header-search-wrap {
+  display: flex;
+  height: 32px;
+  width: 32px;
+  transition: all 0.5s ease-in-out;
   cursor: pointer;
+  border-color: #dcdee2;
+}
+.search-input {
+  flex: 1;
+  width: 0;
+  outline: none;
+  border-width: 0;
+}
+.search-input::placeholder{
+  color: #c5c8ce;
+}
+.button-icon-wrap {
+  width: 32px;
+  flex-shrink: 0;
 }
 </style>

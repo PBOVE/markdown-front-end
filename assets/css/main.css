@@ -76,10 +76,9 @@
   animation: ani-demo-spin 1s linear infinite;
 }
 .main-logo {
-  width: 58px;
+  width: 60px;
   height: 30px;
-  background-image: url('../images/mountain.png');
-  background-size: cover;
+  background-size: 100% 100%;
   text-align: center;
   line-height: 30px;
   font-size: 18px;

@@ -8,10 +8,9 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
       { name: 'google-site-verification', content: 'dhTaTccD_FtgerXGfHKhOQc3voBRhrqmh9xZnkDrzuU' },
       { name: 'keywords', content: 'TBS.fell' },
-      { name: 'description', content: '记录学习中遇到困难与问题,分享学习中的心得体会' }
+      { ame: 'description', content: '记录学习中遇到困难与问题,分享学习中的心得体会' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

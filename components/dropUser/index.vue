@@ -62,7 +62,7 @@ export default {
     // 打开修改照片
     openHeadPortrait() {
       this.headPortrait = true;
-      this.$emit('model-event', false);
+      this.$emit('input', false);
     },
     // 点击退出
     async buttonEvent() {

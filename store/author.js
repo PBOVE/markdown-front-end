@@ -49,6 +49,7 @@ export const getters = {
   storeAuthor(state) {
     return state.author;
   },
+  // 地方
   storeAuthorLocaltion(state) {
     return state.author.location;
   },

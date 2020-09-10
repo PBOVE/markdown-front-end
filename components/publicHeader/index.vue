@@ -8,8 +8,8 @@
   <div class="public-header-wrap" :class="{'public-shadow':shadow}">
     <div class="public-header-left nav-middle">
       <nuxt-link to="/" class="nav-middle">
-        <div class="main-logo" />
-        <div :style="{display:searchHide?'':'none'}" class="logo-title">TBS.feel</div>
+        <!-- <div class="main-logo" /> -->
+        <div class="logo-title">TBS.feel</div>
       </nuxt-link>
       <search-view class="public-header-search" :search-hide="searchHide" />
     </div>
@@ -33,7 +33,7 @@
         </nuxt-link>
       </div>
     </div>
-    <drop-user v-show="userDropDown" />
+    <drop-user v-show="userDropDown" v-model="userDropDown" />
   </div>
 </template>
 

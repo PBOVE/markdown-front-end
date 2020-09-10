@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { _queryRegister, _queryAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 import validRemind from '@/components/validRemind/index.vue';
@@ -45,9 +46,16 @@ export default {
       alertShow: false,
     };
   },
+  computed: {
+    ...mapGetters('author', ['storeAuthor']),
+  },
   head() {
     return {
       title: `${this.$route.params.author} ● TBS.feel`,
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: this.storeAuthor.userName },
+        { hid: 'description', name: 'description', content: this.storeAuthor.signature }
+      ]
     };
   },
 };
