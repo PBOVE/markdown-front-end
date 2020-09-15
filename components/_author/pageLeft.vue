@@ -71,6 +71,7 @@ export default {
   components: { headPortraitShow },
   data() {
     return {
+      author: this.$route.params.author,
       // 头像宽度 高度
       portraitWidth: 200,
       portraitHeight: 200

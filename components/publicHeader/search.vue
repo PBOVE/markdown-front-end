@@ -5,22 +5,50 @@
 */
 
 <template>
-  <div>
+  <div class="header-search">
     <div
       class="header-search-wrap"
-      :style="{width:`${width}%`,'border-bottom':width?'1px solid #dcdee2':''}"
-      @click="handleClick"
+      :style="{width:`${width}px`,'border-bottom':width?'1px solid #dcdee2':''}"
+      @click.stop="handleClick"
     >
-      <input ref="inputRef" type="text" class="search-input" placeholder="搜索" @blur="handleBlur" />
+      <input
+        ref="inputRef"
+        v-model="inputData"
+        type="text"
+        class="search-input"
+        placeholder="搜索"
+        @blur="handleBlur"
+        @keyup.up="handleUp"
+        @keyup.down="handleDown"
+        @keyup.enter="handleEnter"
+        @input="changeInput"
+      />
       <div class="button-icon-wrap main-center-middle">
-        <Icon type="ios-search" />
+        <Icon v-show="!loading" type="ios-search" />
+        <Icon v-show="loading" class="serach-loading" type="ios-loading" color="#2d8cf0" />
       </div>
     </div>
+    <transition name="searchList">
+      <ul v-show="listShow&&searchData.length" class="header-search-list">
+        <li
+          v-for="(item, index) in searchData"
+          :key="index"
+          class="header-search-li"
+          :class="{'select-li':selectIndex===index}"
+          @click.stop="handleListClick(item, index, $event)"
+        >
+          <span>{{ item.author }}</span>
+          <span>/</span>
+          <span>{{ item.title }}</span>
+        </li>
+      </ul>
+    </transition>
   </div>
 </template>
 
 <script>
-import { _queryArticle } from '@/api/article';
+import { _queryArticle } from '@/api/query';
+import { debounce } from 'lodash';
 
 export default {
   props: {
@@ -34,6 +62,7 @@ export default {
     return {
       // 输入数据
       inputData: '',
+      inputAsyncData: '',
       // 搜索数据
       searchData: [],
       // 数据加载中
@@ -41,43 +70,98 @@ export default {
       asyncTitle: '',
       // 宽度
       width: 0,
+      // 列表抽屉
+      listShow: false,
+      // 选中
+      selectIndex: -1,
     };
   },
+  mounted() {
+    window.addEventListener('click', this.globalEvent);
+  },
+  beforeDestroy() {
+    window.removeEventListener('click', this.globalEvent);
+  },
   methods: {
-    // 搜索内容发送变化
-    contentChange() {},
     // 异步搜索
-    async asyncSearch(title) {
-      if (this.loading) {
-        this.asyncTitle = title;
+    getRemote: debounce(async function() {
+      if (!this.inputData) {
+        this.listShow = false;
+        this.loading = false;
         return;
       }
-      this.loading = true;
-      const params = { title };
+      const params = { title: this.inputData };
       const { data } = await _queryArticle(params);
-      this.searchData = data.content;
+      this.selectIndex = -1;
       this.loading = false;
-      if (this.asyncTitle) {
-        const asyncTitle = this.asyncTitle;
-        this.asyncTitle = '';
-        this.asyncSearch(asyncTitle);
+      this.listShow = true;
+      this.searchData = data.content;
+    }, 1000),
+    // 注册全局事件
+    globalEvent() {
+      if (this.width === 350) {
+        this.width = 0;
+        this.listShow = false;
       }
-    },
-    // 处理选择
-    handleSelect(value) {
-      this.$router.push(`/${value}`);
     },
     // 处理获取焦点
     handleClick() {
-      this.width = 100;
-      this.$nextTick(() => {
-        this.$refs.inputRef.focus();
-      });
+      const innerWidth = window.innerWidth;
+      if (innerWidth < 700) {
+        this.drawerShow = true;
+      } else {
+        this.width = 350;
+        this.$nextTick(() => {
+          this.$refs.inputRef.focus();
+        });
+      }
     },
     // 失去焦点
-    handleBlur() {
-      this.width = 0;
-      // this.width = 32;
+    handleBlur() {},
+    // 处理点击
+    handleListClick(item) {
+      const author = item.author;
+      const path = item.path;
+      this.$router.push(`/${author}/${path}`);
+    },
+    // 处理向上
+    handleUp() {
+      if (!this.searchData.length) return;
+      if (this.selectIndex <= -1) {
+        this.selectIndex = this.searchData.length - 1;
+      } else {
+        this.selectIndex -= 1;
+      }
+      if (this.selectIndex === -1) {
+        this.inputData = this.inputAsyncData;
+      } else {
+        this.inputData = this.searchData[this.selectIndex].title;
+      }
+    },
+    // 处理向下
+    handleDown() {
+      if (!this.searchData.length) return;
+      if (this.selectIndex >= this.searchData.length - 1) {
+        this.selectIndex = -1;
+        this.inputData = this.inputAsyncData;
+      } else {
+        this.selectIndex += 1;
+        this.inputData = this.searchData[this.selectIndex].title;
+      }
+    },
+    // 处理按下
+    handleEnter() {
+      if (this.selectIndex !== -1) {
+        const author = this.searchData[this.selectIndex].author;
+        const path = this.searchData[this.selectIndex].path;
+        this.$router.push(`/${author}/${path}`);
+      }
+    },
+    // 输入框改变
+    changeInput() {
+      this.loading = true;
+      this.inputAsyncData = this.inputData;
+      this.getRemote();
     },
   },
 };
@@ -98,11 +182,50 @@ export default {
   outline: none;
   border-width: 0;
 }
-.search-input::placeholder{
+.search-input::placeholder {
   color: #c5c8ce;
 }
 .button-icon-wrap {
   width: 32px;
   flex-shrink: 0;
+}
+.header-search {
+  position: relative;
+}
+.header-search-list {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  padding: 7px 0;
+  background: #fff;
+  border-radius: 4px;
+  list-style: none;
+  box-shadow: 0 12px 32px 0 rgba(38, 38, 38, 0.16);
+  z-index: 99;
+}
+.header-search-li {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #626675;
+}
+.header-search-li:hover {
+  color: #1890ff;
+}
+.serach-loading {
+  animation: ani-demo-spin 1s linear infinite;
+}
+.select-li {
+  color: #1890ff;
+}
+.searchList-enter-active,
+.searchList-leave-active {
+  transform-origin: top;
+  transition: all 0.3s ease-in-out;
+}
+.searchList-enter,
+.searchList-leave-to {
+  transform-origin: top;
+  transform: scale(1, 0);
+  opacity: 0;
 }
 </style>

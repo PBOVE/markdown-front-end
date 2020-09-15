@@ -152,7 +152,7 @@ export default {
     return {
       title: `${this.author} · ${this.storeArticle.title} ● TBS.feel`,
       meta: [
-        { hid: 'keywords', name: 'keywords', content: this.author },
+        { hid: 'author', name: 'author', content: this.author },
         { hid: 'description', name: 'description', content: this.storeArticle.description }
       ]
     };

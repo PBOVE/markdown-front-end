@@ -137,8 +137,7 @@ export default {
   color: #515a6e;
 }
 .public-header-search {
-  margin: 0 0 0 20px;
-  width: 350px;
+  margin: 0 0 0 10px;
 }
 .logo-title {
   font-family: Georgia;
@@ -150,9 +149,6 @@ export default {
 @media screen and (max-width: 730px) {
   .public-header-left {
     flex: 1;
-  }
-  .public-header-search {
-    display: none !important;
   }
   .logo-title {
     display: inline-block !important;
