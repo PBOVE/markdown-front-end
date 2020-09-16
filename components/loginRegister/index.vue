@@ -13,11 +13,11 @@
           <div class="title">
             <h3>欢迎来到</h3>
             <h1>
-              <nuxt-link to="/" style="color:#fff;">TBS.feel</nuxt-link>
+              <nuxt-link to="/" style="color:#fff;">TBS.feel（提笔）</nuxt-link>
             </h1>
           </div>
           <div class="title-content">
-            <div>Markdown是一种轻量级标记语言。 它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的HTML文档。</div>
+            <div>TBS.feel（提笔） 基于 nuxt 开发轻量型学习笔记平台。使用者可以使用 TBS.feel（提笔） 记录学习中遇到困难与问题，分享学习中的心得体会。 </div>
           </div>
           <div class="circle" />
         </div>
