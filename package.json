@@ -1,7 +1,7 @@
 {
   "name": "markdown",
   "version": "1.0.0",
-  "description": "便笺薄",
+  "description": "提笔笔记",
   "author": "pbove",
   "private": true,
   "scripts": {
