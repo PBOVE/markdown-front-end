@@ -25,7 +25,7 @@
         </div>
         <div class="header-name">{{ storeUser.nickName }}</div>
         <div class="header-name">{{ storeUser.userName }}</div>
-        <weather-view v-if="storeWeather" />
+        <weather-view v-if="storeWeather" class="weather-view" />
         <router-link to="/user" class="header-link-user">管理您的 TBS.feel 账号</router-link>
       </div>
       <Divider />
@@ -182,6 +182,11 @@ export default {
     right: 0;
     left: 50%;
     transform: translate(-50%, 0);
+  }
+}
+@media screen and (min-width: 500px) {
+  .weather-view{
+    display: none;
   }
 }
 </style>

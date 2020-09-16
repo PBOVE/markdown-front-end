@@ -15,16 +15,16 @@ const ignorePaths: string[] = [
 const redirectPath = [ '/login', '/register', '/password_reset' ];
 
 const accessMiddleware: Middleware = (context: any) => {
-  const { app, route, redirect } = context;
-  const token = app.$cookies.get('access_token');
+  const { route, redirect, store } = context;
+  const userState = store.state.user.userState;
   const { path } = route;
   const verifyRoute = (route: string) => {
     const routeMatcher = new RegExp(`^${route.replace(/:[^\s/]+/g, '[\\w-.]+')}$`);
     return routeMatcher.test(path);
   };
-  if (!token && ignorePaths.some(verifyRoute)) {
+  if (!userState && ignorePaths.some(verifyRoute)) {
     redirect(`/login?redirect=${path}`);
-  } else if (token && redirectPath.some(verifyRoute)) {
+  } else if (userState && redirectPath.some(verifyRoute)) {
     redirect('/');
   }
 };

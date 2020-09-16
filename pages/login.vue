@@ -50,6 +50,7 @@
         </div>
       </div>
       <div class="from-check">
+        <Checkbox v-model="remember">记住密码</Checkbox>
         <nuxt-link to="/password_reset">忘记密码</nuxt-link>
       </div>
       <button ref="loginbtn" class="login-button" @click="handleLoginEvent($event)">登录</button>
@@ -72,6 +73,8 @@ export default {
       account: '',
       // 密码
       password: '',
+      // 记住密码
+      remember: false,
       // 查看密码
       eye: true,
       // 设置按钮为加载中状态
@@ -101,10 +104,10 @@ export default {
         const params = {
           account: this.account,
           password: this.password,
+          remember: this.remember
         };
         await _login(params);
         const { data } = await _token();
-        this.$cookies.set('access_token', data._csrf.token);
         this.$store.commit('user/setWeather', data.weather);
         this.$store.commit('user/setUser', data.user);
         this.$store.commit('token/setToken', data._csrf.token);
@@ -161,7 +164,7 @@ export default {
 .from-check {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: 1rem 0 1.2rem;
   user-select: none;
 }

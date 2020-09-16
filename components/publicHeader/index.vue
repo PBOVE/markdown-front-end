@@ -24,7 +24,6 @@
           :name="storeNickName"
           :width="30"
           :height="30"
-          :select="true"
         />
       </div>
       <div v-else>
