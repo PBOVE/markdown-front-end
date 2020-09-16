@@ -112,9 +112,9 @@ export default {
     // 处理获取焦点
     handleClick() {
       const innerWidth = window.innerWidth;
-      if (innerWidth < 700) {
-        if (this.storeUserState) this.drawerShow = true;
-        else this.width = '100%';
+      if (innerWidth < 600) {
+        // if (this.storeUserState) this.drawerShow = true;
+        this.width = '100%';
       } else {
         this.width = '275px';
         this.$nextTick(() => {
@@ -163,6 +163,11 @@ export default {
         const author = this.searchData[this.selectIndex].author;
         const path = this.searchData[this.selectIndex].path;
         this.$router.push(`/${author}/${path}`);
+      } else {
+        this.$router.push({
+          path: '/search',
+          query: { q: this.inputData }
+        });
       }
     },
     // 输入框改变

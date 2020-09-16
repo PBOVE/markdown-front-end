@@ -25,6 +25,7 @@
         </div>
         <div class="header-name">{{ storeUser.nickName }}</div>
         <div class="header-name">{{ storeUser.userName }}</div>
+        <weather-view v-if="storeWeather" />
         <router-link to="/user" class="header-link-user">管理您的 TBS.feel 账号</router-link>
       </div>
       <Divider />
@@ -44,9 +45,10 @@ import headPortrait from '@/components/headPortrait/setting.vue';
 import { mapGetters } from 'vuex';
 import { _logout } from '@/api/user';
 import headPortraitShow from '@/components/headPortrait/show.vue';
+import weatherView from '@/components/publicHeader/weather.vue';
 
 export default {
-  components: { headPortrait, headPortraitShow },
+  components: { headPortrait, headPortraitShow, weatherView },
   data() {
     return {
       // 修改照片
@@ -56,7 +58,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user', ['storeUser', 'storeImages']),
+    ...mapGetters('user', ['storeUser', 'storeImages', 'storeWeather']),
   },
   methods: {
     // 打开修改照片

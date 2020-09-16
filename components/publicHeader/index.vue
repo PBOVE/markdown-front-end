@@ -14,7 +14,7 @@
       <search-view class="public-header-search" :search-hide="searchHide" />
     </div>
     <div class="public-header-right nav-middle">
-      <weather-view v-if="storeUserState&&storeWeather" />
+      <weather-view v-if="storeUserState&&storeWeather" class="weather-view" />
       <nuxt-link v-if="storeUserState" :to="userPage" class="public-header-right-icon nav-middle">
         <Icon type="ios-keypad" />
       </nuxt-link>
@@ -162,6 +162,11 @@ export default {
     margin: 0 10px 0 0;
   }
 }
+@media screen and (max-width: 500px) {
+  .weather-view {
+    display: none;
+  }
+}
 @media screen and (max-width: 400px) {
   .main-logo {
     display: none;
@@ -170,4 +175,5 @@ export default {
     margin: 0;
   }
 }
+
 </style>
