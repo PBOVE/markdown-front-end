@@ -8,7 +8,7 @@
   <div class="header-search">
     <div
       class="header-search-wrap"
-      :style="{width:`${width}px`,'border-bottom':width?'1px solid #dcdee2':''}"
+      :style="{width:width}"
       @click.stop="handleClick"
     >
       <input
@@ -29,7 +29,7 @@
       </div>
     </div>
     <transition name="searchList">
-      <ul v-show="listShow&&searchData.length" class="header-search-list">
+      <ul v-show="listShow&&searchData.length" class="header-search-list" :style="{width:width}">
         <li
           v-for="(item, index) in searchData"
           :key="index"
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { _queryArticle } from '@/api/query';
 import { debounce } from 'lodash';
 
@@ -76,6 +77,9 @@ export default {
       selectIndex: -1,
     };
   },
+  computed: {
+    ...mapGetters('user', [ 'storeUserState'])
+  },
   mounted() {
     window.addEventListener('click', this.globalEvent);
   },
@@ -97,10 +101,11 @@ export default {
       this.listShow = true;
       this.searchData = data.content;
     }, 1000),
+
     // 注册全局事件
     globalEvent() {
-      if (this.width === 350) {
-        this.width = 0;
+      if (this.width) {
+        this.width = '';
         this.listShow = false;
       }
     },
@@ -108,16 +113,19 @@ export default {
     handleClick() {
       const innerWidth = window.innerWidth;
       if (innerWidth < 700) {
-        this.drawerShow = true;
+        if (this.storeUserState) this.drawerShow = true;
+        else this.width = '100%';
       } else {
-        this.width = 350;
+        this.width = '275px';
         this.$nextTick(() => {
           this.$refs.inputRef.focus();
         });
       }
     },
+
     // 失去焦点
     handleBlur() {},
+
     // 处理点击
     handleListClick(item) {
       const author = item.author;
@@ -181,6 +189,7 @@ export default {
   width: 0;
   outline: none;
   border-width: 0;
+  border-bottom: 1px solid #dcdee2;
 }
 .search-input::placeholder {
   color: #c5c8ce;
@@ -195,7 +204,6 @@ export default {
 .header-search-list {
   position: absolute;
   top: 40px;
-  width: 100%;
   padding: 7px 0;
   background: #fff;
   border-radius: 4px;

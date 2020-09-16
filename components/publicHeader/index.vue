@@ -105,6 +105,10 @@ export default {
 .public-shadow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
+.public-header-left {
+  flex: 1;
+  margin: 0 10px 0 0;
+}
 .public-header-right {
   font-size: 16px;
 }
@@ -137,6 +141,7 @@ export default {
   color: #515a6e;
 }
 .public-header-search {
+  flex: 1;
   margin: 0 0 0 10px;
 }
 .logo-title {
@@ -147,9 +152,6 @@ export default {
   color: #000;
 }
 @media screen and (max-width: 730px) {
-  .public-header-left {
-    flex: 1;
-  }
   .logo-title {
     display: inline-block !important;
   }
