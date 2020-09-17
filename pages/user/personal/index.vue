@@ -94,7 +94,7 @@
       <div class="user-row user-row-email">
         <nuxt-link to="/account/email" class="user-row-main user-middle">
           <div class="user-middle-left user-middle">
-            <div class="user-row-title">电子邮箱</div>
+            <div class="user-row-title">邮箱</div>
             <div class="user-row-content">{{ storeUser.email }}</div>
           </div>
           <div class="user-middle-right">

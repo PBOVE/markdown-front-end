@@ -9,11 +9,11 @@
     <public-header :shadow="true" />
     <div class="contactemail-link-content">
       <div class="link-box">
-        <div class="link-box-title">验证电子邮箱</div>
+        <div class="link-box-title">验证邮箱</div>
         <Divider size="small" />
-        <div v-if="verify===0" class="link-box-content">电子邮箱认证中，请稍等</div>
+        <div v-if="verify===0" class="link-box-content">邮箱认证中，请稍等</div>
         <div v-else-if="verify===1" class="link-box-content" style="color:#19be6b;">邮箱认证成功</div>
-        <div v-else class="link-box-content" style="color:#ed4014;">此电子邮箱认证链接无效，请重新发送验证邀请</div>
+        <div v-else class="link-box-content" style="color:#ed4014;">此邮箱认证链接无效，请重新发送验证邀请</div>
       </div>
     </div>
   </div>

@@ -187,7 +187,7 @@ export default {
           this.emailLoad = 2;
         } else if (!emailReg.test(this.email)) {
           this.emailLoad = -1;
-          this.handleError('email', 'add', '邮箱地址格式错误');
+          this.handleError('email', 'add', '邮箱格式错误');
         } else {
           this.queryEmailMethod(this.email);
         }
@@ -201,10 +201,10 @@ export default {
       const usernameReg = /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/;
       let flag = true;
       if (!this.email) {
-        this.handleError('email', 'add', '请输入邮箱地址');
+        this.handleError('email', 'add', '请输入邮箱');
         flag = false;
       } else if (!emailReg.test(this.email)) {
-        this.handleError('email', 'add', '邮箱地址格式错误');
+        this.handleError('email', 'add', '邮箱格式错误');
         flag = false;
       }
       if (!this.username) {

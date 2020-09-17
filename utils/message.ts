@@ -59,6 +59,9 @@ const showStatus = (status: number) => {
     case 4009:
       message = '邀请协作已发送';
       break;
+    case 4011:
+      message = '邮箱已存在,请重新输入';
+      break;
     case 6000:
       message = '系统未开放,无法创建文档';
       break;

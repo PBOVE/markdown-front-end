@@ -19,7 +19,7 @@
       <div class="nick-name-content-title">对您的昵称所做的更改将反映在您的 TBS.feel 帐号中。</div>
       <div class="nick-name-box">
         <div class="nick-name-content-title" style="padding:18px 0;">更改昵称</div>
-        <div class="R">
+        <div class="nick-name-title">
           <span class="nick-name-account">{{ storeNickName }}</span>
           <Icon type="md-create" class="nick-name-title-icon curpoin" @click="openModal" />
         </div>
@@ -50,16 +50,10 @@ export default {
       loading: false,
     };
   },
-  head() {
-    return {
-      title: '昵称 ● TBS.feel',
-    };
-  },
-  // eslint-disable-next-line vue/order-in-components
   computed: {
     ...mapGetters('user', ['storeNickName']),
   },
-  // eslint-disable-next-line vue/order-in-components
+
   methods: {
     // 打开对话框
     openModal() {
@@ -71,14 +65,17 @@ export default {
       if (value === this.storeNickName) return callback();
       try {
         this.loading = true;
-        const { data } = await _updateAccount({
-          nickName: value,
-        });
+        const { data } = await _updateAccount({ nickName: value, });
         this.$store.commit('user/setUser', data.user);
         callback();
       } catch (err) {}
       this.loading = false;
     },
+  },
+  head() {
+    return {
+      title: '昵称 ● TBS.feel',
+    };
   },
 };
 </script>

@@ -32,7 +32,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [ 'view-design/dist/styles/iview.css', 'assets/css/main.css' ],
+  css: [ 'view-design/dist/styles/iview.css', 'assets/css/main.css'],
   /*
   ** Plugins to load before mounting the App
   */

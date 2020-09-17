@@ -12,18 +12,28 @@
         <nuxt-link to="/user/personal">
           <Icon type="md-arrow-round-back" class="eh-content-icon" />
         </nuxt-link>
-        <div>电子邮箱地址</div>
+        <div>邮箱</div>
       </div>
     </div>
     <div class="email-content">
-      <div class="email-content-title">您可用于登录自己帐号的电子邮件地址。万一您无法访问自己的帐号，我们还可以通过电子邮件地址与您联系。</div>
+      <div class="email-content-title">您可用于登录自己帐号的邮件。万一您无法访问自己的帐号，我们还可以通过邮件地址与您联系。</div>
       <div class="email-box">
-        <div>
-          <span class="email-account">{{ storeEmail }}</span>
-          <span
-            :style="{color:storeUser.authentication?'#19be6b':'#ed4014'}"
-          >{{ storeUser.authentication|authentication }}</span>
+        <div class="index-between-modal">
+          <div>
+            <span class="email-account">{{ storeEmail }}</span>
+            <span
+              :style="{color:storeUser.authentication?'#19be6b':'#ed4014'}"
+            >{{ storeUser.authentication|authentication }}</span>
+          </div>
+          <Icon
+            type="md-create"
+            color="#515a6e"
+            size="19"
+            style="cursor:pointer;"
+            @click="openModal"
+          />
         </div>
+
         <div v-if="!storeUser.authentication" class="email-again" @click="modalFlag=true">发送验证邮件</div>
       </div>
     </div>
@@ -49,6 +59,7 @@
         <Button :loading="loading" type="primary" @click="sendVerify">发 送</Button>
       </div>
     </Modal>
+    <email-modal ref="emailModal" />
   </div>
 </template>
 
@@ -56,10 +67,11 @@
 import { mapGetters } from 'vuex';
 import { _sendVerifyEmail } from '@/api/account';
 import publicHeader from '@/components/publicHeader/index.vue';
+import emailModal from '@/components/account/emailModal.vue';
 
 export default {
   transition: 'fade',
-  components: { publicHeader },
+  components: { publicHeader, emailModal },
   filters: {
     authentication(state) {
       return state ? '(已验证)' : '(待验证)';
@@ -73,16 +85,10 @@ export default {
       loading: false,
     };
   },
-  head() {
-    return {
-      title: '电子邮箱地址 ● TBS.feel',
-    };
-  },
-  // eslint-disable-next-line vue/order-in-components
+
   computed: {
     ...mapGetters('user', ['storeEmail', 'storeUser']),
   },
-  // eslint-disable-next-line vue/order-in-components
   methods: {
     // 发送验证
     async sendVerify() {
@@ -95,6 +101,15 @@ export default {
       this.modalFlag = false;
       this.loading = false;
     },
+    // 打开对话框
+    openModal() {
+      this.$refs.emailModal.openModal();
+    },
+  },
+  head() {
+    return {
+      title: '邮箱 ● TBS.feel',
+    };
   },
 };
 </script>
