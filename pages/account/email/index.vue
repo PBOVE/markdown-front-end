@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="email-content">
-      <div class="email-content-title">您可用于登录自己帐号的电子邮件地址。万一您无法访问自己的帐号，我们还可以通过这些电子邮件地址与您联系。</div>
+      <div class="email-content-title">您可用于登录自己帐号的电子邮件地址。万一您无法访问自己的帐号，我们还可以通过电子邮件地址与您联系。</div>
       <div class="email-box">
         <div>
           <span class="email-account">{{ storeEmail }}</span>

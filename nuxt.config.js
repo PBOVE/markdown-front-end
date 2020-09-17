@@ -14,6 +14,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', href: '/icon-120x120.png', sizes: '120x120' },
       { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css' }
     ],
     script: [ { src: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js' } ]
