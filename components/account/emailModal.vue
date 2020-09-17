@@ -68,6 +68,7 @@ export default {
     // 对话框
     openModal() {
       this.dataItem = {};
+      this.$refs.from.resetFields();
       this.modalShow = true;
     }
   },
