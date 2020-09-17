@@ -55,14 +55,9 @@ module.exports = {
     proxy: true, // Can be also an object with default options
     prefix: '/api'
   },
-
   proxy: {
-    '/api/storage': {
-      target: 'https://tibis.top/'
-    },
-    '/api': {
-      target: ' http://127.0.0.1:7001/'
-    }
+    '/api/storage': { target: 'https://tibis.top/' },
+    '/api': { target: ' http://127.0.0.1:7001/' }
   },
   /**
    * router
