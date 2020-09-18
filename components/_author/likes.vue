@@ -20,7 +20,10 @@
               <span>/</span>
               <span>{{ item.title }}</span>
             </nuxt-link>
-            <div v-if="!item.share" class="index-page-row-share">{{ item.share|shareFilter }}</div>
+            <div v-if="!item.share" class="index-page-row-share">
+              <span class="index-page-row-share-title">{{ item.share|shareFilter }}</span>
+              <Icon class="index-page-row-share-icon" type="md-lock" />
+            </div>
           </div>
           <div class="index-page-row-description">{{ item.description }}</div>
           <div
@@ -61,7 +64,7 @@ export default {
   filters: {
     shareFilter(share) {
       return share ? '' : '仅文档成员可见';
-    }
+    },
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['likes'],
@@ -74,12 +77,12 @@ export default {
       // 当前页面
       current: this.$route.query.page
         ? parseInt(this.$route.query.page, 10)
-        : 1
+        : 1,
     };
   },
   computed: {
     ...mapGetters('user', ['storeUserState']),
-    ...mapGetters('author', ['storeAuthor'])
+    ...mapGetters('author', ['storeAuthor']),
   },
   watch: {
     async $route(to) {
@@ -88,14 +91,14 @@ export default {
       const params = { page, author: this.author };
       const { data } = await _queryAccountLike(params);
       this.like = data;
-    }
+    },
   },
   methods: {
     // 页面改变
     pageChange(page) {
       this.$router.push({
         path: `/${this.author}`,
-        query: { tab: 'likes', page }
+        query: { tab: 'likes', page },
       });
     },
     // 点赞
@@ -109,7 +112,21 @@ export default {
       else await _articleLike(params);
       row.islike = !row.islike;
       this.$set(this.likes.content, index, row);
-    }
-  }
+    },
+  },
 };
 </script>
+
+<style scoped>
+@media screen and (min-width: 550px)  {
+  .index-page-row-share-icon{
+    display: none;
+  }
+}
+@media screen and (max-width: 550px)  {
+  .index-page-row-share-title{
+    display: none;
+
+  }
+}
+</style>

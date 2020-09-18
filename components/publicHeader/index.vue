@@ -100,6 +100,7 @@ export default {
   justify-content: space-between;
   height: 60px;
   padding: 0 10% 0 3%;
+  background: #ffffff;
 }
 .public-shadow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);

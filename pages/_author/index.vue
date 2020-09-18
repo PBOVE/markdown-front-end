@@ -30,7 +30,7 @@ import pageRight from '@/components/_author/pageRight.vue';
 
 export default {
   transition: 'fade',
-  components: { publicHeader, validRemind, pageLeft, pageRight, },
+  components: { publicHeader, validRemind, pageLeft, pageRight },
   async validate({ params }) {
     const query = { name: params.author };
     const { data } = await _queryRegister(query);

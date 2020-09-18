@@ -30,7 +30,10 @@
         <div class="index-page-row-left">
           <div class="index-page-flex-middle index-page-row-start">
             <nuxt-link class="index-page-row-link" :to="'/'+author+'/'+item.path">{{ item.title }}</nuxt-link>
-            <div v-if="!item.share" class="index-page-row-share">{{ item.share|shareFilter }}</div>
+            <div v-if="!item.share" class="index-page-row-share">
+              <span class="index-page-row-share-title">{{ item.share|shareFilter }}</span>
+              <Icon class="index-page-row-share-icon" type="md-lock" />
+            </div>
           </div>
           <div class="index-page-row-description">{{ item.description }}</div>
           <div
@@ -128,3 +131,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@media screen and (min-width: 550px)  {
+  .index-page-row-share-icon{
+    display: none;
+  }
+}
+@media screen and (max-width: 550px)  {
+  .index-page-row-share-title{
+    display: none;
+
+  }
+}
+</style>
