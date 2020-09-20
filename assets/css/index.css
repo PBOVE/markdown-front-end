@@ -43,7 +43,7 @@
   margin: 20px 0 0 0;
 }
 .index-page-row {
-  padding: 24px 0;
+  padding: 24px 0 8px;
   border-top: 1px solid #e1e4e8;
 }
 
@@ -66,7 +66,7 @@
   color: #586069;
 }
 .index-page-row-description {
-  margin: 10px 0;
+  margin: 10px 0 15px;
   color: #586069;
 }
 .index-page-row-time {

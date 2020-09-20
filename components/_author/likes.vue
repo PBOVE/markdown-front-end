@@ -28,8 +28,8 @@
           <div class="index-page-row-description">{{ item.description }}</div>
           <div
             class="index-page-row-time"
-            :title="$timeConversion(item.updateTime)"
-          >{{ item.updateTime|TimeFilter }}</div>
+            :title="$timeConversion(item.time)"
+          >{{ item.time|TimeFilter }}前更新</div>
         </div>
         <div class="index-page-row-right">
           <div
@@ -118,15 +118,14 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (min-width: 550px)  {
-  .index-page-row-share-icon{
+@media screen and (min-width: 550px) {
+  .index-page-row-share-icon {
     display: none;
   }
 }
-@media screen and (max-width: 550px)  {
-  .index-page-row-share-title{
+@media screen and (max-width: 550px) {
+  .index-page-row-share-title {
     display: none;
-
   }
 }
 </style>

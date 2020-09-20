@@ -22,37 +22,42 @@
       </div>
     </div>
     <div class="index-page-content">
-      <div
-        v-for="(item,index) in articles.content"
-        :key="item.path"
-        class="index-page-row index-page-flex-between"
-      >
-        <div class="index-page-row-left">
-          <div class="index-page-flex-middle index-page-row-start">
-            <nuxt-link class="index-page-row-link" :to="'/'+author+'/'+item.path">{{ item.title }}</nuxt-link>
-            <div v-if="!item.share" class="index-page-row-share">
-              <span class="index-page-row-share-title">{{ item.share|shareFilter }}</span>
-              <Icon class="index-page-row-share-icon" type="md-lock" />
+      <div v-for="(item,index) in articles.content" :key="item.path" class="index-page-row">
+        <div class="index-page-flex-between">
+          <div class="index-page-row-left">
+            <div class="index-page-flex-middle index-page-row-start">
+              <nuxt-link class="index-page-row-link" :to="'/'+author+'/'+item.path">{{ item.title }}</nuxt-link>
+              <div v-if="!item.share" class="index-page-row-share">
+                <span class="index-page-row-share-title">{{ item.share|shareFilter }}</span>
+                <Icon class="index-page-row-share-icon" type="md-lock" />
+              </div>
+            </div>
+            <div class="index-page-row-description">{{ item.description }}</div>
+          </div>
+
+          <div class="index-page-row-right">
+            <div
+              class="index-page-flex-middle index-page-row-star"
+              @click="handleLike( JSON.stringify(item),index)"
+            >
+              <img v-if="item.islike" src="@/assets/svg/star.svg" class="index-page-row-star-image" />
+              <img v-else src="@/assets/svg/unstar.svg" class="index-page-row-star-image" />
+              <span>{{ item.islike?'取消':'赞' }}</span>
             </div>
           </div>
-          <div class="index-page-row-description">{{ item.description }}</div>
-          <div
-            class="index-page-row-time"
-            :title="$timeConversion(item.time)"
-          >{{ item.time|TimeFilter }}</div>
         </div>
-        <div class="index-page-row-right">
-          <div
-            class="index-page-flex-middle index-page-row-star"
-            @click="handleLike( JSON.stringify(item),index)"
-          >
-            <img v-if="item.islike" src="@/assets/svg/star.svg" class="index-page-row-star-image" />
-            <img v-else src="@/assets/svg/unstar.svg" class="index-page-row-star-image" />
-            <span>{{ item.islike?'取消':'赞' }}</span>
+        <div>
+          <div class="index-page-row-left-floor">
+            <div
+              class="index-page-row-time"
+              :title="$timeConversion(item.time)"
+            >{{ item.time|TimeFilter }}前更新</div>
+            <div v-if="storeUserName === author" class="index-page-row-topping">置顶</div>
           </div>
         </div>
       </div>
     </div>
+
     <div v-if="articles.totalElements" class="index-page-footer index-page-flex-middle">
       <Page
         size="small"
@@ -90,7 +95,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user', ['storeUser', 'storeUserState']),
+    ...mapGetters('user', ['storeUser', 'storeUserState', 'storeUserName']),
   },
   methods: {
     // 处理搜索
@@ -133,15 +138,30 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (min-width: 550px)  {
-  .index-page-row-share-icon{
+.index-page-row-left-floor {
+  display: flex;
+  justify-content: space-between;
+}
+.index-page-row-left-floor {
+  padding: 0 10px 0 0;
+  color: #586069;
+}
+.index-page-row-topping {
+  opacity: 0;
+  transition: all 0.1s;
+}
+.index-page-row:hover .index-page-row-topping {
+  cursor: pointer;
+  opacity: 1;
+}
+@media screen and (min-width: 550px) {
+  .index-page-row-share-icon {
     display: none;
   }
 }
-@media screen and (max-width: 550px)  {
-  .index-page-row-share-title{
+@media screen and (max-width: 550px) {
+  .index-page-row-share-title {
     display: none;
-
   }
 }
 </style>
