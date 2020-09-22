@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { _updateEmail } from '@/api/account';
+import { updateEmail } from '@/api/account';
 
 export default {
   data() {
@@ -45,7 +45,7 @@ export default {
       try {
         this.loading = true;
         await this.validate();
-        const { data } = await _updateEmail(this.dataItem);
+        const { data } = await updateEmail(this.dataItem);
         this.$store.commit('user/setUser', data);
         this.modalShow = false;
       } catch (error) {

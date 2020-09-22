@@ -48,11 +48,14 @@
         </div>
         <div>
           <div class="index-page-row-left-floor">
-            <div
-              class="index-page-row-time"
-              :title="$timeConversion(item.time)"
-            >{{ item.time|TimeFilter }}前更新</div>
-            <div v-if="storeUserName === author" class="index-page-row-topping">置顶</div>
+            <div>
+              <span
+                class="index-page-row-time"
+                :title="$timeConversion(item.time)"
+              >{{ item.time|TimeFilter }}前更新</span>
+              <!-- <span>{{ item.likeCount }}</span> -->
+            </div>
+            <!-- <div v-if="storeUserName === author" class="index-page-row-topping">置顶</div> -->
           </div>
         </div>
       </div>
@@ -72,7 +75,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _articleLike, _articleUnLike } from '@/api/article';
+import { articleLike, articleUnLike } from '@/api/article';
 
 export default {
   filters: {
@@ -128,8 +131,8 @@ export default {
       }
       const row = JSON.parse(parseRow);
       const params = { author: this.author, path: row.path };
-      if (row.islike) await _articleUnLike(params);
-      else await _articleLike(params);
+      if (row.islike) await articleUnLike(params);
+      else await articleLike(params);
       row.islike = !row.islike;
       this.$set(this.articles.content, index, row);
     },

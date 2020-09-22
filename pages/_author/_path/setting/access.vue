@@ -27,7 +27,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryArticleUser, _deleteArticleUser } from '@/api/article';
+import { queryArticleUser, deleteArticleUser } from '@/api/article';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 import settingAccessModal from '@/components/_path/settingAccessModal.vue';
 
@@ -35,7 +35,7 @@ export default {
   components: { settingAccessModal, headPortraitShow },
   async asyncData({ params }) {
     const { author, path } = params;
-    const { data: cooperation } = await _queryArticleUser({ author, path });
+    const { data: cooperation } = await queryArticleUser({ author, path });
     return { cooperation };
   },
   data() {
@@ -60,7 +60,7 @@ export default {
         cancelText: '取消',
         onOk: async() => {
           const { author, path } = this;
-          await _deleteArticleUser({ author, path, username: item.userName });
+          await deleteArticleUser({ author, path, username: item.userName });
           this.$delete(this.cooperation, index);
           this.$Modal.remove();
         },
@@ -69,7 +69,7 @@ export default {
     // 添加用户成功
     async userAddSuccess() {
       const { author, path } = this;
-      const { data } = await _queryArticleUser({ author, path });
+      const { data } = await queryArticleUser({ author, path });
       this.cooperation = data;
     },
   },

@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { _verifyEmailLink } from '@/api/account';
-import { _verifyRequestId } from '@/api/valid';
+import { verifyEmailLink } from '@/api/account';
+import { verifyRequestId } from '@/api/valid';
 import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
@@ -29,7 +29,7 @@ export default {
   async validate({ params }) {
     try {
       const { requestId } = params;
-      const { data } = await _verifyRequestId(requestId, { type: 'email' });
+      const { data } = await verifyRequestId(requestId, { type: 'email' });
       return data;
     } catch (err) {}
   },
@@ -41,7 +41,7 @@ export default {
   async mounted() {
     try {
       const { requestId } = this.$route.params;
-      await _verifyEmailLink(requestId);
+      await verifyEmailLink(requestId);
       this.verify = 1;
       const content = '邮箱认证成功,页面将在 6 秒后,跳转至首页';
       this.$Message.success({ duration: 5, content, background: true });

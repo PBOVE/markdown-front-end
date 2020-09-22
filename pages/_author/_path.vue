@@ -42,13 +42,13 @@
             </div>
             <div class="path-button-right">0</div>
           </div>-->
-          <!-- <div class="path-button middle">
+          <div class="path-button middle">
             <div class="path-button-left middle">
-              <Icon type="ios-thumbs-up-outline" class="path-button-icon" />
-              <span>点赞</span>
+              <Icon :type="`md-star${storeArticle.islike?'':'-outline'}`" class="path-button-icon" />
+              <span>{{ storeArticle.islike ?'取消':'赞' }}</span>
             </div>
-            <div class="path-button-right">{{storeArticle.likes}}</div>
-          </div>-->
+            <div class="path-button-right">{{ storeArticle.likeCount }}</div>
+          </div>
         </div>
       </div>
       <div class="middle path-main">
@@ -106,9 +106,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryAccount } from '@/api/user';
-import { _validArticle } from '@/api/valid';
-import { _articleDetails } from '@/api/article';
+import { queryAccount } from '@/api/user';
+import { validArticle } from '@/api/valid';
+import { articleLike, articleUnLike, articleDetails } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
 import userCard from '@/components/userCard/index.vue';
 
@@ -116,7 +116,7 @@ export default {
   components: { publicHeader, userCard },
   async validate({ params }) {
     const { author, path } = params;
-    const { data } = await _validArticle({ author, path });
+    const { data } = await validArticle({ author, path });
     return data;
   },
   filters: {
@@ -126,12 +126,12 @@ export default {
   },
   async fetch({ params, store }) {
     const { author, path } = params;
-    const { data } = await _articleDetails({ author, path });
+    const { data } = await articleDetails({ author, path });
     store.commit('author/setArticle', data);
   },
   async asyncData({ params }) {
     const { author: username } = params;
-    const { data: user } = await _queryAccount({ username });
+    const { data: user } = await queryAccount({ username });
     if (user.location) {
       user.province = user.location.province;
       user.city = user.location.city;
@@ -148,16 +148,6 @@ export default {
       setting: false,
     };
   },
-  head() {
-    return {
-      title: `${this.author} · ${this.storeArticle.title} ● TBS.feel`,
-      meta: [
-        { hid: 'author', name: 'author', content: this.author },
-        { hid: 'description', name: 'description', content: this.storeArticle.description }
-      ]
-    };
-  },
-  // eslint-disable-next-line vue/order-in-components
   computed: {
     ...mapGetters('author', ['storeArticle', 'storeEdit', 'storeSelectPost']),
     ...mapGetters('user', ['storeUserName']),
@@ -179,7 +169,6 @@ export default {
       return `/${author}/${path}`;
     },
   },
-  // eslint-disable-next-line vue/order-in-components
   mounted() {
     if (window.innerWidth < 300) {
       this.width = window.innerWidth - 20;
@@ -189,11 +178,9 @@ export default {
     }
     window.addEventListener('resize', this.clientSize);
   },
-  // eslint-disable-next-line vue/order-in-components
   beforeDestroy() {
     window.removeEventListener('resize', this.clientSize);
   },
-  // eslint-disable-next-line vue/order-in-components
   methods: {
     clientSize() {
       if (window.innerWidth < 300) {
@@ -202,6 +189,31 @@ export default {
       if (window.innerWidth < 500) this.setting = true;
       else this.setting = false;
     },
+    // 点赞
+    async handleLike(parseRow, index) {
+      if (!this.storeUserState) {
+        return this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      }
+      const row = JSON.parse(parseRow);
+      const params = { author: this.author, path: row.path };
+      if (row.islike) await articleUnLike(params);
+      else await articleLike(params);
+      row.islike = !row.islike;
+      this.$set(this.articles.content, index, row);
+    },
+  },
+  head() {
+    return {
+      title: `${this.author} · ${this.storeArticle.title} ● TBS.feel`,
+      meta: [
+        { hid: 'author', name: 'author', content: this.author },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.storeArticle.description,
+        },
+      ],
+    };
   },
 };
 </script>
@@ -263,6 +275,7 @@ export default {
 }
 .path-button-icon {
   margin: 0 4px 0 0;
+  font-size: 16px;
   font-weight: bold;
 }
 .path-button {
@@ -275,7 +288,9 @@ export default {
   margin: 0 20px 0 0;
 }
 .path-button-left {
-  padding: 2px 10px;
+  padding: 0px 10px;
+  height: 27px;
+  user-select: none;
   cursor: pointer;
 }
 .path-button-left:hover {

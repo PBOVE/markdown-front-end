@@ -113,7 +113,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _newArticle } from '@/api/article';
+import { newArticle } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
 import selectBox from '@/components/selectBox/index.vue';
 import headPortraitShow from '@/components/headPortrait/show.vue';
@@ -199,7 +199,7 @@ export default {
         description: this.description,
       };
       try {
-        await _newArticle(params);
+        await newArticle(params);
         this.$router.push(`/${this.storeUserName}/${params.path}/edit`);
       } catch (err) {
         this.loading = false;

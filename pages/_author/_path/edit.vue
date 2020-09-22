@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import { _queryPostListRoot } from '@/api/post';
+import { queryPostListRoot } from '@/api/post';
 import { mapGetters, mapMutations } from 'vuex';
-import { _articleDetails } from '@/api/article';
+import { articleDetails } from '@/api/article';
 import editLeft from '@/components/_path/editLeft.vue';
 
 export default {
@@ -26,12 +26,12 @@ export default {
     const { author, path } = params;
     const { user } = store.state;
     if (user.data.userName === author) return true;
-    const { data } = await _articleDetails({ author, path });
+    const { data } = await articleDetails({ author, path });
     return data.edit;
   },
   async asyncData({ store, params }) {
     const { author, path, id } = params;
-    const { data } = await _queryPostListRoot({ author, path, id });
+    const { data } = await queryPostListRoot({ author, path, id });
     store.commit('author/setArticleList', [
       { _id: 0, name: '首页', type: 'home' },
       ...data.list,

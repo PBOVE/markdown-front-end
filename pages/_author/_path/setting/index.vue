@@ -32,7 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _updateArticle } from '@/api/article';
+import { updateArticle } from '@/api/article';
 import selectBox from '@/components/selectBox/index.vue';
 
 export default {
@@ -105,7 +105,7 @@ export default {
       params.author = this.author;
       params.path = this.path;
       try {
-        const { data } = await _updateArticle(params);
+        const { data } = await updateArticle(params);
         this.$Message.success({ background: true, content: '更新成功' });
         this.$store.commit('author/setArticle', data);
       } catch (err) {}

@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import { _queryRegister } from '@/api/user';
-import { _sendForgetEmail } from '@/api/account';
+import { queryRegister } from '@/api/user';
+import { sendForgetEmail } from '@/api/account';
 import loginRegister from '@/components/loginRegister/index.vue';
 
 export default {
@@ -86,7 +86,7 @@ export default {
         return;
       }
       try {
-        await _sendForgetEmail({ email: this.email });
+        await sendForgetEmail({ email: this.email });
         const content = '您的邮件已发送，请前往您的邮箱中查看';
         this.email = '';
         this.loading = false;
@@ -144,7 +144,7 @@ export default {
       if (this.emailLoad === 1 || this.queryEmail === email) return;
       this.emailLoad = 1;
       this.queryEmail = email;
-      const { data } = await _queryRegister({ email });
+      const { data } = await queryRegister({ email });
       if (data) {
         this.emailLoad = 0;
       } else {

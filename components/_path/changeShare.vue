@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _updateArticle } from '@/api/article';
+import { updateArticle } from '@/api/article';
 
 export default {
   data() {
@@ -93,7 +93,7 @@ export default {
       const params = { author, path };
       params.share = this.share === '1';
       this.loading = true;
-      const { data } = await _updateArticle(params);
+      const { data } = await updateArticle(params);
       this.$store.commit('author/setArticle', data);
       this.$Message.success({ background: true, content: '更新成功' });
       this.loading = false;

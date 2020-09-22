@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { _queryPostListParent } from '@/api/post';
+import { queryPostListParent } from '@/api/post';
 import projectHeader from '@/components/_path/projectHeader.vue';
 import indexShow from '@/components/_path/indexShow.vue';
 
@@ -32,7 +32,7 @@ export default {
   async asyncData({ params, store }) {
     const { author, path, id } = params;
     const request = { author, path, id };
-    const { data } = await _queryPostListParent(request);
+    const { data } = await queryPostListParent(request);
     const { list, details, parent } = data;
     const { content, updateTime, updateUser, name: title } = details;
     const option = { updateTime, title, ...updateUser };

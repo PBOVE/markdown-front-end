@@ -1,10 +1,10 @@
 import { Middleware } from '@nuxt/types';
-import { _token } from '@/api/user';
+import { queryToken } from '@/api/user';
 
 const authMiddleware: Middleware = async(context: any) => {
   const { app, store } = context;
   if (!store.state.token.isGetToken) {
-    const { data } = await _token();
+    const { data } = await queryToken();
     if (!data.user) {
       store.commit('user/removeUser');
     } else {

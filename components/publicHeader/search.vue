@@ -48,7 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryArticle } from '@/api/query';
+import { queryArticle } from '@/api/query';
 import { debounce } from 'lodash';
 
 export default {
@@ -95,7 +95,7 @@ export default {
         return;
       }
       const params = { title: this.inputData };
-      const { data } = await _queryArticle(params);
+      const { data } = await queryArticle(params);
       this.selectIndex = -1;
       this.loading = false;
       this.listShow = true;

@@ -65,7 +65,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _sendVerifyEmail } from '@/api/account';
+import { sendVerifyEmail } from '@/api/account';
 import publicHeader from '@/components/publicHeader/index.vue';
 import emailModal from '@/components/account/emailModal.vue';
 
@@ -94,7 +94,7 @@ export default {
     async sendVerify() {
       try {
         this.loading = true;
-        await _sendVerifyEmail();
+        await sendVerifyEmail();
         const content = '您的验证邮件已发送，请前往您的邮箱中查看';
         this.$Message.success({ duration: 10, content, background: true });
       } catch (code) {}

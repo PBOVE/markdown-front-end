@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { _uploadFile } from '@/api/account';
+import { uploadFile } from '@/api/account';
 
 export default {
   data() {
@@ -60,7 +60,7 @@ export default {
       const fileData = new FormData();
       fileData.append('file', files[0]);
       try {
-        const { data } = await _uploadFile(fileData);
+        const { data } = await uploadFile(fileData);
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
           desc: files[0].name.replace(/\..+/, ''),

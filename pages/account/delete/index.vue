@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { _deleteAccount } from '@/api/user';
+import { deleteAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 
 export default {
@@ -62,7 +62,7 @@ export default {
       }
       try {
         this.loading = true;
-        await _deleteAccount({ password: this.password });
+        await deleteAccount({ password: this.password });
         this.$store.commit('token/removeToken');
         this.$router.push('/login');
       } catch (err) {

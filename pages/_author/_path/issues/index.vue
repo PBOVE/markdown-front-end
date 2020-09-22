@@ -71,12 +71,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryIssues } from '@/api/issues';
+import { queryIssues } from '@/api/issues';
 
 export default {
   async asyncData({ params }) {
     const { author, path } = params;
-    const { data } = await _queryIssues({ author, path });
+    const { data } = await queryIssues({ author, path });
     return { issues: data.content, totalElements: data.totalElements };
   },
   data() {

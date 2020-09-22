@@ -102,7 +102,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _issuesDetails, _comment, _deleteIssues } from '@/api/issues';
+import { issuesDetails, comment, deleteIssues } from '@/api/issues';
 import issuesCard from '@/components/_path/issuesCard.vue';
 import issuesBorder from '@/components/_path/issuesBorder.vue';
 import modifyEdit from '@/components/EditorMarkdown/modify.vue';
@@ -117,7 +117,7 @@ export default {
   },
   async asyncData({ params }) {
     const { id } = params;
-    const { data: details } = await _issuesDetails(id);
+    const { data: details } = await issuesDetails(id);
     const { answer, title, createTime, content } = details;
     let { createUser } = details;
     const participants = {};
@@ -158,7 +158,7 @@ export default {
     // 处理评论
     async handleComment() {
       this.loading = true;
-      const { data } = await _comment(this.id, this.editContent);
+      const { data } = await comment(this.id, this.editContent);
       this.editContent = '';
       this.loading = false;
       this.answer.push(data);
@@ -173,7 +173,7 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: async() => {
-          await _deleteIssues(this.id);
+          await deleteIssues(this.id);
           this.$Modal.remove();
           this.$router.push(`/${this.author}/${this.path}/issues`);
         },

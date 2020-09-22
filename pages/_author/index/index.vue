@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import { _queryArticle } from '@/api/article';
-import { _queryAccountLike } from '@/api/user';
+import { queryArticle } from '@/api/article';
+import { queryAccountLike } from '@/api/user';
 import indexPage from '@/components/_author/index.vue';
 import projectPage from '@/components/_author/projects.vue';
 import likesPage from '@/components/_author/likes.vue';
@@ -23,11 +23,11 @@ export default {
     let articles, likes;
     if (tab === 'articles') {
       const request = { author, page: page ? page - 1 : 0, title };
-      const { data } = await _queryArticle(request);
+      const { data } = await queryArticle(request);
       articles = data;
     } else if (tab === 'likes') {
       const request = { author, page: page ? page - 1 : 0 };
-      const { data } = await _queryAccountLike(request);
+      const { data } = await queryAccountLike(request);
       likes = data;
     } else {
 

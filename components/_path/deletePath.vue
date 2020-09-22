@@ -30,7 +30,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _deleteArticle } from '@/api/article';
+import { deleteArticle } from '@/api/article';
 
 export default {
   data() {
@@ -65,7 +65,7 @@ export default {
       this.loading = true;
       const { author, path } = this.$route.params;
       try {
-        await _deleteArticle({ author, path });
+        await deleteArticle({ author, path });
         this.$router.push(`/${author}`);
       } catch (err) {
         this.loading = false;

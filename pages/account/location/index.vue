@@ -57,7 +57,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _updateAccount } from '@/api/user';
+import { updateAccount } from '@/api/user';
 import cityList from '@/utils/cities';
 import publicHeader from '@/components/publicHeader/index.vue';
 
@@ -115,7 +115,7 @@ export default {
       }
       try {
         this.loading = true;
-        const { data } = await _updateAccount({
+        const { data } = await updateAccount({
           location: {
             province: this.province,
             city: this.city,

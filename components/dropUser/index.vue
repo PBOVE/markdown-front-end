@@ -43,7 +43,7 @@
 // 点击上传照片
 import headPortrait from '@/components/headPortrait/setting.vue';
 import { mapGetters } from 'vuex';
-import { _logout } from '@/api/user';
+import { userLogout } from '@/api/user';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 import weatherView from '@/components/publicHeader/weather.vue';
 
@@ -70,7 +70,7 @@ export default {
     async buttonEvent() {
       try {
         this.loading = true;
-        await _logout();
+        await userLogout();
         this.$store.commit('token/removeToken');
         this.$router.push('/login');
       } catch (err) {}

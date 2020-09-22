@@ -57,8 +57,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryAccountLike } from '@/api/user';
-import { _articleLike, _articleUnLike } from '@/api/article';
+import { queryAccountLike } from '@/api/user';
+import { articleLike, articleUnLike } from '@/api/article';
 
 export default {
   filters: {
@@ -89,7 +89,7 @@ export default {
       const { query: toQuery } = to;
       const page = toQuery.page ? toQuery.page - 1 : 0;
       const params = { page, author: this.author };
-      const { data } = await _queryAccountLike(params);
+      const { data } = await queryAccountLike(params);
       this.like = data;
     },
   },
@@ -108,8 +108,8 @@ export default {
       }
       const row = JSON.parse(parseRow);
       const params = { author: row.author, path: row.path };
-      if (row.islike) await _articleUnLike(params);
-      else await _articleLike(params);
+      if (row.islike) await articleUnLike(params);
+      else await articleLike(params);
       row.islike = !row.islike;
       this.$set(this.likes.content, index, row);
     },

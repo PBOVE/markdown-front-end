@@ -52,8 +52,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import headPortraitShow from '@/components/headPortrait/show.vue';
-import { _queryUser } from '@/api/query';
-import { _articleInvite } from '@/api/invite';
+import { queryUser } from '@/api/query';
+import { articleInvite } from '@/api/invite';
 import { debounce } from 'lodash';
 
 export default {
@@ -108,7 +108,7 @@ export default {
     debounceSearch: debounce(async function(account) {
       if (!account) return;
       this.loading = true;
-      const { data } = await _queryUser({ account });
+      const { data } = await queryUser({ account });
       this.userList = data;
       this.loading = false;
     }, 400),
@@ -130,7 +130,7 @@ export default {
           author: this.author,
           path: this.path,
         };
-        await _articleInvite(params);
+        await articleInvite(params);
         this.modalShow = false;
         this.buttonLoding = false;
         this.$Message.success({ background: true, content: '发送成功', duration: 5, });

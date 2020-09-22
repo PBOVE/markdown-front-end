@@ -22,7 +22,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _queryRegister, _queryAccount } from '@/api/user';
+import { queryRegister, queryAccount } from '@/api/user';
 import publicHeader from '@/components/publicHeader/index.vue';
 import validRemind from '@/components/validRemind/index.vue';
 import pageLeft from '@/components/_author/pageLeft.vue';
@@ -33,12 +33,12 @@ export default {
   components: { publicHeader, validRemind, pageLeft, pageRight },
   async validate({ params }) {
     const query = { name: params.author };
-    const { data } = await _queryRegister(query);
+    const { data } = await queryRegister(query);
     return data;
   },
   async fetch({ store, params }) {
     const { author: username } = params;
-    const { data } = await _queryAccount({ username });
+    const { data } = await queryAccount({ username });
     store.commit('author/setAuthor', data);
   },
   data() {

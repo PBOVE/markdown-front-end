@@ -39,7 +39,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import modifyEdit from '@/components/EditorMarkdown/modify.vue';
-import { _newIssues } from '@/api/issues';
+import { newIssues } from '@/api/issues';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
@@ -77,7 +77,7 @@ export default {
       this.loading = true;
       this.$refs.modifyEdit.handlesave(async(content) => {
         const params = { author, path, title, content };
-        const { data } = await _newIssues(params);
+        const { data } = await newIssues(params);
         this.$router.push(`/${author}/${path}/issues/${data.id}`);
       });
     },

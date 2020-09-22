@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { _queryPostListParent } from '@/api/post';
+import { queryPostListParent } from '@/api/post';
 import indexShow from '@/components/_path/indexShow.vue';
 import projectHeader from '@/components/_path/projectHeader.vue';
 
@@ -20,7 +20,7 @@ export default {
   components: { projectHeader, indexShow },
   async asyncData({ params, store }) {
     const { author, path } = params;
-    const { data } = await _queryPostListParent({ author, path });
+    const { data } = await queryPostListParent({ author, path });
     const { list, details } = data;
     const { content, updateTime, updateUser } = details;
     const to = `/${author}/${path}`;

@@ -64,7 +64,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { _followAccount, _unfollowAccount } from '@/api/user';
+import { followAccount, unfollowAccount } from '@/api/user';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {
@@ -115,8 +115,8 @@ export default {
       const username = this.storeAuthor.userName;
       const isFans = this.storeAuthor.isFans;
       let data;
-      if (isFans) data = await _unfollowAccount({ username });
-      else data = await _followAccount({ username });
+      if (isFans) data = await unfollowAccount({ username });
+      else data = await followAccount({ username });
       this.$store.commit('author/setAuthor', data.data);
     },
   },
