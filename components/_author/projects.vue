@@ -34,7 +34,6 @@
             </div>
             <div class="index-page-row-description">{{ item.description }}</div>
           </div>
-
           <div class="index-page-row-right">
             <div
               class="index-page-flex-middle index-page-row-star"
@@ -48,14 +47,11 @@
         </div>
         <div>
           <div class="index-page-row-left-floor">
-            <div>
-              <span
-                class="index-page-row-time"
-                :title="$timeConversion(item.time)"
-              >{{ item.time|TimeFilter }}前更新</span>
-              <!-- <span>{{ item.likeCount }}</span> -->
-            </div>
-            <!-- <div v-if="storeUserName === author" class="index-page-row-topping">置顶</div> -->
+            <span
+              class="index-page-row-time"
+              :title="$timeConversion(item.time)"
+            >{{ item.time|TimeFilter }}前更新</span>
+            <!-- <span>{{ item.likeCount }}</span> -->
           </div>
         </div>
       </div>
@@ -148,14 +144,6 @@ export default {
 .index-page-row-left-floor {
   padding: 0 10px 0 0;
   color: #586069;
-}
-.index-page-row-topping {
-  opacity: 0;
-  transition: all 0.1s;
-}
-.index-page-row:hover .index-page-row-topping {
-  cursor: pointer;
-  opacity: 1;
 }
 @media screen and (min-width: 550px) {
   .index-page-row-share-icon {

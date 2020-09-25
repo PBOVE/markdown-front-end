@@ -43,11 +43,12 @@
             <div class="path-button-right">0</div>
           </div>-->
           <div class="path-button middle">
-            <div class="path-button-left middle">
-              <Icon :type="`md-star${storeArticle.islike?'':'-outline'}`" class="path-button-icon" />
-              <span>{{ storeArticle.islike ?'取消':'赞' }}</span>
+            <div class="path-button-left middle" @click="handleLike">
+              <Icon v-show="loading" class="main-spin-icon-load path-button-icon" type="ios-loading" />
+              <Icon v-show="!loading" :type="`md-star${islike?'':'-outline'}`" class="path-button-icon" />
+              <span>{{ islike ?'取消':'赞' }}</span>
             </div>
-            <div class="path-button-right">{{ storeArticle.likeCount }}</div>
+            <div class="path-button-right">{{ likeCount }}</div>
           </div>
         </div>
       </div>
@@ -124,19 +125,17 @@ export default {
       return share ? '' : '仅文档成员可见';
     },
   },
-  async fetch({ params, store }) {
-    const { author, path } = params;
-    const { data } = await articleDetails({ author, path });
-    store.commit('author/setArticle', data);
-  },
-  async asyncData({ params }) {
-    const { author: username } = params;
+  async asyncData({ params, store }) {
+    const { author: username, path } = params;
+    const { data } = await articleDetails({ author: username, path });
     const { data: user } = await queryAccount({ username });
     if (user.location) {
       user.province = user.location.province;
       user.city = user.location.city;
     }
-    return { user };
+    store.commit('author/setArticle', data);
+    const { islike, likeCount } = data;
+    return { user, islike, likeCount };
   },
   data() {
     return {
@@ -144,13 +143,16 @@ export default {
       width: 300,
       // 作者
       author: this.$route.params.author,
+      path: this.$route.params.path,
       // 设置菜单展示
       setting: false,
+      // 喜欢 - 加载
+      loading: false,
     };
   },
   computed: {
     ...mapGetters('author', ['storeArticle', 'storeEdit', 'storeSelectPost']),
-    ...mapGetters('user', ['storeUserName']),
+    ...mapGetters('user', ['storeUserName', 'storeUserState']),
     // 路径
     resultPath() {
       const { author, path } = this.storeArticle;
@@ -190,16 +192,24 @@ export default {
       else this.setting = false;
     },
     // 点赞
-    async handleLike(parseRow, index) {
+    async handleLike() {
+      if (this.loading) return;
       if (!this.storeUserState) {
-        return this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+        return;
       }
-      const row = JSON.parse(parseRow);
-      const params = { author: this.author, path: row.path };
-      if (row.islike) await articleUnLike(params);
-      else await articleLike(params);
-      row.islike = !row.islike;
-      this.$set(this.articles.content, index, row);
+      this.loading = true;
+      const params = { author: this.author, path: this.path };
+      if (this.islike) {
+        await articleUnLike(params);
+        this.likeCount -= 1;
+        this.islike = false;
+      } else {
+        await articleLike(params);
+        this.likeCount += 1;
+        this.islike = true;
+      }
+      this.loading = false;
     },
   },
   head() {

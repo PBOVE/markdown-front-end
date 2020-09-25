@@ -72,9 +72,6 @@
   border-radius: 50%;
   animation: animate 1s linear infinite;
 }
-.main-spin-icon-load {
-  animation: ani-demo-spin 1s linear infinite;
-}
 .main-logo {
   width: 60px;
   height: 30px;
@@ -109,8 +106,7 @@
   color: #fff;
 }
 .main-spin-icon-load {
-  margin: 0 3px 0 0;
-  animation: ani-demo-spin 1s linear infinite;
+  animation: ani-main-spin 1s linear infinite;
 }
 
 @keyframes animate {

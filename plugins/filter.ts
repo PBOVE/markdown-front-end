@@ -18,9 +18,9 @@ Vue.prototype.$timeConversion = (time: string) => {
   const completion = (num: number) => {
     return num.toString().padStart(2, '0');
   };
-  return `${date.getFullYear()}年${completion(date.getMonth() + 1)}月${completion(date.getDate())}日 ${completion(
+  return `${date.getFullYear()} 年 ${completion(date.getMonth() + 1)} 月 ${completion(date.getDate())} 日 ${completion(
     date.getHours(),
-  )}:${completion(date.getMinutes())}`;
+  )} : ${completion(date.getMinutes())}`;
 };
 
 Vue.prototype.$elementOffset = (el: any) => {

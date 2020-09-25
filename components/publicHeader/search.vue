@@ -225,7 +225,7 @@ export default {
   color: #1890ff;
 }
 .serach-loading {
-  animation: ani-demo-spin 1s linear infinite;
+  animation: ani-main-spin 1s linear infinite;
 }
 .select-li {
   color: #1890ff;
