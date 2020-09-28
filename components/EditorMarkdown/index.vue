@@ -30,8 +30,6 @@ export default {
     return {
       // 内容
       handbook: '',
-      // 配置
-      toolbars: {},
       // 模式
       mode: 'editable',
       // 左侧侧工具栏
@@ -39,7 +37,7 @@ export default {
       // 右侧工具栏
       rightToolbar: 'preview toc sync-scroll fullscreen',
       // 初始化 Codemirror 的配置
-      codemirrorConfig: {},
+      codemirrorConfig: { lineNumbers: false },
     };
   },
   mounted() {

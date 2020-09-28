@@ -8,7 +8,7 @@
   <div class="index-wrap">
     <public-header :shadow="true" />
     <valid-remind />
-    <div class="index-main scroll">
+    <div class="index-main scroll-transparent">
       <div class="index-content">
         <page-left class="index-content-left" />
         <div class="index-content-right">

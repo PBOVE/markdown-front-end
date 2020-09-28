@@ -6,21 +6,23 @@
 
 <template>
   <div class="container">
-    <div v-if="author===storeUser.userName&&storeUser.authentication" class="container-header">
-      <!-- <div class="container-header-title">您可以通过 HTML 和 CSS 修改当前页面</div>
-      <Button>编辑</Button> -->
+    <div v-if="author===storeUser.userName&&storeUser.authentication" class="container-header index-page-flex-middle">
+      <div class="container-header-title index-page-flex-middle" @click="handleCustom">
+        <img src="@/assets/svg/menu.svg" width="20" height="20">
+        <span style="margin:0 0 0 5px">自定义桌面</span>
+      </div>
+
     </div>
-    <client-only>
-      <iframe id="iframePreview" class="container-iframe" scrolling="no" :height="`${height}px`"></iframe>
-    </client-only>
+    <!-- <sustom-page /> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-// import xss from 'xss';
+import sustomPage from '@/components/custom/customPage.vue';
 
 export default {
+  components: { sustomPage },
   transition: 'fade',
   data() {
     return {
@@ -36,28 +38,25 @@ export default {
     ...mapGetters('user', ['storeUser']),
   },
   mounted() {
-    this.$nextTick(() => {
-      this.initIframe();
-    });
+
   },
   methods: {
-    initIframe() {
-      const preview = document.getElementById('iframePreview').contentDocument;
-      preview.body.innerHTML = this.handbook;
-      this.height = preview.body.offsetHeight + 20;
-    },
+    // 处理自定义页面
+    handleCustom() {
+
+    }
+
   },
 };
 </script>
 
 <style scoped>
 .container-header {
-  display: flex;
-  align-items: center;
   margin: 0 0 20px 0;
 }
 .container-header-title {
   flex: 1;
+  cursor: pointer;
 }
 .container-iframe {
   border-width: 0px;

@@ -11,7 +11,6 @@
       <div class="content">
         <div class="content-header">
           <div class="content-header-title">新建文档</div>
-          <!-- <div class="new-tip">山不在高，有仙则名。水不在深，有龙则灵。</div> -->
         </div>
         <Divider />
         <div class="row">

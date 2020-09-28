@@ -1,10 +1,22 @@
 body::-webkit-scrollbar-thumb,
-.scroll::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb,
+.ivu-scroll-container::-webkit-scrollbar-thumb,
+.scroll-transparent::-webkit-scrollbar-thumb {
   background-color: rgba(144, 147, 153, .3);
   border-radius: 5px;
 }
+.scroll-hidden::-webkit-scrollbar,
+.ivu-scroll-container::-webkit-scrollbar,
+.scroll-transparent::-webkit-scrollbar{
+  background-color: transparent;
+  width: 8px;
+  height: 8px;
+}
+.scroll-hidden::-webkit-scrollbar{
+  background-color: transparent;
+}
 body::-webkit-scrollbar,
-.scroll::-webkit-scrollbar {
+.scroll::-webkit-scrollbar{
   background-color: #f0f2f5;
   width: 8px;
   height: 8px;
@@ -20,3 +32,5 @@ body::-webkit-scrollbar,
   width: 6px;
   height: 6px;
 }
+
+
