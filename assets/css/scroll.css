@@ -5,6 +5,7 @@ body::-webkit-scrollbar-thumb,
   background-color: rgba(144, 147, 153, .3);
   border-radius: 5px;
 }
+.scroll-transparent::-webkit-scrollbar-corner,
 .scroll-hidden::-webkit-scrollbar,
 .ivu-scroll-container::-webkit-scrollbar,
 .scroll-transparent::-webkit-scrollbar{

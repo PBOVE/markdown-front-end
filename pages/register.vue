@@ -103,7 +103,7 @@
 <script>
 import { queryRegister, userRegister } from '@/api/user';
 import loginRegister from '@/components/loginRegister/index.vue';
-import accountName from '@/utils/accountName';
+import { usnserviceable } from '@/utils/accountName';
 
 export default {
   components: { loginRegister },
@@ -146,7 +146,7 @@ export default {
     },
     username(name) {
       const usernameReg = /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/;
-      const nameRules = accountName;
+      const nameRules = usnserviceable;
       const verifyName = (nameRule) => {
         return nameRule.test(name);
       };
