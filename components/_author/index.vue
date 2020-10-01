@@ -20,6 +20,7 @@
         :item="item"
         :index="index"
         :close-button="false"
+        :router-link="true"
       />
     </div>
     <sustom-page v-model="sustomPage" />
