@@ -1,12 +1,33 @@
 <template>
-  <div class="custom-crad">
-    <div class="index-page-flex-between">
-      <div class="custom-crad-title index-text-hidden">{{ item.title }}</div>
-      <Icon v-if="closeButton" type="md-close" class="custom-crad-close" @click.stop="handleCardDelete" />
+  <div class="custom-crad-wrap">
+    <div class="custom-crad">
+      <div class="index-page-flex-between custom-crad-header">
+        <div class="index-page-flex-middle">
+          <Icon type="ios-podium" color="#19be6b" style="margin: 0 10px 0 0" />
+          <nuxt-link v-if="routerLink" :to="`${item.author}/${item.path}`">
+            <span>{{ item.author }}</span> /
+            <span class="text-title">{{ item.title }}</span>
+          </nuxt-link>
+          <span v-else class="header-text">
+            <span class="text-title">{{ item.title }}</span>
+          </span>
+        </div>
+        <Icon
+          v-if="closeButton"
+          type="md-close"
+          class="custom-crad-close"
+          @click.stop="handleCardDelete"
+        />
+      </div>
+      <div class="text-description">{{ item.description }}</div>
+      <div class="index-page-flex-middle">
+        <Icon type="md-star-outline" size="16" />
+        <span>{{ item.likeCount }}</span>
+        <Icon v-if="item.shere" type="ios-lock-outline" />
+        <Icon v-else type="ios-unlock-outline" />
+
+      </div>
     </div>
-    <div>{{ item.description }}</div>
-    <!-- <div class="custom-card-iamges">{{ item.author |filters }}</div> -->
-    <!-- <img class="custom-card-iamges" :src="`/animal/${animal[setImageSrc()]}.png`" @mousedown.prevent /> -->
   </div>
 </template>
 
@@ -17,23 +38,27 @@ export default {
   filters: {
     filters(title) {
       return title[0];
-    }
+    },
   },
   props: {
     item: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     index: {
       type: Number,
-      default: -1
+      default: -1,
     },
     closeButton: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
+    routerLink: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -54,45 +79,50 @@ export default {
     // 点击 Card 删除
     handleCardDelete() {
       this.$emit('on-delete', this.item, this.index);
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-.custom-crad {
+.custom-crad-wrap {
   display: inline-block;
-  position: relative;
+  padding: 10px;
   margin: 10px;
-  padding: 15px;
   width: 236px;
   height: 108px;
-  color: #ffffff;
-  border-radius: 4px;
-  cursor: pointer;
-  overflow: hidden;
-  z-index: 0;
-  background-image: linear-gradient(to bottom right, #2b85e4 20%, #2db7f5);
+  background: #fff;
+  border: 1px solid #e1e4e8;
+  color: #000;
+  border-radius: 8px;
 }
-.custom-crad-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 0 5px 0;
+.custom-crad {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
-.custom-card-iamges{
-  position: absolute;
-  right: 10px;
-  top: 15px;
-  z-index: -1;
-  user-select: none;
+.header-text {
+  color: #2d8cf0;
 }
-.custom-crad-close{
+.text-title {
+  color: #2b85e4;
+}
+.text-author {
+  color: #2d8cf0;
+}
+.custom-crad-close {
   font-weight: bold;
   font-size: 16px;
   opacity: 0;
   transition: opacity 0.3s;
 }
-.custom-crad:hover .custom-crad-close{
+.custom-crad:hover .custom-crad-close {
   opacity: 1;
 }
+.text-description {
+  flex: 1;
+  font-size: 12px;
+  color: #586069;
+}
+
 </style>
