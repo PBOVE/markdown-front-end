@@ -86,8 +86,7 @@ export default {
       const sortData = this.$refs.sortItem.getSortData();
       const params = [];
       sortData.forEach(el => params.push(el._id));
-      const { data } = await updateToppingArticle(params);
-      console.log(data);
+      await updateToppingArticle(params);
     },
   },
 };

@@ -12,7 +12,7 @@
         <span style="margin:0 0 0 5px">自定义桌面</span>
       </div>
     </div>
-    <!-- <div class="index-page-title">置顶文档</div> -->
+    <div class="index-page-title">置顶文档</div>
     <div>
       <custom-card
         v-for="(item, index) in toppingArticle"
@@ -21,9 +21,10 @@
         :index="index"
         :close-button="false"
         :router-link="true"
+        class="custom-card"
       />
     </div>
-    <sustom-page v-model="sustomPage" />
+    <sustom-page v-if="sustomPage" @on-close="sustomPageClose" />
   </div>
 </template>
 
@@ -53,19 +54,23 @@ export default {
       // 用户页面
       author: this.$route.params.author,
       // 自定义页面
-      sustomPage: false
+      sustomPage: false,
+
     };
   },
   computed: {
     ...mapGetters('user', ['storeUser']),
   },
-  async mounted() {
-
+  mounted() {
   },
   methods: {
     // 处理自定义页面
     handleCustom() {
       this.sustomPage = true;
+    },
+    // 处理自定义页面关闭
+    sustomPageClose() {
+      this.sustomPage = false;
     }
 
   },
@@ -87,7 +92,16 @@ export default {
 .index-page-title{
   font-size: 16px;
   letter-spacing: 0.1em;
-  font-weight: bold;
-  color: #464c5b;
+}
+@media screen and (max-width: 660px) {
+  .container-header-title{
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  .custom-card{
+    width: 100%;
+    margin: 10px 0;
+  }
 }
 </style>

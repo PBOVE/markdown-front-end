@@ -4,7 +4,7 @@
       <div class="index-page-flex-between custom-crad-header">
         <div class="index-page-flex-middle">
           <Icon type="ios-podium" color="#19be6b" style="margin: 0 10px 0 0" />
-          <nuxt-link v-if="routerLink" :to="`${item.author}/${item.path}`">
+          <nuxt-link v-if="routerLink" :to="`${item.author}/${item.path}`" class="custom-crad-link">
             <span>{{ item.author }}</span> /
             <span class="text-title">{{ item.title }}</span>
           </nuxt-link>
@@ -16,16 +16,15 @@
           v-if="closeButton"
           type="md-close"
           class="custom-crad-close"
-          @click.stop="handleCardDelete"
+          @click="handleCardDelete"
         />
       </div>
       <div class="text-description">{{ item.description }}</div>
       <div class="index-page-flex-middle">
         <Icon type="md-star-outline" size="16" />
-        <span>{{ item.likeCount }}</span>
-        <Icon v-if="item.shere" type="ios-lock-outline" />
-        <Icon v-else type="ios-unlock-outline" />
-
+        <span style="margin:0 5px;">{{ item.likeCount }}</span>
+        <Icon v-if="item.share" type="ios-unlock-outline" size="16" />
+        <Icon v-else type="ios-lock-outline" size="16" />
       </div>
     </div>
   </div>
@@ -115,6 +114,7 @@ export default {
   font-size: 16px;
   opacity: 0;
   transition: opacity 0.3s;
+  cursor: pointer;
 }
 .custom-crad:hover .custom-crad-close {
   opacity: 1;
@@ -124,5 +124,7 @@ export default {
   font-size: 12px;
   color: #586069;
 }
-
+.custom-crad-link:hover{
+  text-decoration: underline;
+}
 </style>

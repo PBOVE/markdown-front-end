@@ -92,7 +92,7 @@ export default {
       this.sortData.splice(index, 1);
       for (let i = 0; i < this.sortData.length; i++) {
         const changeData = this.computeDataStyle(_.cloneDeep(this.sortData[i]), i);
-        this.sortData[i].position = changeData.position;
+        this.$set(this.sortData, i, changeData);
       }
       // 数据改变
       this.asyncDataChange();

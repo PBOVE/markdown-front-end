@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value" class="custom-page-wrap">
+  <div class="custom-page-wrap">
     <div class="custom-page-mask"></div>
     <div class="custom-page-content">
       <div class="index-between-modal">
@@ -26,21 +26,15 @@ import toppingPage from '@/components/custom/toppingPage';
 export default {
   components: { toppingPage },
   transition: 'fade',
-  props: {
-    value: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
-      menuItem: [{ title: '置顶文档' }, { title: '协作文档' }],
+      menuItem: [{ title: '置顶文档' }],
     };
   },
   methods: {
     // 处理关闭
     handleClose() {
-      this.$emit('input', false);
+      this.$emit('on-close', false);
     }
   }
 };
