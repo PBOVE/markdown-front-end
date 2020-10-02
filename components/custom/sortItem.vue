@@ -88,10 +88,15 @@ export default {
      *
      */
     deleteData(data) {
-      const index = this.sortData.findIndex(el => el.sortId === data.sortId);
-      this.sortData.splice(index, 1);
+      const deleteIndex = this.sortData.findIndex(el => el.sortId === data.sortId);
+      this.sortData.splice(deleteIndex, 1);
       for (let i = 0; i < this.sortData.length; i++) {
-        const changeData = this.computeDataStyle(_.cloneDeep(this.sortData[i]), i);
+        const { w, h } = this.dataParsing(i, 'position');
+        let place = h * this.rowShowNum + w;
+        if (place >= deleteIndex) {
+          place -= 1;
+        }
+        const changeData = this.computeDataStyle(_.cloneDeep(this.sortData[i]), place);
         this.$set(this.sortData, i, changeData);
       }
       // 数据改变
@@ -104,7 +109,9 @@ export default {
      */
     initData(data) {
       data.forEach((el, index) => {
-        const changeData = this.computeDataStyle(_.cloneDeep(el), index);
+        const cloneData = _.cloneDeep(el);
+        cloneData.sortId = onlyId();
+        const changeData = this.computeDataStyle(cloneData, index);
         this.sortData.push(changeData);
       });
     },
