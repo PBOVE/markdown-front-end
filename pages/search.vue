@@ -48,7 +48,6 @@ export default {
     const { data } = await queryArticle({ title });
     const searchData = data.content;
     const totalElements = data.totalElements;
-    console.log(data);
     return { title, searchData, totalElements };
   },
   head() {
