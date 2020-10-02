@@ -12,18 +12,27 @@
         <span style="margin:0 0 0 5px">自定义桌面</span>
       </div>
     </div>
-    <div class="index-page-title">置顶文档</div>
-    <div>
-      <custom-card
-        v-for="(item, index) in toppingArticle"
-        :key="item.path"
-        :item="item"
-        :index="index"
-        :close-button="false"
-        :router-link="true"
-        class="custom-card"
-      />
-    </div>
+    <Divider orientation="left">置顶文档</Divider>
+    <custom-card
+      v-for="(item, index) in userArticle.topping"
+      :key="item.path"
+      :item="item"
+      :index="index"
+      :close-button="false"
+      :router-link="true"
+      class="custom-card"
+    />
+    <div class="index-page-title"></div>
+    <Divider orientation="left">协作文档</Divider>
+    <custom-card
+      v-for="(item, index) in userArticle.assist"
+      :key="item.path"
+      :item="item"
+      :index="index"
+      :close-button="false"
+      :router-link="true"
+      class="custom-card"
+    />
     <sustom-page v-if="sustomPage" @on-close="sustomPageClose" />
   </div>
 </template>
@@ -38,10 +47,10 @@ export default {
   transition: 'fade',
   props: {
     // 置顶文档
-    toppingArticle: {
-      type: Array,
+    userArticle: {
+      type: Object,
       default() {
-        return [];
+        return {};
       }
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fade" mode="out-in">
-      <index-page v-if="!tab" :topping-article="toppingArticle" />
+      <index-page v-if="!tab" :user-article="userArticle" />
       <project-page v-else-if="tab==='articles'" :articles="articles" />
       <likes-page v-else-if="tab==='likes'" :likes="likes" />
     </transition>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { queryArticle, queryToppingArticle } from '@/api/article';
+import { queryArticle, queryUserArticle } from '@/api/article';
 import { queryAccountLike } from '@/api/user';
 import indexPage from '@/components/_author/index.vue';
 import projectPage from '@/components/_author/projects.vue';
@@ -20,7 +20,7 @@ export default {
   async asyncData({ params, query }) {
     const { author } = params;
     const { tab, page, q: title } = query;
-    let articles, likes, toppingArticle;
+    let articles, likes, userArticle;
     if (tab === 'articles') {
       const request = { author, page: page ? page - 1 : 0, title };
       const { data } = await queryArticle(request);
@@ -30,10 +30,10 @@ export default {
       const { data } = await queryAccountLike(request);
       likes = data;
     } else {
-      const { data } = await queryToppingArticle({ author });
-      toppingArticle = data;
+      const { data } = await queryUserArticle({ author });
+      userArticle = data;
     }
-    return { articles, likes, toppingArticle };
+    return { articles, likes, userArticle };
   },
   watchQuery: ['tab', 'page', 'q'],
   computed: {

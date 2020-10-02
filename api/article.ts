@@ -32,5 +32,11 @@ export const deleteArticleUser = (params: any) => axios.$delete('/article/user',
 // 置顶文章
 export const updateToppingArticle = (params:any) => axios.$post('/topping/article', params);
 
+// 查询文章
+export const queryUserArticle = (params:any) => axios.$get('/user/article', { params });
+
 // 查询置顶文章
 export const queryToppingArticle = (params:any) => axios.$get('/topping/article', { params });
+
+// 查询协作文章
+export const queryAssistArticle = (params:any) => axios.$get('/assist/article', { params });

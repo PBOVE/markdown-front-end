@@ -24,9 +24,9 @@
         </div>
       </div>
     </div>
-    <div slot="content" class="api">
+    <div slot="content">
       <Icon type="ios-stats-outline" />
-      {{ signature }}
+      <span>{{ signature }}</span>
     </div>
   </Poptip>
 </template>

@@ -23,6 +23,7 @@ import loadAnimation from '@/components/custom/loadAnimation.vue';
 
 export default {
   components: { customCard, loadAnimation, sortItem },
+  transition: 'fade',
   data() {
     return {
       // 用户页面

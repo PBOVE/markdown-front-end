@@ -5,4 +5,4 @@ const config = { progress: false };
 export const queryUser = (params:any) => axios.$get('/query/user', { params, ...config });
 
 // 查询文章
-export const queryArticle = (params:any) => axios.$get('/query/articel', { params, ...config });
+export const queryArticle = (params:any) => axios.$get('/query/article', { params, ...config });

@@ -8,33 +8,42 @@
           <Button @click="handleClose">关 闭</Button>
         </div>
       </div>
-      <Menu mode="horizontal" active-name="1">
-        <MenuItem v-for="(item, index) in menuItem" :key="index" :name="index + 1 +''">
+      <Menu mode="horizontal" :active-name="menuSelect" @on-select="handleMenuSelect">
+        <MenuItem v-for="(item, index) in menuItem" :key="index" :name="index + 1">
           {{ item.title }}
         </MenuItem>
       </Menu>
       <div class="custom-page-main">
-        <topping-page />
+        <topping-page v-show="menuSelect === 1" />
+        <assist-page v-show="menuSelect === 2" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import toppingPage from '@/components/custom/toppingPage';
+import toppingPage from '@/components/custom/toppingPage.vue';
+import assistPage from '@/components/custom/assistPage.vue';
 
 export default {
-  components: { toppingPage },
+  components: { toppingPage, assistPage },
   transition: 'fade',
   data() {
     return {
-      menuItem: [{ title: '置顶文档' }],
+      // 列表
+      menuItem: [{ title: '置顶文档' }, { title: '协作文档' }],
+      // 菜单选择
+      menuSelect: 1
     };
   },
   methods: {
     // 处理关闭
     handleClose() {
       this.$emit('on-close', false);
+    },
+    // 处理选择
+    handleMenuSelect(name) {
+      this.menuSelect = name;
     }
   }
 };
