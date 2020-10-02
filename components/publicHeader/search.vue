@@ -6,18 +6,13 @@
 
 <template>
   <div class="header-search">
-    <div
-      class="header-search-wrap"
-      :style="{width:width}"
-      @click.stop="handleClick"
-    >
+    <div class="header-search-wrap">
       <input
         ref="inputRef"
         v-model="inputData"
         type="text"
         class="search-input"
         placeholder="搜索"
-        @blur="handleBlur"
         @keyup.up="handleUp"
         @keyup.down="handleDown"
         @keyup.enter="handleEnter"
@@ -25,16 +20,21 @@
       />
       <div class="button-icon-wrap main-center-middle">
         <Icon v-show="!loading" type="ios-search" />
-        <Icon v-show="loading" class="serach-loading" type="ios-loading" color="#2d8cf0" />
+        <Icon
+          v-show="loading"
+          class="serach-loading"
+          type="ios-loading"
+          color="#2d8cf0"
+        />
       </div>
     </div>
     <transition name="searchList">
-      <ul v-show="listShow&&searchData.length" class="header-search-list" :style="{width:width}">
+      <ul v-show="listShow && searchData.length" class="header-search-list">
         <li
           v-for="(item, index) in searchData"
           :key="index"
           class="header-search-li"
-          :class="{'select-li':selectIndex===index}"
+          :class="{ 'select-li': selectIndex === index }"
           @click.stop="handleListClick(item, index, $event)"
         >
           <span>{{ item.author }}</span>
@@ -52,13 +52,6 @@ import { queryArticle } from '@/api/query';
 import { debounce } from 'lodash';
 
 export default {
-  props: {
-    // eslint-disable-next-line vue/prop-name-casing
-    'search-hide': {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       // 输入数据
@@ -69,8 +62,6 @@ export default {
       // 数据加载中
       loading: false,
       asyncTitle: '',
-      // 宽度
-      width: 0,
       // 列表抽屉
       listShow: false,
       // 选中
@@ -78,13 +69,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user', [ 'storeUserState'])
-  },
-  mounted() {
-    window.addEventListener('click', this.globalEvent);
-  },
-  beforeDestroy() {
-    window.removeEventListener('click', this.globalEvent);
+    ...mapGetters('user', ['storeUserState']),
   },
   methods: {
     // 异步搜索
@@ -94,37 +79,13 @@ export default {
         this.loading = false;
         return;
       }
-      const params = { title: this.inputData };
+      const params = { title: this.inputData, size: 6 };
       const { data } = await queryArticle(params);
       this.selectIndex = -1;
       this.loading = false;
       this.listShow = true;
       this.searchData = data.content;
     }, 1000),
-
-    // 注册全局事件
-    globalEvent() {
-      if (this.width) {
-        this.width = '';
-        this.listShow = false;
-      }
-    },
-    // 处理获取焦点
-    handleClick() {
-      const innerWidth = window.innerWidth;
-      if (innerWidth < 600) {
-        // if (this.storeUserState) this.drawerShow = true;
-        this.width = '100%';
-      } else {
-        this.width = '275px';
-        this.$nextTick(() => {
-          this.$refs.inputRef.focus();
-        });
-      }
-    },
-
-    // 失去焦点
-    handleBlur() {},
 
     // 处理点击
     handleListClick(item) {
@@ -163,10 +124,11 @@ export default {
         const author = this.searchData[this.selectIndex].author;
         const path = this.searchData[this.selectIndex].path;
         this.$router.push(`/${author}/${path}`);
-      } else {
+      } else if (this.inputData) {
+        this.listShow = false;
         this.$router.push({
           path: '/search',
-          query: { q: this.inputData }
+          query: { q: this.inputData },
         });
       }
     },
@@ -184,17 +146,17 @@ export default {
 .header-search-wrap {
   display: flex;
   height: 32px;
-  width: 32px;
+  width: 300px;
   transition: all 0.5s ease-in-out;
   cursor: pointer;
   border-color: #dcdee2;
+  border-bottom: 1px solid #dcdee2;
 }
 .search-input {
   flex: 1;
   width: 0;
   outline: none;
   border-width: 0;
-  border-bottom: 1px solid #dcdee2;
 }
 .search-input::placeholder {
   color: #c5c8ce;
@@ -210,9 +172,11 @@ export default {
   position: absolute;
   top: 40px;
   padding: 7px 0;
+   width: 300px;
   background: #fff;
   border-radius: 4px;
   list-style: none;
+
   box-shadow: 0 12px 32px 0 rgba(38, 38, 38, 0.16);
   z-index: 99;
 }
@@ -240,5 +204,11 @@ export default {
   transform-origin: top;
   transform: scale(1, 0);
   opacity: 0;
+}
+@media screen and (max-width: 660px) {
+  .header-search-list,
+  .header-search-wrap {
+    width: 90%;
+  }
 }
 </style>

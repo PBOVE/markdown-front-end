@@ -11,7 +11,7 @@
         <!-- <div class="main-logo" /> -->
         <div class="logo-title">TBS.feel</div>
       </nuxt-link>
-      <search-view class="public-header-search" :search-hide="searchHide" />
+      <search-view class="public-header-search" />
     </div>
     <div class="public-header-right nav-middle">
       <weather-view v-if="storeUserState&&storeWeather" class="weather-view" />
