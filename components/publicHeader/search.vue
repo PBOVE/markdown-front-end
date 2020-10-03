@@ -13,10 +13,11 @@
         type="text"
         class="search-input"
         placeholder="搜索"
+        @focus="handleFocus"
+        @blur="handleBlur"
         @keyup.up="handleUp"
         @keyup.down="handleDown"
         @keyup.enter="handleEnter"
-        @input="changeInput"
       />
       <div class="button-icon-wrap main-center-middle">
         <Icon v-show="!loading" type="ios-search" />
@@ -29,7 +30,7 @@
       </div>
     </div>
     <transition name="searchList">
-      <ul v-show="listShow && searchData.length" class="header-search-list">
+      <ul v-show="listShow && searchData.length && !mandatory" class="header-search-list">
         <li
           v-for="(item, index) in searchData"
           :key="index"
@@ -61,15 +62,24 @@ export default {
       searchData: [],
       // 数据加载中
       loading: false,
-      asyncTitle: '',
       // 列表抽屉
       listShow: false,
       // 选中
       selectIndex: -1,
+      // 强制不显示
+      mandatory: false
     };
   },
   computed: {
     ...mapGetters('user', ['storeUserState']),
+  },
+  watch: {
+    inputData(value) {
+      this.loading = true;
+      this.mandatory = false;
+      this.inputAsyncData = value;
+      this.getRemote();
+    }
   },
   methods: {
     // 异步搜索
@@ -85,7 +95,7 @@ export default {
       this.loading = false;
       this.listShow = true;
       this.searchData = data.content;
-    }, 1000),
+    }, 500),
 
     // 处理点击
     handleListClick(item) {
@@ -125,19 +135,22 @@ export default {
         const path = this.searchData[this.selectIndex].path;
         this.$router.push(`/${author}/${path}`);
       } else if (this.inputData) {
-        this.listShow = false;
+        this.mandatory = true;
         this.$router.push({
           path: '/search',
           query: { q: this.inputData },
         });
       }
     },
-    // 输入框改变
-    changeInput() {
-      this.loading = true;
-      this.inputAsyncData = this.inputData;
-      this.getRemote();
+    // 处理失去焦点
+    handleBlur() {
+      this.mandatory = true;
+      // this.
     },
+    // 处理获取焦点
+    handleFocus() {
+      this.mandatory = false;
+    }
   },
 };
 </script>

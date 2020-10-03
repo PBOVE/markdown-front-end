@@ -2,9 +2,8 @@
   <div class="search-wrap">
     <public-header :shadow="true" />
     <div class="search-main scroll-transparent">
-      <!-- <div style="width:300px"></div> -->
       <search-list :search-data="searchData" />
-      <div class="index-page-flex-between search-page">
+      <div v-if="searchData.length" class="index-page-flex-between search-page">
         <div
           class="search-page-button"
           :class="{ 'search-page-disabled': page === 1 }"
@@ -19,6 +18,9 @@
         >
           下一页
         </div>
+      </div>
+      <div v-else>
+        <h2>很抱歉，没有找到与 “{{ title }} ”相关的文档。</h2>
       </div>
     </div>
   </div>
