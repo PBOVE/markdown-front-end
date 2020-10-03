@@ -141,6 +141,8 @@ export default {
      *
      */
     startEvent(Index, Event) {
+      // 判断鼠标按键
+      if (Event.button !== 0) return;
       // 设置开始位置
       this.sortData[Index].startX = Event.pageX;
       this.sortData[Index].startY = Event.pageY;
@@ -304,6 +306,7 @@ export default {
 <style>
 .sort-Item-wrap {
   position: relative;
+  cursor: default;
 }
 .sort-Item {
   transition: all 0.3s;
