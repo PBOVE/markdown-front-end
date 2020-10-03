@@ -23,7 +23,7 @@
       class="custom-card"
     />
     <div class="index-page-title"></div>
-    <Divider orientation="left">协作文档</Divider>
+    <Divider v-if="userArticle.assist.length" orientation="left">协作文档</Divider>
     <custom-card
       v-for="(item, index) in userArticle.assist"
       :key="item.path"

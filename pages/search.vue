@@ -1,36 +1,24 @@
 <template>
   <div class="search-wrap">
-    <Affix>
-      <public-header :shadow="true" />
-    </Affix>
-    <div class="search-main">
+    <public-header :shadow="true" />
+    <div class="search-main scroll-transparent">
       <!-- <div style="width:300px"></div> -->
-      <div>
-        <div v-for="(item) in searchData" :key="item._id" class="search-item-wrap">
-          <div class="index-page-flex-middle">
-            <Icon type="ios-podium" color="#19be6b" style="margin: 0 10px 0 0" />
-            <nuxt-link :to="`/${item.author}/${item.path}`" class="search-link">
-              <span>{{ item.author }}</span> /
-              <span class="text-title">{{ item.title }}</span>
-            </nuxt-link>
-          </div>
-          <div class="search-description">{{ item.description }}</div>
-          <div class="index-page-flex-middle">
-            <Icon type="md-star-outline" size="14" />
-            <span style="margin: 0 5px">{{ item.likeCount }}</span>
-            <Icon type="ios-time-outline" style="margin:0 5px; 0 0" size="14" />
-            <span
-              class="index-page-row-time"
-              style="margin: 0 5px 0 0"
-              :title="$timeConversion(item.time)"
-            >{{ item.time | TimeFilter }}前更新</span>
-            <Icon v-if="item.share" type="ios-unlock-outline" size="14" />
-            <Icon v-else type="ios-lock-outline" size="14" />
-          </div>
+      <search-list :search-data="searchData" />
+      <div class="index-page-flex-between search-page">
+        <div
+          class="search-page-button"
+          :class="{ 'search-page-disabled': page === 1 }"
+          @click="handlePageChange('previous')"
+        >
+          上一页
         </div>
-        <Page :total="totalElements" show-total size="small">
-          <div>共 {{ totalElements }} 条</div>
-        </Page>
+        <div
+          class="search-page-button"
+          :class="{ 'search-page-disabled': page === totalPages }"
+          @click="handlePageChange('next')"
+        >
+          下一页
+        </div>
       </div>
     </div>
   </div>
@@ -39,16 +27,36 @@
 <script>
 import publicHeader from '@/components/publicHeader/index.vue';
 import { queryArticle } from '@/api/query';
+import searchList from '@/components/search/index.vue';
 
 export default {
-  components: { publicHeader },
-  watchQuery: ['q'],
+  components: { publicHeader, searchList },
+  watchQuery: ['q', 'page'],
   async asyncData({ query }) {
-    const { q: title } = query;
-    const { data } = await queryArticle({ title });
+    const title = query.q;
+    const page = parseInt(query.page || 1);
+    const { data } = await queryArticle({
+      title,
+      type: 'all',
+      size: 6,
+      page: page - 1,
+    });
     const searchData = data.content;
     const totalElements = data.totalElements;
-    return { title, searchData, totalElements };
+    const totalPages = data.totalPages;
+    return { title, page, searchData, totalElements, totalPages };
+  },
+  methods: {
+    // 页码切换
+    handlePageChange(type) {
+      let page = this.page;
+      if (type === 'previous' && page !== 1) {
+        page -= 1;
+      } else if (type === 'next' && page !== this.totalPages) {
+        page += 1;
+      }
+      this.$router.push({ path: '/search', query: { q: this.title, page } });
+    },
   },
   head() {
     return {
@@ -59,21 +67,41 @@ export default {
 </script>
 
 <style scoped>
-.search-main {
+.search-wrap {
   display: flex;
-  margin: 20px auto;
-  padding: 30px 30px 0;
-  max-width: 1200px;
+  flex-direction: column;
+  height: 100vh;
 }
-.search-link:hover {
-  text-decoration: underline;
+.search-main {
+  flex: 1;
+  padding: 20px 30px 40px;
+  overflow: auto;
 }
-.search-description {
-  margin: 10px 0;
+.search-page {
+  max-width: 800px;
 }
-.search-item-wrap {
-  margin: 0 0 20px;
-  padding: 0 0 20px;
-  border-bottom: 1px solid #e1e4e8;
+.search-page-button {
+  height: 40px;
+  width: 100px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 4px;
+  border: 1px solid #dcdee2;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.search-page-button:hover {
+  background: #2b85e4;
+  color: #ffffff;
+}
+.search-page-disabled {
+  cursor: not-allowed;
+  color: #c5c8ce;
+  background-color: #f7f7f7;
+  border-color: #dcdee2;
+}
+.search-page-disabled:hover {
+  color: #c5c8ce;
+  background-color: #f7f7f7;
 }
 </style>

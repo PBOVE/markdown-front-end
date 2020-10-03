@@ -28,7 +28,7 @@
       </div>
       <div class="index-right">
         <div class="index-right-title index-between-modal">
-          <span>关于</span>
+          <span>文档描述</span>
         </div>
         <div class="index-description">{{ storeArticle.description }}</div>
         <Divider />
