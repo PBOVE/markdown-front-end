@@ -107,7 +107,7 @@ export default {
     display: none;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .custom-card{
     width: 100%;
     margin: 10px 0;
