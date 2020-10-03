@@ -31,7 +31,10 @@
       </div>
     </div>
     <transition name="searchList">
-      <ul v-show="listShow && searchData.length && !mandatory" class="header-search-list">
+      <ul
+        v-show="listShow && searchData.length && !mandatory"
+        class="header-search-list"
+      >
         <li
           v-for="(item, index) in searchData"
           :key="index"
@@ -68,7 +71,7 @@ export default {
       // 选中
       selectIndex: -1,
       // 强制不显示
-      mandatory: false
+      mandatory: false,
     };
   },
   computed: {
@@ -149,7 +152,7 @@ export default {
     // 处理获取焦点
     handleFocus() {
       this.mandatory = false;
-    }
+    },
   },
 };
 </script>
@@ -161,21 +164,20 @@ export default {
   width: 300px;
   transition: all 0.5s ease-in-out;
   cursor: pointer;
-  background-color: #f1f3f4;
-  border-radius: 4px;
+  border: 1px solid #dcdee2;
+  border-radius: 16px;
   overflow: hidden;
 }
 .search-input {
   flex: 1;
   width: 0;
   outline: none;
-  text-indent: 0.5em;
+  text-indent: 1em;
   border-width: 0;
-  background-color: #f1f3f4;
 }
 .search-input::placeholder {
   color: #c5c8ce;
-  text-indent: 0.5em;
+  text-indent: 1em;
 }
 .button-icon-wrap {
   width: 32px;
@@ -188,7 +190,8 @@ export default {
   position: absolute;
   top: 40px;
   padding: 7px 0;
-   width: 300px;
+  width: 300px;
+  border: 1px solid #dcdee2;
   background: #fff;
   border-radius: 4px;
   list-style: none;

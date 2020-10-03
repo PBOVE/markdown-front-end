@@ -17,6 +17,7 @@ import publicHeader from '@/components/publicHeader/index.vue';
 import publicFooter from '@/components/publicFooter/index.vue';
 
 export default {
+  transition: 'fade',
   components: { publicHeader, publicFooter },
   data() {
     return {};

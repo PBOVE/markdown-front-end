@@ -32,6 +32,7 @@ import { queryArticle } from '@/api/query';
 import searchList from '@/components/search/index.vue';
 
 export default {
+  transition: 'fade',
   components: { publicHeader, searchList },
   watchQuery: ['q', 'page'],
   async asyncData({ query }) {
