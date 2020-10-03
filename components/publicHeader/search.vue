@@ -161,17 +161,21 @@ export default {
   width: 300px;
   transition: all 0.5s ease-in-out;
   cursor: pointer;
-  border-color: #dcdee2;
-  border-bottom: 1px solid #dcdee2;
+  background-color: #f1f3f4;
+  border-radius: 4px;
+  overflow: hidden;
 }
 .search-input {
   flex: 1;
   width: 0;
   outline: none;
+  text-indent: 0.5em;
   border-width: 0;
+  background-color: #f1f3f4;
 }
 .search-input::placeholder {
   color: #c5c8ce;
+  text-indent: 0.5em;
 }
 .button-icon-wrap {
   width: 32px;
