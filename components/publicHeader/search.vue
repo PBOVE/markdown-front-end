@@ -18,6 +18,7 @@
         @keyup.up="handleUp"
         @keyup.down="handleDown"
         @keyup.enter="handleEnter"
+        @input="changeInput"
       />
       <div class="button-icon-wrap main-center-middle">
         <Icon v-show="!loading" type="ios-search" />
@@ -72,14 +73,6 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['storeUserState']),
-  },
-  watch: {
-    inputData(value) {
-      this.loading = true;
-      this.mandatory = false;
-      this.inputAsyncData = value;
-      this.getRemote();
-    }
   },
   methods: {
     // 异步搜索
@@ -142,10 +135,16 @@ export default {
         });
       }
     },
+    // 输入框改变
+    changeInput() {
+      this.loading = true;
+      this.mandatory = false;
+      this.inputAsyncData = this.inputData;
+      this.getRemote();
+    },
     // 处理失去焦点
     handleBlur() {
       this.mandatory = true;
-      // this.
     },
     // 处理获取焦点
     handleFocus() {
