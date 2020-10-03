@@ -89,11 +89,13 @@ export default {
      */
     deleteData(data) {
       const deleteIndex = this.sortData.findIndex(el => el.sortId === data.sortId);
+      const deletePos = this.dataParsing(deleteIndex, 'position');
+      const deletePlace = deletePos.h * this.rowShowNum + deletePos.w;
       this.sortData.splice(deleteIndex, 1);
       for (let i = 0; i < this.sortData.length; i++) {
         const { w, h } = this.dataParsing(i, 'position');
         let place = h * this.rowShowNum + w;
-        if (place >= deleteIndex) {
+        if (place >= deletePlace) {
           place -= 1;
         }
         const changeData = this.computeDataStyle(_.cloneDeep(this.sortData[i]), place);
