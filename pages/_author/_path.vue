@@ -12,19 +12,19 @@
         <div class="middle">
           <Icon v-if="storeArticle.share" type="ios-podium-outline" class="path-header-icon" />
           <Icon v-else type="ios-lock-outline" class="path-header-icon" />
-          <user-card
+          <!-- <user-card
             :images="user.images"
             :nick-name="user.nickName"
             :user-name="user.userName"
             :signature="user.signature"
             :province="user.province"
             :city="user.city"
-          >
-            <nuxt-link
-              :to="'/' + storeArticle.author"
-              class="path-header-title"
-            >{{ storeArticle.author }}</nuxt-link>
-          </user-card>
+          > -->
+          <nuxt-link
+            :to="'/' + storeArticle.author"
+            class="path-header-title"
+          >{{ storeArticle.author }}</nuxt-link>
+          <!-- </user-card> -->
           <span class="path-header-line">/</span>
           <span class="index-text-hidden">{{ storeArticle.title }}</span>
           <span v-if="storeSelectPost.title" class="path-header-line">/</span>
@@ -111,10 +111,10 @@ import { queryAccount } from '@/api/user';
 import { validArticle } from '@/api/valid';
 import { articleLike, articleUnLike, articleDetails } from '@/api/article';
 import publicHeader from '@/components/publicHeader/index.vue';
-import userCard from '@/components/userCard/index.vue';
+// import userCard from '@/components/userCard/index.vue';
 
 export default {
-  components: { publicHeader, userCard },
+  components: { publicHeader },
   async validate({ params }) {
     const { author, path } = params;
     const { data } = await validArticle({ author, path });

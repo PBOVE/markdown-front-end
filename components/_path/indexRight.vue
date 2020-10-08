@@ -66,6 +66,7 @@ export default {
 .index-right-wrap {
   border: 1px solid #e1e4e8;
   border-radius: 8px;
+  overflow: hidden;
 }
 .index-titles:hover {
   background: #f8f8f9;
