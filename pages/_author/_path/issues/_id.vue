@@ -105,7 +105,7 @@ import { mapGetters } from 'vuex';
 import { issuesDetails, comment, deleteIssues } from '@/api/issues';
 import issuesCard from '@/components/_path/issuesCard.vue';
 import issuesBorder from '@/components/_path/issuesBorder.vue';
-import modifyEdit from '@/components/EditorMarkdown/modify.vue';
+import modifyEdit from '@/components/Editor/EditorMarkdown/modify.vue';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 
 export default {

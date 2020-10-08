@@ -14,8 +14,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import { updateContent, queryPostDetails } from '@/api/post';
-import tinymceEditor from '@/components/EditorTinymce/index.vue';
-import markdownEditor from '@/components/EditorMarkdown/index.vue';
+import tinymceEditor from '@/components/Editor/EditorTinymce/index.vue';
+import markdownEditor from '@/components/Editor/EditorMarkdown/index.vue';
 
 export default {
   components: { tinymceEditor, markdownEditor },

@@ -85,7 +85,7 @@ export default {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url('../../assets/svg/save.svg');
+  background: url('../../../assets/svg/save.svg');
   background-size: 100% 100%;
 
 }

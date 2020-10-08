@@ -38,7 +38,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import modifyEdit from '@/components/EditorMarkdown/modify.vue';
+import modifyEdit from '@/components/Editor/EditorMarkdown/modify.vue';
 import { newIssues } from '@/api/issues';
 import headPortraitShow from '@/components/headPortrait/show.vue';
 
