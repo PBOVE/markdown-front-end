@@ -15,9 +15,8 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'icon', type: 'image/png', href: '/icon-120x120.png', sizes: '120x120' },
-      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css' }
     ],
-    script: [ { src: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js' } ]
+    script: []
   },
   /**
    * 使用watchQuery属性可以监听参数字符串的更改
@@ -32,7 +31,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [ 'view-design/dist/styles/iview.css', 'assets/css/main.css'],
+  css: ['view-design/dist/styles/iview.css', 'assets/css/main.css'],
   /*
   ** Plugins to load before mounting the App
   */
@@ -46,11 +45,14 @@ module.exports = {
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [ '@nuxt/typescript-build' ],
+  buildModules: ['@nuxt/typescript-build'],
   /*
   ** Nuxt.js modules
   */
-  modules: [ '@nuxtjs/axios', '@nuxtjs/proxy', 'cookie-universal-nuxt' ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/proxy', 'cookie-universal-nuxt', ['nuxt-highlightjs', {
+    style: 'dracula'
+  }]],
+
   axios: {
     proxy: true, // Can be also an object with default options
     prefix: '/api'
@@ -63,7 +65,7 @@ module.exports = {
    * router
    */
   router: {
-    middleware: [ 'auth', 'view', 'access' ]
+    middleware: ['auth', 'view', 'access']
   },
   /*
   ** Build configuration
@@ -72,7 +74,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    vendor: [ 'axios', 'vue-cropper' ] // 为防止重复打包
+    vendor: ['axios', 'vue-cropper'] // 为防止重复打包
   },
   typescript: {
     typeCheck: {

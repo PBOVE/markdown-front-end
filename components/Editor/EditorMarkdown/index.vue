@@ -7,46 +7,24 @@
 <template>
   <div class="markdown-wrap">
     <client-only>
-      <v-md-editor
-        v-model="handbook"
-        height="100%"
-        :left-toolbar="leftToolbar"
-        :right-toolbar="rightToolbar"
-        :mode="mode"
-        :disabled-menus="[]"
-        :codemirror-config="codemirrorConfig"
-        @upload-image="handleUploadImage"
-        @save="handleSave"
-      />
+      <custom-editor ref="customEditor" @on-save="handleSave" />
     </client-only>
   </div>
 </template>
 
 <script>
 import { uploadFile } from '@/api/account';
+import customEditor from '@/components/Editor/customEditor/index.vue';
 
 export default {
+  components: { customEditor },
   data() {
     return {
       // 内容
       handbook: '',
-      // 模式
-      mode: 'editable',
-      // 左侧侧工具栏
-      leftToolbar: 'save | undo redo clear | image emoji',
-      // 右侧工具栏
-      rightToolbar: 'preview toc sync-scroll fullscreen',
-      // 初始化 Codemirror 的配置
-      codemirrorConfig: { lineNumbers: false },
     };
   },
   mounted() {
-    if (window.innerWidth <= 500) {
-      this.mode = 'edit';
-      this.rightToolbar = 'fullscreen';
-      this.leftToolbar = 'save | undo redo clear | emoji ';
-      this.codemirrorConfig = { lineNumbers: false };
-    }
   },
   methods: {
     // 保存
@@ -67,7 +45,9 @@ export default {
     },
     // 设置内容
     setUserByInput(value) {
-      this.handbook = value;
+      this.$nextTick(() => {
+        this.$refs.customEditor.initContent(value);
+      });
     },
   },
 };
