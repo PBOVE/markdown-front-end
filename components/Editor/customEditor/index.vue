@@ -68,6 +68,7 @@ export default {
   flex: 1;
   display: flex;
   height: 0;
+  overflow: hidden;
 }
 .custom-editor-main > div:nth-child(2n) {
   border-left: 1px solid #dcdee2;
