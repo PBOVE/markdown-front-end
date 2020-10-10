@@ -115,11 +115,11 @@ $primary-color: #17233d;
   blockquote {
     margin: 1rem 0;
     padding: 0.25rem 0 0.25rem 1rem;
-    color: #808695;
     font-size: 1rem;
     border-left: 0.2rem solid #dfe2e5;
   }
   .hljs {
+    margin: 1em 0;
     border-radius: 3px;
     display: inline;
   }
