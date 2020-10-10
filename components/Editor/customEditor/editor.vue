@@ -58,6 +58,10 @@ export default {
     // 初始化内容
     initContent(value) {
       this.content = value;
+    },
+    // 获取内容
+    getContent() {
+      return this.content;
     }
 
   },

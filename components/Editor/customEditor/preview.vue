@@ -62,7 +62,7 @@ $primary-color: #17233d;
   word-break: break-all;
   h1 {
     margin: 0.67em 0;
-    padding: 0 0 0.2em;
+    padding: 0 0 0.4em;
     color: $primary-color;
     border-bottom: 1px solid #dcdee2;
   }
@@ -90,9 +90,8 @@ $primary-color: #17233d;
   ul {
     padding-left: 1.2em;
   }
-  li{
-    padding: 1em 0;
-    line-height: 40px;
+  p{
+    line-height: 2em;
   }
   table {
     display: block;
@@ -119,16 +118,18 @@ $primary-color: #17233d;
   }
   blockquote {
     margin: 1rem 0;
-    padding: 0.25rem 0 0.25rem 1rem;
+    padding: 0.25em 0 0 1em;
     font-size: 1rem;
     border-left: 0.2rem solid #dfe2e5;
   }
   .hljs {
     margin: 1em 0;
+    padding: 0 0.5em;
     border-radius: 3px;
     display: inline;
   }
   pre .hljs {
+    padding: 1em;
     display: block;
   }
   p {

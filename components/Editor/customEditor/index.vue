@@ -50,8 +50,8 @@ export default {
       this.$refs.editor.initContent(value);
     },
     // 用户点击保存
-    handlerSave(value) {
-      this.$emit('on-save', value);
+    handlerSave() {
+      this.$emit('on-save', this.$refs.editor.getContent());
     },
   },
 };
