@@ -25,6 +25,7 @@ export default {
         tables: true,
         strikethrough: true,
         openLinksInNewWindow: true,
+        parseImgDimensions: true,
         extensions: [xssFilter],
       }),
     };
@@ -88,6 +89,10 @@ $primary-color: #17233d;
   ol,
   ul {
     padding-left: 1.2em;
+  }
+  li{
+    padding: 1em 0;
+    line-height: 40px;
   }
   table {
     display: block;

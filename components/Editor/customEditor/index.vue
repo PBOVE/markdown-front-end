@@ -4,16 +4,18 @@
       <custom-toolbar @on-save="handlerSave" />
     </div>
     <div class="custom-editor-main">
-      <div class="custom-editor-left">
-        <custom-editor
-          ref="editor"
-          @on-save="handlerSave"
-          @on-change="editorChange"
-          @on-scroll="handlerLeftScroll"
-        />
-      </div>
-      <div class="custom-editor-right">
-        <custom-preview ref="preview" :text="handbook" />
+      <div class="custom-editor-content">
+        <div class="custom-editor-left">
+          <custom-editor
+            ref="editor"
+            @on-save="handlerSave"
+            @on-change="editorChange"
+            @on-scroll="handlerLeftScroll"
+          />
+        </div>
+        <div class="custom-editor-right">
+          <custom-preview ref="preview" :text="handbook" />
+        </div>
       </div>
     </div>
   </div>
@@ -29,7 +31,7 @@ export default {
   data() {
     return {
       // 内容
-      handbook: ''
+      handbook: '',
     };
   },
   methods: {
@@ -43,13 +45,14 @@ export default {
     },
     // 初始化内容
     initContent(value) {
+      console.log(value);
       this.handbook = value;
       this.$refs.editor.initContent(value);
     },
     // 用户点击保存
     handlerSave(value) {
       this.$emit('on-save', value);
-    }
+    },
   },
 };
 </script>
@@ -70,12 +73,18 @@ export default {
   height: 0;
   overflow: hidden;
 }
-.custom-editor-main > div:nth-child(2n) {
+.custom-editor-content{
+  display: flex;
+  flex: 1;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.custom-editor-content > div:nth-child(2n) {
   border-left: 1px solid #dcdee2;
 }
 .custom-editor-left,
 .custom-editor-right {
   width: 50%;
-  flex-shrink: 0;
 }
 </style>
