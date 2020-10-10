@@ -13,8 +13,8 @@ export default {
   props: {
     text: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
@@ -25,7 +25,7 @@ export default {
         tables: true,
         strikethrough: true,
         openLinksInNewWindow: true,
-        extensions: [xssFilter]
+        extensions: [xssFilter],
       }),
     };
   },
@@ -34,8 +34,8 @@ export default {
       handler(value) {
         this.content = this.converter.makeHtml(value);
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     // 设置滚动条高度
@@ -45,8 +45,7 @@ export default {
       const scale = (scrollHeight - offsetHeight) / (pos.height - offsetHeight);
       if (scale < 0) return;
       this.$refs.wrap.scrollTop = scale * pos.top;
-    }
-
+    },
   },
 };
 </script>
@@ -59,9 +58,10 @@ $primary-color: #17233d;
   padding: 20px;
   overflow: auto;
   color: #515a6e;
-  word-break:break-all;
+  word-break: break-all;
   h1 {
     margin: 0.67em 0;
+    padding: 0 0 0.2em;
     color: $primary-color;
     border-bottom: 1px solid #dcdee2;
   }
@@ -121,13 +121,13 @@ $primary-color: #17233d;
   }
   .hljs {
     border-radius: 3px;
-  }
-  .hljs.angelscript,
-  .hljs.ebnf {
     display: inline;
-    overflow-x: auto;
-    margin: 0;
-    padding: 0.25rem 0.5rem;
+  }
+  pre .hljs {
+    display: block;
+  }
+  p {
+    margin: 0 0 16px;
   }
 }
 </style>

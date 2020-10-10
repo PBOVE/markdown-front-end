@@ -15,7 +15,7 @@
     <Divider orientation="left">置顶文档</Divider>
     <custom-card
       v-for="(item, index) in userArticle.topping"
-      :key="item.path"
+      :key="item._id + index"
       :item="item"
       :index="index"
       :close-button="false"
@@ -26,7 +26,7 @@
     <Divider v-if="userArticle.assist.length" orientation="left">协作文档</Divider>
     <custom-card
       v-for="(item, index) in userArticle.assist"
-      :key="item.path"
+      :key="item._id + index"
       :item="item"
       :index="index"
       :close-button="false"

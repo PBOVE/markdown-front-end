@@ -67,6 +67,7 @@ export default {
   border: 1px solid #e1e4e8;
   border-radius: 8px;
   overflow: hidden;
+  padding: 11.5px 0;
 }
 .index-titles:hover {
   background: #f8f8f9;
@@ -77,7 +78,7 @@ export default {
   font-weight: bold;
 }
 .index-titles-header {
-  padding: 11.5px 16px;
+  padding: 0px 16px 11.5px;
   font-weight: bold;
   font-size: 16px;
 }

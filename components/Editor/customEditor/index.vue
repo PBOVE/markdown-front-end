@@ -1,7 +1,7 @@
 <template>
   <div class="custom-editor-wrap">
     <div class="custom-editor-header">
-      <custom-toolbar />
+      <custom-toolbar @on-save="handlerSave" />
     </div>
     <div class="custom-editor-main">
       <div class="custom-editor-left">
