@@ -75,7 +75,7 @@
               v-model="description"
               class="row-input row-input-position"
               type="text"
-              maxlength="60"
+              maxlength="100"
             />
             <div class="row-size-position">{{ descriptionSize }}</div>
           </div>
@@ -137,7 +137,7 @@ export default {
       share: '1',
       // 描述
       description: '',
-      descriptionSize: '0/60',
+      descriptionSize: '0/100',
       // 名称
       title: '',
       titleSize: '0/30',
@@ -175,7 +175,7 @@ export default {
       }
     },
     description(value) {
-      this.descriptionSize = `${value.length}/60`;
+      this.descriptionSize = `${value.length}/100`;
     },
     title(value) {
       this.$refs.titleRef.classList.remove('row-error');
@@ -323,7 +323,7 @@ export default {
   position: relative;
 }
 .row-input-position {
-  padding: 0 40px 0 0;
+  padding: 0 60px 0 0;
 }
 .row-size-position {
   position: absolute;

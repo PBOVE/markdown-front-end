@@ -19,10 +19,12 @@
           @click="handleCardDelete"
         />
       </div>
-      <div class="text-description">{{ item.description }}</div>
+      <div class="text-description">
+        {{ item.description | descriptionSubstr }}
+      </div>
       <div class="index-page-flex-middle">
         <Icon type="md-star-outline" size="16" />
-        <span style="margin:0 5px;">{{ item.likeCount }}</span>
+        <span style="margin: 0 5px">{{ item.likeCount }}</span>
         <Icon v-if="item.share" type="ios-unlock-outline" size="16" />
         <Icon v-else type="ios-lock-outline" size="16" />
       </div>
@@ -35,8 +37,11 @@ import { animalName } from '@/utils/accountName';
 
 export default {
   filters: {
-    filters(title) {
-      return title[0];
+    descriptionSubstr(title) {
+      if (title.length < 60) {
+        return title;
+      }
+      return title.substr(0, 50) + '...';
     },
   },
   props: {
@@ -123,8 +128,10 @@ export default {
   flex: 1;
   font-size: 12px;
   color: #586069;
+
+  word-break: break-all;
 }
-.custom-crad-link:hover{
+.custom-crad-link:hover {
   text-decoration: underline;
 }
 </style>

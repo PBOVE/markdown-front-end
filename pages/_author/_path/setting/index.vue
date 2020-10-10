@@ -15,7 +15,7 @@
     </div>
     <div class="setting-title">文档描述</div>
     <div class="setting-input-wrap">
-      <input v-model="description" type="text" class="setting-input" />
+      <input v-model="description" maxlength="100" type="text" class="setting-input" />
       <div class="setting-input-suffix">{{ descriptionSize }}</div>
     </div>
     <div class="setting-title">文档排序</div>
@@ -46,7 +46,7 @@ export default {
       titleSize: '0/30',
       // 名称
       description: '',
-      descriptionSize: '0/60',
+      descriptionSize: '0/100',
       // 排序
       sort: 0,
       sortList: [
@@ -68,20 +68,30 @@ export default {
     'storeArticle.title': {
       handler(value) {
         this.title = value;
-        this.titleSize = `${value.length || 0}/60`;
       },
       immediate: true,
     },
     'storeArticle.description': {
       handler(value) {
         this.description = value;
-        this.descriptionSize = `${value.length || 0}/60`;
       },
       immediate: true,
     },
     'storeArticle.sort': {
       handler(value) {
         this.sort = value;
+      },
+      immediate: true,
+    },
+    title: {
+      handler(value) {
+        this.titleSize = `${value.length || 0}/30`;
+      },
+      immediate: true,
+    },
+    description: {
+      handler(value) {
+        this.descriptionSize = `${value.length || 0}/100`;
       },
       immediate: true,
     },
@@ -135,9 +145,10 @@ export default {
 .setting-select {
   width: 400px;
 }
+
 .setting-input {
   margin: 2px 0 0 0;
-  padding: 0 40px 0 0;
+  padding: 0 60px 0 0;
   width: 400px;
   height: 33px;
   text-indent: 0.2em;

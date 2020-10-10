@@ -68,7 +68,7 @@ export default {
     pushData(data) {
       // 改变数据结构
       const cloneData = _.cloneDeep(data);
-      cloneData.sortId = onlyId();
+      cloneData.sortId = onlyId() + this.sortData.length;
       const changeData = this.computeDataStyle(cloneData, this.sortData.length);
 
       // 添加数据
@@ -112,7 +112,7 @@ export default {
     initData(data) {
       data.forEach((el, index) => {
         const cloneData = _.cloneDeep(el);
-        cloneData.sortId = onlyId();
+        cloneData.sortId = onlyId() + index;
         const changeData = this.computeDataStyle(cloneData, index);
         this.sortData.push(changeData);
       });
