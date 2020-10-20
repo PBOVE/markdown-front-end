@@ -1,6 +1,12 @@
 <template>
-  <div class="custom-textarea-wrap">
+  <div
+    class="custom-textarea-wrap"
+    @dragover.prevent
+    @paste="handlePaste($event)"
+    @drop.prevent="handleDrop($event)"
+  >
     <ace-editor
+      ref="ace"
       v-model="content"
       lang="markdown"
       theme="chrome"
@@ -17,21 +23,24 @@ export default {
   props: {
     value: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
+      // 内容
       content: '',
+      // 配置
       options: {
         fontSize: 14,
         wrap: true,
         showLineNumbers: false,
         showGutter: false,
       },
+      //
     };
   },
-
+  mounted() {},
   methods: {
     editorInit(editor) {
       require('brace/ext/language_tools'); // language extension prerequsite...
@@ -41,8 +50,9 @@ export default {
       require('brace/theme/chrome');
       require('brace/snippets/javascript'); // snippet
 
-      editor.session.on('changeScrollTop', (top) => {
-        const height = editor.getSession().getScreenLength() * editor.renderer.lineHeight;
+      editor.session.on('changeScrollTop', top => {
+        const height =
+          editor.getSession().getScreenLength() * editor.renderer.lineHeight;
         this.$emit('on-scroll', { top, height });
       });
       editor.session.on('change', () => {
@@ -54,6 +64,10 @@ export default {
         exec: () => this.$emit('on-save', this.content),
         readOnly: false,
       });
+      editor.on('paste', e => {
+        console.log(e);
+      });
+      // console.log();
     },
     // 初始化内容
     initContent(value) {
@@ -62,8 +76,32 @@ export default {
     // 获取内容
     getContent() {
       return this.content;
-    }
-
+    },
+    // 处理复制
+    handlePaste(event) {
+      const items = (event.clipboardData || window.clipboardData).items;
+      let file = null;
+      if (!items || items.length === 0) return;
+      // 搜索剪切板items
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.includes('image')) {
+          file = items[i].getAsFile();
+          break;
+        }
+      }
+      if (!file) return;
+      this.$emit('on-image', file);
+    },
+    // 处理粘贴
+    handleDrop(event) {
+      const file = event.dataTransfer.files[0];
+      if (!file) return;
+      this.$emit('on-image', file, this.insertImage);
+    },
+    // 照片插入
+    insertImage(image) {
+      this.$refs.ace.editor.insert(`![${image.desc}](${image.url} =100%x*)`);
+    },
   },
 };
 </script>

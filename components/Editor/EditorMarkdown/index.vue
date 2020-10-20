@@ -7,7 +7,7 @@
 <template>
   <div class="markdown-wrap">
     <client-only>
-      <custom-editor ref="customEditor" @on-save="handleSave" />
+      <custom-editor ref="customEditor" @on-save="handleSave" @on-image="handleUploadImage" />
     </client-only>
   </div>
 </template>
@@ -32,11 +32,12 @@ export default {
       this.$emit('on-save', content);
     },
     // 上传照片
-    async handleUploadImage(_event, insertImage, files) {
+    async handleUploadImage(files,insertImage) {
       const fileData = new FormData();
       fileData.append('file', files[0]);
       try {
         const { data } = await uploadFile(fileData);
+        console.log(data)
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
           desc: files[0].name.replace(/\..+/, ''),

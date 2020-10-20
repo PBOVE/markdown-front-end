@@ -60,6 +60,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import { queryPostList, newPost, updatePost, deletePost } from '@/api/post';
 import dropDownList from '@/components/dropDownList/index.vue';
+
 export default {
   components: { dropDownList },
   data() {

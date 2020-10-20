@@ -11,6 +11,7 @@
             @on-save="handlerSave"
             @on-change="editorChange"
             @on-scroll="handlerLeftScroll"
+            @on-image="handlerImage"
           />
         </div>
         <div class="custom-editor-right">
@@ -45,13 +46,16 @@ export default {
     },
     // 初始化内容
     initContent(value) {
-      console.log(value);
       this.handbook = value;
       this.$refs.editor.initContent(value);
     },
     // 用户点击保存
     handlerSave() {
       this.$emit('on-save', this.$refs.editor.getContent());
+    },
+    // 处理照片
+    handlerImage(file, insertImage) {
+      this.$emit('on-image', [file], insertImage);
     },
   },
 };
@@ -73,7 +77,7 @@ export default {
   height: 0;
   overflow: hidden;
 }
-.custom-editor-content{
+.custom-editor-content {
   display: flex;
   flex: 1;
   width: 0;
