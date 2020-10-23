@@ -50,7 +50,7 @@ export default {
       require('brace/theme/chrome');
       require('brace/snippets/javascript'); // snippet
 
-      editor.session.on('changeScrollTop', top => {
+      editor.session.on('changeScrollTop', (top) => {
         const height =
           editor.getSession().getScreenLength() * editor.renderer.lineHeight;
         this.$emit('on-scroll', { top, height });
@@ -64,7 +64,7 @@ export default {
         exec: () => this.$emit('on-save', this.content),
         readOnly: false,
       });
-      editor.on('paste', e => {
+      editor.on('paste', (e) => {
         console.log(e);
       });
       // console.log();

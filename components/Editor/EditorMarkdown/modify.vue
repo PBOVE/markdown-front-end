@@ -6,7 +6,7 @@
 
 <template>
   <div class="modify-md-wrap">
-    <textarea class="modify-textarea" />
+    <textarea v-model="handbook" class="modify-textarea" />
   </div>
 </template>
 
@@ -68,8 +68,8 @@ export default {
 .modify-md-wrap {
   height: 100%;
   width: 100%;
-  border-top: 1px solid #dcdee2;
-  border-bottom: 1px solid #dcdee2;
+  /* border-top: 1px solid #dcdee2;
+  border-bottom: 1px solid #dcdee2; */
 }
 .modify-textarea {
   resize: none;

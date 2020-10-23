@@ -1,9 +1,3 @@
-/**
-*
-*  @author ZTiger
-*
-*/
-
 <template>
   <issues-border :images="images" :title="nickName">
     <div class="right-header index-page-flex-middle">
@@ -18,21 +12,24 @@
         <Icon type="ios-more" size="30" />
       </div>
     </div>
-    <client-only>
-      <v-md-preview ref="editor" height="100%" :text="content" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div class="content" v-html="xss(content)" />
     </client-only>
   </issues-border>
 </template>
 
 <script>
 import issuesBorder from '@/components/_path/issuesBorder.vue';
+import xss from 'xss';
 
 export default {
   components: { issuesBorder },
   // eslint-disable-next-line vue/require-prop-types
   props: ['images', 'userName', 'createTime', 'content', 'nickName'],
   data() {
-    return {};
+    return {
+      xss
+    };
   },
   mounted() {},
   methods: {},
@@ -61,5 +58,8 @@ export default {
 }
 .right-header-time {
   color: #515a6e;
+}
+.content{
+  padding: 20px;
 }
 </style>
