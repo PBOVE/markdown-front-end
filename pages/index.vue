@@ -6,13 +6,19 @@
 
 <template>
   <div class="home-page-wrap">
-    <public-header :shadow="true" />
+    <Affix>
+      <public-header :shadow="true" />
+    </Affix>
     <div class="home-page-content">
-      <Alert class="tip">
-        <h2>
-          首页 暂时没有想出来怎么做, 放哪些内容. 现在 完成内容 搜索文档, 用户创建,用户信息修改,文档创建等功能
-        </h2>
-      </Alert>
+      <custom-card
+        v-for="(item, index) in article"
+        :key="item._id + index"
+        :item="item"
+        :index="index"
+        :close-button="false"
+        :router-link="true"
+        class="custom-card"
+      />
     </div>
     <public-footer />
   </div>
@@ -21,10 +27,17 @@
 <script>
 import publicHeader from '@/components/publicHeader/index.vue';
 import publicFooter from '@/components/publicFooter/index.vue';
+import customCard from '@/components/custom/customCard.vue';
+import { queryAllArticle } from '~/api/query';
 
 export default {
   transition: 'fade',
-  components: { publicHeader, publicFooter },
+  components: { publicHeader, publicFooter, customCard },
+  async asyncData() {
+    const { data: article } = await queryAllArticle();
+    console.log(article);
+    return { article };
+  },
   data() {
     return {};
   },
@@ -39,6 +52,8 @@ export default {
 }
 .home-page-content {
   flex: auto;
+  margin: 0 auto;
+  max-width: 1100px;
 }
 .tip {
   max-width: 1200px;
