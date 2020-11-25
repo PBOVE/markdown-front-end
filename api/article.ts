@@ -12,13 +12,13 @@ export const newArticle = (params: any) => axios.$post('/article', params, heade
 export const updateArticle = (params: any) => axios.$put('/article', params, header);
 
 // 删除知识库
-export const deleteArticle = (params: any) => axios.$delete('/article', { data: params });
+export const deleteArticle = (params: any) => axios.$request({ url: '/article', method: 'delete', data: params });
 
 // 处理点赞
 export const articleLike = (params: any) => axios.$post('/article/like', params, header);
 
 // 删除点赞
-export const articleUnLike = (params: any) => axios.$delete('/article/like', { data: params });
+export const articleUnLike = (params: any) => axios.$request({ url: '/article/like', method: 'delete', data: params });
 
 // 获取文章内容
 export const articleDetails = (params: any) => axios.$get('/article/details', { params });
@@ -27,16 +27,16 @@ export const articleDetails = (params: any) => axios.$get('/article/details', { 
 export const queryArticleUser = (params: any) => axios.$get('/article/user', { params });
 
 // 文章删除用户
-export const deleteArticleUser = (params: any) => axios.$delete('/article/user', { params });
+export const deleteArticleUser = (params: any) => axios.$request({ url: '/article/user', method: 'delete', data: params });
 
 // 置顶文章
-export const updateToppingArticle = (params:any) => axios.$post('/topping/article', params);
+export const updateToppingArticle = (params: any) => axios.$post('/topping/article', params);
 
 // 查询文章
-export const queryUserArticle = (params:any) => axios.$get('/user/article', { params });
+export const queryUserArticle = (params: any) => axios.$get('/user/article', { params });
 
 // 查询置顶文章
-export const queryToppingArticle = (params:any) => axios.$get('/topping/article', { params });
+export const queryToppingArticle = (params: any) => axios.$get('/topping/article', { params });
 
 // 查询协作文章
-export const queryAssistArticle = (params:any) => axios.$get('/assist/article', { params });
+export const queryAssistArticle = (params: any) => axios.$get('/assist/article', { params });

@@ -1,19 +1,16 @@
 <template>
-  <div ref="editor">
+  <div>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="storeFormat==='richText'" class="richText" v-html="content" />
+    <div v-if="storeFormat==='richText'" ref="editor" class="richText" v-html="content" />
     <client-only v-if="storeFormat==='markdown'">
-      <custom-preview :text="content" />
+      <v-md-preview ref="editor" height="100%" :text="content" />
     </client-only>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import customPreview from '@/components/Editor/customEditor/preview';
-
 export default {
-  components: { customPreview },
   props: {
     content: { type: String, default: '' },
   },
@@ -24,16 +21,43 @@ export default {
     content: {
       handler(value) {
         if (!value) return;
-        this.$nextTick(() => this.handleRTitles());
+        const format = this.storeFormat;
+        if (format === 'richText') this.handleRTitles();
+        else if (format === 'markdown') this.$nextTick(() => this.handleMTitles());
       },
     }
   },
   mounted() {
-    this.$nextTick(() => this.handleRTitles());
+    const format = this.storeFormat;
+    if (format === 'richText') this.handleRTitles();
+    else if (format === 'markdown') this.$nextTick(() => this.handleMTitles());
   },
   methods: {
     ...mapMutations('author', ['setCustomAnchor']),
-    // 处理编辑器
+    // 处理 mankdown 语法编辑目录
+    handleMTitles() {
+      const anchors = this.$refs.editor.$el.querySelectorAll(
+        '.v-md-editor-preview h1,h2,h3,h4,h5,h6',
+      );
+      const titles = Array.from(anchors).filter(
+        title => !!title.textContent.trim(),
+      );
+      if (!titles.length) {
+        this.setCustomAnchor([]);
+        return;
+      }
+      const hTags = Array.from(
+        new Set(titles.map(title => title.tagName)),
+      ).sort();
+      this.setCustomAnchor(
+        titles.map(el => ({
+          title: el.textContent,
+          lineIndex: el.getAttribute('data-v-md-line'),
+          indent: hTags.indexOf(el.tagName),
+        })),
+      );
+    },
+    // 处理富文本编辑器
     handleRTitles() {
       const anchors = this.$refs.editor.querySelectorAll('h1,h2,h3,h4,h5,h6');
       const titles = Array.from(anchors).filter(

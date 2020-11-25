@@ -7,24 +7,48 @@
 <template>
   <div class="markdown-wrap">
     <client-only>
-      <custom-editor ref="customEditor" @on-save="handleSave" @on-image="handleUploadImage" />
+      <v-md-editor
+        v-model="handbook"
+        height="100%"
+        :left-toolbar="leftToolbar"
+        :right-toolbar="rightToolbar"
+        :mode="mode"
+        :disabled-menus="[]"
+        :codemirror-config="codemirrorConfig"
+        @upload-image="handleUploadImage"
+        @save="handleSave"
+      />
     </client-only>
   </div>
 </template>
 
 <script>
 import { uploadFile } from '@/api/account';
-import customEditor from '@/components/Editor/customEditor/index.vue';
 
 export default {
-  components: { customEditor },
   data() {
     return {
       // 内容
       handbook: '',
+      // 配置
+      toolbars: {},
+      // 模式
+      mode: 'editable',
+      // 左侧侧工具栏
+      leftToolbar: 'save | undo redo clear | image emoji',
+      // 右侧工具栏
+      rightToolbar: 'preview toc sync-scroll fullscreen',
+      // 初始化 Codemirror 的配置
+      codemirrorConfig: {},
     };
   },
   mounted() {
+    if (window.innerWidth <= 500) {
+      this.mode = 'edit';
+      this.rightToolbar = 'fullscreen';
+      this.leftToolbar = 'save | undo redo clear | emoji ';
+      this.codemirrorConfig = { lineNumbers: false };
+    }
   },
   methods: {
     // 保存
@@ -32,12 +56,11 @@ export default {
       this.$emit('on-save', content);
     },
     // 上传照片
-    async handleUploadImage(files,insertImage) {
+    async handleUploadImage(_event, insertImage, files) {
       const fileData = new FormData();
       fileData.append('file', files[0]);
       try {
         const { data } = await uploadFile(fileData);
-        console.log(data)
         insertImage({
           url: `/api/storage/preview/${data[0]}`,
           desc: files[0].name.replace(/\..+/, ''),
@@ -46,9 +69,7 @@ export default {
     },
     // 设置内容
     setUserByInput(value) {
-      this.$nextTick(() => {
-        this.$refs.customEditor.initContent(value);
-      });
+      this.handbook = value;
     },
   },
 };
@@ -68,7 +89,6 @@ export default {
   height: 16px;
   background: url('../../../assets/svg/save.svg');
   background-size: 100% 100%;
-
 }
 .markdown-wrap .v-md-editor__toolbar-item-save{
   line-height: 32px;

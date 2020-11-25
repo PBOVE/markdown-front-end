@@ -24,4 +24,4 @@ export const newPost = (params: any) => axios.$post('/post', params, header);
 export const updatePost = (params: any) => axios.$put('/post', params, header);
 
 // 删除文章文章列表
-export const deletePost = (params: any) => axios.$delete('/post', { data: params });
+export const deletePost = (params: any) => axios.$request({ url: '/post', method: 'delete', data: params });

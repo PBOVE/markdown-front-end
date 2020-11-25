@@ -10,13 +10,15 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'google-site-verification', content: 'dhTaTccD_FtgerXGfHKhOQc3voBRhrqmh9xZnkDrzuU' },
       { name: 'keywords', content: 'TBS.fell' },
-      { ame: 'description', content: '记录学习中遇到困难与问题,分享学习中的心得体会' }
+      { ame: 'description', content: '记录学习中遇到困难与问题,分享学习中的心得体会' },
+
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'icon', type: 'image/png', href: '/icon-120x120.png', sizes: '120x120' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css' }
     ],
-    script: []
+    script: [{ src: 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js' }]
   },
   /**
    * 使用watchQuery属性可以监听参数字符串的更改
@@ -59,7 +61,7 @@ module.exports = {
   },
   proxy: {
     '/api/storage': { target: 'https://tibis.top/' },
-    '/api': { target: 'http://127.0.0.1:7001' }
+    '/api': { target: 'https://tibis.top' }
   },
   /**
    * router

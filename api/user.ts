@@ -24,13 +24,13 @@ export const updateAccount = (params: any) => axios.$put('/user/me', params, hea
 export const updatePassword = (params: any) => axios.$put('/user/me/password', params);
 
 // 删除账户
-export const deleteAccount = (params: any) => axios.$delete('/user/me', { data: params });
+export const deleteAccount = (params: any) => axios.$request({ url: '/user/me', method: 'delete', data: params });
 
 // 关注用户
 export const followAccount = (params: any) => axios.$post('/user/follow', params);
 
 // 取消关注
-export const unfollowAccount = (params: any) => axios.$delete('/user/follow', { data: params });
+export const unfollowAccount = (params: any) => axios.$request({ url: '/user/follow', method: 'delete', data: params });
 
 // 查询 注册 是否
 export const queryRegister = (params: any) => axios.$get('/register/query', { params, ...config });

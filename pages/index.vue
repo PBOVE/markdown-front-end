@@ -12,7 +12,7 @@
     <div class="home-page-content">
       <custom-card
         v-for="(item, index) in article"
-        :key="item._id + index"
+        :key="item._id"
         :item="item"
         :index="index"
         :close-button="false"
@@ -35,7 +35,6 @@ export default {
   components: { publicHeader, publicFooter, customCard },
   async asyncData() {
     const { data: article } = await queryAllArticle();
-    console.log(article);
     return { article };
   },
   data() {
