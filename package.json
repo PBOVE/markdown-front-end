@@ -21,7 +21,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "cross-env": "^5.2.0",
     "koa": "^2.6.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "nuxt": "^2.12.2",
     "nuxt-highlightjs": "^1.0.1",
     "qs": "^6.9.4",
