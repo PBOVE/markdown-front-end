@@ -25,7 +25,7 @@
     "nuxt": "^2.12.2",
     "nuxt-highlightjs": "^1.0.1",
     "qs": "^6.9.4",
-    "tinymce": "^5.4.0",
+    "tinymce": "^5.10.7",
     "view-design": "^4.2.0",
     "vue-cropper": "^0.5.4",
     "vue-prism-component": "^1.2.0",
